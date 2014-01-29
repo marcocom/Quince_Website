@@ -1,0 +1,570 @@
+/*
+MY STYLE
+*/
+
+
+//----------------GLOBAL
+body{
+  margin:0;
+  background-color:$white;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+td,
+th,
+label,
+input,
+li,
+.datepicker-dropdown {
+  //font-family:                      $fontFamilyBase;
+  font-family: 'aaux-next', 'Helvetica', 'Arial', sans-serif;
+  color:$brand_gray;
+  font-weight:400;
+
+
+
+  -ms-word-break: break-word;
+  word-break: break-word;
+
+  // Non standard for webkit
+  //word-break: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+a:visited,
+a:link,
+a:hover
+{
+  text-decoration:none;
+  color:$brand_gray;
+}
+em{
+  text-emphasis-style:              none;
+  font-style:                       normal;
+}
+ul{
+  list-style-type:                  none;
+  margin:                           0;
+}
+body{
+  width:100%;
+  height:100%;
+  //background: transparent url('../img/trees_sky.jpg') repeat-y 0 0;
+  background-color:$white;
+}
+
+
+//-----------------INDEX HOMEPAGE
+
+.home-content{
+  width:100%;
+  height:100%;
+  display:block;
+  top:0;
+  //@include tb_transition(all 0.5s ease-out 0s);
+  @include tb_box-shadow($div-shadow);
+  background-color:white;
+  position: absolute;
+  z-index:2;
+
+  .header{
+    position: absolute;
+    top:10px;
+    right: 0;
+
+    li{
+      display:inline-block;
+      padding-right: 20px;
+      a{
+        height:20px;
+        width:auto;
+        //margin-left:20px;
+        display:inline-block;
+        h5{
+          font-size: 0.9em;
+        }
+        h5:hover{
+          color:$grayDark;
+        }
+      }
+    }
+  }
+  //
+  //.logo{
+  //  display:block;
+  //  height:346px;
+  //  width:339px;
+  //  background: transparent url(../img/logo.png) no-repeat 0 0;
+  //  position: absolute;
+  //}
+
+  .content{
+
+    width:100%;
+    height:100%;
+    display:block;
+    position:relative;
+
+    .main-logo{
+      display: block;
+      position: relative;
+      top:15px;
+      #logo{
+        max-width: 520px;
+        height: auto;
+        width:100px;
+        display:block;
+        position:relative;
+        left:20px;
+      }
+      h6{
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        line-height: 1em;
+        position: absolute;
+        text-align: center;
+        bottom:0;
+        font-weight:200;
+        font-style: italic;
+      }
+    }
+  }
+
+
+  .nav{
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 45px;
+    ul{
+      display: block;
+      //margin: 0 auto;
+      width:auto;
+      display:inline-block;
+      li{
+        display:block;
+        float:left;
+        margin-right: 20px;
+        a{
+          display:block;
+          width:29px;
+          height:29px;
+          background:transparent url(img/nav_sprite.png) no-repeat 0 0;
+
+        }
+      }
+
+      &.social{
+        padding-left:150px;
+        li{
+          &.facebook{
+            a{background-position:0 0;&:hover{background-position:0 -29px;}}
+          }
+          &.twitter{
+            a{background-position:-33px 0;&:hover{background-position:-33px -29px;}}
+          }
+          &.linkedin{
+            a{background-position:-66px 0;&:hover{background-position:-66px -29px;}}
+          }
+          &.pinterest{
+            a{background-position:-101px 0;&:hover{background-position:-101px -29px;}}
+          }
+          &.youtube{
+            a{background-position:-134px 0;&:hover{background-position:-134px -29px;}}
+          }
+          &.vimeo{
+            a{background-position:-168px 0;&:hover{background-position:-168px -29px;}}
+          }
+        }
+      }
+      &.refinement{
+        float:right;
+        right: 20px;
+        padding-left:0;
+        li{
+          &.search{
+            a{background-position:-349px 0;&:hover{background-position:-349px -29px;}}
+          }
+          &.timeline{
+            a{background-position:-382px 0;&:hover{background-position:-382px -29px;}}
+          }
+          &.viewed{
+            a{background-position:-414px 0;&:hover{background-position:-414px -29px;}}
+          }
+          &.clients{
+            a{background-position:-446px 0;&:hover{background-position:-446px -29px;}}
+          }
+        }
+      }
+    }
+
+  }
+
+  .footer{
+    color:#666;
+    position: absolute;
+    display: block;
+    right: 20px;
+    bottom: 2px;
+    text-align:right;
+    h6{
+      font-size: 8px;
+
+    }
+  }
+
+}
+
+#slider-container {
+  position: absolute;
+  z-index: 1;
+  top: 120px;
+  bottom: 48px;
+  left: 0;
+  width: 100%;
+  .scroller {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    min-width: 5000px;
+    height: 100%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+    .container {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 50%;
+      text-align: center;
+
+      li {
+        display: block;
+        float: left;
+        max-width: 721px;
+        min-width:478px;
+        height: 100%;
+        border: $grayLight; //TEMPORARY DEV GUIDES
+        color:$grayLight;
+        font-size: 14px;
+
+      }
+    }
+    .bottom-row{
+      margin: 50% 0 0 0;
+    }
+  }
+}
+
+
+//-------------------CELLS-------------------------
+
+#slider-container .scroller .container li{
+
+  .cell-box{ //general default
+    border: $cell-border;
+    display:block;
+    width:$cell-half-width;
+    height:$cell-half-height;
+    margin: 2px;
+    background-color:$grayLighter;
+    float:left;
+    overflow:hidden;
+    position:relative;
+
+    .off-state{
+      display:inline-block;
+      width:100%;
+      height:100%;
+      z-index:1;
+      img{
+        display:block;
+        width:100%;
+        height:auto;
+      }
+    }
+    .on-state{
+      display:none;
+      width:100%;
+      height:100%;
+    }
+  }
+
+
+  .cell-a{ // HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
+    width:$cell-half-width;
+    height:$cell-full-height;
+    .off-state{
+
+    }
+    .on-state{
+      .content{
+        border: $cell-border;
+        .title{
+          font-weight:800;
+        }
+        .author{
+          .name{
+            font-weight:600;
+          }
+          .jobtitle{
+            font-weight:200;
+          }
+        }
+        .article{
+          font-weight:200;
+          a{
+            color:$brand_blue;
+          }
+        }
+        .social{
+
+        }
+      }
+    }
+  }
+  .cell-b{ // QUARTER-SIZED IMAGE w/ NO INFO -->
+    width:$cell-half-width;
+    height:$cell-half-height;
+    .off-state{
+
+    }
+  }
+  .cell-c{ // QUARTER-SIZED LOGO w/ NO INFO
+    width:$cell-half-width;
+    height:$cell-half-height;
+    .off-state{ //button for this unit. will act as 'refine-by-client' functionality later
+
+    }
+  }
+  .cell-d{ // HALF-HEIGHT/DOUBLE-WIDTH TEXT (quotes) w/ NO CLICKTHRU
+    width:$cell-full-width;
+    height:$cell-half-height;
+    background:none;
+    border:none;
+    .off-state{
+      h2{
+        color:$grayDarker;
+        font-style: italic;
+      }
+    }
+  }
+  .cell-e{ //COLORED QUARTER-SIZED TEXT w/ NO CLICKTHRU
+    width:$cell-half-width;
+    height:$cell-half-height;
+
+    .off-state{
+      h2{
+        line-height:1em;
+        font-style: italic;
+        font-weight:200;
+      }
+    }
+  }
+  .cell-f{ //FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO
+    width:$cell-full-width;
+    height:$cell-full-height;
+    .off-state{
+      h1{
+        display: block;
+        font-size: 3em;
+        font-style: italic;
+        font-weight: 800;
+        line-height: 1em;
+        padding-left: 20px;
+        position: absolute;
+        width: 120px;
+      }
+    }
+  }
+  .cell-g{ // LONG-IMAGE w/ NO CLICKTHRU
+    width:$cell-full-width;
+    height:$cell-half-height;
+  }
+  .cell-h{ // QUARTER-SIZED TEXT-BLOCK CELL w/ NO CLICKTHRU BUT HAS AUTHOR-INFO
+    width:$cell-half-width;
+    height:$cell-half-height;
+    background:none;
+    border:none;
+    .author{
+      a{
+        width:100%;
+        .name{
+          font-weight:600;
+        }
+        .jobtitle{
+          font-weight:200;
+        }
+      }
+    }
+    .article{
+      p{
+        line-height:0.5em;
+        font-weight:200;
+        color:$grayDarker;
+      }
+    }
+  }
+  .cell-i{ // EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+    width:$cell-half-width;
+    height:$cell-half-height;
+    background:none;
+    border:none;
+  }
+
+}
+
+
+
+//---------------SUBPAGES
+
+.subcontent.opened{display:block}
+
+.subcontent{
+  z-index:1;
+
+  width:100%;
+  height:100%;
+  display:none;
+  background-color:$grayLighter;
+  position: fixed;
+
+
+  .content{
+
+    h1{
+      color:$white;
+      font-weight:200;
+      display:block;
+      position:absolute;
+      right:20px;
+      top:10px;
+      margin:0;
+      padding:0;
+      width:50%;
+      line-height:1em;
+      text-align:right;
+    }
+
+    ul{
+      width:90%;
+      margin: 40px auto 0;
+      vertical-align:top;
+      li{
+        width:33%;
+        padding:10px;
+        //float:left;
+        display:inline-block;
+        vertical-align:top;
+        background-color:$almostWhite;
+        border: solid 2px $white;
+        @include tb_border-top-radius(10px);
+        min-height:250px;
+        margin:20px 5px 0;
+        a{
+          font-weight:200;
+          color:$state_primary;
+        }
+
+        h3{
+          font-weight:800 !important;
+          color:black;
+          margin-bottom:10px;
+        }
+      }
+    }
+  }
+}
+
+.contact-content{
+  ul li{
+    .address{
+      display:block;
+      margin: 10px 0;
+      h5{
+        color:black;
+        line-height:1em;
+
+        a{
+          font-weight:400;
+          color:$state_primary;
+        }
+      }
+    }
+    .legal-info{
+      margin-top:10px;
+      h6{
+        color:$gray;
+        font-size:0.6em;
+        line-height: 1.5em;
+        word-break:auto;
+      }
+    }
+
+  }
+}
+
+.jobs-content{
+  ul li{
+    width:25% !important;
+
+    h2{
+      color:$gray;
+      font-size:0.6em;
+      line-height: 1.5em;
+    }
+
+    h4{
+      font-size: 0.9em;
+      line-height:1.3em;
+    }
+    h4, h6, h5{
+      font-weight:200;
+      margin-top:10px;
+      a{
+        font-weight:400;
+        color:$state_primary;
+      }
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

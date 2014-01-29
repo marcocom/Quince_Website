@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $body-background-color;
+  font-family: $main-font;
+  line-height: 1.5em;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: $link-color;
+
+  &.selected {
+    color: $link-color-active;
+  }
+
+  &:hover {
+    color: $link-color-active;
+    -webkit-transition: color .1s ease-in;
+    -moz-transition: color .1s ease-in;
+    -o-transition: color .1s ease-in;
+    transition: color .1s ease-in;
+  }
+}
+
+.clear {
+  clear: both;
+  height: 1px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.off-screen-text {
+  text-indent: -9999px;
+}
