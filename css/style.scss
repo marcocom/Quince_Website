@@ -6,7 +6,8 @@ MY STYLE
 //----------------GLOBAL
 body{
   margin:0;
-  background-color:$white;
+  background-color:white;
+  font-size:0.8em;
 }
 h1,
 h2,
@@ -24,10 +25,8 @@ li,
 .datepicker-dropdown {
   //font-family:                      $fontFamilyBase;
   font-family: 'aaux-next', 'Helvetica', 'Arial', sans-serif;
-  color:$brand_gray;
+  color:$brand-gray;
   font-weight:400;
-
-
 
   -ms-word-break: break-word;
   word-break: break-word;
@@ -44,7 +43,26 @@ a:link,
 a:hover
 {
   text-decoration:none;
-  color:$brand_gray;
+  color:$brand-gray;
+  line-height:125%;
+}
+h1{
+  font-size:300%;
+}
+h2{
+  font-size:250%;
+}
+h3{
+  font-size:200%;
+}
+h4{
+  font-size:150%;
+}
+h5{
+  font-size:100%;
+}
+h6{
+  font-size:75%;
 }
 em{
   text-emphasis-style:              none;
@@ -53,6 +71,7 @@ em{
 ul{
   list-style-type:                  none;
   margin:                           0;
+  padding:                          0;
 }
 body{
   width:100%;
@@ -69,35 +88,35 @@ body{
   height:100%;
   display:block;
   top:0;
-  //@include tb_transition(all 0.5s ease-out 0s);
-  @include tb_box-shadow($div-shadow);
+  //@include transition(all 0.5s ease-out 0s);
+  @include box-shadow($div-shadow);
   background-color:white;
   position: absolute;
   z-index:2;
 
   .header{
     position: absolute;
-    top:10px;
-    right: 0;
-
+    top: 0px;
+    right: 20px;
+    z-index: 1;
     li{
       display:inline-block;
       padding-right: 20px;
       a{
-        height:20px;
+        height:30px;
         width:auto;
         //margin-left:20px;
         display:inline-block;
-        h5{
-          font-size: 0.9em;
+        &:hover{
+          cursor:pointer;
+          color:$gray-dark;
         }
-        h5:hover{
-          color:$grayDark;
-        }
+
       }
     }
   }
-  //
+
+
   //.logo{
   //  display:block;
   //  height:346px;
@@ -112,7 +131,7 @@ body{
     height:100%;
     display:block;
     position:relative;
-
+    overflow:hidden;
     .main-logo{
       display: block;
       position: relative;
@@ -188,7 +207,7 @@ body{
       }
       &.refinement{
         float:right;
-        right: 20px;
+        margin-right: 10px;
         padding-left:0;
         li{
           &.search{
@@ -217,7 +236,7 @@ body{
     bottom: 2px;
     text-align:right;
     h6{
-      font-size: 8px;
+      //font-size: 8px;
 
     }
   }
@@ -231,11 +250,14 @@ body{
   bottom: 48px;
   left: 0;
   width: 100%;
+  height:100%;
+  //overflow:hidden;
   .scroller {
     position: absolute;
     z-index: 1;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     min-width: 5000px;
+    width:auto;
     height: 100%;
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
@@ -252,28 +274,22 @@ body{
     -ms-text-size-adjust: none;
     -o-text-size-adjust: none;
     text-size-adjust: none;
-    .container {
+    .mosaic-container {
       list-style: none;
       padding: 0;
       margin: 0;
       width: 100%;
-      height: 50%;
+      height:100%;
       text-align: center;
-
       li {
         display: block;
         float: left;
-        max-width: 721px;
-        min-width:478px;
+        width: $cell-total-container-width;
         height: 100%;
-        border: $grayLight; //TEMPORARY DEV GUIDES
-        color:$grayLight;
-        font-size: 14px;
-
+        //border: $gray-light; //TEMPORARY DEV GUIDES
+        color:$gray-light;
+        //font-size: 14px;
       }
-    }
-    .bottom-row{
-      margin: 50% 0 0 0;
     }
   }
 }
@@ -281,19 +297,18 @@ body{
 
 //-------------------CELLS-------------------------
 
-#slider-container .scroller .container li{
+#slider-container .scroller .mosaic-container li{
 
   .cell-box{ //general default
-    border: $cell-border;
+    //border: $cell-border;
     display:block;
     width:$cell-half-width;
     height:$cell-half-height;
     margin: 2px;
-    background-color:$grayLighter;
-    float:left;
-    overflow:hidden;
-    position:relative;
+    background-color:$gray-lighter;
 
+    overflow:hidden;
+    //position:absolute;
     .off-state{
       display:inline-block;
       width:100%;
@@ -336,7 +351,7 @@ body{
         .article{
           font-weight:200;
           a{
-            color:$brand_blue;
+            color:$brand-blue;
           }
         }
         .social{
@@ -365,9 +380,19 @@ body{
     background:none;
     border:none;
     .off-state{
-      h2{
-        color:$grayDarker;
+      h3{
+        color:$gray-darker;
         font-style: italic;
+        //font-size: 1.5em;
+        bottom: 2px;
+        position: absolute;
+        display: block;
+        line-height: 15px;
+        em{
+          font-size: 50%;
+          color:$gray;
+          //font-style: italic;
+        }
       }
     }
   }
@@ -389,7 +414,7 @@ body{
     .off-state{
       h1{
         display: block;
-        font-size: 3em;
+        //font-size: 3em;
         font-style: italic;
         font-weight: 800;
         line-height: 1em;
@@ -421,9 +446,8 @@ body{
     }
     .article{
       p{
-        line-height:0.5em;
         font-weight:200;
-        color:$grayDarker;
+        color:$gray-darker;
       }
     }
   }
@@ -448,7 +472,7 @@ body{
   width:100%;
   height:100%;
   display:none;
-  background-color:$grayLighter;
+  background-color:$gray-lighter;
   position: fixed;
 
 
@@ -480,12 +504,12 @@ body{
         vertical-align:top;
         background-color:$almostWhite;
         border: solid 2px $white;
-        @include tb_border-top-radius(10px);
+        @include border-top-radius(10px);
         min-height:250px;
         margin:20px 5px 0;
         a{
           font-weight:200;
-          color:$state_primary;
+          color:$brand-blue;
         }
 
         h3{
@@ -509,7 +533,7 @@ body{
 
         a{
           font-weight:400;
-          color:$state_primary;
+          color:$brand-blue;
         }
       }
     }
@@ -517,7 +541,7 @@ body{
       margin-top:10px;
       h6{
         color:$gray;
-        font-size:0.6em;
+        //font-size:0.6em;
         line-height: 1.5em;
         word-break:auto;
       }
@@ -545,7 +569,7 @@ body{
       margin-top:10px;
       a{
         font-weight:400;
-        color:$state_primary;
+        color:$brand-blue;
       }
     }
   }

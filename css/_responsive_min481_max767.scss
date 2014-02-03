@@ -19,6 +19,7 @@
           font-size-adjust: 0.3;
         }
       }
+
     }
   header{
     position: absolute;
@@ -39,7 +40,7 @@
     ul{
       display: block;
       //margin: 0 auto;
-      @include tb_clearfix();
+      @include clearfix();
       width:50%;
       padding:0;
       position:relative;
@@ -60,4 +61,7 @@
       font-size: 8px;
     }
   }
+}
+#slider-container .scroller .mosaic-container li{
+  width:486px;
 }

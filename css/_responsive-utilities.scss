@@ -3,68 +3,84 @@
 // --------------------------------------------------
 
 
-// IE10 Metro responsive
-// Required for Windows 8 Metro split-screen snapping with IE10
+// IE10 in Windows (Phone) 8
+//
+// Support for responsive views via media queries is kind of borked in IE10, for
+// Surface/desktop in split view and for Windows Phone 8. This particular fix
+// must be accompanied by a snippet of JavaScript to sniff the user agent and
+// apply some conditional CSS to *only* the Surface/desktop Windows 8. Look at
+// our Getting Started page for more information on this bug.
+//
+// For more information, see the following:
+//
+// Issue: https://github.com/twbs/bootstrap/issues/10497
+// Docs: http://getbootstrap.com/getting-started/#browsers
 // Source: http://timkadlec.com/2012/10/ie10-snap-mode-and-responsive-design/
-//@-ms-viewport{
-//  width: device-width;
-//}
 
-// Hide from screenreaders and browsers
-// Credit: HTML5 Boilerplate
-.hidden {
-  display: none;
-  visibility: hidden;
+@-ms-viewport {
+  width: device-width;
 }
+
 
 // Visibility utilities
 
-// For desktops
-.visible-phone     { display: none !important; }
-.visible-tablet    { display: none !important; }
-.hidden-phone      { }
-.hidden-tablet     { }
-.hidden-desktop    { display: none !important; }
-.visible-desktop   { display: inherit !important; }
+@include responsive-invisibility('.visible-xs');
 
-// Tablets & small desktops only
-@media (min-width: 768px) and (max-width: 979px) {
-  @import "responsive_min767_max979";
-  // Hide everything else
-  .hidden-desktop    { display: inherit !important; }
-  .visible-desktop   { display: none !important ; }
-  // Show
-  .visible-tablet    { display: inherit !important; }
-  // Hide
-  .hidden-tablet     { display: none !important; }
-}
-
-// Phones only
-@media (min-width:481px) and (max-width: 767px) {
-  @import "responsive_min481_max767";
-  // Hide everything else
-  .hidden-desktop    { display: inherit !important; }
-  .visible-desktop   { display: none !important; }
-  // Show
-  .visible-tablet     { display: inherit !important; } // Use inherit to restore previous behavior
-  // Hide
-  .hidden-tablet      { display: none !important; }
-}
-
-@media(max-width: 480px){
+@media (max-width: $screen-xs-max) {
   @import "responsive_max480";
-  .visible-phone     { display: inherit !important; } // Use inherit to restore previous behavior
-// Hide
-  .hidden-phone      { display: none !important; }
+  @include responsive-visibility('.visible-xs');
 }
+
+@include responsive-invisibility('.visible-sm');
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+
+  @import "responsive_min481_max767";
+  @include responsive-visibility('.visible-sm');
+}
+
+@include responsive-invisibility('.visible-md');
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  @import "responsive_min767_max979";
+  @include responsive-visibility('.visible-md');
+}
+
+@include responsive-invisibility('.visible-lg');
+
+@media (min-width: $screen-lg-min) {
+  @include responsive-visibility('.visible-lg');
+}
+
+@media (max-width: $screen-xs-max) {
+  @include responsive-invisibility('.hidden-xs');
+}
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  @include responsive-invisibility('.hidden-sm');
+}
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  @include responsive-invisibility('.hidden-md');
+}
+
+@media (min-width: $screen-lg-min) {
+  @include responsive-invisibility('.hidden-lg');
+}
+
 
 // Print utilities
-.visible-print    { display: none !important; }
-.hidden-print     { }
+//
+// Media queries are placed on the inside to be mixin-friendly.
+
+@include responsive-invisibility('.visible-print');
 
 @media print {
-  .visible-print  { display: inherit !important; }
-  .hidden-print   { display: none !important; }
+  @include responsive-visibility('.visible-print');
+}
+
+@media print {
+  @include responsive-invisibility('.hidden-print');
 }
 
 // RETINA DEVICES - marcocom
@@ -78,3 +94,32 @@ only screen and (min-device-pixel-ratio: 2.0) {
 @media (min-resolution: 2dppx){ //double dpi
 
 }
+
+// Extra small screen / phone
+// Note: Deprecated $screen-xs and $screen-phone as of v3.0.1
+//$screen-xs:                  480px !default;
+//$screen-xs-min:              $screen-xs !default;
+//$screen-phone:               $screen-xs-min !default;
+//
+//// Small screen / tablet
+//// Note: Deprecated $screen-sm and $screen-tablet as of v3.0.1
+//$screen-sm:                  768px !default;
+//$screen-sm-min:              $screen-sm !default;
+//$screen-tablet:              $screen-sm-min !default;
+//
+//// Medium screen / desktop
+//// Note: Deprecated $screen-md and $screen-desktop as of v3.0.1
+//$screen-md:                  992px !default;
+//$screen-md-min:              $screen-md !default;
+//$screen-desktop:             $screen-md-min !default;
+//
+//// Large screen / wide desktop
+//// Note: Deprecated $screen-lg and $screen-lg-desktop as of v3.0.1
+//$screen-lg:                  1200px !default;
+//$screen-lg-min:              $screen-lg !default;
+//$screen-lg-desktop:          $screen-lg-min !default;
+//
+//// So media queries don't overlap when required, provide a maximum
+//$screen-xs-max:              ($screen-sm-min - 1) !default;
+//$screen-sm-max:              ($screen-md-min - 1) !default;
+//$screen-md-max:              ($screen-lg-min - 1) !default;

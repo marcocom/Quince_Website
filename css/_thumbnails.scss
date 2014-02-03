@@ -3,40 +3,36 @@
 // --------------------------------------------------
 
 
-// Base classes
-// For thumbnail block-level composite components and simple image styles
-
-// The actual thumbnailed element
-// Can be `a`, `div`, or `img`
-.thumbnail,
-.img-thumbnail {
-  padding: 4px;
-  line-height: $lineHeightBase;
-  border: 1px solid #ddd;
-  border-radius: $borderRadiusBase;
-  @include tb_transition(all .2s ease-in-out);
-}
+// Mixin and adjust the regular image class
 .thumbnail {
   display: block;
-}
-.img-thumbnail {
-  display: inline-block;
+  padding: $thumbnail-padding;
+  margin-bottom: $line-height-computed;
+  line-height: $line-height-base;
+  background-color: $thumbnail-bg;
+  border: 1px solid $thumbnail-border;
+  border-radius: $thumbnail-border-radius;
+  @include transition(all .2s ease-in-out);
+
+  > img,
+  a > img {
+    @include img-responsive();
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  // Add a hover state for linked versions only
+  a:hover,
+  a:focus,
+  // [converter] extracted a&.active to a.thumbnail.active
+
+  // Image captions
+  .caption {
+    padding: $thumbnail-caption-padding;
+    color: $thumbnail-caption-color;
+  }
 }
 
-// Add a hover state for linked versions only
-a.thumbnail:hover,
-a.thumbnail:focus { // TODO: don't be so specific limiting this to an <a> tag
-  border-color: $linkColor;
-}
-
-// Images and captions
-.thumbnail > img {
-  display: block;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.thumbnail .caption {
-  padding: 9px;
-  color: $gray;
+a.thumbnail.active {
+  border-color: $link-color;
 }

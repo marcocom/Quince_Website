@@ -160,44 +160,6 @@
           $log("--GREENSOCK WORKS");
         },
 
-//
-//        toplinkAction : function(e){
-//            e.preventDefault();
-//
-//            var c = $(e.currentTarget)[0];
-//            var ref = "."+c.id + "-content";
-//            var $content = $(ref);
-//
-//            var _this = this;
-//
-//            if(this.subcontentOpened == false){
-//
-//                $content.show();
-////                $content.addClass('opened');
-//
-//                var t = $content.find('.content')[0];
-//                var targetHeight = $(t).height() + 40;
-//
-//                this.setScrollable(false);
-//                this.currentContent = $content;
-//                this._el.css('top', (targetHeight + 'px'));
-//                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:", this.currentContent);
-//                this.subcontentOpened = true;
-//            } else {
-//
-//                this._el.bind("webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd", function(){
-//                    _this.subcontentOpened = false;
-//                    _this.currentContent = null;
-//                    _this.setScrollable(true);
-//                    $content.hide();
-//                    $log("TRANS_END (after): subOpened:"+_this.subcontentOpened+" currentContent:", _this.currentContent);
-//                });
-//
-//                this._el.css('top', '0');
-//                this.subcontentOpened = false;
-//                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:", this.currentContent);
-//            }
-//        },
 
         setScrollable : function(setOn){
             var topdoc = $('html, body');

@@ -29,7 +29,7 @@
           font-size: 10px;
         }
         h5:hover{
-          color:$grayDark;
+          color:$gray-dark;
         }
       }
     }
@@ -42,7 +42,7 @@
     ul{
       display: block;
       //margin: 0 auto;
-      @include tb_clearfix();
+      @include clearfix();
       width:50%;
       padding:0;
       position:relative;
@@ -94,3 +94,8 @@
   }
 }
 
+#slider-container .scroller .mosaic-container li{
+  width:486px;
+  float:none;
+  height:auto;
+}

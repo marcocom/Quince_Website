@@ -1,4 +1,7 @@
-cat lib/jquery.fancybox.js jquery.ext.js quince.js quince.page.js plugins.js helper.js > cat_main.js
+
+
+cat lib/iscroll-lite.js lib/jquery.flexslider.js lib/masonry.js jquery.ext.js helper.js quince.js quince.page.js quince.mosaic.js plugins.js > cat_main.js
+
 
 
 java -jar compress.jar cat_main.js -o main.js
