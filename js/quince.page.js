@@ -45,8 +45,6 @@
 
         initPage : function(){
 
-
-
 //            $.fancybox({
 //                padding: 0,
 //                'autoScale'     : false,

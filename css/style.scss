@@ -37,6 +37,7 @@ li,
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+  text-align:left;
 }
 a:visited,
 a:link,
@@ -300,12 +301,15 @@ body{
 #slider-container .scroller .mosaic-container li{
 
   .cell-box{ //general default
-    //border: $cell-border;
+    border: 1px solid #cccccc;
+    border-spacing: 0;
+    box-sizing:border-box;
     display:block;
     width:$cell-half-width;
     height:$cell-half-height;
     margin: 2px;
     background-color:$gray-lighter;
+    //@include drop-shadow($div-shadow);
 
     overflow:hidden;
     //position:absolute;
@@ -341,15 +345,12 @@ body{
           font-weight:800;
         }
         .author{
-          .name{
-            font-weight:600;
-          }
-          .jobtitle{
-            font-weight:200;
+          a{
+            @include author-information();
           }
         }
         .article{
-          font-weight:200;
+          padding: 0px 5px
           a{
             color:$brand-blue;
           }
@@ -388,6 +389,7 @@ body{
         position: absolute;
         display: block;
         line-height: 15px;
+        font-size: 1.5em;
         em{
           font-size: 50%;
           color:$gray;
@@ -401,10 +403,11 @@ body{
     height:$cell-half-height;
 
     .off-state{
-      h2{
+      h3{
         line-height:1em;
         font-style: italic;
         font-weight:200;
+        padding:5px;
       }
     }
   }
@@ -434,20 +437,24 @@ body{
     background:none;
     border:none;
     .author{
+      padding:5px 5px 0 5px;
       a{
-        width:100%;
-        .name{
-          font-weight:600;
-        }
-        .jobtitle{
-          font-weight:200;
-        }
+        @include author-information();
       }
     }
     .article{
+      padding:5px 5px 0 5px;
       p{
         font-weight:200;
         color:$gray-darker;
+      }
+    }
+    .cta-text{
+      font-weight:600;
+      color:$brand-blue;
+      padding:5px 5px 0 5px;
+      &:hover{
+        color:darken($brand-blue, .50);
       }
     }
   }

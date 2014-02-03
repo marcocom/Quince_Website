@@ -235,7 +235,8 @@
 		
 		// grid setup
 		set_columns();
-		$(window).resize(function() { if(columns!=set_columns()) place_grid_items(true); });
+
+        $(window).resize(function() { if(columns!=set_columns()) place_grid_items(true); });
 		$('#grid .item').hide();
 		
 		// scroll loader
@@ -249,7 +250,6 @@
 		
 		// check height
 		if(scroll) scroll_handler(null);
-	
 	}
 	
 	/**

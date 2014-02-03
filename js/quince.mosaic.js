@@ -128,6 +128,7 @@
             this._super(this._el);
             $log("Mosaic init");
             this._grid = null;
+            this._cells = new Array();
             this.loading_items = false;
             this.building = false;
 
@@ -147,6 +148,7 @@
             this.initContainer();
         },
         initContainer : function(){
+            var _this = this;
             this._grid = this._el.masonry({
                 itemSelector: '.cell-box',
                 columnWidth: 240,
@@ -157,22 +159,20 @@
             var c = this._grid.masonry('getItemElements');
 
             //var c = this._grid.children;
-            $log("INIT COLUMN cells:"+ c.length);
-
-            console.dir(c);
 
             $(c).each(function(e){
                 var mc = new $q.Mosaic.Cell(this);
+                _this._cells.push(mc);
             });
 
+            $log("INIT PARENT-COLUMN cells:"+ this._cells.length);
 
 //            this._el.on( 'click', '.off-state', function( event ) {
 //                var $this = $(this);
 //                var previousContentSize = getSize( this );
 //
 //                $log("CLICK EVENT");
-
-                // disable transition
+//                // disable transition
 //                this.style[ transitionProp ] = 'none';
 //                // set current size
 //                $this.css({
@@ -230,12 +230,31 @@
 
             this.loading_items=false;
 
-
+            this.sizeLetter = null;
             this.initContainer();
         },
 
         initContainer : function(){
-            $log("CELL INIT");
+            this.sizeLetter = this.getItemSize(this._el);
+            $log("CELL INIT -- SIZE:"+this.sizeLetter);
+            this._el.click($.proxy(this.offClickAction, this));
+        },
+
+        offClickAction : function(e){
+            $log("CELL CLICKED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        },
+
+        getItemSize : function(item) {
+            if($(item).hasClass('cell-a')) return 'a';
+            if($(item).hasClass('cell-b')) return 'b';
+            if($(item).hasClass('cell-c')) return 'c';
+            if($(item).hasClass('cell-d')) return 'd';
+            if($(item).hasClass('cell-e')) return 'e';
+            if($(item).hasClass('cell-f')) return 'f';
+            if($(item).hasClass('cell-g')) return 'g';
+            if($(item).hasClass('cell-h')) return 'h';
+            return '';
         }
     });
 

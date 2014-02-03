@@ -1,4 +1,4 @@
-(function($, $q) {
+    (function($, $q) {
 
     $q.Mosaic = Class.extend({
         _construct : function(el) {
@@ -61,7 +61,7 @@
 
             // grid setup
             set_columns();
-            $(window).resize(function() { if(columns!=set_columns()) place_grid_items(true); });
+            $(window).resize(function() { if(this.columns!=set_columns()) place_grid_items(true); });
             $('#grid .item').hide();
 
             // scroll loader
@@ -81,8 +81,8 @@
         create_grid_array : function() {
             var array = new Array(rows);
             for(var i=0; i<rows; i++) {
-                array[i] = new Array(columns);
-                for(var j=0; j<columns; j++) {
+                array[i] = new Array(this.columns);
+                for(var j=0; j<this.columns; j++) {
                     array[i][j]=false;
                 }
             }
@@ -131,7 +131,7 @@
         },
         get_insert_location : function(offset) {
             for(var i=0; i<rows; i++) {
-                for(var j=0; j<columns; j++) {
+                for(var j=0; j<this.columns; j++) {
                     if(!grid[i][j]) {
                         if(offset==0) {
                             if(debug) trace('found location ['+i+','+j+']');
@@ -169,7 +169,7 @@
        get_total_rows : function () {
             for(var i=0; i<rows; i++) {
                 var empty=true;
-                for(var j=0; j<columns; j++) {
+                for(var j=0; j<this.columns; j++) {
                     if(grid[i][j]) empty=false;
                 }
                 if(empty) return i;
@@ -191,15 +191,15 @@
 
        set_columns : function() {
             var new_columns=Math.floor(($(window).width()-30)/column_width);
-            if(debug) trace('calculated columns: '+new_columns);
-            if(new_columns>=4&&new_columns!=columns) {
-                if(debug) trace('changing columns: '+new_columns);
-                columns=new_columns;
-                var width=columns*column_width;
+            if(debug) trace('calculated this.columns: '+new_columns);
+            if(new_columns>=4&&new_columns!=this.columns) {
+                if(debug) trace('changing this.columns: '+new_columns);
+                this.columns=new_columns;
+                var width=this.columns*column_width;
                 $('#grid').css({width:width+'px'}); // set new grid size
                 $('header.top .container').css({width:width+'px'}); // update header position
             }
-            return columns;
+            return this.columns;
         },
 
 
@@ -220,11 +220,11 @@
 
                         ( (column-1)>=0 && grid[row][column-1]=='b1' && grid[row+1][column-1]=='b2' ) // size b to left
                             ||
-                            ( (column+1)<columns && grid[row][column+1]=='b1' && grid[row+1][column+1]=='b2' ) // size b to right
+                            ( (column+1)<this.columns && grid[row][column+1]=='b1' && grid[row+1][column+1]=='b2' ) // size b to right
                             ||
                             ( (column-1)>=0 && grid[row][column-1]=='d1' && grid[row+1][column-1]=='d3' ) // size d to left
                             ||
-                            ( (column+1)<columns && grid[row][column+1]=='d1' && grid[row+1][column+1]=='d3' ) // size d to right
+                            ( (column+1)<this.columns && grid[row][column+1]=='d1' && grid[row+1][column+1]=='d3' ) // size d to right
 
                         )) return false; // strict neighbor rules
                     grid[row][column]	='b1';
@@ -232,7 +232,7 @@
                     break;
 
                 case 'c': // 2x1
-                    if( (column+1)>=columns || grid[row][column] || grid[row][column+1] ) return false; // space clear?
+                    if( (column+1)>=this.columns || grid[row][column] || grid[row][column+1] ) return false; // space clear?
                     if( strict && (
 
                         ( (row-1)>=0 && grid[row-1][column]=='c1' && grid[row-1][column+1]=='c2' ) // size c above
@@ -249,7 +249,7 @@
                     break;
 
                 case 'd': // 2x2
-                    if( (column+1)>=columns || grid[row][column] || grid[row][column+1] || grid[row+1][column] || grid[row+1][column+1] ) return false; // space clear?
+                    if( (column+1)>=this.columns || grid[row][column] || grid[row][column+1] || grid[row+1][column] || grid[row+1][column+1] ) return false; // space clear?
                     if( strict && (
 
                         ( (row-1)>=0 && grid[row-1][column]=='c1' && grid[row-1][column+1]=='c2' ) // size c above
@@ -262,11 +262,11 @@
                             ||
                             ( (column-1)>=0 && grid[row][column-1]=='b1' && grid[row+1][column-1]=='b2' ) // size b to left
                             ||
-                            ( (column+1)<columns && grid[row][column+1]=='b1' && grid[row+1][column+1]=='b2' ) // size b to right
+                            ( (column+1)<this.columns && grid[row][column+1]=='b1' && grid[row+1][column+1]=='b2' ) // size b to right
                             ||
                             ( (column-1)>=0 && grid[row][column-1]=='d1' && grid[row+1][column-1]=='d3' ) // size d to left
                             ||
-                            ( (column+1)<columns && grid[row][column+1]=='d1' && grid[row+1][column+1]=='d3' ) // size d to right
+                            ( (column+1)<this.columns && grid[row][column+1]=='d1' && grid[row+1][column+1]=='d3' ) // size d to right
 
                         )) return false; // strict neighbor rules
                     grid[row][column]		='d1';
@@ -276,7 +276,7 @@
                     break;
 
                 case 'e': // 2x3
-                    if( (column+1)>=columns || grid[row][column] || grid[row][column+1] || grid[row+1][column] || grid[row+1][column+1] || grid[row+2][column] || grid[row+2][column+1] ) return false; // space clear?
+                    if( (column+1)>=this.columns || grid[row][column] || grid[row][column+1] || grid[row+1][column] || grid[row+1][column+1] || grid[row+2][column] || grid[row+2][column+1] ) return false; // space clear?
                     grid[row][column]		='e1';
                     grid[row][column+1]		='e2';
                     grid[row+1][column]		='e3';
@@ -286,7 +286,7 @@
                     break;
 
                 case 'f': // 3x3
-                    if( (column+2)>=columns || grid[row][column] || grid[row][column+1]|| grid[row][column+2] || grid[row+1][column] || grid[row+1][column+1] || grid[row+1][column+2] || grid[row+2][column] || grid[row+2][column+1] || grid[row+2][column+2] ) return false; // space clear?
+                    if( (column+2)>=this.columns || grid[row][column] || grid[row][column+1]|| grid[row][column+2] || grid[row+1][column] || grid[row+1][column+1] || grid[row+1][column+2] || grid[row+2][column] || grid[row+2][column+1] || grid[row+2][column+2] ) return false; // space clear?
                     grid[row][column]		='f1';
                     grid[row][column+1]		='f2';
                     grid[row][column+2]		='f3';
