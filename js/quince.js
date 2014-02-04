@@ -311,6 +311,7 @@
     Quince.Event.PAGECHANGE = "PAGECHANGE";
     Quince.Event.DISCLAIMER = "DISCLAIMER";
     Quince.Event.CURRENTPAGE = "CURRENTPAGE";
+    Quince.Event.OPEN_CELL = "OPEN_CELL";
 
     this.Quince = Quince;
 

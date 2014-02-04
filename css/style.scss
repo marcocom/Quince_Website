@@ -313,15 +313,15 @@ body{
     height:$cell-half-height;
     margin: 2px;
     background-color:$gray-lighter;
-    //@include drop-shadow($div-shadow);
 
     overflow:hidden;
-    //position:absolute;
+
     .off-state{
       display:inline-block;
       width:100%;
       height:100%;
       z-index:1;
+
       img{
         display:block;
         width:100%;
@@ -329,7 +329,7 @@ body{
       }
     }
     .on-state{
-      display:none;
+      display:inline-block;
       width:100%;
       height:100%;
       background:#FFFFFF;
@@ -350,8 +350,10 @@ body{
     }
     .on-state{
       .content{
+        padding: 0px 5px;
         .title{
           font-weight:800;
+          font-size: 2em;
         }
         .author{
           a{
@@ -359,7 +361,10 @@ body{
           }
         }
         .article{
-          padding: 0px 5px
+          p{
+            font-weight:200;
+            color:$gray-darker;
+          }
           a{
             color:$brand-blue;
           }
@@ -374,25 +379,32 @@ body{
     width:$cell-half-width;
     height:$cell-half-height;
     .on-state{
-      .author{
-        padding:5px 5px 0 5px;
-        a{
-          @include author-information();
+      .content{
+        padding: 0px 5px;
+        .title{
+          font-weight:800;
         }
-      }
-      .article{
-        padding:5px 5px 0 5px;
-        p{
-          font-weight:200;
-          color:$gray-darker;
+        .author{
+          a{
+            @include author-information();
+          }
         }
-      }
-      .cta-text{
-        font-weight:600;
-        color:$brand-blue;
-        padding:5px 5px 0 5px;
-        &:hover{
-          color:darken($brand-blue, .50);
+        .article{
+          p{
+            font-weight:200;
+            color:$gray-darker;
+          }
+          a{
+            color:$brand-blue;
+          }
+        }
+        .cta-text{
+          font-weight:600;
+          color:$brand-blue;
+          padding:5px 5px 0 5px;
+          &:hover{
+            color:darken($brand-blue, .50);
+          }
         }
       }
     }

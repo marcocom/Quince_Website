@@ -11,6 +11,7 @@
         {	// associate element class to Page for auto initialization
             _selectors : {},
             _extend : $q.Mosaic.extend,
+            _slider : null,
             extend : function(prop, selector) {
                 var klass = $q.Mosaic._extend(prop);
                 if (typeof selector == 'string')
@@ -40,13 +41,17 @@
             this.loading_items = false;
             this.building = false;
 
+
+
             this.initContainer();
 
         },
 
 
         initContainer : function(){
-            $q.Mosaic.slider = new IScroll('#slider-container', { scrollX: true, scrollY: false, mouseWheel: true });
+
+            $q.Mosaic._slider = new IScroll('#slider-container', { scrollX: true, scrollY: false, mouseWheel: true});
+//            $q.Mosaic._slider.scrollBy(-$q.windowWidth, 0, 2500);
 
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
@@ -56,7 +61,6 @@
 
             this._columns.each(function(){
                var mc = new $q.Mosaic.ParentColumn(this);
-
             });
 
 
@@ -128,14 +132,10 @@
             this._super(this._el);
             $log("Mosaic init");
             this._grid = null;
+            this.currentCellOpened = null;
             this._cells = new Array();
             this.loading_items = false;
             this.building = false;
-
-            this.sub_rows=5;
-            this.sub_columns=3;
-            this.row_height=134;
-            this.column_width=272;
             this.strict=false;
             this.overlay=false;
             this.building=false
@@ -153,20 +153,19 @@
                 itemSelector: '.cell-box',
                 columnWidth: 240,
                 isAnimated: true
-//                isFitWidth: true
             }).masonry('bindResize');
 //            this.grid.bindResize();
+
             var c = this._grid.masonry('getItemElements');
 
             //var c = this._grid.children;
 
             $(c).each(function(e){
-                var mc = new $q.Mosaic.Cell(this);
+                var mc = new $q.Mosaic.Cell(this, _this._grid);
                 _this._cells.push(mc);
             });
 
             $log("INIT PARENT-COLUMN cells:"+ this._cells.length);
-
 //            this._el.on( 'click', '.off-state', function( event ) {
 //                var $this = $(this);
 //                var previousContentSize = getSize( this );
@@ -206,18 +205,16 @@
 //                });
 //
 //                $container.masonry();
-
 //            });
-
-
 
         }
     });
 
     $q.Mosaic.Cell = $q.Mosaic.extend({
-        _construct : function(el) {
+        _construct : function(el, parentColumn) {
             this._el = $(el);
             this._super(this._el);
+            this._parent = parentColumn;
 
             this.loading_items = false;
             this.building = false;
@@ -231,40 +228,69 @@
 
             this.deadzone = 5;
             this.startMouseX = null;
-
+            this.offContent = null;
+            this.onContent = null;
             this.sizeLetter = null;
             this.initContainer();
 
+            return this.closeInfo;
         },
 
         initContainer : function(){
             this.sizeLetter = this.getItemSize(this._el);
-            $log("CELL INIT -- SIZE:"+this.sizeLetter);
-//            if(this.sizeLetter == "") this._el.click($.proxy(this.onClick, this));
+//            $log("CELL INIT -- SIZE:"+this.sizeLetter+" parent:"+this._parent);
 
-            if(this.sizeLetter == "a" || this.sizeLetter == "b" ) this._el.mousedown($.proxy(this.onPress, this));
+
+            var n = this._el.find('.on-state');
+            var f = this._el.find('.off-state');
+
+            this.offContent = $(f);
+            this.onContent = n.length > 0 ? $(f) : null;
+
+            if(this.sizeLetter == "a" || this.sizeLetter == "b" ){
+                this._el.mousedown($.proxy(this.onPress, this));
+                this._el.mouseup($.proxy(this.onRelease, this));
+            }
+
+            $q.EventManager.addEventHandler($q.Event.OPEN_CELL, this.onCellClick.bind(this));
+
+        },
+        onCellClick : function(e, target){
+            var isMe = e == this;
+            if(!isMe && this.opened) this.closeInfo();
+        },
+        onClick : function(e){
+
+            $log("CELL CLICKED!");
+            !this.opened ? this.openInfo() : this.closeInfo();
         },
 
-        onClick : function(e){
-            $log("CELL CLICKED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        openInfo : function(){
+            $log("OPEN CELL");
             if(!this.opened){
-                this._el.addClass('activated');
+                $q.EventManager.fireEvent($q.Event.OPEN_CELL, this);
+
+                this.offContent.slideUp(this.offContent.height());
+
                 this.opened = true;
-            } else {
-                this._el.removeClass('activated');
+            }
+        },
+        closeInfo : function(){
+            $log("CLOSE CELL");
+            if(this.opened){
+                this.offContent.slideDown(this.offContent.height());
                 this.opened = false;
             }
         },
 
         onPress : function(e){
-            $log("CELL PRESS!");
+//            $log("CELL PRESS!");
             this.startMouseX = e.pageX;
-            this._el.mouseup($.proxy(this.onRelease, this));
         },
 
         onRelease : function(e){
             var xdist = e.pageX - this.startMouseX;
-            $log("CELL RELEASED Xdist:"+xdist);
+//            $log("CELL RELEASED Xdist:"+xdist);
             if(xdist < this.deadzone && xdist > -this.deadzone) this.onClick(null);
 
         },
@@ -280,6 +306,9 @@
             if(item.hasClass('cell-h')) return 'h';
             return '';
         }
+
+
+
     });
 
 

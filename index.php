@@ -128,7 +128,7 @@
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
                                             </div>
                                             <div class="social"></div>
                                         </div>
@@ -136,16 +136,30 @@
                                 </div>
 
 
-                                <!-- QUARTER-SIZED IMAGE w/ NO INFO -->
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
                                 <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_FighterJet_Event.jpg"></a>
                                     </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
+                                            <div class="author" id="12345">
+                                                <a href="people.php?user=12345">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
 
-                                <!-- QUARTER-SIZED IMAGE w/ NO INFO -->
-                                <div class="cell-b cell-box cell-stack-half" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
+                                <div class="cell-c cell-box active" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-c_235x134_Nokia.jpg"></a>
                                     </div>
@@ -167,7 +181,7 @@
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
                                             </div>
                                             <div class="social"></div>
                                         </div>
@@ -175,10 +189,24 @@
                                 </div>
 
 
-                                <!-- QUARTER-SIZED IMAGE w/ NO INFO -->
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
                                 <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Samsung_Dealershow.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
+                                            <div class="author" id="12345">
+                                                <a href="people.php?user=12345">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -197,10 +225,24 @@
                                 </div>
 
 
-                                <!-- QUARTER-SIZED IMAGE w/ NO INFO -->
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
                                 <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
+                                            <div class="author" id="12345">
+                                                <a href="people.php?user=12345">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -227,7 +269,7 @@
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
                                             </div>
                                             <div class="social"></div>
                                         </div>
@@ -239,10 +281,24 @@
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
 
 
-                                <!-- QUARTER-SIZED IMAGE w/ NO INFO -->
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
                                 <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
+                                            <div class="author" id="12345">
+                                                <a href="people.php?user=12345">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -288,10 +344,24 @@
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
 
 
-                                <!-- QUARTER-SIZED IMAGE w/ NO INFO -->
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
                                 <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Porche_Event.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
+                                            <div class="author" id="12345">
+                                                <a href="people.php?user=12345">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
