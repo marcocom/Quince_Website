@@ -154,7 +154,7 @@
                 columnWidth: 240,
                 isAnimated: true
 //                isFitWidth: true
-            });
+            }).masonry('bindResize');
 //            this.grid.bindResize();
             var c = this._grid.masonry('getItemElements');
 
@@ -218,42 +218,66 @@
         _construct : function(el) {
             this._el = $(el);
             this._super(this._el);
-            $log("Mosaic init");
 
             this.loading_items = false;
             this.building = false;
+            this.loading_items=false;
+            this.opened=false;
+
             this.half_width = 235;
             this.full_width = 474; //plus margin space 2x2px
             this.half_height = 134;
             this.full_height = 272;
 
-
-            this.loading_items=false;
+            this.deadzone = 5;
+            this.startMouseX = null;
 
             this.sizeLetter = null;
             this.initContainer();
+
         },
 
         initContainer : function(){
             this.sizeLetter = this.getItemSize(this._el);
             $log("CELL INIT -- SIZE:"+this.sizeLetter);
-            this._el.click($.proxy(this.offClickAction, this));
+//            if(this.sizeLetter == "") this._el.click($.proxy(this.onClick, this));
+
+            if(this.sizeLetter == "a" || this.sizeLetter == "b" ) this._el.mousedown($.proxy(this.onPress, this));
         },
 
-        offClickAction : function(e){
+        onClick : function(e){
             $log("CELL CLICKED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            if(!this.opened){
+                this._el.addClass('activated');
+                this.opened = true;
+            } else {
+                this._el.removeClass('activated');
+                this.opened = false;
+            }
+        },
+
+        onPress : function(e){
+            $log("CELL PRESS!");
+            this.startMouseX = e.pageX;
+            this._el.mouseup($.proxy(this.onRelease, this));
+        },
+
+        onRelease : function(e){
+            var xdist = e.pageX - this.startMouseX;
+            $log("CELL RELEASED Xdist:"+xdist);
+            if(xdist < this.deadzone && xdist > -this.deadzone) this.onClick(null);
 
         },
 
         getItemSize : function(item) {
-            if($(item).hasClass('cell-a')) return 'a';
-            if($(item).hasClass('cell-b')) return 'b';
-            if($(item).hasClass('cell-c')) return 'c';
-            if($(item).hasClass('cell-d')) return 'd';
-            if($(item).hasClass('cell-e')) return 'e';
-            if($(item).hasClass('cell-f')) return 'f';
-            if($(item).hasClass('cell-g')) return 'g';
-            if($(item).hasClass('cell-h')) return 'h';
+            if(item.hasClass('cell-a')) return 'a';
+            if(item.hasClass('cell-b')) return 'b';
+            if(item.hasClass('cell-c')) return 'c';
+            if(item.hasClass('cell-d')) return 'd';
+            if(item.hasClass('cell-e')) return 'e';
+            if(item.hasClass('cell-f')) return 'f';
+            if(item.hasClass('cell-g')) return 'g';
+            if(item.hasClass('cell-h')) return 'h';
             return '';
         }
     });

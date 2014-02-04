@@ -291,7 +291,7 @@
                                 <!-- QUARTER-SIZED IMAGE w/ NO INFO -->
                                 <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
+                                        <a href="#"><img src="img/cells/cell-b_235x134_Porche_Event.jpg"></a>
                                     </div>
                                 </div>
 
