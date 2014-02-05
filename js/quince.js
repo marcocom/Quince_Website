@@ -305,6 +305,14 @@
         }
     });
 
+    Quince.Brand = {
+        brand_blue:              '#0172b4',
+        brand_purple:              '#5d2278',
+        brand_orange:              '#f5a81f',
+        brand_red:              '#da061e',
+        brand_green:              '#009339'
+    };
+    
     Quince.EventManager = new Quince.Event();
     Quince.Event.SHOWPOPUP = 'SHOWPOPUP';
     Quince.Event.RESIZE = 'RESIZE';
@@ -312,7 +320,8 @@
     Quince.Event.DISCLAIMER = "DISCLAIMER";
     Quince.Event.CURRENTPAGE = "CURRENTPAGE";
     Quince.Event.OPEN_CELL = "OPEN_CELL";
-
+    
+    
     this.Quince = Quince;
 
 })(jQuery);
