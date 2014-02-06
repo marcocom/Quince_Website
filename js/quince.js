@@ -25,13 +25,14 @@
             $log("QUINCE:INIT isHandheld:"+this.isHandheldPortrait+" isFireFox:"+this.isFF);
             $(window).resize(this.onResize);
            // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-            $(document).touch
+
 //            Quince.eventManager.addEventHandler(Quince.Event.LOGIN_SUCCESS_FB_USER,this.fbLoggedIn.bind(this));
         },
         onResize: function(){
             this.windowWidth = $(window).width();
             this.windowHeight = $(window).height();
-            $log("RESIZE!  w:"+this.windowWidth+" h:"+this.windowHeight);
+//            $log("RESIZE!  w:"+this.windowWidth+" h:"+this.windowHeight);
+            Quince.EventManager.fireEvent(Quince.Event.RESIZE, this);
         },
         animationHelper: function(target, from, to, options) {
             $(target)
@@ -312,7 +313,10 @@
         brand_red:              '#da061e',
         brand_green:              '#009339'
     };
-    
+
+
+    Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green]
+
     Quince.EventManager = new Quince.Event();
     Quince.Event.SHOWPOPUP = 'SHOWPOPUP';
     Quince.Event.RESIZE = 'RESIZE';
@@ -320,7 +324,10 @@
     Quince.Event.DISCLAIMER = "DISCLAIMER";
     Quince.Event.CURRENTPAGE = "CURRENTPAGE";
     Quince.Event.OPEN_CELL = "OPEN_CELL";
-    
+    Quince.Event.MOSAIC_SCROLL_START = "MOSAIC_SCROLL_START";
+    Quince.Event.MOSAIC_SCROLL_END = "MOSAIC_SCROLL_END";
+    Quince.Event.MOSAIC_FLICK = "MOSAIC_FLICK";
+
     
     this.Quince = Quince;
 

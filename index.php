@@ -307,7 +307,7 @@
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
                                 <div class="cell-e cell-box " data-size="1" id="0005">
                                     <div class="off-state">
-                                        <h3>lorem ipsum.<br>dolor sit.<br>amet consequtor.</h3>
+                                        <h3>Real People,<br>Real Passion,<br>Real Action!</h3>
                                     </div>
                                 </div>
 

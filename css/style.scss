@@ -286,10 +286,11 @@ body{
       height:100%;
       text-align: center;
       li.column {
-        display: block;
+        display: inline-block;
         float: left;
         width: $cell-total-container-width;
         height: 100%;
+        position:absolute;
         //border: $gray-light; //TEMPORARY DEV GUIDES
         color:$gray-light;
         //font-size: 14px;
@@ -427,6 +428,7 @@ body{
         font-style: italic;
         //font-size: 1.5em;
         bottom: 2px;
+        left: 5px;
         position: absolute;
         display: block;
         line-height: 15px;
@@ -449,6 +451,8 @@ body{
         font-style: italic;
         font-weight:200;
         padding:5px;
+        color:#FFF;
+        text-shadow:$textShadow;
       }
     }
   }

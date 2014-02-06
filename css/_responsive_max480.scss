@@ -94,6 +94,11 @@
   }
 }
 
-#slider-container .scroller .mosaic-container li.column{
-  width:1370px;
+#slider-container .scroller{
+  width:10000px;
+  .mosaic-container li.column{
+    width:$cell-total-sm-width;
+    position:absolute;
+    display:inline-block;
+  }
 }
