@@ -70,8 +70,7 @@
 //                } // overlay
 //            });
 
-//            this._el.css('top', '0');
-//            this.toplinks.click($.proxy((!Quince.isFF ? this.toplinkAction : this.toplinkFirefox), this));
+
             this.toplinks.click($.proxy(this.toplinkAnimate, this));
 
         },

@@ -132,7 +132,10 @@
                 added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
                 removed: function(){}           //{NEW} Callback: function(slider) - Fires after a slide is removed
             });
+
             $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
+            Quince.EventManager.fireEvent(Quince.Event.RESIZE, this);
+
 
         },
 
@@ -141,18 +144,23 @@
             var w = $(this._columns[0]).width();
             var totalw = this._columns.length * w;
 
-
-
-
             if(w != this.currentColumnWidth){
-                $log("COLUMN RESIZE ----  columns:"+w);
+
                 $q.Mosaic._slider.refresh();
                 this.currentColumnWidth = w;
 
                 $('#slider-container .scroller').width(totalw);
+
+                if($q.windowWidth < 480){
+                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SM_RESPONSE, this);
+                } else
+                if($q.windowWidth >= 480 && $q.windowWidth < 720){
+                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_MED_RESPONSE, this);
+                } else
+                if($q.windowWidth >= 720){
+                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
+                }
             }
-
-
 //            $log("COLUMN RESIZE ----  w:"+$q.windowWidth+" columns:"+this.currentColumnWidth);
 
         },
@@ -310,17 +318,21 @@
             } else
             if(this.sizeLetter == "e"){
                 this.colorizeCell();
+                this.processAction(this.data('action'));
+
             }
 
             $q.EventManager.addEventHandler($q.Event.OPEN_CELL, this.onCellClick.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_START, this.closeInfo.bind(this));
 
         },
+
+        processAction : function(actionString){
+            $log("ACTION:"+actionString);
+        },
+
         colorizeCell : function(){
             var ind = Math.round(Math.random() * $q.Brand.ALL_COLORS.length);
-
-            var colors = [];
-
             var newcolor = $q.Brand.ALL_COLORS[ind];
             this._el.find('.off-state').css({'background-color':newcolor});
         },

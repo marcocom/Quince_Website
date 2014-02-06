@@ -500,7 +500,7 @@ body { width: 100%; height: 100%; background-color: white; }
 .home-content .nav ul.social li.youtube a:hover { background-position: -134px -29px; }
 .home-content .nav ul.social li.vimeo a { background-position: -168px 0; }
 .home-content .nav ul.social li.vimeo a:hover { background-position: -168px -29px; }
-.home-content .nav ul.refinement { float: right; margin-right: 10px; padding-left: 0; }
+.home-content .nav ul.refinement { float: right; margin-right: 10px; padding-left: 0; display: none; }
 .home-content .nav ul.refinement li.search a { background-position: -349px 0; }
 .home-content .nav ul.refinement li.search a:hover { background-position: -349px -29px; }
 .home-content .nav ul.refinement li.timeline a { background-position: -382px 0; }
@@ -593,22 +593,19 @@ body { width: 100%; height: 100%; background-color: white; }
 
 .visible-xs, tr.visible-xs, th.visible-xs, td.visible-xs { display: none !important; }
 
-@media (max-width: 767px) { .home-content content { height: 60%; top: 27px; }
-  .home-content content .main-logo { width: 33%; margin: 5% auto 0; }
-  .home-content content .main-logo h6 { position: relative; font-size-adjust: 0.3; }
-  .home-content header { position: absolute; right: 10px; }
-  .home-content header li a h5 { font-size: 10px; }
-  .home-content header li a h5:hover { color: #333333; }
-  .home-content nav { width: 100%; display: block; position: absolute; bottom: 25px; }
-  .home-content nav ul { display: block; width: 50%; padding: 0; position: relative; -webkit-padding-start: 0; -webkit-margin-before: 0; -webkit-margin-after: 0; margin: 0 auto; max-width: 220px; }
-  .home-content nav ul:before, .home-content nav ul:after { content: " "; display: table; }
-  .home-content nav ul:after { clear: both; }
-  .home-content nav ul li { display: block; float: left; margin-right: 10px; }
-  .home-content footer h6 { font-size: 8px; }
+@media (max-width: 767px) { .home-content .content .main-logo { top: 15px; }
+  .home-content .content .main-logo #logo { max-width: 520px; height: auto; width: 100px; display: block; position: relative; left: 20px; }
+  .home-content .header { position: absolute; right: 10px; }
+  .home-content .header li a h5 { font-size: 10px; }
+  .home-content .header li a h5:hover { color: #333333; }
+  .home-content .nav { width: 100%; display: block; position: absolute; top: 45px; }
+  .home-content .nav ul li { margin-right: 5px; }
+  .home-content .footer h6 { font-size: 8px; }
   .subcontent .content h1 { right: 5px; top: 2px; font-size-adjust: 0.5; }
   .subcontent .content ul { width: 95%; margin: 20px auto 0; }
   .subcontent .content ul li { min-height: 200px; width: 40%; padding: 5px; margin: 20px 0 0 5px; }
   .subcontent .content ul li h3, .subcontent .content ul li h5 { font-size-adjust: 0.5; }
+  #slider-container .scroller { width: 10000px; }
   #slider-container .scroller .mosaic-container li.column { width: 1682px; position: absolute; display: inline-block; }
   .visible-xs { display: block !important; }
   table.visible-xs { display: table; }
@@ -616,18 +613,12 @@ body { width: 100%; height: 100%; background-color: white; }
   th.visible-xs, td.visible-xs { display: table-cell !important; } }
 .visible-sm, tr.visible-sm, th.visible-sm, td.visible-sm { display: none !important; }
 
-@media (min-width: 768px) and (max-width: 991px) { .home-content content { height: 60%; top: 27px; }
-  .home-content content .main-logo { width: 30%; margin: 5% auto 0; }
-  .home-content content .main-logo h6 { position: relative; font-size-adjust: 0.3; }
-  .home-content header { position: absolute; right: 10px; }
-  .home-content header li a h5 { font-size: 10px; }
-  .home-content nav { width: 100%; display: block; position: absolute; bottom: 25px; }
-  .home-content nav ul { display: block; width: 50%; padding: 0; position: relative; -webkit-padding-start: 0; -webkit-margin-before: 0; -webkit-margin-after: 0; margin: 0 auto; max-width: 220px; }
-  .home-content nav ul:before, .home-content nav ul:after { content: " "; display: table; }
-  .home-content nav ul:after { clear: both; }
-  .home-content nav ul li { display: block; float: left; margin-right: 10px; }
-  .home-content footer h6 { font-size: 8px; }
-  #slider-container .scroller .mosaic-container li.column { width: 992px; }
+@media (min-width: 768px) and (max-width: 991px) { .home-content { width: 100%; height: 100%; display: block; top: 0; -webkit-box-shadow: 0 0 10px rgba(50, 50, 50, 0.25); box-shadow: 0 0 10px rgba(50, 50, 50, 0.25); background-color: white; position: absolute; z-index: 2; }
+  .home-content .header { position: absolute; top: 0px; right: 20px; z-index: 1; }
+  .home-content .header li { display: inline-block; padding-right: 20px; }
+  .home-content .header li a { height: 30px; width: auto; display: inline-block; }
+  .home-content .header li a:hover { cursor: pointer; color: #333333; }
+  #slider-container .scroller .mosaic-container li.column { width: 960px; }
   .visible-sm { display: block !important; }
   table.visible-sm { display: table; }
   tr.visible-sm { display: table-row !important; }

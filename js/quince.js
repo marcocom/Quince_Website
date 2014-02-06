@@ -320,6 +320,9 @@
     Quince.EventManager = new Quince.Event();
     Quince.Event.SHOWPOPUP = 'SHOWPOPUP';
     Quince.Event.RESIZE = 'RESIZE';
+    Quince.Event.RESIZE_SM_RESPONSE = 'RESIZE_SM';
+    Quince.Event.RESIZE_MED_RESPONSE = 'RESIZE_MED';
+    Quince.Event.RESIZE_LRG_RESPONSE = 'RESIZE_LRG';
     Quince.Event.PAGECHANGE = "PAGECHANGE";
     Quince.Event.DISCLAIMER = "DISCLAIMER";
     Quince.Event.CURRENTPAGE = "CURRENTPAGE";

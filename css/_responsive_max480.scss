@@ -8,19 +8,21 @@
   //  position: absolute;
   //}
 
-  content{
-    height:60%;
-    top:27px;
+  .content{
+
     .main-logo{
-      width: 33%;
-      margin:5% auto 0;
-      h6{
-        position: relative;
-        font-size-adjust: 0.3;
+      top:15px;
+      #logo{
+        max-width: 520px;
+        height: auto;
+        width:100px;
+        display:block;
+        position:relative;
+        left:20px;
       }
     }
   }
-  header{
+  .header{
     position: absolute;
     right: 10px;
     li{
@@ -34,31 +36,16 @@
       }
     }
   }
-  nav{
+  .nav{
     width: 100%;
     display: block;
     position: absolute;
-    bottom: 25px;
-    ul{
-      display: block;
-      //margin: 0 auto;
-      @include clearfix();
-      width:50%;
-      padding:0;
-      position:relative;
-      -webkit-padding-start: 0;
-      -webkit-margin-before: 0;
-      -webkit-margin-after: 0;
-      margin: 0 auto;
-      max-width: 220px;
-      li{
-        display:block;
-        float:left;
-        margin-right: 10px;
-      }
+    top: 45px;
+    ul li{
+        margin-right: 5px;
     }
   }
-  footer{
+  .footer{
     h6{
       font-size: 8px;
     }

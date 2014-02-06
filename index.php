@@ -43,43 +43,43 @@
                 <div class="nav">
                     <ul class="social">
                         <li class="facebook">
-                            <a href="http://www.facebook.com/QuinceAmsterdam" target="_blank">
+                            <a href="http://www.facebook.com/QuinceAmsterdam" data-portal="fb"  target="_blank">
                                 <!--                            <img src="img/icon_fb.png">-->
                             </a>
                         </li>
 
                         <li class="twitter">
-                            <a href="http://www.twitter.com/QuinceAmsterdam" target="_blank">
+                            <a href="http://www.twitter.com/QuinceAmsterdam" data-portal="tw"  target="_blank">
                                 <!--                            <img src="img/icon_twit.png">-->
                             </a>
                         </li>
                         <li class="linkedin">
-                            <a href="http://www.linkedin.com/company/quince" target="_blank">
+                            <a href="http://www.linkedin.com/company/quince" data-portal="link"  target="_blank">
                                 <!--                            <img src="img/icon_li.png">-->
                             </a>
                         </li>
                         <li class="pinterest">
-                            <a href="http://www.pinterest.com/QuinceAmsterdam" target="_blank">
+                            <a href="http://www.pinterest.com/QuinceAmsterdam" data-portal="pin"  target="_blank">
                                 <!--                            <img src="img/icon_pin.png">-->
                             </a>
                         </li>
                         <li class="youtube">
-                            <a href="http://www.youtube.com/QuinceAmsterdam" target="_blank">
+                            <a href="http://www.youtube.com/QuinceAmsterdam" data-portal="yt"  target="_blank">
                                 <!--                            <img src="img/icon_yt.png">-->
                             </a>
                         </li>
                         <li class="vimeo">
-                            <a href="http://vimeo.com/user11247254" target="_blank">
+                            <a href="http://vimeo.com/user11247254" data-portal="vim"  target="_blank">
                                 <!--                            <img src="img/icon_vim.png">-->
                             </a>
                         </li>
                         <!--li class="gplus">
-                            <a href="http://plus.google.com/QuinceAmsterdam" target="_blank">
+                            <a href="http://plus.google.com/QuinceAmsterdam" data-portal="gp"  target="_blank">
                                 <img src="img/icon_gp.png">
                             </a>
                         </li-->
                         <!--li class="rss">
-                            <a href="http://rss.quince.nl" target="_blank">
+                            <a href="http://rss.quince.nl" data-portal="rss"  target="_blank">
                                 <img src="img/icon_rss.png">
                             </a>
                         </li-->
@@ -109,12 +109,12 @@
                                 <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(quote) w/ NO INFO -->
                                 <div class="cell-d cell-box " data-row="1" data-col="1" data-sizex="2" data-sizey="1" id="0004">
                                     <div class="off-state">
-                                        <h3>"lorem ipsum dolor sit amet consequtor." <em>-- Some Smart Guy</em></h3>
+                                        <h3>"Impossible is nothing." <em>-- Muhammad Ali</em></h3>
                                     </div>
                                 </div>
 
                                 <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_BlackBerry_flightcase.jpg"></a>
                                     </div>
@@ -137,7 +137,7 @@
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_FighterJet_Event.jpg"></a>
                                     </div>
@@ -159,7 +159,7 @@
 
 
                                 <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
-                                <div class="cell-c cell-box active" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
+                                <div class="cell-c cell-box" data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-c_235x134_Nokia.jpg"></a>
                                     </div>
@@ -167,7 +167,7 @@
 
 
                                 <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_FoxSport.jpg "></a>
                                     </div>
@@ -190,7 +190,7 @@
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Samsung_Dealershow.jpg"></a>
                                     </div>
@@ -212,7 +212,7 @@
 
 
                                 <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-                                <div class="cell-f cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
                                     <div class="off-state flexslider">
                                         <h1>Lorem<br>Ipsum</h1>
                                         <ul class="slides">
@@ -226,7 +226,7 @@
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
                                     </div>
@@ -255,7 +255,7 @@
 
 
                                 <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_HC_Vakantie.jpg"></a>
                                     </div>
@@ -278,11 +278,11 @@
 
 
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
                                     </div>
@@ -305,7 +305,7 @@
 
 
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
-                                <div class="cell-e cell-box " data-size="1" id="0005">
+                                <div class="cell-e cell-box " data-action="none" data-size="1" id="0005">
                                     <div class="off-state">
                                         <h3>Real People,<br>Real Passion,<br>Real Action!</h3>
                                     </div>
@@ -313,7 +313,7 @@
 
 
                                 <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-                                <div class="cell-f cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
                                     <div class="off-state flexslider">
                                         <h1>Lorem<br>Ipsum</h1>
                                         <ul class="slides">
@@ -326,7 +326,7 @@
                                 </div>
 
                                 <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
-                                <div class="cell-h cell-box active"  data-sizex="1" data-sizey="1" id="0008">
+                                <div class="cell-h cell-box"  data-sizex="1" data-sizey="1" id="0008">
                                     <div class="author" id="12345">
                                         <a href="people.php?user=12345">
                                             <h5 class="name">Jonathan Van Der Lorem</h5>
@@ -341,11 +341,11 @@
 
 
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Porche_Event.jpg"></a>
                                     </div>
@@ -373,12 +373,12 @@
                                 <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(quote) w/ NO INFO -->
                                 <div class="cell-d cell-box " data-row="1" data-col="1" data-sizex="2" data-sizey="1" id="0004">
                                     <div class="off-state">
-                                        <h3>"lorem ipsum dolor sit amet consequtor." <em>-- Some Smart Guy</em></h3>
+                                        <h3>"Creativity is contagious, pass it on" <em>-- Albert Einstein</em></h3>
                                     </div>
                                 </div>
 
                                 <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_BlackBerry_flightcase.jpg"></a>
                                     </div>
@@ -401,7 +401,7 @@
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_FighterJet_Event.jpg"></a>
                                     </div>
@@ -423,7 +423,7 @@
 
 
                                 <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
-                                <div class="cell-c cell-box active" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
+                                <div class="cell-c cell-box" data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-c_235x134_Nokia.jpg"></a>
                                     </div>
@@ -431,7 +431,7 @@
 
 
                                 <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_FoxSport.jpg "></a>
                                     </div>
@@ -454,7 +454,7 @@
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Samsung_Dealershow.jpg"></a>
                                     </div>
@@ -476,7 +476,7 @@
 
 
                                 <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-                                <div class="cell-f cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
                                     <div class="off-state flexslider">
                                         <h1>Lorem<br>Ipsum</h1>
                                         <ul class="slides">
@@ -490,7 +490,7 @@
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
                                     </div>
@@ -519,7 +519,7 @@
 
 
                                 <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_HC_Vakantie.jpg"></a>
                                     </div>
@@ -542,11 +542,11 @@
 
 
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
                                     </div>
@@ -577,7 +577,7 @@
 
 
                                 <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-                                <div class="cell-f cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
                                     <div class="off-state flexslider">
                                         <h1>Lorem<br>Ipsum</h1>
                                         <ul class="slides">
@@ -590,7 +590,7 @@
                                 </div>
 
                                 <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
-                                <div class="cell-h cell-box active"  data-sizex="1" data-sizey="1" id="0008">
+                                <div class="cell-h cell-box"  data-sizex="1" data-sizey="1" id="0008">
                                     <div class="author" id="12345">
                                         <a href="people.php?user=12345">
                                             <h5 class="name">Jonathan Van Der Lorem</h5>
@@ -605,11 +605,11 @@
 
 
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-b_235x134_Porche_Event.jpg"></a>
                                     </div>
@@ -632,8 +632,9 @@
                             </li>
 
 
-                            <li class="column">Cell 3</li>
-                            <li class="column">Cell 4</li>
+
+
+
                             <li class="column">Cell 5</li>
                             <li class="column">Cell 6</li>
                         </ul>
@@ -683,7 +684,7 @@
                         <div class="legal-info">
                             <h6>Chamber of commerce: 01-09-863566</h6>
                             <h6>VAT number: 13597986-2-42</h6>
-							<h6>HVB Bank Zrt.; Bankaccount: 
+							<h6>HVB Bank Zrt.; Bankaccount:
 								10918001-00000026-40920003</h6>
                             <h6>IBAN: HU621091800100000026-40920010</h6>
                             <h6>Swift: BACXHUHB</h6>

@@ -213,6 +213,7 @@ body{
         float:right;
         margin-right: 10px;
         padding-left:0;
+        display:none;
         li{
           &.search{
             a{background-position:-349px 0;&:hover{background-position:-349px -29px;}}
