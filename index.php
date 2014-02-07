@@ -30,7 +30,8 @@
         <div class="home-content">
             <div class="header">
                 <ul>
-                    <li><a id="people" href="people.php" target="_blank" ><h5>PEOPLE</h5></a></li>
+<!--                    <li><a id="people" href="people.php" target="_blank" ><h5>PEOPLE</h5></a></li>-->
+                    <li><a class="toplink" id="people" href="#"><h5>PEOPLE</h5></a></li>
                     <li><a class="toplink" id="jobs" href="#"><h5>JOBS</h5></a></li>
                     <li><a class="toplink" id="contact" href="#"><h5>CONTACT US</h5></a></li>
                 </ul>
@@ -569,9 +570,9 @@
 
 
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
-                                <div class="cell-e cell-box " data-size="1" id="0005">
+                                <div class="cell-e cell-box " data-action="jobs" data-size="1" id="0005">
                                     <div class="off-state">
-                                        <h3>lorem ipsum.<br>dolor sit.<br>amet consequtor.</h3>
+                                        <h3>Find out how to join us and how we grow</h3>
                                     </div>
                                 </div>
 
@@ -647,6 +648,7 @@
                 <h6>Copyright 2014 All Rights Reserved</h6>
             </div>
         </div>
+
         <div class="contact-content container subcontent">
             <div class="content">
                 <h1>Contact Information</h1>
@@ -730,6 +732,12 @@
                     <div class="clear"></div>
                 </ul>
             </div>
+        </div>
+
+        <div class="people-content container subcontent">
+
+            <iframe src="people.php" class="content"></iframe>
+
         </div>
 
 

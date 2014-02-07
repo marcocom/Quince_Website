@@ -318,7 +318,8 @@
             } else
             if(this.sizeLetter == "e"){
                 this.colorizeCell();
-                this.processAction(this.data('action'));
+                var a = this._el.data('action')
+                if(a) this.processAction(a);
 
             }
 
@@ -329,12 +330,22 @@
 
         processAction : function(actionString){
             $log("ACTION:"+actionString);
+
+            if(actionString != "none"){
+                this._el.click(function(){
+                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
+                })
+
+            }
+            //if(actionString == "jobs") Quince.Page.Home.toplinkAnimate(null, actionString);
         },
 
         colorizeCell : function(){
             var ind = Math.round(Math.random() * $q.Brand.ALL_COLORS.length);
             var newcolor = $q.Brand.ALL_COLORS[ind];
             this._el.find('.off-state').css({'background-color':newcolor});
+
+
         },
 
         onCellClick : function(e, target){
@@ -349,20 +360,21 @@
         },
 
         openInfo : function(){
-            $log("OPEN CELL");
             if(!this.opened){
                 $q.EventManager.fireEvent($q.Event.OPEN_CELL, this);
+                var t = Math.round(this._el.height() - 20);
 
-                this.offContent.slideUp(this.offContent.height());
+                $log("OPEN CELL this.h:"+t);
+                this.offContent.slideUp();
 
                 this.opened = true;
             }
         },
 
         closeInfo : function(){
-            $log("CLOSE CELL");
             if(this.opened){
-                this.offContent.slideDown(this.offContent.height());
+                $log("CLOSE CELL");
+                this.offContent.slideDown();
                 this.opened = false;
             }
         },

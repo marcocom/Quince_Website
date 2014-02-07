@@ -41,9 +41,14 @@
     display: block;
     position: absolute;
     top: 45px;
-    ul li{
-        margin-right: 5px;
+    ul.refinement, ul.social{
+      padding-left: 150px;
+      float:left;
+      li{
+          margin-right: 5px;
+      }
     }
+    ul.refinement{padding-top:5px}
   }
   .footer{
     h6{
@@ -59,7 +64,7 @@
     h1{
       right:5px;
       top:2px;
-      font-size-adjust:0.5;
+      font-size:70%;
     }
 
     ul{
@@ -68,12 +73,14 @@
       li{
         //float:left;
         min-height:200px;
-        width: 40%;
+        width: 47%;
         padding:5px;
         margin: 20px 0 0 5px;
-        h3,h5{
-          font-size-adjust:0.5;
-
+        h4,h5, h3{
+          font-size:80%;
+        }
+        h3{
+          min-height:30px;
         }
 
       }
@@ -87,5 +94,16 @@
     width:$cell-total-sm-width;
     position:absolute;
     display:inline-block;
+  }
+}
+
+.flex-control-paging li a {
+  width: 11px;
+  height: 11px;
+}
+
+.flex-control-nav {
+  li {
+    margin: 0 6px;
   }
 }

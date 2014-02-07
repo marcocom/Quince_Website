@@ -114,8 +114,8 @@ function initializeProfiles() {
            	$insertAfter.after($profileInfoDiv);
 			
 			$profileInfoDiv.animate({
-                height: '17.5em'
-            }, 150,function(){		
+                height: '180px'
+            }, 500,function(){
 				$profileInfoDiv.animate({
 	                opacity: '1'
     	        }, 400);			

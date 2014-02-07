@@ -227,7 +227,7 @@ html[xmlns] .slides {
   right:20px;
   text-align: center;
   li {
-    margin: 0 6px;
+    margin: 0 3px;
     display: inline-block;
     zoom: 1;
     *display: inline;
@@ -235,8 +235,8 @@ html[xmlns] .slides {
 }
 
 .flex-control-paging li a {
-  width: 11px;
-  height: 11px;
+  width: 6px;
+  height: 6px;
   display: block;
   background: #FFF;
   background: rgba(255, 255, 255, 0.5);
@@ -251,12 +251,13 @@ html[xmlns] .slides {
   -moz-box-shadow:  0 0 3px rgba(0, 0, 0, 0.5);
   -o-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  z-index:30;
   &:hover {
     background: #333;
     background: rgba(0, 0, 0, 0.7);
   }
   &.flex-active {
-    background: $brand-blue;
+    background: white;
     //background: rgba(0, 0, 0, 0.9);
     cursor: default;
   }

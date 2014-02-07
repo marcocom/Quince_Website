@@ -73,7 +73,15 @@
 
             this.toplinks.click($.proxy(this.toplinkAnimate, this));
 
+            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
+
         },
+
+        catchPageChange : function(e, props){
+            $log("PAGECHANGE e:"+e+" props:"+props);
+            this.toplinkAnimate(null,props);
+        },
+
         onOpenTransitionEnd : function(){
 
                 this.subcontentOpened = true;
@@ -113,11 +121,11 @@
             this._el.unbind('tap click swipe focus');
 //            this._el.touch(null);
         },
-        toplinkAnimate : function(e){
-            e.preventDefault();
+        toplinkAnimate : function(e, remoteLink){
+            if(e) e.preventDefault();
 
-            var c = $(e.currentTarget)[0];
-            var ref = "."+c.id + "-content";
+            var c = e ? $(e.currentTarget)[0] : null;
+            var ref = "."+( remoteLink ? remoteLink : c.id) + "-content";
             var $content = $(ref);
             var _this = this;
             if(this.subcontentOpened == false){
@@ -127,6 +135,9 @@
 
                 var t = $content.find('.content')[0];
                 var targetHeight = $(t).height() + ($('body').hasClass('ipad-iphone') ? 10 : 40);
+                var maxHeight = $q.windowHeight - 30;
+
+                if(targetHeight > maxHeight) targetHeight = maxHeight;
 
                 $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:", this.currentContent);
 

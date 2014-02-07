@@ -7,7 +7,7 @@ $contact-section-background-color: #fff;
 $footer-background-color: $link-color-active;
 
 
-@import "reset.scss";
-@import "generic.scss";
+@import "../normalize";
+@import "generic";
 //@import "nav.scss";
-@import "sections.scss";
+@import "sections";
