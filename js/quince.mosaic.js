@@ -49,7 +49,7 @@
 
         initContainer : function(){
 
-            $q.Mosaic._slider = new IScroll('#slider-container', { scrollX: true, scrollY: false, mouseWheel: true});
+            $q.Mosaic._slider = new IScroll('#slider-container', { scrollX: true, scrollY: false, mouseWheel: true, click:true});
 
 //            $q.Mosaic._slider.scrollBy(-$q.windowWidth, 0, 2500);
 
@@ -58,9 +58,18 @@
             $q.Mosaic._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
             $q.Mosaic._slider.on('flick', $.proxy(this.onFlick, this));
 
+            $log("DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
+//
+//            var tmpl_to_html = function(id) {
+//                var $el = $('#' + id);
+//                return _.template($el.html(), { });
+//            };
+//            var $e = $(tmpl_to_html('template'));
+
+
 
             var c = this._mosaic.find('.column');
             this._columns = $(c);
@@ -69,7 +78,136 @@
                var mc = new $q.Mosaic.ParentColumn(this);
             });
 
-            $('.flexslider').flexslider({
+
+
+            $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
+            Quince.EventManager.fireEvent(Quince.Event.RESIZE, this);
+
+
+            $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
+
+
+        },
+
+
+        onResize : function(){
+
+            var w = $(this._columns[0]).width();
+            var totalw = this._columns.length * w;
+
+            if(w != this.currentColumnWidth){
+
+                $q.Mosaic._slider.refresh();
+                this.currentColumnWidth = w;
+
+                $('#slider-container .scroller').width(totalw);
+
+                if($q.windowWidth < 480){
+                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SM_RESPONSE, this);
+                } else
+                if($q.windowWidth >= 480 && $q.windowWidth < 720){
+                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_MED_RESPONSE, this);
+                } else
+                if($q.windowWidth >= 720){
+                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
+                }
+            }
+//            $log("COLUMN RESIZE ----  w:"+$q.windowWidth+" columns:"+this.currentColumnWidth);
+
+        },
+
+        onScrollStart : function(e){
+            $log("SCROLL START----------------");
+            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_START, this);
+        },
+
+        onScrollCancel : function(e){
+            $log("SCROLL CANCEL----------------");
+        },
+
+        onScrollEnd : function(e){
+            $log("SCROLL END----------------");
+            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this);
+        },
+
+        onFlick : function(e){
+            $log("FLICK----------------");
+            $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
+        },
+
+        playbackVideo : function(e, url){
+            $log("VIDEO PLAYER----------   src:"+url);
+
+            $.fancybox({
+
+                'padding': 0,
+                'autoScale'     : false,
+                'transitionIn'  : 'none',
+                'transitionOut' : 'none',
+                'title'         : "",
+                'autoPlay'      : true,
+                'hideOnOverlayClick' : true,
+                'width'         : 1280,
+                'height'        : 720,
+//                    'href'          : "http://player.vimeo.com/video/82283832", //HD
+                'href'          : url, //SD
+//                    'href'          : "http://vimeo.com/moogaloop.swf?clip_id=82283832",
+                'type'          : 'iframe',
+                'swf'           : {
+                    'wmode'             : 'transparent',
+                    'allowfullscreen'   : 'false'
+
+                },
+                overlay: {
+                    opacity: 0.1, // or the opacity you want
+                    css: {'background-color': '#000000'} // or your preferred hex color value
+                } // overlay
+            });
+        }
+    });
+
+    $q.Mosaic.ParentColumn = $q.Mosaic.extend({
+        _construct : function(el) {
+            this._el = $(el);
+            this._super(this._el);
+            $log("Mosaic init");
+            this._grid = null;
+            this.currentCellOpened = null;
+            this._cells = new Array();
+            this.loading_items = false;
+            this.building = false;
+            this.strict=false;
+            this.overlay=false;
+            this.building=false
+            this.scroll=false;
+            this.filter=false;
+            this.grid_full=false;
+            this.loading_items=false;
+
+            this.initContainer();
+        },
+
+        initContainer : function(){
+            var _this = this;
+            this._grid = this._el.masonry({
+                itemSelector: '.cell-box',
+                columnWidth: 240,
+                isAnimated: true
+            }).masonry('bindResize');
+//            this.grid.bindResize();
+
+            var c = this._grid.masonry('getItemElements');
+
+
+            //var c = this._grid.children;
+
+            $(c).each(function(e){
+                var mc = new $q.Mosaic.Cell(this, _this._grid);
+                _this._cells.push(mc);
+            });
+
+            var fs = this._el.find('.flexslider');
+            $(fs).flexslider({
                 namespace: "flex-",             //{NEW} String: Prefix string attached to the class of every element generated by the plugin
                 selector: ".slides > li",       //{NEW} Selector: Must match a simple pattern. '{container} > {slide}' -- Ignore pattern at your own peril
                 animation: "fade",              //String: Select your animation type, "fade" or "slide"
@@ -82,7 +220,7 @@
                 slideshow: true,                //Boolean: Animate slider automatically
                 slideshowSpeed: 4000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
                 animationSpeed: 500,            //Integer: Set the speed of animations, in milliseconds
-                initDelay: 0,                   //{NEW} Integer: Set an initialization delay, in milliseconds
+                initDelay: (Math.random * 5000),                   //{NEW} Integer: Set an initialization delay, in milliseconds
                 randomize: false,               //Boolean: Randomize slide order
 
 // Usability features
@@ -133,97 +271,6 @@
                 removed: function(){}           //{NEW} Callback: function(slider) - Fires after a slide is removed
             });
 
-            $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
-            Quince.EventManager.fireEvent(Quince.Event.RESIZE, this);
-
-
-        },
-
-        onResize : function(){
-
-            var w = $(this._columns[0]).width();
-            var totalw = this._columns.length * w;
-
-            if(w != this.currentColumnWidth){
-
-                $q.Mosaic._slider.refresh();
-                this.currentColumnWidth = w;
-
-                $('#slider-container .scroller').width(totalw);
-
-                if($q.windowWidth < 480){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SM_RESPONSE, this);
-                } else
-                if($q.windowWidth >= 480 && $q.windowWidth < 720){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_MED_RESPONSE, this);
-                } else
-                if($q.windowWidth >= 720){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
-                }
-            }
-//            $log("COLUMN RESIZE ----  w:"+$q.windowWidth+" columns:"+this.currentColumnWidth);
-
-        },
-
-        onScrollStart : function(e){
-            $log("SCROLL START----------------");
-            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_START, this);
-        },
-
-        onScrollCancel : function(e){
-            $log("SCROLL CANCEL----------------");
-        },
-
-        onScrollEnd : function(e){
-            $log("SCROLL END----------------");
-            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this);
-        },
-
-        onFlick : function(e){
-            $log("FLICK----------------");
-            $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
-        }
-    });
-
-    $q.Mosaic.ParentColumn = $q.Mosaic.extend({
-        _construct : function(el) {
-            this._el = $(el);
-            this._super(this._el);
-            $log("Mosaic init");
-            this._grid = null;
-            this.currentCellOpened = null;
-            this._cells = new Array();
-            this.loading_items = false;
-            this.building = false;
-            this.strict=false;
-            this.overlay=false;
-            this.building=false
-            this.scroll=false;
-            this.filter=false;
-            this.grid_full=false;
-            this.loading_items=false;
-
-            this.initContainer();
-        },
-
-        initContainer : function(){
-            var _this = this;
-            this._grid = this._el.masonry({
-                itemSelector: '.cell-box',
-                columnWidth: 240,
-                isAnimated: true
-            }).masonry('bindResize');
-//            this.grid.bindResize();
-
-            var c = this._grid.masonry('getItemElements');
-
-            //var c = this._grid.children;
-
-            $(c).each(function(e){
-                var mc = new $q.Mosaic.Cell(this, _this._grid);
-                _this._cells.push(mc);
-            });
-
             $log("INIT PARENT-COLUMN cells:"+ this._cells.length);
 //            this._el.on( 'click', '.off-state', function( event ) {
 //                var $this = $(this);
@@ -268,9 +315,12 @@
             $q.EventManager.addEventHandler($q.Event.RESIZE, this.onResize.bind(this));
         },
 
+
+
         onResize : function(){
 
         }
+
 
 
     });
@@ -296,6 +346,7 @@
             this.offContent = null;
             this.onContent = null;
             this.sizeLetter = null;
+
             this.initContainer();
 
             return this.closeInfo;
@@ -313,14 +364,31 @@
             this.onContent = n.length > 0 ? $(f) : null;
 
             if(this.sizeLetter == "a" || this.sizeLetter == "b" ){
-                this._el.mousedown($.proxy(this.onPress, this));
-                this._el.mouseup($.proxy(this.onRelease, this));
+
+                if($q.msGesture){
+                    this._el.on('MSPointerDown', $.proxy(this.onMsPress, this));
+                    this._el.on('MSGestureEnd', $.proxy(this.onMsRelease, this));
+                } else {
+                    this._el.hammer().on('touch', $.proxy(this.onPress, this));
+                    //                this._el.on('mousedown', $.proxy(this.onPress, this));
+                    //                this._el.mousedown($.proxy(this.onPress, this));
+
+                    this._el.hammer().on('release', $.proxy(this.onRelease, this));
+                    //                this._el.on('mouseup, tap', $.proxy(this.onRelease, this));
+                    //                this._el.mouseup($.proxy(this.onRelease, this));
+
+                }
             } else
             if(this.sizeLetter == "e"){
                 this.colorizeCell();
                 var a = this._el.data('action')
-                if(a) this.processAction(a);
+                if(a) this.processPageAction(a);
 
+            } else
+            if(this.sizeLetter == "j"){
+                var b = this._el.data('portal');
+
+                if(b) this.processVideoAction(b);
             }
 
             $q.EventManager.addEventHandler($q.Event.OPEN_CELL, this.onCellClick.bind(this));
@@ -328,20 +396,43 @@
 
         },
 
-        processAction : function(actionString){
+        processVideoAction : function(portal){
+
+            var num = this._el.data('ref');
+            $log("VIDEO ACTION -portal:"+portal+" num:"+num);
+
+            var url = "http://";
+            if(portal == "vim") url += "player.vimeo.com/video/";
+            if(portal == "yt") url += "youtube.com/?";
+
+            if(num){
+                url += num;
+            } else {
+                url = "http://vimeo.com/quinceamsterdam";
+            }
+
+            this._el.click(function(e){
+                e.preventDefault();
+                $log("TEST CLICK");
+                $q.EventManager.fireEvent($q.Event.MOSAIC_VIDEO, this, url);
+            });
+        },
+
+        processPageAction : function(actionString){
             $log("ACTION:"+actionString);
 
             if(actionString != "none"){
-                this._el.click(function(){
+                this._el.click(function(e){
+                    e.preventDefault();
                     $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
                 })
-
+                this._el.css({'cursor':'pointer'});
             }
-            //if(actionString == "jobs") Quince.Page.Home.toplinkAnimate(null, actionString);
         },
 
         colorizeCell : function(){
-            var ind = Math.round(Math.random() * $q.Brand.ALL_COLORS.length);
+            var ind = Math.floor(Math.random() * $q.Brand.ALL_COLORS.length);
+            $log("COLORIZE CELL index:"+ind);
             var newcolor = $q.Brand.ALL_COLORS[ind];
             this._el.find('.off-state').css({'background-color':newcolor});
 
@@ -380,11 +471,40 @@
         },
 
         onPress : function(e){
+            $log("CELL PRESS!");
+//            console.dir(e);
+            e.preventDefault();
+//            e.stopImmediatePropagation();
+            e.stopPropagation();
+//            $log("CELL PRESS!");
+            this.startMouseX = e.gesture.center.pageX;
+        },
+
+        onRelease : function(e){
+            $log("CELL RELEASE!");
+            e.preventDefault();
+//            e.stopImmediatePropagation();
+            e.stopPropagation();
+            var xdist = e.gesture.center.pageX - this.startMouseX;
+//            $log("CELL RELEASED Xdist:"+xdist);
+            if(xdist < this.deadzone && xdist > -this.deadzone) this.onClick(null);
+
+        },
+        onMsPress : function(e){
+            $log("CELL PRESS!");
+//            console.dir(e);
+            e.preventDefault();
+//            e.stopImmediatePropagation();
+            e.stopPropagation();
 //            $log("CELL PRESS!");
             this.startMouseX = e.pageX;
         },
 
-        onRelease : function(e){
+        onMsRelease : function(e){
+            $log("CELL RELEASE!");
+            e.preventDefault();
+//            e.stopImmediatePropagation();
+            e.stopPropagation();
             var xdist = e.pageX - this.startMouseX;
 //            $log("CELL RELEASED Xdist:"+xdist);
             if(xdist < this.deadzone && xdist > -this.deadzone) this.onClick(null);
@@ -400,12 +520,15 @@
             if(item.hasClass('cell-f')) return 'f';
             if(item.hasClass('cell-g')) return 'g';
             if(item.hasClass('cell-h')) return 'h';
+            if(item.hasClass('cell-i')) return 'i';
+            if(item.hasClass('cell-j')) return 'j';
             return '';
         }
 
 
 
     });
+
 
 
 

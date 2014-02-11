@@ -105,7 +105,8 @@ body{
     z-index: 1;
     li{
       display:inline-block;
-      padding-right: 20px;
+
+      margin:0 20px 0 0;
       a{
         height:30px;
         width:auto;
@@ -334,7 +335,50 @@ body{
       display:inline-block;
       width:100%;
       height:100%;
+      padding: 0px 5px;
       background:#FFFFFF;
+        .title{
+          font-weight:800;
+          font-size: 1.2em;
+          margin:10px 0 0 0;
+          color:$gray-dark;
+        }
+        .author{
+          a{
+            @include author-information();
+          }
+        }
+        .article{
+          //background: transparent url(img/cell-horiz-div.png) no-repeat 0 0;
+          padding-top: 1px;
+          margin-top: 4px;
+
+          p{
+            font-weight:200;
+            color:$gray-darker;
+          }
+          a{
+            color:$brand-blue;
+          }
+        }
+        .social{
+
+        }
+        .cta-text{
+          font-weight:600;
+          color:$brand-blue;
+          //padding:5px 5px 0 5px;
+          padding: 0;
+          position: absolute;
+          display: block;
+          bottom: 0;
+          //left: 5px;
+
+          &:hover{
+            color:darken($brand-blue, .50);
+          }
+        }
+
     }
     &.activated{
       border:none;
@@ -351,30 +395,6 @@ body{
 
     }
     .on-state{
-      .content{
-        padding: 0px 5px;
-        .title{
-          font-weight:800;
-          font-size: 2em;
-        }
-        .author{
-          a{
-            @include author-information();
-          }
-        }
-        .article{
-          p{
-            font-weight:200;
-            color:$gray-darker;
-          }
-          a{
-            color:$brand-blue;
-          }
-        }
-        .social{
-
-        }
-      }
     }
   }
   .cell-b{ // QUARTER-SIZED IMAGE w/ INFO CLICKTHRU -->
@@ -382,40 +402,16 @@ body{
     height:$cell-half-height;
     .on-state{
       .content{
-        padding: 0px 5px;
-        .title{
-          font-weight:800;
-        }
-        .author{
-          a{
-            @include author-information();
-          }
-        }
-        .article{
-          p{
-            font-weight:200;
-            color:$gray-darker;
-          }
-          a{
-            color:$brand-blue;
-          }
-        }
-        .cta-text{
-          font-weight:600;
-          color:$brand-blue;
-          padding:5px 5px 0 5px;
-          &:hover{
-            color:darken($brand-blue, .50);
-          }
-        }
+
       }
     }
   }
   .cell-c{ // QUARTER-SIZED LOGO w/ NO INFO
     width:$cell-half-width;
     height:$cell-half-height;
-    .off-state{ //button for this unit. will act as 'refine-by-client' functionality later
-
+    cursor:inherit;
+    .off-state a{ //button for this unit. will act as 'refine-by-client' functionality later
+      cursor:default;
     }
   }
   .cell-d{ // HALF-HEIGHT/DOUBLE-WIDTH TEXT (quotes) w/ NO CLICKTHRU
@@ -445,7 +441,7 @@ body{
   .cell-e{ //COLORED QUARTER-SIZED TEXT w/ NO CLICKTHRU
     width:$cell-half-width;
     height:$cell-half-height;
-
+    cursor:inherit;
     .off-state{
       h3{
         line-height:1em;
@@ -454,7 +450,8 @@ body{
         padding:5px;
         color:#FFF;
         text-shadow:$textShadow;
-
+        @include font-smoothing(on);
+        cursor:inherit;
       }
     }
   }
@@ -478,7 +475,7 @@ body{
         text-shadow:$textShadow;
       }
       .flex-control-nav{
-        z-index:21;
+        z-index:221;
         position:absolute;
         right:5px;
         top:5px;
@@ -498,26 +495,8 @@ body{
     height:$cell-half-height;
     background:none;
     border:none;
-    .author{
-      padding:5px 5px 0 5px;
-      a{
-        @include author-information();
-      }
-    }
-    .article{
-      padding:5px 5px 0 5px;
-      p{
-        font-weight:200;
-        color:$gray-darker;
-      }
-    }
-    .cta-text{
-      font-weight:600;
-      color:$brand-blue;
-      padding:5px 5px 0 5px;
-      &:hover{
-        color:darken($brand-blue, .50);
-      }
+    .on-state{
+      display:block;
     }
   }
   .cell-i{ // EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
@@ -525,6 +504,21 @@ body{
     height:$cell-half-height;
     background:none;
     border:none;
+  }
+
+  .cell-j{ // <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+    width:$cell-half-width;
+    height:$cell-half-height;
+    cursor:pointer;
+    .off-state{
+      .playbut, thumb{
+        width:100%;
+        height:auto;
+        display:block;
+        position:absolute;
+      }
+
+    }
   }
 
 }
@@ -559,6 +553,7 @@ body{
       width:50%;
       line-height:1em;
       text-align:right;
+      @include font-smoothing(on);
     }
 
     ul{
@@ -650,7 +645,7 @@ body{
 
 .people-content{
   width:100%;
-  height:1200px;
+  height:1400px;
   .content{
     width:100%;
     height:100%;

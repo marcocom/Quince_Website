@@ -139,7 +139,7 @@
 
                 if(targetHeight > maxHeight) targetHeight = maxHeight;
 
-                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:", this.currentContent);
+                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
 
                 this.setScrollable(false);
                 this.currentContent = $content;
@@ -153,8 +153,14 @@
                 });
             }
             else {
-                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:", this.currentContent);
-                if(this.currentContent !== $content) this.contentSwap = c;
+                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
+                $log("NEW CONTENT:"+$content.selector);
+                if(this.currentContent.selector != $content.selector){
+                    this.contentSwap = c;
+                    $log("CONTENTSWAP REASSIGNED-------")
+                } else {
+                    this.contentSwap = null;
+                }
 
                 this._el.animate({
                     top:'0'

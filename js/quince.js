@@ -11,6 +11,8 @@
         isIE : ($('html').is('.ie9, .ie8')), //("v" == "\v"),
         isFF : navigator.userAgent.indexOf('Firefox') > 0,
         isHandheldPortrait : $('body').width() < 450 && $('body').height() > $('body').width(),
+        msGesture : window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
+        isTouch : (( "ontouchstart" in window ) || this.msGesture || window.DocumentTouch && document instanceof DocumentTouch),
         googleAccount:"UA-1007198-3",
         _popups : {},
 
@@ -82,7 +84,21 @@
                 this._popups[name] = popup;
             }
             return popup;
+        },
+
+        loadTemplate : function(id){
+            var $el = $('#' + id);
+            return _.template($el.html(), { });
+        },
+        nano : function(template, data) {
+            return template.replace(/\{([\w\.]*)\}/g, function(str, key) {
+                var keys = key.split("."), v = data[keys.shift()];
+                for (var i = 0, l = keys.length; i < l; i++) v = v[keys[i]];
+                return (typeof v !== "undefined" && v !== null) ? v : "";
+            });
         }
+
+
 
     };
 
@@ -330,6 +346,7 @@
     Quince.Event.MOSAIC_SCROLL_START = "MOSAIC_SCROLL_START";
     Quince.Event.MOSAIC_SCROLL_END = "MOSAIC_SCROLL_END";
     Quince.Event.MOSAIC_FLICK = "MOSAIC_FLICK";
+    Quince.Event.MOSAIC_VIDEO = "MOSAIC_VIDEO";
 
     
     this.Quince = Quince;

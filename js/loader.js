@@ -4,7 +4,11 @@
     var jsFiles = [ // files to be conditionally included
         'lib/iscroll.js',
         'lib/jquery.flexslider.js',
+        'lib/jquery.fancybox.js',
+        'lib/hammer.js',
+        'lib/jquery.hammer.js',
         'lib/masonry.js',
+        'lib/underscore.js',
         'jquery.ext.js',
         'helper.js',
         'quince.js',

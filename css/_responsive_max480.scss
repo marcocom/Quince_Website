@@ -11,14 +11,14 @@
   .content{
 
     .main-logo{
-      top:15px;
+      top:10px;
       #logo{
         max-width: 520px;
         height: auto;
-        width:100px;
+        width:90px;
         display:block;
         position:relative;
-        left:20px;
+        left:10px;
       }
     }
   }
@@ -26,6 +26,7 @@
     position: absolute;
     right: 10px;
     li{
+      margin:0 0 0 5px;
       a{
         h5{
           font-size: 10px;
@@ -40,15 +41,19 @@
     width: 100%;
     display: block;
     position: absolute;
-    top: 45px;
+    top: 27px;
     ul.refinement, ul.social{
-      padding-left: 150px;
-      float:left;
+      float: right;
+      margin-right: 5px;
+      padding-left: 0;
       li{
           margin-right: 5px;
       }
     }
-    ul.refinement{padding-top:5px}
+    ul.refinement{
+      padding-top:4px;
+      clear: right;
+    }
   }
   .footer{
     h6{
@@ -88,12 +93,15 @@
   }
 }
 
-#slider-container .scroller{
-  width:10000px;
-  .mosaic-container li.column{
-    width:$cell-total-sm-width;
-    position:absolute;
-    display:inline-block;
+#slider-container{
+  top:100px;
+  .scroller{
+    width:10000px;
+    .mosaic-container li.column{
+      width:$cell-total-sm-width;
+      position:absolute;
+      display:inline-block;
+    }
   }
 }
 
@@ -105,5 +113,16 @@
 .flex-control-nav {
   li {
     margin: 0 6px;
+  }
+}
+
+.people-content{
+  width:100%;
+  height:1400px;
+  .content{
+    width:100%;
+    height:100%;
+    margin:0 auto;
+    display:block;
   }
 }

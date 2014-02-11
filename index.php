@@ -6,8 +6,13 @@
         <title>Quince</title>
         <meta name="keywords" content="amsterdam, holland, quince, quince technologies, quince amsterdam bv, dutch creative, holland prin, online offline, web, web design, website design, graphic design, web engineering, website engineering, java, web consulting, web application, web development, web application development, e-commerce, interactive web, streaming video, interactive display unit, dcms, qrs content management system, content management, 3d development, web consulting, lamp, open source">
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0, target-densitydpi=device-dpi">-->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta http-equiv="cleartype" content="on">
+        <meta name="HandheldFriendly" content="True">
 
 <!--        <link href='http://fonts.googleapis.com/css?family=Exo+2:400,700' rel='stylesheet' type='text/css'>-->
         <script type="text/javascript" src="//use.typekit.net/lef7vlr.js"></script>
@@ -23,7 +28,7 @@
             })();
         </script>
 
-        <script type="text/javascript" src="js/lib/modernizr.js"></script>
+        <script type="text/javascript" src="js/lib/modernizr.custom.min.js"></script>
         <link rel="stylesheet" href="css/base.css">
     </head>
     <body>
@@ -31,7 +36,7 @@
             <div class="header">
                 <ul>
 <!--                    <li><a id="people" href="people.php" target="_blank" ><h5>PEOPLE</h5></a></li>-->
-                    <li><a class="toplink" id="people" href="#"><h5>PEOPLE</h5></a></li>
+                    <li><a class="toplink hidden-xs" id="people" href="#"><h5>PEOPLE</h5></a></li>
                     <li><a class="toplink" id="jobs" href="#"><h5>JOBS</h5></a></li>
                     <li><a class="toplink" id="contact" href="#"><h5>CONTACT US</h5></a></li>
                 </ul>
@@ -70,7 +75,7 @@
                             </a>
                         </li>
                         <li class="vimeo">
-                            <a href="http://vimeo.com/user11247254" data-portal="vim"  target="_blank">
+                            <a href="http://vimeo.com/quinceamsterdam " data-portal="vim"  target="_blank">
                                 <!--                            <img src="img/icon_vim.png">-->
                             </a>
                         </li>
@@ -114,342 +119,55 @@
                                     </div>
                                 </div>
 
-                                <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-a_235x272_BlackBerry_flightcase.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h3 class="title">Lorem Ipsum Dolor Sit Amet</h3>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                            <div class="social"></div>
-                                        </div>
-                                    </div>
-                                </div>
 
-
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_FighterJet_Event.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
-                                <div class="cell-c cell-box" data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-c_235x134_Nokia.jpg"></a>
-                                    </div>
-                                </div>
-
-
-                                <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
                                 <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_FoxSport.jpg "></a>
                                     </div>
                                     <div class="on-state">
                                         <div class="content">
-                                            <h3 class="title">Lorem Ipsum Dolor Sit Amet</h3>
+                                            <h3 class="title">Fox Top Scorers</h3>
                                             <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                <a href="#">
+                                                    <h5 class="name">David Pepperkamp</h5>
                                                     <h5 class="jobtitle">Creative Technologist<em></em></h5>
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>Fox Sports required a multi-media campaign of print posters and website for their Top-Scorers program.</h5>
                                             </div>
                                             <div class="social"></div>
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Samsung_Dealershow.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
-                                    <div class="off-state flexslider">
-                                        <h1>Lorem<br>Ipsum</h1>
-                                        <ul class="slides">
-                                            <li><img src="img/cells/cell-f_474x272_Helden-van-Hi.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_NederlandSchoon_Kenniswijzer.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_Tmobile_Galaxy.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_HTC_Avatar.jpg"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                            </li>
-
-                            <li class="column">
-
-
-
-                                <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-a_235x272_HC_Vakantie.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h3 class="title">Lorem Ipsum Dolor Sit Amet</h3>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                            <div class="social"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
-
-
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
 
 
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
-                                <div class="cell-e cell-box " data-action="none" data-size="1" id="0005">
+                                <div class="cell-e cell-box" data-sizex="1" data-sizey="1" id="0005">
                                     <div class="off-state">
                                         <h3>Real People,<br>Real Passion,<br>Real Action!</h3>
                                     </div>
                                 </div>
 
 
-                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
-                                    <div class="off-state flexslider">
-                                        <h1>Lorem<br>Ipsum</h1>
-                                        <ul class="slides">
-                                            <li><img src="img/cells/cell-f_474x272_BandenSpecialist.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_Copaco_event.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_Ctouch_Stand.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_HC_3D.jpg"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
-                                <div class="cell-h cell-box"  data-sizex="1" data-sizey="1" id="0008">
-                                    <div class="author" id="12345">
-                                        <a href="people.php?user=12345">
-                                            <h5 class="name">Jonathan Van Der Lorem</h5>
-                                            <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                        </a>
-                                    </div>
-                                    <div class="article">
-                                        <h5><p>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></h5>
-                                    </div>
-                                    <a class="cta-text" href="#SOCIAL-ORIGIN" >read more &gt;&gt;</a>
-                                </div>
-
-
-                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
-
-
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Porche_Event.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-<li class="column">
-
-
-
-                                <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(quote) w/ NO INFO -->
-                                <div class="cell-d cell-box " data-row="1" data-col="1" data-sizex="2" data-sizey="1" id="0004">
-                                    <div class="off-state">
-                                        <h3>"Creativity is contagious, pass it on" <em>-- Albert Einstein</em></h3>
-                                    </div>
-                                </div>
-
-                                <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-a_235x272_BlackBerry_flightcase.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h3 class="title">Lorem Ipsum Dolor Sit Amet</h3>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                            <div class="social"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_FighterJet_Event.jpg"></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                                 <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
                                 <div class="cell-c cell-box" data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
                                     <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-c_235x134_Nokia.jpg"></a>
+                                        <a href="#"><img src="img/cells/cell-c_235x134_Philips.jpg"></a>
                                     </div>
                                 </div>
 
-
-                                <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
-                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
-                                    <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-a_235x272_FoxSport.jpg "></a>
-                                    </div>
-                                    <div class="on-state">
-                                        <div class="content">
-                                            <h3 class="title">Lorem Ipsum Dolor Sit Amet</h3>
-                                            <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                                </a>
-                                            </div>
-                                            <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
-                                            </div>
-                                            <div class="social"></div>
-                                        </div>
+                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                    <div class="off-state flexslider">
+                                        <!--                                        <h1>Lorem<br>Ipsum</h1>-->
+                                        <ul class="slides">
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0013_samsung_display-1.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0012_samsung_display-2.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0011_samsung_display-3.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0010_samsung_display-4.jpg"></li>
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -461,52 +179,39 @@
                                     </div>
                                     <div class="on-state">
                                         <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
+                                            <h5 class="title">Samsung 'Convergence'</h5>
                                             <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                <a href="#">
+                                                    <h5 class="name">Robin Kooiker</h5>
+                                                    <h5 class="jobtitle">Graphics/3D Designer<em></em></h5>
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>New proposed look and feel for Samsung Retail. <a href="#">&#35;Quince</a><a href="#">&#64;RobinKookier</a></h5>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
-                                    <div class="off-state flexslider">
-                                        <h1>Lorem<br>Ipsum</h1>
-                                        <ul class="slides">
-                                            <li><img src="img/cells/cell-f_474x272_Helden-van-Hi.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_NederlandSchoon_Kenniswijzer.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_Tmobile_Galaxy.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_HTC_Avatar.jpg"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="85926446" data-sizex="1" data-sizey="1" id="0009">
                                     <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_0_82293470.jpg">
                                     </div>
                                     <div class="on-state">
                                         <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
                                             <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                <a href="#">
+                                                    <h5 class="name">Joyce de Groot</h5>
+                                                    <h5 class="jobtitle"><em>Office Manager</em></h5>
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>From all of us at Quince, we wish you happy holidays and all the best for 2014!</h5>
                                             </div>
+                                            <a class="cta-text" href="#SOCIAL-ORIGIN" >view &gt;&gt;</a>
                                         </div>
                                     </div>
                                 </div>
@@ -519,22 +224,22 @@
 
 
 
-                                <!-- HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
                                 <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
                                         <a href="#"><img src="img/cells/cell-a_235x272_HC_Vakantie.jpg"></a>
                                     </div>
                                     <div class="on-state">
                                         <div class="content">
-                                            <h3 class="title">Lorem Ipsum Dolor Sit Amet</h3>
+                                            <h3 class="title">Holland Casino Vakantie</h3>
                                             <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                <a href="#">
+                                                    <h5 class="name">Coen Schaafma</h5>
+                                                    <h5 class="jobtitle">Art Director<em></em></h5>
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>A fresh and bright visual approach to the, more commonly, dark and sexy casino aesthetic.</h5>
                                             </div>
                                             <div class="social"></div>
                                         </div>
@@ -543,25 +248,25 @@
 
 
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
+                                <!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
 
 
-                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
-                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="38566969" data-sizex="1" data-sizey="1" id="0009">
                                     <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Quince_Run.jpg"></a>
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_1_38566969.jpg">
                                     </div>
                                     <div class="on-state">
                                         <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
                                             <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                <a href="#">
+                                                    <h5 class="name">Sander Sneek</h5>
+                                                    <h5 class="jobtitle"><em>Creative Technologist</em></h5>
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>Quince IDU has developed a holographic presentation showing the highlights of the new Samsung Solid State Drive 830 Series.</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -569,10 +274,11 @@
 
 
 
+
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
-                                <div class="cell-e cell-box " data-action="jobs" data-size="1" id="0005">
+                                <div class="cell-e cell-box" data-action="jobs" data-sizex="1" data-sizey="1" id="0005">
                                     <div class="off-state">
-                                        <h3>Find out how to join us and how we grow</h3>
+                                        <h3>Quince is hiring. click here to find out how we grow together!</h3>
                                     </div>
                                 </div>
 
@@ -580,53 +286,52 @@
                                 <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
                                 <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
                                     <div class="off-state flexslider">
-                                        <h1>Lorem<br>Ipsum</h1>
+<!--                                        <h1>Lorem<br>Ipsum</h1>-->
                                         <ul class="slides">
-                                            <li><img src="img/cells/cell-f_474x272_BandenSpecialist.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_Copaco_event.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_Ctouch_Stand.jpg"></li>
-                                            <li><img src="img/cells/cell-f_474x272_HC_3D.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0027_mf_vip_2008_1.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0026_mf_vip_2008_2.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0025_mf_vip_2008_3.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0024_mf_vip_2008_4.jpg"></li>
                                         </ul>
                                     </div>
                                 </div>
-
-                                <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
-                                <div class="cell-h cell-box"  data-sizex="1" data-sizey="1" id="0008">
-                                    <div class="author" id="12345">
-                                        <a href="people.php?user=12345">
-                                            <h5 class="name">Jonathan Van Der Lorem</h5>
-                                            <h5 class="jobtitle">Creative Technologist<em></em></h5>
-                                        </a>
-                                    </div>
-                                    <div class="article">
-                                        <h5><p>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></h5>
-                                    </div>
-                                    <a class="cta-text" href="#SOCIAL-ORIGIN" >read more &gt;&gt;</a>
-                                </div>
-
-
-                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-<!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
 
 
                                 <!-- QUARTER-SIZED IMAGE w/ INFO -->
                                 <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
                                     <div class="off-state">
-                                        <a href="#"><img src="img/cells/cell-b_235x134_Porche_Event.jpg"></a>
+                                        <a href="#"><img src="img/cells/10151817863075666.jpg"></a>
                                     </div>
                                     <div class="on-state">
                                         <div class="content">
-                                            <h5 class="title">Lorem Ipsum Dolor Sit Amet</h5>
+                                            <h5 class="title">Jeffrey in Lingo</h5>
                                             <div class="author" id="12345">
-                                                <a href="people.php?user=12345">
-                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
-                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                <a href="#">
+                                                    <h5 class="name">Jeffrey Kors</h5>
+                                                    <h5 class="jobtitle">Office Services<em></em></h5>
                                                 </a>
                                             </div>
                                             <div class="article">
-                                                <h5>Lorem ipsum dolor sit amet. <a href="#">&#35;Quince</a><a href="#">&#64;VanDerLorem</a></h5>
+                                                <h5>Last night Jeffrey and his brother Mitchel took part in the Dutch tv game show Lingo. </h5>
                                             </div>
+                                            <a class="cta-text" href="http://www.uitzendinggemist.nl/afleveringen/1391351" >read more &gt;&gt;</a>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
+                                <div class="cell-h cell-box"  data-sizex="1" data-sizey="1" id="0008">
+                                    <div class="on-state">
+                                        <div class="author" id="12345">
+                                            <a href="#">
+                                                <h5 class="name">Joyce DeGroot</h5>
+                                                <h5 class="jobtitle">Office Manager<em></em></h5>
+                                            </a>
+                                        </div>
+                                        <div class="article">
+                                            <h5><p>Just when you thought the day could have used a bit more play next to all the work, the Quince band starts rehearsing...</p></h5>
+                                        </div>
+                                        <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=" >read more &gt;&gt;</a>
                                     </div>
                                 </div>
 
@@ -634,14 +339,230 @@
 
 
 
+                            <li class="column">
+                                <!-- LONG-IMAGE w/ NO INFO -->
+                                <div class="cell-g cell-box"  data-sizex="2" data-sizey="1" id="0007">
+                                    <div class="off-state">
+                                        <img src="img/cells/cell-g_474x134_Budapest_Office.jpg">
+                                    </div>
+                                </div>
+
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="10151480910580666" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151480910580666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Supersoaker battle</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Jeroen Van Der Horst</h5>
+                                                    <h5 class="jobtitle">AV Director<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Friday afternoon, sun, drinks and super soakers. What's not to like? Enjoy the summer weekend everyone! <a href="#">&#35;Quince</a></h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151480910580666" >read more &gt;&gt;</a>
+                                            <div class="social"></div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-                            <li class="column">Cell 5</li>
-                            <li class="column">Cell 6</li>
+                                <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
+                                <div class="cell-e cell-box" data-sizex="1" data-sizey="1" id="0005">
+                                    <div class="off-state">
+                                        <h3>Co-Create your solutions with Quince.</h3>
+                                    </div>
+                                </div>
+
+
+                                <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
+                                <div class="cell-c cell-box" data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/cell-c_235x134_FOXsports.jpg"></a>
+                                    </div>
+                                </div>
+
+                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                    <div class="off-state flexslider">
+                                        <!--                                        <h1>Lorem<br>Ipsum</h1>-->
+                                        <ul class="slides">
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_4_itre-1.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_3_itre-2.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_2_itre-3.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_1_itre-4.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0_itre-5.jpg"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151731915295666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">The Quince band</h5>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Just when you thought the day could have used a bit more play next to all the work, the Quince band starts rehearsing...</a></h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151731915295666" >read more &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="75781009" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_12_75781009.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Joyce de Groot</h5>
+                                                    <h5 class="jobtitle"><em>Office Manager</em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Quince Interactive Retail Solutions has developed an interactive photo booth that has been in demand ever since its first release... </h5>
+                                            </div>
+                                            <!--a class="cta-text" href="#SOCIAL-ORIGIN" >view &gt;&gt;</a-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                            <li class="column">
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151810418470666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Fred &amp; Daniel in keuken</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Joyce DeGroot</h5>
+                                                    <h5 class="jobtitle">Office Manager<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Today we were treated on delicious, yummy, good old fashioned hamburgers with everything on it for lunch. Kudos to chefs Daniel and Frederik for this very tasty initiative!</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151810418470666" >view &gt;&gt;</a>
+                                            <!--div class="social"></div-->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="77117922" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_13_77117922.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Sander Sneek</h5>
+                                                    <h5 class="jobtitle"><em>Creative Technologist</em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5></h5>
+                                            </div>
+                                            <!--a class="cta-text" href="https://www.facebook.com/photo.php?fbid=" >view &gt;&gt;</a-->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
+                                <div class="cell-e cell-box" data-action="jobs" data-sizex="1" data-sizey="1" id="0005">
+                                    <div class="off-state">
+                                        <h3>Quince is hiring. click here to find out how we grow together!</h3>
+                                    </div>
+                                </div>
+
+
+                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                    <div class="off-state flexslider">
+                                        <!--                                        <h1>Lorem<br>Ipsum</h1>-->
+                                        <ul class="slides">
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0033_samsung_galaxy_1.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0032_samsung_galaxy_2.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0031_samsung_galaxy_3.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0028_samsung_galaxy_6.jpg"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
+
+
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151694285220666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Love - take what you need</h5>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Miranda Kasius</h5>
+                                                    <h5 class="jobtitle">Project Manager<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Somebody got creative and happily shared the result with her colleagues...</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151694285220666" >read more &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(Quotes) w/ NO INFO -->
+                                <div class="cell-d cell-box" data-size="2" id="0004">
+                                    <div class="off-state">
+                                        <h3>"You can’t wait for inspiration, you have to go after it with a club" <em>-- Jack London</em></h3>
+                                    </div>
+                                </div>
+
+                            </li>
+
                         </ul>
                     </div>
                 </div>
-                <!--            <div class="logo"></div>-->
             </div>
 
             <div class="footer">
@@ -713,6 +634,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="jobs-content container subcontent">
             <div class="content">
                 <h1>Jobs and Opportunities</h1>
@@ -740,7 +662,11 @@
 
         </div>
 
+        <script type="text/template" class="template">
 
+
+
+        </script>
 
 <!--        <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>-->
 
