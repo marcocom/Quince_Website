@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!--http://hsmaker.com/harlemshake.asp?url=http://www.quince.nl -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Quince</title>
@@ -144,7 +145,7 @@
 
 
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
-                                <div class="cell-e cell-box" data-sizex="1" data-sizey="1" id="0005">
+                                <div class="cell-e cell-box" data-action="people" data-sizex="1" data-sizey="1" id="0005">
                                     <div class="off-state">
                                         <h3>Real People,<br>Real Passion,<br>Real Action!</h3>
                                     </div>
@@ -332,6 +333,144 @@
                                             <h5><p>Just when you thought the day could have used a bit more play next to all the work, the Quince band starts rehearsing...</p></h5>
                                         </div>
                                         <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=" >read more &gt;&gt;</a>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                            <li class="column">
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+
+
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151562998425666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Lorem Ipsum Dolor Sit Amet</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>There are lots and lots of things you can design with 3D design software. But one thing that’s just not possible on screen is getting a feel for the actual product.</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151562998425666" >view &gt;&gt;</a>
+                                            <div class="social"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="66081643" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_10_66081643.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Marco Comparato</h5>
+                                                    <h5 class="jobtitle"><em>Creative Technologist</em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5></h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=" >view &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/cell-a_235x272_Samsung_Convergence.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Samsung 'Convergence'</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Djamel De Ligt</h5>
+                                                    <h5 class="jobtitle">Art Director<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Samsung's retail needs a look that showcases the interoperability of its many products in your home.  This is our proposed new look.</h5>
+                                            </div>
+                                            <div class="social"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
+                                <div class="cell-e cell-box" data-action="contact" data-sizex="1" data-sizey="1" id="0005">
+                                    <div class="off-state">
+                                        <h3>Quince has a fantastic creative space, Click here to find us!</h3>
+                                    </div>
+                                </div>
+
+
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
+
+
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151669526830666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Welcome Jan</h5>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Jonathan Van Der Lorem</h5>
+                                                    <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>A new colleague has started at Quince Amsterdam. His name is Jan and he will be working as a software engineer. </h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151669526830666" >read more &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="38566969" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_1_38566969.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Sander Sneek</h5>
+                                                    <h5 class="jobtitle"><em>Creative Technologist</em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Quince IDU has developed a holographic presentation showing the highlights of the new Samsung SSD 830 Series...</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=" >view &gt;&gt;</a>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -560,6 +699,147 @@
 
                             </li>
 
+                            <li class="column">
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+                                <div class="cell-i cell-box " data-size="1" id="0009"></div>
+
+
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151553932155666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Gamer's Delight</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Djamel DeLigt</h5>
+                                                    <h5 class="jobtitle">Art Director<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Having some good old virtual Friday afternoon fun with the new Oculus Rift virtual reality headset. We cant wait to get our hands into the SDK and make this thing do magic!</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151553932155666" >view &gt;&gt;</a>
+                                            <div class="social"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="60837705" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_7_60837705.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Holland Casino Interactive Projection Mapping</h3>
+                                            <!--div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Marco Comparato</h5>
+                                                    <h5 class="jobtitle"><em>Creative Technologist</em></h5>
+                                                </a>
+                                            </div-->
+                                            <div class="article">
+                                                <h5></h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=60837705" >view &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151552064070666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Lunch time!</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Joyce De Groot</h5>
+                                                    <h5 class="jobtitle">Office Manager<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>What’s cooking at Quince today? Thanks to Jamel we’re having shawarma for lunch!</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151552064070666" >view &gt;&gt;</a>
+                                            <div class="social"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
+                                <div class="cell-e cell-box" data-action="contact" data-sizex="1" data-sizey="1" id="0005">
+                                    <div class="off-state">
+                                        <h3>Quince has a fantastic creative space, Click here to find us!</h3>
+                                    </div>
+                                </div>
+
+
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
+
+
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151558387050666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Hearing Voices</h5>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Jeroen Van Der Horst</h5>
+                                                    <h5 class="jobtitle">AV Director<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Recording a voice-over for another great Quince video production. It looks like this!</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151558387050666" >read more &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="45238850" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_6_45238850.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Bart Van Asperen</h5>
+                                                    <h5 class="jobtitle"><em>Art Director</em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Quince IDU has developed a holographic presentation showing the highlights of the new Samsung SSD 830 Series...</h5>
+                                            </div>
+                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=" >view &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
+
+
 
                             <li class="column">
                                 <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(Quotes) w/ NO INFO -->
@@ -687,6 +967,125 @@
 
                             </li>
 
+                            <li class="column">
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151647722395666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Bake Quince!</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Theo Popadopoulos</h5>
+                                                    <h5 class="jobtitle">Senior Developer<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>Baked Quince, it looks like this. Kudos to Theo for this very special treat! <a href="#">&#35;Quince</a></h5>
+                                            </div>
+                                            <a class="cta-text" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151647722395666" >view &gt;&gt;</a>
+                                            <div class="social"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="66137605" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_11_66137688.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Sander Sneek</h5>
+                                                    <h5 class="jobtitle"><em>Creative Technologist</em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>HiJack and making of Hi Commercial</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
+                                <div class="cell-e cell-box" data-action="people" data-sizex="1" data-sizey="1" id="0005">
+                                    <div class="off-state">
+                                        <h3>Click here to meet our staff!</h3>
+                                    </div>
+                                </div>
+
+
+                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                    <div class="off-state flexslider">
+                                        <!--                                        <h1>Lorem<br>Ipsum</h1>-->
+                                        <ul class="slides">
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0023_mf_vip_2008_5.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0022_mf_vip_2008_6.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0021_mf_vip_2008_7.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0020_mf_vip_2008_8.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_0019_mf_vip_2008_9.jpg"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
+                                <!--                                <div class="cell-i cell-box " data-size="1" id="0009"></div>-->
+
+
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151681614700666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Welcome Carla</h5>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Lisette Koot</h5>
+                                                    <h5 class="jobtitle">Human Resource Manager<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>She’s doing an internship at Quince, helping out the development team as a part of her study in web development. </h5>
+                                            </div>
+                                            <a class="cta-text" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151681614700666" >read more &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
+                                <div class="cell-h cell-box"  data-sizex="1" data-sizey="1" id="0008">
+                                    <div class="on-state">
+                                        <div class="author" id="12345">
+                                            <a href="#">
+                                                <h5 class="name">Sander Sneek</h5>
+                                                <h5 class="jobtitle">Creative Technologist<em></em></h5>
+                                            </a>
+                                        </div>
+                                        <div class="article">
+                                            <h5><p>Having some good old virtual Friday afternoon fun with the Oculus Rift virtual reality headset. Enjoy the weekend everyone!</p></h5>
+                                        </div>
+                                        <a class="cta-text" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151553932155666" >read more &gt;&gt;</a>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -703,7 +1102,7 @@
                 <ul>
                     <li class="contact-section" id="contact-amsterdam">
                         <h3>Quince Amsterdam B.V.</h3>
-                        <a class="address" target="_blank" target="_blank" target="_blank" href="https://maps.google.nl/maps?q=Assumburg+73+1081+GB+Amsterdam+the+Netherlands&daddr=Assumburg+73,+1081+GB+Amsterdam&hnear=0x47c60a0b845ef23b:0x79090fe2330b7586,Assumburg+73,+1081+GB+Amsterdam&gl=nl&t=h&z=16">
+                        <a class="address" target="_blank" target="_blank" href="https://maps.google.nl/maps?q=Assumburg+73+1081+GB+Amsterdam+the+Netherlands&daddr=Assumburg+73,+1081+GB+Amsterdam&hnear=0x47c60a0b845ef23b:0x79090fe2330b7586,Assumburg+73,+1081+GB+Amsterdam&gl=nl&t=h&z=16">
                             <h5>Assumburg 73</h5>
                             <h5>1081 GB Amsterdam</h5>
                             <h5>the Netherlands</h5><img src="img/googlemaps_pin.png">
@@ -722,7 +1121,7 @@
                     </li>
                     <li class="contact-section" id="contact-budapest">
                         <h3>Quince Hungary Kft.</h3>
-                        <a class="address" target="_blank" target="_blank" target="_blank" href="https://maps.google.nl/maps?q=Marcius+15.+t%C3%A9r+1+1056+Budapest+Hungary&hl=en&ie=UTF8&sll=47.737938,18.557968&sspn=0.53613,1.338959&t=h&gl=nl&hnear=1056+Budapest,+V.+ker%C3%BClet,+M%C3%A1rcius+15.+t%C3%A9r+1,+Hungary&z=17">
+                        <a class="address" target="_blank" target="_blank" href="https://maps.google.nl/maps?q=Marcius+15.+t%C3%A9r+1+1056+Budapest+Hungary&hl=en&ie=UTF8&sll=47.737938,18.557968&sspn=0.53613,1.338959&t=h&gl=nl&hnear=1056+Budapest,+V.+ker%C3%BClet,+M%C3%A1rcius+15.+t%C3%A9r+1,+Hungary&z=17">
                             <h5>Marcius 15. tér 1 [4th floor]</h5>
                             <h5>1056 Budapest</h5>
                             <h5>Hungary</h5><img src="img/googlemaps_pin.png">

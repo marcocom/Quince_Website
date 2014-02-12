@@ -594,7 +594,7 @@ body { width: 100%; height: 100%; background-color: white; }
 
 #slider-container { position: absolute; z-index: 1; top: 120px; bottom: 48px; left: 0; width: 100%; height: 100%; }
 #slider-container .scroller { position: absolute; z-index: 1; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); min-width: 5000px; width: auto; height: 100%; -webkit-transform: translateZ(0); -moz-transform: translateZ(0); -ms-transform: translateZ(0); -o-transform: translateZ(0); transform: translateZ(0); -webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-text-size-adjust: none; -moz-text-size-adjust: none; -ms-text-size-adjust: none; -o-text-size-adjust: none; text-size-adjust: none; }
-#slider-container .scroller .mosaic-container { list-style: none; padding: 0; margin: 0; width: 100%; height: 100%; text-align: center; }
+#slider-container .scroller .mosaic-container { list-style: none; padding: 0; margin: 0; width: auto; height: 100%; text-align: center; }
 #slider-container .scroller .mosaic-container li.column { display: inline-block; float: left; width: 720px; height: 100%; position: absolute; color: #999999; }
 
 #slider-container .scroller .mosaic-container li.column .cell-box { border: 1px solid #cccccc; border-spacing: 0; box-sizing: border-box; display: block; width: 235px; height: 134px; margin: 2px; background-color: #eeeeee; overflow: hidden; }
@@ -664,7 +664,7 @@ body { width: 100%; height: 100%; background-color: white; }
 
 .visible-xs, tr.visible-xs, th.visible-xs, td.visible-xs { display: none !important; }
 
-@media (max-width: 767px) { .home-content .content .main-logo { top: 10px; }
+@media (max-width: 767px) { .home-content .content .main-logo { top: 6px; }
   .home-content .content .main-logo #logo { max-width: 520px; height: auto; width: 90px; display: block; position: relative; left: 10px; }
   .home-content .header { position: absolute; right: 10px; }
   .home-content .header li { margin: 0 0 0 5px; }
@@ -683,6 +683,7 @@ body { width: 100%; height: 100%; background-color: white; }
   #slider-container { top: 100px; }
   #slider-container .scroller { width: 10000px; }
   #slider-container .scroller .mosaic-container li.column { width: 1682px; position: absolute; display: inline-block; }
+  #slider-container .scroller .mosaic-container li.column .cell-i { display: none; }
   .flex-control-paging li a { width: 11px; height: 11px; }
   .flex-control-nav li { margin: 0 6px; }
   .people-content { width: 100%; height: 1400px; }
@@ -703,6 +704,7 @@ body { width: 100%; height: 100%; background-color: white; }
   .home-content .content .main-logo #logo { max-width: 520px; height: auto; width: 100px; display: block; position: relative; left: 20px; }
   .home-content .content .main-logo h6 { display: block; width: 100%; margin: 0 auto; line-height: 1em; position: absolute; text-align: center; bottom: 0; font-weight: 200; font-style: italic; }
   #slider-container .scroller .mosaic-container li.column { width: 960px; }
+  #slider-container .scroller .mosaic-container li.column .cell-i { display: none; }
   .visible-sm { display: block !important; }
   table.visible-sm { display: table; }
   tr.visible-sm { display: table-row !important; }

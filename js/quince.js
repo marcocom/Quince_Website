@@ -18,6 +18,12 @@
 
         windowWidth:$(window).width(),
         windowHeight:$(window).height(),
+        columnSizes : {
+            cell-total-container-width:720,
+            cell-total-med-width:960,
+            cell-total-sm-width:1682,
+            cell-total-extra-tall:478
+            },
         _currentPopup : null,
         landingContent:null,
 

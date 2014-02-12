@@ -11,7 +11,7 @@
   .content{
 
     .main-logo{
-      top:10px;
+      top:6px;
       #logo{
         max-width: 520px;
         height: auto;
@@ -101,6 +101,10 @@
       width:$cell-total-sm-width;
       position:absolute;
       display:inline-block;
+
+      .cell-i{
+        display:none;
+      }
     }
   }
 }
