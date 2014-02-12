@@ -49,43 +49,43 @@
                 <div class="nav">
                     <ul class="social">
                         <li class="facebook">
-                            <a href="http://www.facebook.com/QuinceAmsterdam" data-portal="fb"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://www.facebook.com/QuinceAmsterdam" data-portal="fb"  target="_blank">
                                 <!--                            <img src="img/icon_fb.png">-->
                             </a>
                         </li>
 
                         <li class="twitter">
-                            <a href="http://www.twitter.com/QuinceAmsterdam" data-portal="tw"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://www.twitter.com/QuinceAmsterdam" data-portal="tw"  target="_blank">
                                 <!--                            <img src="img/icon_twit.png">-->
                             </a>
                         </li>
                         <li class="linkedin">
-                            <a href="http://www.linkedin.com/company/quince" data-portal="link"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://www.linkedin.com/company/quince" data-portal="link"  target="_blank">
                                 <!--                            <img src="img/icon_li.png">-->
                             </a>
                         </li>
                         <li class="pinterest">
-                            <a href="http://www.pinterest.com/QuinceAmsterdam" data-portal="pin"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://www.pinterest.com/QuinceAmsterdam" data-portal="pin"  target="_blank">
                                 <!--                            <img src="img/icon_pin.png">-->
                             </a>
                         </li>
                         <li class="youtube">
-                            <a href="http://www.youtube.com/QuinceAmsterdam" data-portal="yt"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://www.youtube.com/QuinceAmsterdam" data-portal="yt"  target="_blank">
                                 <!--                            <img src="img/icon_yt.png">-->
                             </a>
                         </li>
                         <li class="vimeo">
-                            <a href="http://vimeo.com/quinceamsterdam " data-portal="vim"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://vimeo.com/quinceamsterdam " data-portal="vim"  target="_blank">
                                 <!--                            <img src="img/icon_vim.png">-->
                             </a>
                         </li>
                         <!--li class="gplus">
-                            <a href="http://plus.google.com/QuinceAmsterdam" data-portal="gp"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://plus.google.com/QuinceAmsterdam" data-portal="gp"  target="_blank">
                                 <img src="img/icon_gp.png">
                             </a>
                         </li-->
                         <!--li class="rss">
-                            <a href="http://rss.quince.nl" data-portal="rss"  target="_blank">
+                            <a target="_blank" target="_blank" href="http://rss.quince.nl" data-portal="rss"  target="_blank">
                                 <img src="img/icon_rss.png">
                             </a>
                         </li-->
@@ -278,7 +278,7 @@
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
                                 <div class="cell-e cell-box" data-action="jobs" data-sizex="1" data-sizey="1" id="0005">
                                     <div class="off-state">
-                                        <h3>Quince is hiring. click here to find out how we grow together!</h3>
+                                        <h3>Quince is hiring. click here to find out how we grow!</h3>
                                     </div>
                                 </div>
 
@@ -314,7 +314,7 @@
                                             <div class="article">
                                                 <h5>Last night Jeffrey and his brother Mitchel took part in the Dutch tv game show Lingo. </h5>
                                             </div>
-                                            <a class="cta-text" href="http://www.uitzendinggemist.nl/afleveringen/1391351" >read more &gt;&gt;</a>
+                                            <a class="cta-text" target="_blank" target="_blank" href="http://www.uitzendinggemist.nl/afleveringen/1391351" >read more &gt;&gt;</a>
                                         </div>
                                     </div>
                                 </div>
@@ -331,7 +331,7 @@
                                         <div class="article">
                                             <h5><p>Just when you thought the day could have used a bit more play next to all the work, the Quince band starts rehearsing...</p></h5>
                                         </div>
-                                        <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=" >read more &gt;&gt;</a>
+                                        <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=" >read more &gt;&gt;</a>
                                     </div>
                                 </div>
 
@@ -343,7 +343,7 @@
                                 <!-- LONG-IMAGE w/ NO INFO -->
                                 <div class="cell-g cell-box"  data-sizex="2" data-sizey="1" id="0007">
                                     <div class="off-state">
-                                        <img src="img/cells/cell-g_474x134_Budapest_Office.jpg">
+                                        <img src="img/cells/cell_g_1.jpg">
                                     </div>
                                 </div>
 
@@ -364,7 +364,7 @@
                                             <div class="article">
                                                 <h5>Friday afternoon, sun, drinks and super soakers. What's not to like? Enjoy the summer weekend everyone! <a href="#">&#35;Quince</a></h5>
                                             </div>
-                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151480910580666" >read more &gt;&gt;</a>
+                                            <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151480910580666" >read more &gt;&gt;</a>
                                             <div class="social"></div>
                                         </div>
                                     </div>
@@ -418,7 +418,7 @@
                                             <div class="article">
                                                 <h5>Just when you thought the day could have used a bit more play next to all the work, the Quince band starts rehearsing...</a></h5>
                                             </div>
-                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151731915295666" >read more &gt;&gt;</a>
+                                            <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151731915295666" >read more &gt;&gt;</a>
                                         </div>
                                     </div>
                                 </div>
@@ -466,7 +466,7 @@
                                             <div class="article">
                                                 <h5>Today we were treated on delicious, yummy, good old fashioned hamburgers with everything on it for lunch. Kudos to chefs Daniel and Frederik for this very tasty initiative!</h5>
                                             </div>
-                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151810418470666" >view &gt;&gt;</a>
+                                            <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151810418470666" >view &gt;&gt;</a>
                                             <!--div class="social"></div-->
                                         </div>
                                     </div>
@@ -494,7 +494,7 @@
                                             <div class="article">
                                                 <h5></h5>
                                             </div>
-                                            <!--a class="cta-text" href="https://www.facebook.com/photo.php?fbid=" >view &gt;&gt;</a-->
+                                            <!--a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=" >view &gt;&gt;</a-->
                                         </div>
                                     </div>
                                 </div>
@@ -505,7 +505,7 @@
                                 <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
                                 <div class="cell-e cell-box" data-action="jobs" data-sizex="1" data-sizey="1" id="0005">
                                     <div class="off-state">
-                                        <h3>Quince is hiring. click here to find out how we grow together!</h3>
+                                        <h3>Quince is hiring. click here to find out how we grow!</h3>
                                     </div>
                                 </div>
 
@@ -546,15 +546,142 @@
                                             <div class="article">
                                                 <h5>Somebody got creative and happily shared the result with her colleagues...</h5>
                                             </div>
-                                            <a class="cta-text" href="https://www.facebook.com/photo.php?fbid=10151694285220666" >read more &gt;&gt;</a>
+                                            <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151694285220666" >read more &gt;&gt;</a>
                                         </div>
                                     </div>
                                 </div>
 
+                                <!-- LONG-IMAGE w/ NO INFO -->
+                                <div class="cell-g cell-box"  data-sizex="2" data-sizey="1" id="0007">
+                                    <div class="off-state">
+                                        <img src="img/cells/cell_g_2.jpg">
+                                    </div>
+                                </div>
+
+                            </li>
+
+
+                            <li class="column">
                                 <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(Quotes) w/ NO INFO -->
                                 <div class="cell-d cell-box" data-size="2" id="0004">
                                     <div class="off-state">
                                         <h3>"You can’t wait for inspiration, you have to go after it with a club" <em>-- Jack London</em></h3>
+                                    </div>
+                                </div>
+
+
+                                <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
+                                <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151718746400666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h3 class="title">Quince rebranding</h3>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Guido Porten</h5>
+                                                    <h5 class="jobtitle">Creative Director<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5></h5>
+                                            </div>
+                                            <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151718746400666" >read more &gt;&gt;</a>
+                                            <!--div class="social"></div-->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
+                                <div class="cell-b cell-box" data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151681522185666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Welcome Gian-Luca</h5>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Lisette Koot</h5>
+                                                    <h5 class="jobtitle">Human Resources Director<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>He’s been working at Quince for over a month now and for some unknown reason...</h5>
+                                            </div>
+                                            <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151681522185666" >read more &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
+                                <div class="cell-c cell-box" data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-sizex="1" data-sizey="1" data-client="123456" id="0003">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/cell-c_235x134_KPN.jpg"></a>
+                                    </div>
+                                </div>
+
+                                <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
+                                <div class="cell-f cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="2" data-sizey="2" data-client="123456" id="0006">
+                                    <div class="off-state flexslider">
+                                        <!--                                        <h1>Lorem<br>Ipsum</h1>-->
+                                        <ul class="slides">
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_9_kenniswijzer_nl_schoon01.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_8_kenniswijzer_nl_schoon02.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_7_kenniswijzer_nl_schoon03.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_6_kenniswijzer_nl_schoon04.jpg"></li>
+                                            <li><img src="img/cells/campaign_stacks/img_campstack_5_kenniswijzer_nl_schoon05.jpg"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <!-- QUARTER-SIZED IMAGE w/ INFO -->
+                                <div class="cell-b cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-row="1" data-col="1"  data-viewed="0000"  data-sizex="1" data-sizey="1" data-client="123456" id="0002">
+                                    <div class="off-state">
+                                        <a href="#"><img src="img/cells/10151669657185666.jpg"></a>
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <h5 class="title">Quince Halloween 2013</h5>
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Jeffrey Schulz</h5>
+                                                    <h5 class="jobtitle">Traffic Services Manager<em></em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>One hellish party of the damned.</h5>
+                                            </div>
+                                            <a class="cta-text" target="_blank" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151669657185666" >read more &gt;&gt;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
+                                <div class="cell-j cell-box" data-portal="vim" data-ref="66137688" data-sizex="1" data-sizey="1" id="0009">
+                                    <div class="off-state">
+                                        <img class="playbut" src="img/playbut.png">
+                                        <img class="thumb" src="img/cells/vimeo/img_vimeo_11_66137688.jpg">
+                                    </div>
+                                    <div class="on-state">
+                                        <div class="content">
+                                            <div class="author" id="12345">
+                                                <a href="#">
+                                                    <h5 class="name">Remco Schoos</h5>
+                                                    <h5 class="jobtitle"><em>Director, QRS</em></h5>
+                                                </a>
+                                            </div>
+                                            <div class="article">
+                                                <h5>From all of us at Quince, we wish you happy holidays and all the best for 2014!</h5>
+                                            </div>
+                                            <!--a class="cta-text" href="#SOCIAL-ORIGIN" >view &gt;&gt;</a-->
+                                        </div>
                                     </div>
                                 </div>
 
@@ -576,7 +703,7 @@
                 <ul>
                     <li class="contact-section" id="contact-amsterdam">
                         <h3>Quince Amsterdam B.V.</h3>
-                        <a class="address" target="_blank" href="https://maps.google.nl/maps?q=Assumburg+73+1081+GB+Amsterdam+the+Netherlands&daddr=Assumburg+73,+1081+GB+Amsterdam&hnear=0x47c60a0b845ef23b:0x79090fe2330b7586,Assumburg+73,+1081+GB+Amsterdam&gl=nl&t=h&z=16">
+                        <a class="address" target="_blank" target="_blank" target="_blank" href="https://maps.google.nl/maps?q=Assumburg+73+1081+GB+Amsterdam+the+Netherlands&daddr=Assumburg+73,+1081+GB+Amsterdam&hnear=0x47c60a0b845ef23b:0x79090fe2330b7586,Assumburg+73,+1081+GB+Amsterdam&gl=nl&t=h&z=16">
                             <h5>Assumburg 73</h5>
                             <h5>1081 GB Amsterdam</h5>
                             <h5>the Netherlands</h5><img src="img/googlemaps_pin.png">
@@ -595,7 +722,7 @@
                     </li>
                     <li class="contact-section" id="contact-budapest">
                         <h3>Quince Hungary Kft.</h3>
-                        <a class="address" target="_blank" href="https://maps.google.nl/maps?q=Marcius+15.+t%C3%A9r+1+1056+Budapest+Hungary&hl=en&ie=UTF8&sll=47.737938,18.557968&sspn=0.53613,1.338959&t=h&gl=nl&hnear=1056+Budapest,+V.+ker%C3%BClet,+M%C3%A1rcius+15.+t%C3%A9r+1,+Hungary&z=17">
+                        <a class="address" target="_blank" target="_blank" target="_blank" href="https://maps.google.nl/maps?q=Marcius+15.+t%C3%A9r+1+1056+Budapest+Hungary&hl=en&ie=UTF8&sll=47.737938,18.557968&sspn=0.53613,1.338959&t=h&gl=nl&hnear=1056+Budapest,+V.+ker%C3%BClet,+M%C3%A1rcius+15.+t%C3%A9r+1,+Hungary&z=17">
                             <h5>Marcius 15. tér 1 [4th floor]</h5>
                             <h5>1056 Budapest</h5>
                             <h5>Hungary</h5><img src="img/googlemaps_pin.png">

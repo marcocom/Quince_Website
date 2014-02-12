@@ -597,7 +597,7 @@ body { width: 100%; height: 100%; background-color: white; }
 #slider-container .scroller .mosaic-container { list-style: none; padding: 0; margin: 0; width: 100%; height: 100%; text-align: center; }
 #slider-container .scroller .mosaic-container li.column { display: inline-block; float: left; width: 720px; height: 100%; position: absolute; color: #999999; }
 
-#slider-container .scroller .mosaic-container li.column .cell-box { border: 1px solid #cccccc; border-spacing: 0; display: block; width: 235px; height: 134px; margin: 2px; background-color: #eeeeee; overflow: hidden; }
+#slider-container .scroller .mosaic-container li.column .cell-box { border: 1px solid #cccccc; border-spacing: 0; box-sizing: border-box; display: block; width: 235px; height: 134px; margin: 2px; background-color: #eeeeee; overflow: hidden; }
 #slider-container .scroller .mosaic-container li.column .cell-box .off-state { display: inline-block; width: 100%; height: 100%; z-index: 1; }
 #slider-container .scroller .mosaic-container li.column .cell-box .off-state img { display: block; width: 100%; height: auto; }
 #slider-container .scroller .mosaic-container li.column .cell-box .on-state { display: inline-block; width: 100%; height: 100%; padding: 0px 5px; background: #FFFFFF; }
@@ -620,12 +620,12 @@ body { width: 100%; height: 100%; background-color: white; }
 #slider-container .scroller .mosaic-container li.column .cell-c { width: 235px; height: 134px; cursor: inherit; }
 #slider-container .scroller .mosaic-container li.column .cell-c .off-state a { cursor: default; }
 #slider-container .scroller .mosaic-container li.column .cell-d { width: 474px; height: 134px; background: none; border: none; }
-#slider-container .scroller .mosaic-container li.column .cell-d .off-state h3 { color: #222222; font-style: italic; bottom: 2px; left: 5px; position: absolute; display: block; line-height: 15px; font-size: 1.5em; }
+#slider-container .scroller .mosaic-container li.column .cell-d .off-state h3 { color: #222222; font-style: italic; bottom: 2px; left: 5px; position: absolute; display: block; font-size: 1.5em; }
 #slider-container .scroller .mosaic-container li.column .cell-d .off-state h3 em { font-size: 50%; color: #555555; }
 #slider-container .scroller .mosaic-container li.column .cell-e { width: 235px; height: 134px; cursor: inherit; }
 #slider-container .scroller .mosaic-container li.column .cell-e .off-state h3 { line-height: 1em; font-style: italic; font-weight: 200; padding: 5px; color: #FFF; text-shadow: 0px 0px 3px rgba(50, 50, 50, 0.75); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-smoothing: antialiased; cursor: inherit; }
 #slider-container .scroller .mosaic-container li.column .cell-f { width: 474px; height: 272px; }
-#slider-container .scroller .mosaic-container li.column .cell-f .off-state { box-sizing: content-box; }
+#slider-container .scroller .mosaic-container li.column .cell-f .off-state { box-sizing: padding-box; -moz-box-sizing: padding-box; }
 #slider-container .scroller .mosaic-container li.column .cell-f .off-state h1 { display: block; font-style: italic; font-weight: 800; line-height: 1em; padding-left: 20px; position: absolute; width: auto; z-index: 20; color: white; text-shadow: 0px 0px 3px rgba(50, 50, 50, 0.75); }
 #slider-container .scroller .mosaic-container li.column .cell-f .off-state .flex-control-nav { z-index: 221; position: absolute; right: 5px; top: 5px; width: auto; }
 #slider-container .scroller .mosaic-container li.column .cell-f .off-state .slides { z-index: 0; }

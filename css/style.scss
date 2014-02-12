@@ -309,7 +309,7 @@ body{
   .cell-box{ //general default
     border: 1px solid #cccccc;
     border-spacing: 0;
-    //box-sizing:border-box;
+    box-sizing:border-box;
 
     display:block;
     width:$cell-half-width;
@@ -428,7 +428,6 @@ body{
         left: 5px;
         position: absolute;
         display: block;
-        line-height: 15px;
         font-size: 1.5em;
         em{
           font-size: 50%;
@@ -459,7 +458,8 @@ body{
     width:$cell-full-width;
     height:$cell-full-height;
     .off-state{
-      box-sizing: content-box;
+      box-sizing: padding-box;
+      -moz-box-sizing:padding-box;
       h1{
         display: block;
         //font-size: 3em;
