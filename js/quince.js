@@ -19,10 +19,10 @@
         windowWidth:$(window).width(),
         windowHeight:$(window).height(),
         columnSizes : {
-            cell-total-container-width:720,
-            cell-total-med-width:960,
-            cell-total-sm-width:1682,
-            cell-total-extra-tall:478
+            cell_total_container_width:720,
+            cell_total_med_width:960,
+            cell_total_sm_width:1682,
+            cell_total_extra_tall:478
             },
         _currentPopup : null,
         landingContent:null,
@@ -30,7 +30,7 @@
         init: function() {
             if ($.support.touch) $('body').addClass('ipad-iphone');
             this.setupEventManager();
-            $log("QUINCE:INIT isHandheld:"+this.isHandheldPortrait+" isFireFox:"+this.isFF);
+            $log("QUINCE:INIT isHandheld:"+this.isHandheldPortrait+"  --UA:"+navigator.userAgent);
             $(window).resize(this.onResize);
            // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
@@ -103,8 +103,6 @@
                 return (typeof v !== "undefined" && v !== null) ? v : "";
             });
         }
-
-
 
     };
 
@@ -337,14 +335,17 @@
     };
 
 
-    Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green]
+    Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
 
     Quince.EventManager = new Quince.Event();
+
     Quince.Event.SHOWPOPUP = 'SHOWPOPUP';
     Quince.Event.RESIZE = 'RESIZE';
     Quince.Event.RESIZE_SM_RESPONSE = 'RESIZE_SM';
     Quince.Event.RESIZE_MED_RESPONSE = 'RESIZE_MED';
     Quince.Event.RESIZE_LRG_RESPONSE = 'RESIZE_LRG';
+    Quince.Event.RESIZE_SHORT_RESPONSE = 'RESIZE_SHORT';
+    Quince.Event.RESIZE_TALL_RESPONSE = 'RESIZE_TALL';
     Quince.Event.PAGECHANGE = "PAGECHANGE";
     Quince.Event.DISCLAIMER = "DISCLAIMER";
     Quince.Event.CURRENTPAGE = "CURRENTPAGE";

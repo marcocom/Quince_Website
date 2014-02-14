@@ -30,6 +30,7 @@
 @mixin author-information {
 
   width:100%;
+  margin: 10px 0 0 0;
     h5{
       line-height: 110%;
       margin: 0;
@@ -47,6 +48,30 @@
 }
 
 
+@mixin desaturate {
+
+    -webkit-transition:all .4s;
+    -moz-transition:all .4s;
+    -ms-transition:all .4s;
+    -o-transition:all .4s;
+    transition:all .4s;
+
+  -webkit-filter:grayscale(0%);
+  -moz-filter:grayscale(0%);
+  -ms-filter:grayscale(0%);
+  -o-filter:grayscale(0%);
+  filter:grayscale(0%);
+
+  &.desaturate{
+    -webkit-filter:grayscale(100%);
+    -moz-filter:grayscale(100%);
+    -ms-filter:grayscale(100%);
+    -o-filter:grayscale(100%);
+    filter:grayscale(100%);
+  }
+
+
+}
 
 
 
@@ -216,6 +241,10 @@
 @mixin transition-duration($transition-duration...) {
   -webkit-transition-duration: $transition-duration;
           transition-duration: $transition-duration;
+}
+@mixin transition-timing-function($transition-timing) {
+  -webkit-timing-function: $transition-timing;
+  timing-function: $transition-timing;
 }
 @mixin transition-transform($transition...) {
   -webkit-transition: -webkit-transform $transition;
@@ -739,6 +768,7 @@
   margin-right: ($gutter / -2);
   @include clearfix();
 }
+
 
 // Generate the extra small columns
 @mixin make-xs-column($columns, $gutter: $grid-gutter-width) {

@@ -262,7 +262,7 @@ body{
     position: absolute;
     z-index: 1;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-    min-width: 5000px;
+    min-width: $mosaic-min-width;
     width:auto;
     height: 100%;
     -webkit-transform: translateZ(0);
@@ -320,23 +320,38 @@ body{
     overflow:hidden;
 
     .off-state{
-      display:inline-block;
+      display:block;
       width:100%;
       height:100%;
-      z-index:1;
-
+      position:absolute;
+      @include desaturate();
       img{
         display:block;
         width:100%;
         height:auto;
+
       }
     }
     .on-state{
-      display:inline-block;
+      display:block;
       width:100%;
       height:100%;
+      z-index:1;
+      position:absolute;
+      top:100%;
       padding: 0px 5px;
       background:#FFFFFF;
+
+      //-webkit-transition:top 1s;
+      //-moz-transition:top 1s;
+      //-ms-transition:top 1s;
+      //-o-transition:top 1s;
+      //transition:top 1s;
+
+      @include transition(top 1s);
+      @include transition-timing-function(ease-out);
+
+
         .title{
           font-weight:800;
           font-size: 1.2em;
@@ -395,6 +410,20 @@ body{
 
     }
     .on-state{
+      .cta-text{
+        font-weight:600;
+        color:$brand-blue;
+        //padding:5px 5px 0 5px;
+        padding: 0;
+        position: absolute;
+        display: block;
+        bottom: 30%;
+        //left: 5px;
+
+        &:hover{
+          color:darken($brand-blue, .50);
+        }
+      }
     }
   }
   .cell-b{ // QUARTER-SIZED IMAGE w/ INFO CLICKTHRU -->
@@ -402,7 +431,11 @@ body{
     height:$cell-half-height;
     .on-state{
       .content{
-
+        .article h5{
+          max-height: 43px;
+          overflow-y: hidden;
+          display: block;
+        }
       }
     }
   }
@@ -448,7 +481,7 @@ body{
         font-weight:200;
         padding:5px;
         color:#FFF;
-        text-shadow:$textShadow;
+        //text-shadow:$textShadow;
         @include font-smoothing(on);
         cursor:inherit;
       }
@@ -458,7 +491,7 @@ body{
     width:$cell-full-width;
     height:$cell-full-height;
     .off-state{
-      box-sizing: padding-box;
+      box-sizing: content-box;
       -moz-box-sizing:padding-box;
       h1{
         display: block;
@@ -645,7 +678,9 @@ body{
 
 .people-content{
   width:100%;
-  height:1400px;
+  height:1000px;
+  overflow-y:scroll;
+  overflow-x:auto;
   .content{
     width:100%;
     height:100%;
@@ -655,8 +690,24 @@ body{
 
 
 
+@media (min-height:$mosaic-response-height-max){
+  #slider-container .scroller .mosaic-container li.column{
+    width:$cell-total-short-width;
+  }
+}
 
+@media (max-height:$mosaic-response-height-mobile) and (max-width:$screen-xs){
+  #slider-container .scroller .mosaic-container li.column{
+    width:$cell-total-med-width;
+  }
+}
 
+//@media (min-height: $mosaic-response-height-min) and (max-height:$mosaic-response-height-max){
+//  #slider-container .scroller .mosaic-container li.column{
+//    width:$cell-total-short-width;
+//  }
+//}
+//
 
 
 
