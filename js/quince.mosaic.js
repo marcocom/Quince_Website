@@ -49,7 +49,12 @@
 
         initContainer : function(){
 
-            $q.Mosaic._slider = new IScroll('#slider-container', { scrollX: true, scrollY: false, mouseWheel: true, click:true});
+            $q.Mosaic._slider = new IScroll('#slider-container', {
+                scrollX: true,
+                scrollY: false,
+                mouseWheel: true,
+                click:true
+            });
 
 //            $q.Mosaic._slider.scrollBy(-$q.windowWidth, 0, 2500);
 
@@ -83,49 +88,65 @@
             $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
             Quince.EventManager.fireEvent(Quince.Event.RESIZE, this);
 
-
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
-
 
         },
 
         onResize : function(){
 
             var w = $(this._columns[0]).width();
-            var totalw = this._columns.length * w;
+            var totalw = (this._columns.length) * w;
+            var xs = 480;
+            var md = 720;
+            var sh = 540;
+            var tl = 700;
 
+            $('#slider-container .scroller').width(totalw);
             if(w != this.currentColumnWidth){  //one-time event fire when site shifts through a responsive media-query
 
                 $q.Mosaic._slider.refresh();
                 this.currentColumnWidth = w;
 
-                $('#slider-container .scroller').width(totalw);
+//
+//                if($q.windowWidth < xs){
+//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SM_RESPONSE, this);
+//                    this.scaleColumns($q.columnSizes.cell_total_sm_width);
+//                } else
+//                if($q.windowWidth >= xs && $q.windowWidth < md){
+//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_MED_RESPONSE, this);
+//                    this.scaleColumns($q.columnSizes.cell_total_med_width);
+//                } else
+//                if($q.windowWidth >= md){
+//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
+//                    this.scaleColumns($q.columnSizes.cell_total_container_width);
+//                }
 
-                if($q.windowWidth < 480){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SM_RESPONSE, this);
-                } else
-                if($q.windowWidth >= 480 && $q.windowWidth < 720){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_MED_RESPONSE, this);
-                } else
-                if($q.windowWidth >= 720){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
-                }
-
-
-                if($q.windowHeight > 700){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_TALL_RESPONSE, this);
-                } else
-                if($q.windowHeight < 540){
-                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SHORT_RESPONSE, this);
-                }
+//
+//                if($q.windowHeight > tl && $q.windowWidth > xs){
+//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_TALL_RESPONSE, this);
+//                    this.scaleColumns($q.columnSizes.cell_total_med_width);
+//                } else
+//                if($q.windowHeight < sh){
+//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SHORT_RESPONSE, this);
+//                    this.scaleColumns($q.columnSizes.cell_total_short_width);
+//                }
             }
 //            $log("COLUMN RESIZE ----  w:"+$q.windowWidth+" columns:"+this.currentColumnWidth);
 
         },
 
+        scaleColumns : function(w){
+            var _this = this;
+            $log("SET WIDTH:"+w);
+            this._columns.each(function(e){
+                $(this).width(w);
+            })
+        },
+
         onScrollStart : function(e){
 //            $log("SCROLL START----------------");
             $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_START, this);
+            Quince.EventManager.fireEvent(Quince.Event.RESIZE);
         },
 
         onScrollCancel : function(e){
@@ -241,6 +262,8 @@
             this.onContent = null;
             this.sizeLetter = null;
 
+            this._carousel = null;
+
             this.initContainer();
 
             return this.closeInfo;
@@ -257,7 +280,7 @@
             this.offContent = $(f);
             this.onContent = n.length > 0 ? $(n) : null;
 
-            if(this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j" ){
+            if(this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j" || this.sizeLetter == "f"){
 
                 if($q.msGesture){
                     this._el.on('MSPointerDown', $.proxy(this.onMsPress, this));
@@ -277,12 +300,13 @@
                 this.colorizeCell();
                 this.processPageAction(this._el.data('action'));
 
-            } else
-//            if(this.sizeLetter == "j"){
-//                this.processVideoAction(this._el.data('portal'));
-//            } else
+            }
+
+
+
+
             if(this.sizeLetter == "f"){
-                this._el.find('.flexslider').flexslider({
+                this._carousel = this._el.find('.flexslider').flexslider({
                     namespace: "flex-",             //{NEW} String: Prefix string attached to the class of every element generated by the plugin
                     selector: ".slides > li",       //{NEW} Selector: Must match a simple pattern. '{container} > {slide}' -- Ignore pattern at your own peril
                     animation: "fade",              //String: Select your animation type, "fade" or "slide"
@@ -312,7 +336,7 @@
                     nextText: "Next",               //String: Set the text for the "next" directionNav item
 
 // Secondary Navigation
-                    keyboard: true,                 //Boolean: Allow slider navigating via keyboard left/right keys
+                    keyboard: false,                 //Boolean: Allow slider navigating via keyboard left/right keys
                     multipleKeyboard: false,        //{NEW} Boolean: Allow keyboard navigation to affect multiple sliders. Default behavior cuts out keyboard navigation with more than one slider present.
                     mousewheel: false,              //{UPDATED} Boolean: Requires jquery.mousewheel.js (https://github.com/brandonaaron/jquery-mousewheel) - Allows slider navigating via mousewheel
                     pausePlay: false,               //Boolean: Create pause/play dynamic element
@@ -334,10 +358,10 @@
 
 // Callback API
                     start: function(slider){
-                        $(slider).find('.slides li img').click(function(event){
-                            event.preventDefault();
-                            slider.flexAnimate(slider.getTarget("next"));
-                        });
+//                        $(slider).find('.slides li img').click(function(event){
+//                            event.preventDefault();
+//                            slider.flexAnimate(slider.getTarget("next"));
+//                        });
                     },            //Callback: function(slider) - Fires when the slider loads the first slide
                     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
                     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
@@ -366,13 +390,6 @@
             } else {
                 url = "http://vimeo.com/quinceamsterdam";
             }
-//
-//            this._el.click(function(e){
-//
-//                e.preventDefault();
-//                $log("TEST CLICK");
-//                $q.EventManager.fireEvent($q.Event.MOSAIC_VIDEO, this, url);
-//            });
 
             $q.EventManager.fireEvent($q.Event.MOSAIC_VIDEO, this, url);
         },
@@ -394,8 +411,6 @@
             //$log("COLORIZE CELL index:"+ind);
             var newcolor = $q.Brand.ALL_COLORS[ind];
             this._el.find('.off-state').css({'background-color':newcolor});
-
-
         },
 
         onCellClick : function(e, target){
@@ -421,10 +436,15 @@
                 var t = Math.round(this._el.height() - 20);
                 //if($q.platformDetect.android || $q.platformDetect.blackberry || $q.platformDetect.iphone)
                     this.offContent.addClass('desaturate');
-                this.onContent.css({'top':(this.sizeLetter == 'a' ? '30%' : '0')});
-
-
+                this.onContent.topZIndex();
                 this.opened = true;
+                if(this.sizeLetter == "f"){
+                    this._carousel.flexslider("pause");
+                    this.onContent.css({'top':'60%'});
+                } else {
+                    this.onContent.css({'top':(this.sizeLetter == 'a' ? '30%' : '0')});
+
+                }
             }
         },
 
@@ -433,6 +453,7 @@
                 this.offContent.removeClass('desaturate');
                 this.onContent.css({'top':'100%'});
                 this.opened = false;
+                if(this.sizeLetter == "f") this._carousel.flexslider("play");
             }
         },
 
@@ -440,6 +461,7 @@
             e.preventDefault();
             e.stopPropagation();
             this.startMouseX = e.gesture.center.pageX;
+            $log("ONPRESS [[]]:"+this.startMouseX);
         },
 
         onRelease : function(e){
@@ -447,7 +469,7 @@
             e.stopPropagation();
             var xdist = e.gesture.center.pageX - this.startMouseX;
             if(xdist < this.deadzone && xdist > -this.deadzone) this.onClick(null);
-
+            $log("ONRELEASE ]][[:"+xdist);
         },
 
         onMsPress : function(e){

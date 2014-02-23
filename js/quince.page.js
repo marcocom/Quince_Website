@@ -40,37 +40,15 @@
             this.subcontentOpened = false;
             this.currentContent = null;
             this.contentSwap = null;
+            this.closeButton = null;
             this.initPage();
         },
 
         initPage : function(){
 
-//            $.fancybox({
-//                padding: 0,
-//                'autoScale'     : false,
-//                'transitionIn'  : 'none',
-//                'transitionOut' : 'none',
-//                'title'         : "Christmas Wishes",
-//                'autoPlay'      : true,
-//                'hideOnOverlayClick' : true,
-//                'width'         : 1280,
-//                'height'        : 720,
-////                    'href'          : "http://player.vimeo.com/video/82283832", //HD
-//                'href'          : "http://player.vimeo.com/video/82293470", //SD
-////                    'href'          : "http://vimeo.com/moogaloop.swf?clip_id=82283832",
-//                'type'          : 'iframe',
-//                'swf'           : {
-//                    'wmode'             : 'transparent',
-//                    'allowfullscreen'   : 'true',
-//
-//                },
-//                overlay: {
-//                    opacity: 0.3, // or the opacity you want
-//                    css: {'background-color': '#ff0000'} // or your preferred hex color value
-//                } // overlay
-//            });
-
-
+            this.closeButton = $('.sub-close-cta a').click($.proxy(this.pageCollapse, this));
+            
+            
             this.toplinks.click($.proxy(this.toplinkAnimate, this));
 
             $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
@@ -85,12 +63,13 @@
         onOpenTransitionEnd : function(){
 
                 this.subcontentOpened = true;
-                //this._el.mouseover($.proxy(this.pageOver, this));
-//                this._el.touch($.proxy(this.pageOver, this));
+                //this._el.mouseover($.proxy(this.pageCollapse, this));
+//                this._el.touch($.proxy(this.pageCollapse, this));
 
-                this._el.bind('tap click swipe focus', $.proxy(this.pageOver, this));
+                this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
             $log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
         },
+
         onCloseTransitionEnd : function(){
             // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
             $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened);
@@ -108,7 +87,8 @@
 
             }
         },
-        pageOver : function(e){
+
+        pageCollapse : function(e){
 //            if(this.subcontentOpened) this._el.css('top', '0px');
             var _this = this;
             if(this.subcontentOpened)
@@ -121,6 +101,7 @@
             this._el.unbind('tap click swipe focus');
 //            this._el.touch(null);
         },
+
         toplinkAnimate : function(e, remoteLink){
             if(e) e.preventDefault();
 

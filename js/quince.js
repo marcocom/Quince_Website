@@ -22,10 +22,12 @@
             cell_total_container_width:720,
             cell_total_med_width:960,
             cell_total_sm_width:1682,
-            cell_total_extra_tall:478
+            cell_total_extra_tall:482,
+            cell_total_short_width:482
             },
         _currentPopup : null,
         landingContent:null,
+        _model:null,
 
         init: function() {
             if ($.support.touch) $('body').addClass('ipad-iphone');
@@ -105,6 +107,8 @@
         }
 
     };
+
+
 
 
     Quince.SquareItem = Class.extend({
