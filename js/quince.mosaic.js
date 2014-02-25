@@ -32,16 +32,16 @@
     );
 
     $q.Mosaic.Container = $q.Mosaic.extend({
+        _mosaic:null,
+        _columns:null,
+        loading_items:false,
+        building:false,
+        currentColumnWidth:null,
+
         _construct : function(el) {
             this._el = $(el);
             this._super(this._el);
 //            $log("Mosaic init");
-            this._mosaic = null;
-            this._columns = null;
-            this.loading_items = false;
-            this.building = false;
-
-            this.currentColumnWidth = null;
 
             this.initContainer();
 
@@ -63,16 +63,10 @@
             $q.Mosaic._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
             $q.Mosaic._slider.on('flick', $.proxy(this.onFlick, this));
 
-            $log("DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
+            $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
-//
-//            var tmpl_to_html = function(id) {
-//                var $el = $('#' + id);
-//                return _.template($el.html(), { });
-//            };
-//            var $e = $(tmpl_to_html('template'));
 
 
 
@@ -195,21 +189,22 @@
     });
 
     $q.Mosaic.ParentColumn = $q.Mosaic.extend({
+        _grid:null,
+        _cells:[],
+        currentCellOpened:null,
+        loading_items:false,
+        building:false,
+        strict:false,
+        overlay:false,
+        scroll:false,
+        filter:false,
+        grid_full:false,
+        loading_items:false,
+
         _construct : function(el) {
             this._el = $(el);
             this._super(this._el);
-            this._grid = null;
-            this.currentCellOpened = null;
-            this._cells = new Array();
-            this.loading_items = false;
-            this.building = false;
-            this.strict=false;
-            this.overlay=false;
-            this.building=false
-            this.scroll=false;
-            this.filter=false;
-            this.grid_full=false;
-            this.loading_items=false;
+
 
             this.initContainer();
         },
@@ -240,29 +235,26 @@
     });
 
     $q.Mosaic.Cell = $q.Mosaic.extend({
+        _parent:null,
+        _carousel:null,
+        loading_items:false,
+        building:false,
+        opened:false,
+        half_width:235,
+        full_width:474,
+        half_height:134,
+        full_height:272,
+        deadzone:5,
+        startMouseX:null,
+        offContent:null,
+        onContent:null,
+        sizeLetter:null,
+
         _construct : function(el, parentColumn) {
             this._el = $(el);
             this._super(this._el);
 //            this._el.hammer({prevent_default: true});
             this._parent = parentColumn;
-
-            this.loading_items = false;
-            this.building = false;
-            this.loading_items=false;
-            this.opened=false;
-
-            this.half_width = 235;
-            this.full_width = 474; //plus margin space 2x2px
-            this.half_height = 134;
-            this.full_height = 272;
-
-            this.deadzone = 5;
-            this.startMouseX = null;
-            this.offContent = null;
-            this.onContent = null;
-            this.sizeLetter = null;
-
-            this._carousel = null;
 
             this.initContainer();
 
@@ -509,7 +501,12 @@
 
 
 
-    $q.Mosaic.Init();
-    if($('#slider-container').length > 0) this.landingContent = new $q.Mosaic.Container('#slider-container');
+
+    function startMosaic(e){
+        $q.Mosaic.Init();
+        if($('#slider-container').length > 0) this.landingContent = new $q.Mosaic.Container('#slider-container');
+    }
+    $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_COMPLETE, startMosaic.bind(this));
+
 
 })(jQuery, Quince);

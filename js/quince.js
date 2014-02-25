@@ -29,6 +29,7 @@
         landingContent:null,
         _model:null,
 
+
         init: function() {
             if ($.support.touch) $('body').addClass('ipad-iphone');
             this.setupEventManager();
@@ -93,7 +94,6 @@
             }
             return popup;
         },
-
         loadTemplate : function(id){
             var $el = $('#' + id);
             return _.template($el.html(), { });
@@ -338,6 +338,79 @@
         brand_green:              '#009339'
     };
 
+    Quince.templates = {
+        cells:{
+            'cell_a':null,
+                'cell_b':null,
+                'cell_c':null,
+                'cell_d':null,
+                'cell_e':null,
+                'cell_f':null,
+                'cell_g':null,
+                'cell_h':null,
+                'cell_i':null
+        },
+        quotes:[
+            {
+                'Body':'Creativity is contagious, pass it on.',
+                'Credit':'Albert Einstein',
+                'Id':''
+            },
+            {
+                'Body':'Creativity is contagious, pass it on.',
+                'Credit':'Albert Einstein',
+                'Id':''
+            },
+            {
+                'Body':'Creativity is contagious, pass it on.',
+                'Credit':'Albert Einstein',
+                'Id':''
+            },
+            {
+                'Body':'Creativity is contagious, pass it on.',
+                'Credit':'Albert Einstein',
+                'Id':''
+            },
+            {
+                'Body':'Creativity is contagious, pass it on.',
+                'Credit':'Albert Einstein',
+                'Id':''
+            }
+        ],
+            actions:[
+            {
+                'Action':'jobs',
+                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
+                'Id':''
+            },
+            {
+                'Action':'jobs',
+                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
+                'Id':''
+            },
+            {
+                'Action':'jobs',
+                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
+                'Id':''
+            },
+            {
+                'Action':'jobs',
+                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
+                'Id':''
+            },
+            {
+                'Action':'jobs',
+                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
+                'Id':''
+            },
+            {
+                'Action':'jobs',
+                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
+                'Id':''
+            }
+        ]
+    };
+
 
     Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
 
@@ -358,6 +431,9 @@
     Quince.Event.MOSAIC_SCROLL_END = "MOSAIC_SCROLL_END";
     Quince.Event.MOSAIC_FLICK = "MOSAIC_FLICK";
     Quince.Event.MOSAIC_VIDEO = "MOSAIC_VIDEO";
+    Quince.Event.MODEL_COLUMN_LOADED = "MODEL_COLUMN_LOADED";
+    Quince.Event.MODEL_COLUMNS_COMPLETE = "MODEL_COLUMNS_COMPLETE";
+    Quince.Event.MODEL_TEMPLATES_COMPLETE = "MODEL_TEMPLATES_COMPLETE";
 
     
     this.Quince = Quince;

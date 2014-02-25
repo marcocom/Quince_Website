@@ -7,7 +7,6 @@
         'lib/jquery.hammer.js',
         'lib/masonry.js',
         'lib/lodash.underscore.js',
-        'lib/backbone.js',
         'jquery.ext.js',
         'helper.js',
         'lib/jquery.flexslider.js',

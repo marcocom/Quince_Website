@@ -176,5 +176,8 @@
     $log = function(obj) {
          try { if (arguments.length > 1) { console.dir(arguments); } else { console.log(arguments[0]); } } catch (d) { }
     };
+    $dir = function(obj) {
+         try { console.dir(arguments); } catch (d) { }
+    };
 
 }());
