@@ -35,7 +35,7 @@
            // this._postUrl = '/login';
             this._el = $(el);
             this._super(this._el);
-            $log("Register init");
+            //$log("Register init");
             this.toplinks = $(this._el.find('.header .toplink'));
             this.subcontentOpened = false;
             this.currentContent = null;
@@ -56,7 +56,7 @@
         },
 
         catchPageChange : function(e, props){
-            $log("PAGECHANGE e:"+e+" props:"+props);
+            //$log("PAGECHANGE e:"+e+" props:"+props);
             this.toplinkAnimate(null,props);
         },
 
@@ -67,12 +67,12 @@
 //                this._el.touch($.proxy(this.pageCollapse, this));
 
                 this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
-            $log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
+            //$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
         },
 
         onCloseTransitionEnd : function(){
             // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
-            $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened);
+            //$log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened);
             if(this.subcontentOpened == true){
                 this.subcontentOpened = false;
                 this.currentContent.hide();
@@ -81,7 +81,7 @@
 
                 if(this.contentSwap != null){
                     $(this.contentSwap).trigger('click');
-                    $log("CONTENT SWAP:"+this.contentSwap);
+                    //$log("CONTENT SWAP:"+this.contentSwap);
                     this.contentSwap = null;
                 }
 
@@ -106,6 +106,9 @@
             if(e) e.preventDefault();
 
             var c = e ? $(e.currentTarget)[0] : null;
+
+            if(remoteLink != undefined && remoteLink.length < 2) return;
+
             var ref = "."+( remoteLink ? remoteLink : c.id) + "-content";
             var $content = $(ref);
             var _this = this;
@@ -120,7 +123,7 @@
 
                 if(targetHeight > maxHeight) targetHeight = maxHeight;
 
-                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
+                //$log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
 
                 this.setScrollable(false);
                 this.currentContent = $content;
@@ -134,11 +137,11 @@
                 });
             }
             else {
-                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
-                $log("NEW CONTENT:"+$content.selector);
+                //$log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
+                //$log("NEW CONTENT:"+$content.selector);
                 if(this.currentContent.selector != $content.selector){
                     this.contentSwap = c;
-                    $log("CONTENTSWAP REASSIGNED-------")
+                    //$log("CONTENTSWAP REASSIGNED-------")
                 } else {
                     this.contentSwap = null;
                 }
@@ -150,11 +153,6 @@
                 });
             }
         },
-
-        onRevealComplete : function(){
-          $log("--GREENSOCK WORKS");
-        },
-
 
         setScrollable : function(setOn){
             var topdoc = $('html, body');

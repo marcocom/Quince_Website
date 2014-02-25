@@ -116,7 +116,7 @@
             var style = Math.abs(this._currentColumn % 3);
             var el = this.injectColumn(style);
 
-            var c = new Quince.Model.Column(result, style, el);
+            var c = new Quince.Model.Column(result, style, el, this._currentColumn);
             this._columns.push(c);
 
             this.nextModel();
@@ -159,18 +159,25 @@
         _model:[],
         _cells:[],
         _style:null,
-        _construct : function(m, int, el) {
+        _index:0,
+        _construct : function(m, int, el, i) {
             this._el = $(el);
             this._model = m;
             this._style = int;
+            this._index = i;
             this.initModel();
         },
 
         initModel : function(){
             $log("-------------------------MODEL COLUMN INIT-----------------------------:"+this._style);
 
+            this.matchStyle();
 
+            this.instantiateCells();
+        },
+        instantiateCells : function(){
             for(var i = 0; i < this._model.length; i++){
+//                $log("INSTANTIATE CELL:"+i);
                 this.generateCell(i);
             }
         },
@@ -191,6 +198,63 @@
                 ),
                 data
             );
+        },
+        matchStyle : function(){
+            var pattern = $q.ancillary_models.column_patterns[this._style];
+
+            var newArr = [];
+            for(var i = 0; i < pattern.length; i++){
+
+                var ancil_obj = {};
+                var cell_letter = pattern[i];
+                var uId = "0" + this._index.toString() + i.toString();  //--------------------------------------TEMP this creates a unique ID number for every unit.  no reason really...yet
+
+                if($q.AncillaryLetters.indexOf(cell_letter) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
+//                    $log("ANCILLARY CELL:"+cell_letter);
+                    ancil_obj = this.pullAncillaryData(cell_letter);
+                    ancil_obj.CellType = cell_letter;
+                }
+                else {
+                    ancil_obj = this.getObjects(this._model, 'CellType', cell_letter)[0];
+//                    $log("DATA CELL:"+cell_letter);
+                }
+
+
+                ancil_obj.Id = uId;
+                newArr.push(ancil_obj);
+            }
+
+//            $log("MATCHSTYLE()  pattern:"+pattern);
+
+            this._model = newArr;
+
+
+        },
+        pullAncillaryData : function(letter){
+            var obj = {};
+            if(letter == 'd'){
+                obj = $q.ancillary_models.quote_data.splice(0,1)[0];
+            } else
+            if(letter == 'e'){
+                obj = $q.ancillary_models.action_data.splice(0,1)[0];
+            } else
+            if(letter == 'i'){
+                obj = {'Id':''};
+            }
+            return obj;
+        },
+        getObjects : function (obj, key, val) {
+            var objects = [];
+            for (var i in obj) {
+                if (!obj.hasOwnProperty(i)) continue;
+                if (typeof obj[i] == 'object') {
+                    objects = objects.concat(this.getObjects(obj[i], key, val));
+                } else
+                if (i == key && obj[key] == val) {
+                    objects.push(obj);
+                }
+            }
+            return objects;
         }
 
     });
@@ -204,14 +268,15 @@
         _column:null,
         _construct : function(m, el) {
             this._model = m;
+//            $log("-----------MODEL CELL INIT----------:");
+//            $dir(this._model);
             this._column = el;
             this._style = this._model.CellType;
-            $log("-----------MODEL CELL INIT----------:"+this._style);
             this.initTemplate();
 
         },
         initTemplate : function(){
-            var tplname = 'cell-'+this._model.CellType;
+            var tplname = 'cell-'+ this._style;
             var tpl = $('#tpl-'+tplname).html();
             this._view = Quince.templates.cells['cell_'+this._style](this._model);
 //            this._view = new $q.Model.CellView(tplname, this._model);

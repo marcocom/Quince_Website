@@ -1526,7 +1526,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
         <script type="text/template" id="tpl-cell-g">
             <div class="cell-g cell-box"  data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" id="<%= Id %>">
                 <div class="off-state">
-                    <img src="id="<%= Image %>"">
+                    <img src="<%= Image %>">
                 </div>
             </div>
         </script>

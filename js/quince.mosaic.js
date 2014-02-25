@@ -37,7 +37,12 @@
         loading_items:false,
         building:false,
         currentColumnWidth:null,
-
+        columnWidths:{
+            'xs':480,
+            'md':720,
+            'sh':540,
+            'tl':700
+        },
         _construct : function(el) {
             this._el = $(el);
             this._super(this._el);
@@ -84,49 +89,57 @@
 
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
 
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.refreshMosaic, this));
         },
 
         onResize : function(){
 
             var w = $(this._columns[0]).width();
             var totalw = (this._columns.length) * w;
-            var xs = 480;
-            var md = 720;
-            var sh = 540;
-            var tl = 700;
+
 
             $('#slider-container .scroller').width(totalw);
+
             if(w != this.currentColumnWidth){  //one-time event fire when site shifts through a responsive media-query
 
-                $q.Mosaic._slider.refresh();
                 this.currentColumnWidth = w;
+                $q.Mosaic._slider.refresh();
 
 //
-//                if($q.windowWidth < xs){
+//                if($q.windowWidth < this.columnWidths.xs){
 //                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SM_RESPONSE, this);
 //                    this.scaleColumns($q.columnSizes.cell_total_sm_width);
 //                } else
-//                if($q.windowWidth >= xs && $q.windowWidth < md){
+//                if($q.windowWidth >= this.columnWidths.xs && $q.windowWidth < this.columnWidths.md){
 //                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_MED_RESPONSE, this);
 //                    this.scaleColumns($q.columnSizes.cell_total_med_width);
 //                } else
-//                if($q.windowWidth >= md){
+//                if($q.windowWidth >= this.columnWidths.md){
 //                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
 //                    this.scaleColumns($q.columnSizes.cell_total_container_width);
 //                }
 
 //
-//                if($q.windowHeight > tl && $q.windowWidth > xs){
+//                if($q.windowHeight > this.columnWidths.tl && $q.windowWidth > this.columnWidths.xs){
 //                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_TALL_RESPONSE, this);
 //                    this.scaleColumns($q.columnSizes.cell_total_med_width);
 //                } else
-//                if($q.windowHeight < sh){
+//                if($q.windowHeight < this.columnWidths.sh){
 //                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SHORT_RESPONSE, this);
 //                    this.scaleColumns($q.columnSizes.cell_total_short_width);
 //                }
             }
 //            $log("COLUMN RESIZE ----  w:"+$q.windowWidth+" columns:"+this.currentColumnWidth);
 
+        },
+
+        refreshMosaic: function(e){
+            var c = this._mosaic.find('.column');
+            this._columns = $(c);
+
+            var totalw = (this._columns.length) * this.currentColumnWidth;
+            $('#slider-container .scroller').width(totalw);
+            $q.Mosaic._slider.refresh();
         },
 
         scaleColumns : function(w){
@@ -228,10 +241,6 @@
 
             Quince.EventManager.fireEvent(Quince.Event.RESIZE);
         }
-
-
-
-
     });
 
     $q.Mosaic.Cell = $q.Mosaic.extend({
@@ -428,11 +437,11 @@
                 var t = Math.round(this._el.height() - 20);
                 //if($q.platformDetect.android || $q.platformDetect.blackberry || $q.platformDetect.iphone)
                     this.offContent.addClass('desaturate');
-                this.onContent.topZIndex();
+                if(this.onContent) this.onContent.topZIndex();
                 this.opened = true;
                 if(this.sizeLetter == "f"){
                     this._carousel.flexslider("pause");
-                    this.onContent.css({'top':'60%'});
+                    if(this.onContent) this.onContent.css({'top':'60%'});
                 } else {
                     this.onContent.css({'top':(this.sizeLetter == 'a' ? '30%' : '0')});
 
@@ -443,7 +452,7 @@
         closeInfo : function(){
             if(this.opened){
                 this.offContent.removeClass('desaturate');
-                this.onContent.css({'top':'100%'});
+                if(this.onContent) this.onContent.css({'top':'100%'});
                 this.opened = false;
                 if(this.sizeLetter == "f") this._carousel.flexslider("play");
             }

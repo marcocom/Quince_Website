@@ -28,7 +28,7 @@
         _currentPopup : null,
         landingContent:null,
         _model:null,
-
+        AncillaryLetters : ["d", "e", "i"], //cell-types that are not CMS data-fed.  pulled from objects above.
 
         init: function() {
             if ($.support.touch) $('body').addClass('ipad-iphone');
@@ -67,8 +67,8 @@
         },
         fireHashEvents :function() {
             var name = document.location.hash.toString().replace('#','');
-            this._getPopup(name);
-            Quince.eventManager.fireEvent(Quince.Event.SHOWPOPUP,name);
+//            this._getPopup(name);
+            if(name.length > 0) Quince.eventManager.fireEvent(Quince.Event.DEEPLINK,name);
         },
         popup : function(t,name) {
             //$log('open popup: '+name);
@@ -341,75 +341,129 @@
     Quince.templates = {
         cells:{
             'cell_a':null,
-                'cell_b':null,
-                'cell_c':null,
-                'cell_d':null,
-                'cell_e':null,
-                'cell_f':null,
-                'cell_g':null,
-                'cell_h':null,
-                'cell_i':null
-        },
-        quotes:[
+            'cell_b':null,
+            'cell_c':null,
+            'cell_d':null,
+            'cell_e':null,
+            'cell_f':null,
+            'cell_g':null,
+            'cell_h':null,
+            'cell_i':null
+        }
+    };
+    Quince.ancillary_models = {
+        'quote_data':[
             {
-                'Body':'Creativity is contagious, pass it on.',
-                'Credit':'Albert Einstein',
-                'Id':''
+                'Body':"learn the rules like a pro, so you can break them like an artist.",
+                'Credit':"Pablo Picasso",
+                'Id':""
             },
             {
-                'Body':'Creativity is contagious, pass it on.',
-                'Credit':'Albert Einstein',
-                'Id':''
+                'Body':"creativity is contagious, pass it on.",
+                'Credit':"Albert Einstein",
+                'Id':""
             },
             {
-                'Body':'Creativity is contagious, pass it on.',
-                'Credit':'Albert Einstein',
-                'Id':''
+                'Body':"you can't wait for inspiration, you have to go after it with a club.",
+                'Credit':"Jack London",
+                'Id':""
             },
             {
-                'Body':'Creativity is contagious, pass it on.',
-                'Credit':'Albert Einstein',
-                'Id':''
+                'Body':"creativity requires the courage to let go of certainties.",
+                'Credit':"Erich Fromm",
+                'Id':""
             },
             {
-                'Body':'Creativity is contagious, pass it on.',
-                'Credit':'Albert Einstein',
-                'Id':''
+                'Body':"when the going gets weird, the weird turn pro.",
+                'Credit':"Hunter S. Thompson",
+                'Id':""
+            },
+            {
+                'Body':"we don't make mistakes, just happy little accidents.",
+                'Credit':"Bob Ross",
+                'Id':""
+            },
+            {
+                'Body':"design is not just what it looks like and feels like. Design is how it works.",
+                'Credit':"Steve Jobs",
+                'Id':""
+            },
+            {
+                'Body':"there is nothing worse than a sharp image of a fuzzy concept.",
+                'Credit':"Ansel Adams",
+                'Id':""
+            },
+            {
+                'Body':"while they are deciding, make even more art.",
+                'Credit':"Andy Warhol",
+                'Id':""
+            },
+            {
+                'Body':"Let the blood and the bruises define your legacy.",
+                'Credit':"Lady Gaga",
+                'Id':""
             }
         ],
-            actions:[
+        'action_data':[
             {
-                'Action':'jobs',
-                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
-                'Id':''
+                'Action':"",
+                'Sentences':["real people", "real passion", "real action"],
+                'Id':""
             },
             {
-                'Action':'jobs',
-                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
-                'Id':''
+                'Action':"jobs",
+                'Sentences':["get to know us", "click here if you are up to the challenge"],
+                'Id':""
             },
             {
-                'Action':'jobs',
-                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
-                'Id':''
+                'Action':"about",
+                'Sentences':["who we are", "click here to find out"],
+                'Id':""
             },
             {
-                'Action':'jobs',
-                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
-                'Id':''
+                'Action':"about",
+                'Sentences':["a team photo has many portraits", "but only one story"],
+                'Id':""
             },
             {
-                'Action':'jobs',
-                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
-                'Id':''
+                'Action':"contact",
+                'Sentences':["a place to grow", "click here to find our locations"],
+                'Id':""
             },
             {
-                'Action':'jobs',
-                'Sentences':['Get to know us', 'click here if you are up to the challenge'],
-                'Id':''
+                'Action':"",
+                'Sentences':["real people", "real passion", "real action"],
+                'Id':""
+            },
+            {
+                'Action':"jobs",
+                'Sentences':["get to know us", "click here if you are up to the challenge"],
+                'Id':""
+            },
+            {
+                'Action':"about",
+                'Sentences':["who we are", "click here to find out"],
+                'Id':""
+            },
+            {
+                'Action':"about",
+                'Sentences':["a team photo has many portraits", "but only one story"],
+                'Id':""
+            },
+            {
+                'Action':"contact",
+                'Sentences':["a place to grow", "click here to find our locations"],
+                'Id':""
             }
+        ],
+        'column_patterns':[
+           ["d","a","e","c","f","b","j"],
+           ["a","j","e","f","b","h"],
+           ["i","i","a","j","a","e","b","j"]
         ]
     };
+
+
 
 
     Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
@@ -417,6 +471,7 @@
     Quince.EventManager = new Quince.Event();
 
     Quince.Event.SHOWPOPUP = 'SHOWPOPUP';
+    Quince.Event.DEEPLINK = 'DEEPLINK';
     Quince.Event.RESIZE = 'RESIZE';
     Quince.Event.RESIZE_SM_RESPONSE = 'RESIZE_SM';
     Quince.Event.RESIZE_MED_RESPONSE = 'RESIZE_MED';
