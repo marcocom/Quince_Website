@@ -36,7 +36,7 @@
     );
 
     $q.Model.Mosaic = $q.Model.extend({
-        _totalPreload : 4,
+        _totalPreload : 5,
         _currentColumn : 0,
         _columns : [],
         _firstLoad : false,
@@ -55,9 +55,9 @@
         },
         modifyPreload : function(){
             if($q.windowWidth <= 450){
-                this._totalPreload = 2;
+                this._totalPreload = 3;
             } else if($q.windowHeight >= 970 ){
-                this._totalPreload = 6;
+                this._totalPreload = 7;
             }
         },
         mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
@@ -135,7 +135,6 @@
         },
         parseColumn : function(result ){
 
-
             var style = Math.abs(this._currentColumn % 3);
             var el = this.injectColumn(style);
 
@@ -149,7 +148,8 @@
         loadError : function(error){
             $log("=============================DATA LOAD ERROR===========================",error);
             this._dataFinished = true;
-            Quince.EventManager.fireEvent(Quince.Event.JSON_NOT_FOUND, this);
+            Quince.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler);
+//            Quince.EventManager.fireEvent(Quince.Event.JSON_NOT_FOUND, this);
         },
         injectColumn : function(style){
             var htm = $('<li class="column col-style-'+style+'"></li>');

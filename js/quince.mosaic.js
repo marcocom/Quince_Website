@@ -61,7 +61,7 @@
                 mouseWheel: true,
                 click:true,
                 startX:0,
-                useTransform: false,
+                useTransform: true,
                 //snap: 'li',
                 deceleration:0.05,
                 momentum:true
@@ -101,7 +101,7 @@
 
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.refreshMosaic, this));
 
-            this.onResize();
+            this.onResize(null);
         },
 
         onBeforeScrollStart: function (e) {
@@ -140,7 +140,6 @@
 //                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
 //                    this.scaleColumns($q.columnSizes.cell_total_container_width);
 //                }
-
 //
 //                if($q.windowHeight > this.columnWidths.tl && $q.windowWidth > this.columnWidths.xs){
 //                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_TALL_RESPONSE, this);
@@ -206,8 +205,10 @@
 
         onScrollEnd : function(e){
 //            $log("SCROLL END---------------- X:"+this.x);
-            this.currentScrollX = this._slider.x;
-            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+                this.currentScrollX = this._slider.x;
+
+                $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+
         },
 
         onFlick : function(e){
