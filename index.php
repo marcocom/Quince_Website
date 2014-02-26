@@ -246,7 +246,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
         <!-- ==================================TEMPLATES======================================== -->
         <script type="text/template" id="tpl-cell-a">
             <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
-            <div class="cell-a cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-a cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="1" data-sizey="2" data-client="<%= Client %>" id="<%= Id %>">
                 <div class="off-state">
                     <a href="#"><img src="<%= Image %>"></a>
                 </div>
@@ -271,7 +271,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-b">
             <!-- QUARTER-SIZED IMAGE w/ INFO -->
-            <div class="cell-b cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-b cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= Client %>" id="<%= Id %>">
                 <div class="off-state">
                     <a href="#"><img src="<%= Image %>"></a>
                 </div>
@@ -296,7 +296,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-c">
             <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
-            <div class="cell-c cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>" data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-c cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>" data-sizex="1" data-sizey="1" data-client="<%= Client %>" id="<%= Id %>">
                 <div class="off-state">
                     <a href="#"><img src="<%= Image %>"></a>
                 </div>
@@ -327,7 +327,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-f">
             <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-            <div class="cell-f cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-f cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="2" data-sizey="2" data-client="<%= Client %>" id="<%= Id %>">
                 <div class="off-state flexslider">
                     <ul class="slides">
                         <% for (var i=0; i < Image.length; i++) { %>
@@ -340,7 +340,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-g">
             <!-- LONG-IMAGE w/ NO INFO -->
-            <div class="cell-g cell-box"  data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" id="<%= Id %>">
+            <div class="cell-g cell-box"  data-sizex="2" data-sizey="1" id="<%= Id %>">
                 <div class="off-state">
                     <img src="<%= Image %>"">
                 </div>
@@ -349,7 +349,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-h">
             <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
-            <div class="cell-h cell-box" data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" id="<%= Id %>">
+            <div class="cell-h cell-box" data-sizex="1" data-sizey="1" id="<%= Id %>">
                 <div class="on-state">
                     <div class="content">
                         <div class="author" id="<%= AuthorId %>">
@@ -375,7 +375,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-j">
             <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
-            <div class="cell-j cell-box"  data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="<%= SizeX %>" data-sizey="<%= SizeY %>" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-j cell-box"  data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= Client %>" id="<%= Id %>">
                 <div class="off-state">
                     <img class="playbut" src="img/playbut.png">
                     <img class="thumb" src="<%= Image %>">

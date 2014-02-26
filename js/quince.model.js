@@ -265,6 +265,9 @@
             if(letter == 'e'){
                 obj = $q.ancillary_models.action_data.splice(0,1)[0];
             } else
+            if(letter == 'g'){
+                obj = $q.ancillary_models.long_images.splice(0,1)[0];
+            } else
             if(letter == 'i'){
                 obj = {'Id':''};
             }

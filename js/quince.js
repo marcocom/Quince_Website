@@ -29,7 +29,7 @@
         landingContent:null,
         _model:null,
         _mosaic_container:null,
-        AncillaryLetters : ["d", "e", "i"], //cell-types that are not CMS data-fed.  pulled from objects above.
+        AncillaryLetters : ["d", "e", "i", "g"], //cell-types that are not CMS data-fed.  pulled from objects above.
 
         init: function() {
             if ($.support.touch) $('body').addClass('ipad-iphone');
@@ -459,9 +459,23 @@
                 'Id':""
             }
         ],
+        'long_images':[
+            {
+                'Image':"img/cells/cell_g_1.jpg",
+                'Id':""
+            },
+            {
+                'Image':"img/cells/cell_g_2.jpg",
+                'Id':""
+            },
+            {
+                'Image':"img/cells/cell_g_3.jpg",
+                'Id':""
+            }
+        ],
         'column_patterns':[
            ["d","a","e","c","f","b","j"],
-           ["a","j","e","f","b","h"],
+           ["a","j","e","f","b","g","h"],
            ["i","i","a","j","a","e","b","j"]
         ]
     };
