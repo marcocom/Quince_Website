@@ -678,7 +678,6 @@ IScroll.prototype = {
 		this._execEvent('refresh');
 
 		this.resetPosition();
-        $log("REFRESHING MOSAIC");
 // INSERT POINT: _refresh
 
 	},

@@ -38,6 +38,7 @@
         currentColumnWidth:null,
         currentScrollX:0,
         _slider : null,
+        _loader : null,
         columnWidths:{
             'xs':480,
             'md':720,
@@ -178,6 +179,7 @@
 //                 _this._slider.refresh();
 //                _this._slider.scrollTo(_this.currentScrollX, 0, 0);
 //            }, 200);
+            this.hideLoader();
         },
 
         positionMosaic : function(){
@@ -207,8 +209,18 @@
 //            $log("SCROLL END---------------- X:"+this.x);
                 this.currentScrollX = this._slider.x;
 
-                $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+//            if(this._slider.x <= this._slider.maxScrollX) this.showLoader();
+            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+        },
 
+        showLoader : function(){
+            this._slider.scrollBy(-100,0);
+            this._loader = $('<img src="img/fancybox_loaing.gif">').appendTo(this._mosaic);
+            this._loader.css({'position':'absolute', 'display':'block', 'top':'200px', 'left':($q.windowWidth - 50), 'z-index':'50' })
+        },
+
+        hideLoader : function(){
+            this._loader.remove();
         },
 
         onFlick : function(e){
@@ -473,7 +485,6 @@
                 this.openInfo();
             } else {
                 if(this.sizeLetter == "j") this.processVideoAction(this._el.data('portal'));
-
                 this.closeInfo();
             }
         },

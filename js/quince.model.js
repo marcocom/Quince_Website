@@ -61,7 +61,7 @@
             }
         },
         mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
-            $log("MODEL.MOSAIC.SCROLL xdiff:"+xdiff+" dir:"+maxscroll+" dirx:"+directx+" diry:"+directy+" DATAFINISHED:"+this._dataFinished);
+//            $log("MODEL.MOSAIC.SCROLL xdiff:"+xdiff+" dir:"+maxscroll+" dirx:"+directx+" diry:"+directy+" DATAFINISHED:"+this._dataFinished);
 
             if(xdiff <= maxscroll && !this._dataFinished) this.nextModel();
         },
