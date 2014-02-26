@@ -28,6 +28,7 @@
         _currentPopup : null,
         landingContent:null,
         _model:null,
+        _mosaic_container:null,
         AncillaryLetters : ["d", "e", "i"], //cell-types that are not CMS data-fed.  pulled from objects above.
 
         init: function() {
@@ -35,6 +36,8 @@
             this.setupEventManager();
             $log("QUINCE:INIT isHandheld:"+this.isHandheldPortrait+"  --UA:"+navigator.userAgent);
             $(window).resize(this.onResize);
+
+            $("#slider-container").hide();
            // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
 //            Quince.eventManager.addEventHandler(Quince.Event.LOGIN_SUCCESS_FB_USER,this.fbLoggedIn.bind(this));
@@ -489,6 +492,7 @@
     Quince.Event.MODEL_COLUMN_LOADED = "MODEL_COLUMN_LOADED";
     Quince.Event.MODEL_COLUMNS_COMPLETE = "MODEL_COLUMNS_COMPLETE";
     Quince.Event.MODEL_TEMPLATES_COMPLETE = "MODEL_TEMPLATES_COMPLETE";
+    Quince.Event.JSON_NOT_FOUND = "JSON_NOT_FOUND";
 
     
     this.Quince = Quince;

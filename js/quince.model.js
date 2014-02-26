@@ -40,6 +40,7 @@
         _currentColumn : 0,
         _columns : [],
         _firstLoad : false,
+        _dataFinished : false,
         _mosaic:null,
         _construct : function(el) {
             this._el = $(el);
@@ -47,8 +48,22 @@
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
 
+            this.modifyPreload();
             this.compileTemplates();
             this.initModel();
+            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
+        },
+        modifyPreload : function(){
+            if($q.windowWidth <= 450){
+                this._totalPreload = 2;
+            } else if($q.windowHeight >= 970 ){
+                this._totalPreload = 6;
+            }
+        },
+        mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
+            $log("MODEL.MOSAIC.SCROLL xdiff:"+xdiff+" dir:"+maxscroll+" dirx:"+directx+" diry:"+directy+" DATAFINISHED:"+this._dataFinished);
+
+            if(xdiff <= maxscroll && !this._dataFinished) this.nextModel();
         },
         compileTemplates : function(){
             Quince.templates.cells.cell_a = _.template($('#tpl-cell-a').html());
@@ -84,52 +99,64 @@
 //                    $log("JSON INIT:"+this.url);
 //                }
 //            });
-            this.loadJson();
+            this.loadJson(0);
         },
         nextModel : function(){
-            if((this._currentColumn+1) < this._totalPreload){
-                this._currentColumn++;
-                this.loadJson();
+            var nextup  = (this._currentColumn+1);
+            if(nextup < this._totalPreload){
+
+                this.loadJson(nextup);
+
             } else if(!this._firstLoad){
+
                 this._firstLoad = true;
-                $log("==============================FINISH PRELOAD===========================:"+this._firstLoad);
+                $log("==============================FINISH PRELOAD=========================== firstload:"+this._firstLoad);
                 //event call
                 Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_COMPLETE, this);
-            } else {
+
+            } else if(!this._dataFinished){
+
                 //what now?
-                $log("==============================LOAD REQUEST===========================:"+this._firstLoad);
-                this._currentColumn++;
-                this.loadJson();
+                $log("==============================LOAD REQUEST=========================== firstload:"+this._firstLoad);
+
+                this.loadJson(nextup);
             }
         },
-        loadJson : function(){
+        loadJson : function(int){
+
             $.ajax({
-                url: "data/column_"+this._currentColumn+".json",
+                url: "data/column_"+int+".json",
                 cache: false,
                 async:true,
                 dataType: 'json',
                 success: $.proxy(this.parseColumn, this),
-                error:this.loadError
+                error:$.proxy(this.loadError, this)
             });
         },
         parseColumn : function(result ){
+
+
             var style = Math.abs(this._currentColumn % 3);
             var el = this.injectColumn(style);
 
             var c = new Quince.Model.Column(result, style, el, this._currentColumn);
             this._columns.push(c);
 
-            this.nextModel();
+            this._currentColumn++;
+
+            !this._firstLoad ? this.nextModel() : $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
         },
         loadError : function(error){
-            $log("=============================DATA LOAD ERROR===========================");
+            $log("=============================DATA LOAD ERROR===========================",error);
+            this._dataFinished = true;
+            Quince.EventManager.fireEvent(Quince.Event.JSON_NOT_FOUND, this);
         },
         injectColumn : function(style){
             var htm = $('<li class="column col-style-'+style+'"></li>');
             var el = htm.appendTo(this._mosaic);
             return el;
         },
-        loadtemplateFile : function(templateName) {
+        loadTemplateFile : function(templateName) {
             var template = $('#tpl-' + templateName);
             if (template.length === 0) {
                 var tmpl_dir = '/templates';

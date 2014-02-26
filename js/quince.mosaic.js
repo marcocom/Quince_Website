@@ -11,7 +11,6 @@
         {	// associate element class to Page for auto initialization
             _selectors : {},
             _extend : $q.Mosaic.extend,
-            _slider : null,
             extend : function(prop, selector) {
                 var klass = $q.Mosaic._extend(prop);
                 if (typeof selector == 'string')
@@ -37,6 +36,8 @@
         loading_items:false,
         building:false,
         currentColumnWidth:null,
+        currentScrollX:0,
+        _slider : null,
         columnWidths:{
             'xs':480,
             'md':720,
@@ -54,19 +55,27 @@
 
         initContainer : function(){
 
-            $q.Mosaic._slider = new IScroll('#slider-container', {
+            this._slider = new IScroll('#slider-container', {
                 scrollX: true,
                 scrollY: false,
                 mouseWheel: true,
-                click:true
+                click:true,
+                startX:0,
+                useTransform: false,
+                //snap: 'li',
+                deceleration:0.05,
+                momentum:true
             });
 
-//            $q.Mosaic._slider.scrollBy(-$q.windowWidth, 0, 2500);
+//            this._slider.scrollBy(-$q.windowWidth, 0, 2500, IScroll.utils.ease.elastic);
 
-            $q.Mosaic._slider.on('scrollStart', $.proxy(this.onScrollStart, this));
-            $q.Mosaic._slider.on('scrollCancel', $.proxy(this.onScrollCancel, this));
-            $q.Mosaic._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
-            $q.Mosaic._slider.on('flick', $.proxy(this.onFlick, this));
+            this._slider.on('scrollStart', $.proxy(this.onScrollStart, this));
+//            this._slider.on('scrollCancel', $.proxy(this.onScrollCancel, this));
+            this._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
+//            this._slider.on('flick', $.proxy(this.onFlick, this));
+//            this._slider.on('refresh', $.proxy(this.positionMosaic, this));
+//            this._slider.on('beforeScrollStart', this.onBeforeScrollStart.bind(this));
+
 
             $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
@@ -85,25 +94,38 @@
 
 
             $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
-            Quince.EventManager.fireEvent(Quince.Event.RESIZE, this);
+
+            $q.EventManager.fireEvent($q.Event.RESIZE, this);
 
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
 
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.refreshMosaic, this));
+
+            this.onResize();
         },
 
-        onResize : function(){
+        onBeforeScrollStart: function (e) {
+            var target = e.target;
+            while (target.nodeType != 1) target = target.parentNode;
+            if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA') e.preventDefault();
+        },
+
+        onResize : function(e){
 
             var w = $(this._columns[0]).width();
             var totalw = (this._columns.length) * w;
-
+            var slider = this._slider;
+            var _this = this;
 
             $('#slider-container .scroller').width(totalw);
 
             if(w != this.currentColumnWidth){  //one-time event fire when site shifts through a responsive media-query
 
                 this.currentColumnWidth = w;
-                $q.Mosaic._slider.refresh();
+//                this._slider.refresh();
+                setTimeout(function () {
+                    _this._slider.refresh();
+                }, 0);
 
 //
 //                if($q.windowWidth < this.columnWidths.xs){
@@ -134,12 +156,34 @@
         },
 
         refreshMosaic: function(e){
-            var c = this._mosaic.find('.column');
-            this._columns = $(c);
 
+            $log("REFRESH MOSAIC!!!!!!");
+            var c = this._mosaic.find('.column');
+            var newcol = c[c.length-1];
+
+            this._columns.push(newcol);
             var totalw = (this._columns.length) * this.currentColumnWidth;
             $('#slider-container .scroller').width(totalw);
-            $q.Mosaic._slider.refresh();
+//
+            var mc = new $q.Mosaic.ParentColumn(newcol);
+//
+
+
+            var _this = this;
+
+
+
+
+            this._slider.refresh();
+//            setTimeout(function () {
+//                 _this._slider.refresh();
+//                _this._slider.scrollTo(_this.currentScrollX, 0, 0);
+//            }, 200);
+        },
+
+        positionMosaic : function(){
+//            this._slider.scrollTo(this.currentScrollX, 0, 0);
+            this._slider.forcePositionX(this.currentScrollX);
         },
 
         scaleColumns : function(w){
@@ -153,7 +197,7 @@
         onScrollStart : function(e){
 //            $log("SCROLL START----------------");
             $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_START, this);
-            Quince.EventManager.fireEvent(Quince.Event.RESIZE);
+//            $q.EventManager.fireEvent(Quince.Event.RESIZE);
         },
 
         onScrollCancel : function(e){
@@ -161,12 +205,13 @@
         },
 
         onScrollEnd : function(e){
-//            $log("SCROLL END----------------");
-            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this);
+//            $log("SCROLL END---------------- X:"+this.x);
+            this.currentScrollX = this._slider.x;
+            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
         },
 
         onFlick : function(e){
-//            $log("FLICK----------------");
+            $log("FLICK----------------");
             $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
         },
 
@@ -239,7 +284,7 @@
 
             //$log("INIT PARENT-COLUMN cells:"+ this._cells.length);
 
-            Quince.EventManager.fireEvent(Quince.Event.RESIZE);
+            $q.EventManager.fireEvent(Quince.Event.RESIZE, this);
         }
     });
 
@@ -375,6 +420,7 @@
             $q.EventManager.addEventHandler($q.Event.OPEN_CELL, this.onCellClick.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_START, this.closeInfo.bind(this));
 
+            $("#slider-container").show();
         },
 
         processVideoAction : function(portal){
@@ -462,7 +508,7 @@
             e.preventDefault();
             e.stopPropagation();
             this.startMouseX = e.gesture.center.pageX;
-            $log("ONPRESS [[]]:"+this.startMouseX);
+//            $log("ONPRESS [[]]:"+this.startMouseX);
         },
 
         onRelease : function(e){
@@ -470,7 +516,7 @@
             e.stopPropagation();
             var xdist = e.gesture.center.pageX - this.startMouseX;
             if(xdist < this.deadzone && xdist > -this.deadzone) this.onClick(null);
-            $log("ONRELEASE ]][[:"+xdist);
+//            $log("ONRELEASE ]][[:"+xdist);
         },
 
         onMsPress : function(e){

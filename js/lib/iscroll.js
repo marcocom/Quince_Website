@@ -678,7 +678,7 @@ IScroll.prototype = {
 		this._execEvent('refresh');
 
 		this.resetPosition();
-
+        $log("REFRESHING MOSAIC");
 // INSERT POINT: _refresh
 
 	},
@@ -718,7 +718,6 @@ IScroll.prototype = {
 
 	scrollTo: function (x, y, time, easing) {
 		easing = easing || utils.ease.circular;
-
 		if ( !time || (this.options.useTransition && easing.style) ) {
 			this._transitionTimingFunction(easing.style);
 			this._transitionTime(time);
@@ -727,6 +726,9 @@ IScroll.prototype = {
 			this._animate(x, y, time, easing.fn);
 		}
 	},
+    forcePositionX : function(x){
+        this.options.useTransition ? this._translate(x, 0) : this._animate(x, 0, 0);
+    },
 
 	scrollToElement: function (el, time, offsetX, offsetY, easing) {
 		el = el.nodeType ? el : this.scroller.querySelector(el);

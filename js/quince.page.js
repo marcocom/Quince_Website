@@ -42,6 +42,7 @@
             this.contentSwap = null;
             this.closeButton = null;
             this.initPage();
+
         },
 
         initPage : function(){
