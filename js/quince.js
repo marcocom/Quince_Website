@@ -351,7 +351,9 @@
             'cell_f':null,
             'cell_g':null,
             'cell_h':null,
-            'cell_i':null
+            'cell_i':null,
+
+            'cell_p':null
         }
     };
     Quince.ancillary_models = {

@@ -31,7 +31,7 @@
         "AuthorId": 234,
         "JobTitle": "Lorem Director b",
         "Article": "Lorem ipsum dolor sit amet. consequtor locum like latin aleph.",
-        "URL": "http://www.test.com",
+        "URL": "",
         "Image":["img/cells/10151411931875666.jpg"],
         "Tags" : "Lorem, Ipsum, Dolor, Sit, Amet"
     },
@@ -68,7 +68,12 @@
         "JobTitle": "",
         "Article": "Lorem ipsum dolor sit amet. consequtor locum like latin aleph.",
         "URL": "",
-        "Image":["img/cells/cell-f_474x272_BandenSpecialist.jpg", "img/cells/cell-f_474x272_Copaco_event.jpg", "img/cells/cell-f_474x272_Ctouch_Stand.jpg", "img/cells/cell-f_474x272_HC_3D.jpg"],
+        "Image":[
+            "img/cells/cell-f_474x272_BandenSpecialist.jpg",
+            "img/cells/cell-f_474x272_Copaco_event.jpg",
+            "img/cells/cell-f_474x272_Ctouch_Stand.jpg",
+            "img/cells/cell-f_474x272_HC_3D.jpg"
+        ],
         "Tags" : "Lorem, Ipsum, Dolor, Sit, Amet"
     },
     {
@@ -86,7 +91,7 @@
         "JobTitle": "",
         "Article": "",
         "URL": "",
-        "Image":["img/cells/cell-g_474x134_Budapest_Office.jpg"],
+        "Image":["img/cells/longs/cell-g_474x134_Budapest_Office.jpg"],
         "Tags" : ""
     },
     {

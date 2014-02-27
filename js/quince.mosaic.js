@@ -100,7 +100,7 @@
 
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
 
-            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.refreshMosaic, this));
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
 
             this.onResize(null);
         },
@@ -155,7 +155,7 @@
 
         },
 
-        refreshMosaic: function(e){
+        appendMosaic: function(e){
 
             $log("REFRESH MOSAIC!!!!!!");
             var c = this._mosaic.find('.column');
@@ -220,7 +220,7 @@
         },
 
         hideLoader : function(){
-            this._loader.remove();
+//            this._loader.remove();
         },
 
         onFlick : function(e){

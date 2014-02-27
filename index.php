@@ -398,6 +398,28 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
             </div>
         </script>
 
+        <script type="text/template" id="tpl-personnel">
+            <!-- QUARTER-SIZED IMAGE w/ INFO -->
+            <div class="cell-p cell-box" data-ref="<%= Ref %>" data-author="<%= AuthorId %>" data-sizex="1" data-sizey="1" id="<%= Id %>">
+                <div class="off-state">
+                    <a href="#"><img src="<%= Image %>"></a>
+                </div>
+                <div class="on-state">
+                    <div class="content">
+                        <div class="author" id="<%= AuthorId %>">
+                            <a href="#">
+                                <h5 class="name"><%= Author %></h5>
+                                <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
+                            </a>
+                        </div>
+                        <div class="article">
+                            <h5><%= Article %></h5>
+                        </div>
+                        <div class="social"></div>
+                    </div>
+                </div>
+            </div>
+        </script>
 
 
 

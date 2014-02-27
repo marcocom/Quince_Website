@@ -77,6 +77,8 @@
             Quince.templates.cells.cell_i = _.template($('#tpl-cell-i').html());
             Quince.templates.cells.cell_j = _.template($('#tpl-cell-j').html());
 
+            Quince.templates.cells.cell_p = _.template($('#tpl-cell-personnel').html());
+
             $('#tpl-cell-a').remove();
             $('#tpl-cell-b').remove();
             $('#tpl-cell-c').remove();
@@ -87,6 +89,8 @@
             $('#tpl-cell-h').remove();
             $('#tpl-cell-i').remove();
             $('#tpl-cell-j').remove();
+
+            $('#tpl-cell-personnel').remove();
         },
         initModel : function(){
             $log("-------------------------MODEL MOSAIC INIT-----------------------------");
@@ -179,7 +183,6 @@
         }
 
     });
-
 
 
     $q.Model.Column = $q.Model.extend({
@@ -340,10 +343,6 @@
 //        }
 //    });
 //var search_view = new $q.Model.CellView({ el: $("#search_container") });
-
-
-
-
 
     $q.Model.Init();
 

@@ -68,12 +68,7 @@
         "JobTitle": "",
         "Article": "Lorem ipsum dolor sit amet. consequtor locum like latin aleph.",
         "URL": "",
-        "Image":[
-            "img/cells/cell-f_474x272_BandenSpecialist.jpg",
-            "img/cells/cell-f_474x272_Copaco_event.jpg",
-            "img/cells/cell-f_474x272_Ctouch_Stand.jpg",
-            "img/cells/cell-f_474x272_HC_3D.jpg"
-        ],
+        "Image":["img/cells/cell-f_474x272_BandenSpecialist.jpg", "img/cells/cell-f_474x272_Copaco_event.jpg", "img/cells/cell-f_474x272_Ctouch_Stand.jpg", "img/cells/cell-f_474x272_HC_3D.jpg"],
         "Tags" : "Lorem, Ipsum, Dolor, Sit, Amet"
     },
     {

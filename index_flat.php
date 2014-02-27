@@ -120,7 +120,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                     <div class="scroller">
                         <ul class="mosaic-container container">
 
-                            <li class="column col-style-3">
+                            <li class="column col-style-2">
                                 <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(quote) w/ NO INFO -->
                                 <div class="cell-d cell-box " data-row="1" data-col="1" data-sizex="2" data-sizey="1" id="0004">
                                         <div class="off-state">
@@ -262,7 +262,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                             </li>
 
 
-                            <li class="column col-style-1">
+                            <li class="column col-style-0">
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
@@ -372,7 +372,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                                 </div>
                             </li>
 
-                            <li class="column col-style-2">
+                            <li class="column col-style-1">
                                 <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
                                 <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
@@ -477,7 +477,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
                             </li>
 
-                            <li class="column col-style-3">
+                            <li class="column col-style-2">
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
@@ -608,7 +608,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
 
 
-                            <li class="column col-style-1">
+                            <li class="column col-style-0">
                                 <!-- LONG-IMAGE w/ NO INFO -->
                                 <div class="cell-g cell-box"  data-sizex="2" data-sizey="1" id="0007">
                                     <div class="off-state">
@@ -713,7 +713,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
                             </li>
 
-                            <li class="column col-style-2">
+                            <li class="column col-style-1">
                                 <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
                                 <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
@@ -817,7 +817,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
                             </li>
 
-                            <li class="column col-style-3">
+                            <li class="column col-style-2">
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
@@ -949,7 +949,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
 
 
-                            <li class="column col-style-1">
+                            <li class="column col-style-0">
                                 <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(Quotes) w/ NO INFO -->
                                 <div class="cell-d cell-box" data-size="2" id="0004">
                                     <div class="off-state">
@@ -1069,7 +1069,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
                             </li>
 
-                            <li class="column col-style-2">
+                            <li class="column col-style-1">
                                 <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
                                 <div class="cell-a cell-box " data-portal="fb" data-value="CMS_ID_HERE" data-date="00000" data-viewed="0000" data-row="1" data-col="1"  data-sizex="1" data-sizey="2" data-client="123456" id="0001">
                                     <div class="off-state">
@@ -1181,7 +1181,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                                 </div>
                             </li>
 
-                            <li class="column col-style-3">
+                            <li class="column col-style-2">
                                 <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
                                 <div class="cell-i cell-box " data-size="1" id="0009"></div>
