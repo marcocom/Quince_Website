@@ -224,7 +224,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                                             <div class="article">
                                                 <h5>It is our responsibility to take care of our environment. There's no actual small figures cleaning the the mess we leave behind.</h5>
                                             </div>
-                                            <a class="cta-text" target="_blank" href="https://www.facebook.com/photo.php?fbid=10151669526830666" >read more &gt;&gt;</a>
+                                            <a class="cta-text" target="_blank" href="http://www.pinterest.com/pin/10151669526830666" >read more &gt;&gt;</a>
                                         </div>
                                     </div>
                                 </div>

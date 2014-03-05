@@ -39,6 +39,7 @@
         currentScrollX:0,
         _slider : null,
         _loader : null,
+        _cta : null,
         columnWidths:{
             'xs':480,
             'md':720,
@@ -67,6 +68,7 @@
                 deceleration:0.05,
                 momentum:true
             });
+            this.initCTA();
 
 //            this._slider.scrollBy(-$q.windowWidth, 0, 2500, IScroll.utils.ease.elastic);
 
@@ -77,7 +79,7 @@
 //            this._slider.on('refresh', $.proxy(this.positionMosaic, this));
 //            this._slider.on('beforeScrollStart', this.onBeforeScrollStart.bind(this));
 
-
+            this.loading_items = true;
             $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
             var m = this._el.find('.mosaic-container');
@@ -93,16 +95,71 @@
             });
 
 
-
-            $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
+            this.addEventHandlers();
 
             $q.EventManager.fireEvent($q.Event.RESIZE, this);
 
-            $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
-
-            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
+            this.initLoader();
+            this.hideLoader();
 
             this.onResize(null);
+        },
+        initCTA : function(){
+            var _this = this;
+
+            var cta = this._el.find('.cta-msg');
+            this._cta = $(cta[0]);
+            this._cta.css({'left':'5px'});
+            setTimeout(function(){
+                // Get the width here
+                _this.animateCTA();
+            },2000);
+        },
+
+        addEventHandlers : function(){
+            $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
+            $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
+
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
+        },
+
+        removeEventHandlers : function(){
+
+            $q.EventManager.removeEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));
+
+            $q.EventManager.removeEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
+
+            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
+            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
+
+            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
+        },
+
+        animateCTA : function(){
+
+            //this._slider.x <= this._slider.maxScrollX
+            var go = ($q.windowWidth + Math.abs(this._slider.x)) - (this._cta.width() + 15);
+            this._cta.animate({ top: '-=100px' }, 600, 'easeOutBounce');
+//            this._cta.css({'left':(go+'px')});
+
+        },
+
+        onLoadingData : function(e){
+            this.loading_items = true;
+            this.showLoader();
+        },
+
+        onEndOfData : function(e){
+            this.loading_items = false;
+
+            var w = $(this._columns[0]).width();
+            var totalw = (this._columns.length * w);
+            $('#slider-container .scroller').width(totalw);
+            this._slider.refresh();
+            this.hideLoader();
+            this._loader.remove();
         },
 
         onBeforeScrollStart: function (e) {
@@ -114,7 +171,7 @@
         onResize : function(e){
 
             var w = $(this._columns[0]).width();
-            var totalw = (this._columns.length) * w;
+            var totalw = (this._columns.length * w) + (this.loading_items ? 50 : 0 );
             var slider = this._slider;
             var _this = this;
 
@@ -171,7 +228,7 @@
 
             var _this = this;
 
-
+            this.hideLoader();
 
 
             this._slider.refresh();
@@ -179,7 +236,7 @@
 //                 _this._slider.refresh();
 //                _this._slider.scrollTo(_this.currentScrollX, 0, 0);
 //            }, 200);
-            this.hideLoader();
+
         },
 
         positionMosaic : function(){
@@ -208,19 +265,30 @@
         onScrollEnd : function(e){
 //            $log("SCROLL END---------------- X:"+this.x);
                 this.currentScrollX = this._slider.x;
-
+                this.animateCTA();
 //            if(this._slider.x <= this._slider.maxScrollX) this.showLoader();
             $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
         },
 
+        initLoader : function(){
+            this._loader = $('<img src="img/loading.gif">')
+                .appendTo('.home-content')
+                .css({
+                    'position':'absolute',
+                    'display':'block',
+                    'top':'123px',
+                    'right':'10px',
+                    'z-index':'50'
+                });
+        },
+
         showLoader : function(){
-            this._slider.scrollBy(-100,0);
-            this._loader = $('<img src="img/fancybox_loaing.gif">').appendTo(this._mosaic);
-            this._loader.css({'position':'absolute', 'display':'block', 'top':'200px', 'left':($q.windowWidth - 50), 'z-index':'50' })
+            this._loader.show();
+
         },
 
         hideLoader : function(){
-//            this._loader.remove();
+            this._loader.hide();
         },
 
         onFlick : function(e){
@@ -270,7 +338,6 @@
         scroll:false,
         filter:false,
         grid_full:false,
-        loading_items:false,
 
         _construct : function(el) {
             this._el = $(el);

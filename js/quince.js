@@ -107,6 +107,25 @@
                 for (var i = 0, l = keys.length; i < l; i++) v = v[keys[i]];
                 return (typeof v !== "undefined" && v !== null) ? v : "";
             });
+        },
+        isEmpty : function(obj) {
+
+            // null and undefined are "empty"
+            if (obj == null) return true;
+
+            // Assume if it has a length property with a non-zero value
+            // that that property is correct.
+            if (obj.length > 0)    return false;
+            if (obj.length === 0)  return true;
+
+            // Otherwise, does it have any properties of its own?
+            // Note that this doesn't handle
+            // toString and valueOf enumeration bugs in IE < 9
+            for (var key in obj) {
+                if (hasOwnProperty.call(obj, key)) return false;
+            }
+
+            return true;
         }
 
     };
@@ -463,22 +482,22 @@
         ],
         'long_images':[
             {
-                'Image':"img/cells/cell_g_1.jpg",
+                'Image':"img/cells/longs/cell_g_1.jpg",
                 'Id':""
             },
             {
-                'Image':"img/cells/cell_g_2.jpg",
+                'Image':"img/cells/longs/cell_g_2.jpg",
                 'Id':""
             },
             {
-                'Image':"img/cells/cell_g_3.jpg",
+                'Image':"img/cells/longs/cell_g_3.jpg",
                 'Id':""
             }
         ],
         'column_patterns':[
-           ["d","a","e","c","f","b","j"],
-           ["a","j","e","f","b","h"],
-           ["g","a","j","a","e","b","j"]
+           ["d","a","e","b","f","b","c","j"],
+           ["a","j","b","e","c","b","h","f","j"],
+           ["g","f","a","j","a","e","b","j"]
         ]
     };
 
@@ -505,8 +524,10 @@
     Quince.Event.MOSAIC_SCROLL_END = "MOSAIC_SCROLL_END";
     Quince.Event.MOSAIC_FLICK = "MOSAIC_FLICK";
     Quince.Event.MOSAIC_VIDEO = "MOSAIC_VIDEO";
+    Quince.Event.MODEL_COLUMN_LOADING = "MODEL_COLUMN_LOADING";
     Quince.Event.MODEL_COLUMN_LOADED = "MODEL_COLUMN_LOADED";
     Quince.Event.MODEL_COLUMNS_COMPLETE = "MODEL_COLUMNS_COMPLETE";
+    Quince.Event.MODEL_COLUMNS_NODATA = "MODEL_COLUMNS_NODATA";
     Quince.Event.MODEL_TEMPLATES_COMPLETE = "MODEL_TEMPLATES_COMPLETE";
     Quince.Event.JSON_NOT_FOUND = "JSON_NOT_FOUND";
 

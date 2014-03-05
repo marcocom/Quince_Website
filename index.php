@@ -118,6 +118,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div id="slider-container">
                     <div class="scroller">
+                        <div class="cta-msg"><h5>scroll or drag from the right to see more <b>>></b></h5></div>
                         <ul class="mosaic-container container">
 
 
@@ -252,7 +253,9 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div class="on-state">
                     <div class="content">
+                        <% if(Title && Title.length > 0){ %>
                         <h3 class="title"><%= Title %></h3>
+                        <% } %>
                         <div class="author" id="<%= AuthorId %>">
                             <a href="#">
                                 <h5 class="name"><%= Author %></h5>
@@ -262,7 +265,9 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                         <div class="article">
                             <h5><%= Article %></h5>
                         </div>
-                        <a class="cta-text" href="<%= URL %>" >read more &gt;&gt;</a>
+                        <% if(URL && URL.length > 0){ %>
+                        <a class="cta-text" href="<%= URL %>" target="_blank" >read more &gt;&gt;</a>
+                        <% } %>
                         <div class="social"></div>
                     </div>
                 </div>
@@ -277,7 +282,9 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div class="on-state">
                     <div class="content">
-                        <h3 class="title"><%= Title %></h3>
+                        <% if(Title && Title.length > 0){ %>
+                            <h3 class="title"><%= Title %></h3>
+                        <% } %>
                         <div class="author" id="<%= AuthorId %>">
                             <a href="#">
                                 <h5 class="name"><%= Author %></h5>
@@ -287,7 +294,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                         <div class="article">
                             <h5><%= Article %></h5>
                         </div>
-                        <a class="cta-text" href="<%= URL %>" >read more &gt;&gt;</a>
+                        <a class="cta-text" href="<%= URL %>" target="_blank" >read more &gt;&gt;</a>
                         <div class="social"></div>
                     </div>
                 </div>
@@ -335,6 +342,18 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                         <% } %>
                     </ul>
                 </div>
+                <div class="on-state">
+                    <div class="content">
+                        <% if(Title && Title.length > 0){ %>
+                            <h3 class="title"><%= Title %></h3>
+                        <% } %>
+                        <div class="article">
+                            <h5><%= Article %></h5>
+                        </div>
+                        <div class="social"></div>
+                    </div>
+                </div>
+            </div>
             </div>
         </script>
 
@@ -352,16 +371,20 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
             <div class="cell-h cell-box" data-sizex="1" data-sizey="1" id="<%= Id %>">
                 <div class="on-state">
                     <div class="content">
-                        <div class="author" id="<%= AuthorId %>">
-                            <a href="#">
-                                <h5 class="name"><%= Author %></h5>
-                                <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
-                            </a>
-                        </div>
+                        <% if(Title && Title.length > 0){ %>
+                            <h3 class="title"><%= Title %></h3>
+                        <% } else { %>
+                            <div class="author" id="<%= AuthorId %>">
+                                <a href="#">
+                                    <h5 class="name"><%= Author %></h5>
+                                    <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
+                                </a>
+                            </div>
+                        <% } %>
                         <div class="article">
                             <h5><%= Article %></h5>
                         </div>
-                        <a class="cta-text" href="<%= URL %>" >read more &gt;&gt;</a>
+                        <a class="cta-text" href="<%= URL %>" target="_blank" >read more &gt;&gt;</a>
                         <div class="social"></div>
                     </div>
                 </div>
@@ -382,16 +405,20 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div class="on-state">
                     <div class="content">
+                        <% if(Title && Title.length > 0){ %>
+                            <h3 class="title"><%= Title %></h3>
+                        <% } else { %>
                         <div class="author" id="<%= AuthorId %>">
                             <a href="#">
                                 <h5 class="name"><%= Author %></h5>
                                 <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
                             </a>
                         </div>
+                        <% } %>
                         <div class="article">
                             <h5><%= Article %></h5>
                         </div>
-                        <a class="cta-text" href="<%= URL %>" >view &gt;&gt;</a>
+                        <a class="cta-text" href="#">view &gt;&gt;</a>
                         <div class="social"></div>
                     </div>
                 </div>
@@ -406,6 +433,9 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div class="on-state">
                     <div class="content">
+                        <% if(Title && Title.length > 0){ %>
+                            <h3 class="title"><%= Title %></h3>
+                        <% } %>
                         <div class="author" id="<%= AuthorId %>">
                             <a href="#">
                                 <h5 class="name"><%= Author %></h5>

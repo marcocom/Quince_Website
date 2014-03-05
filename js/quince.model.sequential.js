@@ -75,11 +75,10 @@
             }
         },
         mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
-//            //$log("MODEL.MOSAIC.SCROLL xdiff:"+xdiff+" dir:"+maxscroll+" dirx:"+directx+" diry:"+directy+" DATAFINISHED:"+this._dataFinished);
+//            $log("MODEL.MOSAIC.SCROLL xdiff:"+xdiff+" dir:"+maxscroll+" dirx:"+directx+" diry:"+directy+" DATAFINISHED:"+this._dataFinished);
 
             if(xdiff <= maxscroll && !this._dataFinished) this.nextModel();
         },
-        
         compileTemplates : function(){
             Quince.templates.cells.cell_a = _.template($('#tpl-cell-a').html());
             Quince.templates.cells.cell_b = _.template($('#tpl-cell-b').html());
@@ -107,57 +106,45 @@
 
             $('#tpl-cell-personnel').remove();
         },
-        
         initModel : function(){
-            //$log("-------------------------MODEL MOSAIC INIT-----------------------------");
+            $log("-------------------------MODEL MOSAIC INIT-----------------------------");
 //            this.components.Models.Column = Backbone.Model.extend({});
 //            this.components.Models.Cell = Backbone.Model.extend({});
 //            this.components.Collections.Cells = Backbone.Collection.extend({
 //                model: this.components.Models.Column,
 //                url: "../data/column_0.json",
 //                initialize: function(){
-//                    //$log("JSON INIT:"+this.url);
+//                    $log("JSON INIT:"+this.url);
 //                }
 //            });
-            this.loadJsonFile(this._currentColumn);
+            this.loadJson(0);
         },
-        
         nextModel : function(){
-
-//            this._currentColumn+=1;
-            var nextup  = (this._currentColumn+=1);
-
+            var nextup  = (this._currentColumn+1);
             if(nextup < this._totalPreload){
 
-                //$log("==============================LOAD NEXT=========================== nextup:"+nextup);
-                this.loadJsonFile(nextup);
+                this.loadJson(nextup);
 
             } else if(!this._firstLoad){
 
                 this._firstLoad = true;
-                
-                //$log("==============================FINISH PRELOAD=========================== firstload:"+this._firstLoad);
-
+                $log("==============================FINISH PRELOAD=========================== firstload:"+this._firstLoad);
+                //event call
                 Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_COMPLETE, this);
 
             } else if(!this._dataFinished){
 
-                //$log("==============================LOAD REQUEST=========================== firstload:"+this._firstLoad);
+                //what now?
+                $log("==============================LOAD REQUEST=========================== firstload:"+this._firstLoad);
 
-                this.loadJsonFile(nextup);
+                this.loadJson(nextup);
             }
         },
-        
-        loadJsonFile : function(indexnum){
-            var nextInverted = this._totalDataFiles - indexnum;
-            //$log("LOAD JSON:"+nextInverted+" index:"+indexnum);
-            if(nextInverted == 0) Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_NODATA, this);
-
-
-            if(nextInverted >= 0) {
-                Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
+        loadJson : function(int){
+            var nextConverted = this._totalDataFiles - int;
+            if(nextConverted >= 0) {
                 $.ajax({
-                    url: this._directory+"column_"+nextInverted+".json",
+                    url: this._directory+"column_"+nextConverted+".json",
                     cache: false,
                     async:true,
                     dataType: 'json',
@@ -166,26 +153,22 @@
                 });
             } else {
                 this.loadError(null);
-
             }
-
         },
-        
         parseColumn : function(result ){
 
             var style = Math.abs(this._currentColumn % 3);
             var el = this.injectColumn(style);
 
             var c = new Quince.Model.Column(result, style, el, this._currentColumn);
-
             this._columns.push(c);
 
-            //$log("PARSE COLUMNS current:"+this._currentColumn);
+            this._currentColumn++;
 
             !this._firstLoad ? this.nextModel() : $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
         },
         loadError : function(error){
-            //$log("=============================DATA LOAD ERROR===========================",error);
+            $log("=============================DATA LOAD ERROR===========================",error);
             this._dataFinished = true;
             Quince.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler);
 //            Quince.EventManager.fireEvent(Quince.Event.JSON_NOT_FOUND, this);
@@ -226,16 +209,16 @@
         _style:null,
         _index:0,
 
-        _construct : function(m, index, el, i) {
+        _construct : function(m, int, el, i) {
             this._el = $(el);
             this._model = m;
-            this._style = index;
+            this._style = int;
             this._index = i;
             this.initModel();
         },
 
         initModel : function(){
-            //$log("-------------------------MODEL COLUMN INIT-----------------------------:"+this._style);
+            $log("-------------------------MODEL COLUMN INIT-----------------------------:"+this._style);
 
             this.matchStyle();
             this.instantiateCells();
@@ -243,7 +226,7 @@
 
         instantiateCells : function(){
             for(var i = 0; i < this._model.length; i++){
-                //$log("INSTANTIATE CELL:"+this._model[i].CellType);
+                $log("INSTANTIATE CELL:"+this._model[i].CellType);
                 this.generateCell(i);
             }
         },
@@ -272,13 +255,13 @@
             var pattern = $q.ancillary_models.column_patterns[this._style];
 
             var newArr = [];
-//            if(this._index == 0){
-//                var firstobj = this.pullAncillaryData("d");
-//                firstobj.CellType = "d";
-//                if(firstobj.Id) firstobj.Id = '0001';
-//                newArr.push(firstobj);
-//                //$log("INDEX ZERO:", firstobj, newArr);
-//            }
+            if(this._index == 0){
+                var firstobj = this.pullAncillaryData("d");
+                firstobj.CellType = "d";
+                if(firstobj.Id) firstobj.Id = '0001';
+                newArr.push(firstobj);
+                $log("INDEX ZERO:", firstobj, newArr);
+            }
 
 
             for(var i = 0; i < pattern.length; i++){
@@ -287,34 +270,32 @@
                 var cell_letter = pattern[i];
                 var uId = "0" + this._index.toString() + i.toString();  //--------------------------------------TEMP this creates a unique ID number for every unit.  no reason really...yet
 
-//                if(this._model.length < 1) return;
+                if(this._model.length < 1) return;
                 if($q.AncillaryLetters.indexOf(cell_letter) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
 
-//                    //$log("ANCILLARY CELL:"+cell_letter);
+//                    $log("ANCILLARY CELL:"+cell_letter);
                     ancil_obj = this.pullAncillaryData(cell_letter);
                     ancil_obj.CellType = cell_letter;
 
                 } else {
                     for (var k = 0; k < this._model.length; k++){
-                        if(this._model[k].CellType == cell_letter) ancil_obj = this._model.splice(k, 1)[0];
-
+                        if(this._model[k].CellType === cell_letter) ancil_obj = this._model.splice(k, 0);
                     }
-
 //                    ancil_obj = this.getObjects(this._model, 'CellType', cell_letter)[0];
-                    //$log("DATA CELL:"+cell_letter, ancil_obj);
+//                    $log("DATA CELL:"+cell_letter, ancil_obj);
 
-                    if($q.isEmpty(ancil_obj)) ancil_obj = {};  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<DISABLE TO FIND OUT IF YOURE MISSING DATA IN THE HARD-CODED FILES
+                    if(!ancil_obj) ancil_obj = {};  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<DISABLE TO FIND OUT IF YOURE MISSING DATA IN THE HARD-CODED FILES
                 }
 
 
-                if($q.isEmpty(ancil_obj) == false){
+                if($q.isEmpty(ancil_obj)){
                     if(ancil_obj.Id) ancil_obj.Id = uId;
                     newArr.push(ancil_obj);
                 }
             }
 
-            //$log("MODEL:");
-            //$dir(newArr);
+            $log("MODEL:");
+            $dir(newArr);
             this._model = newArr;
 
         },
@@ -334,7 +315,6 @@
             if(letter == 'i'){
                 obj = {'Id':''};
             }
-
             return obj;
         },
 
@@ -362,7 +342,7 @@
         _column:null,
         _construct : function(m, el) {
             this._model = m;
-//            //$log("-----------MODEL CELL INIT----------:");
+//            $log("-----------MODEL CELL INIT----------:");
 //            $dir(this._model);
             this._column = el;
             this._style = this._model.CellType;
