@@ -29,7 +29,7 @@
             }
         }
     );
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
     $q.Mosaic.Container = $q.Mosaic.extend({
         _mosaic:null,
         _columns:null,
@@ -104,17 +104,6 @@
 
             this.onResize(null);
         },
-        initCTA : function(){
-            var _this = this;
-
-            var cta = this._el.find('.cta-msg');
-            this._cta = $(cta[0]);
-            this._cta.css({'left':'5px'});
-            setTimeout(function(){
-                // Get the width here
-                _this.animateCTA();
-            },2000);
-        },
 
         addEventHandlers : function(){
             $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
@@ -137,12 +126,28 @@
             $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
         },
 
+        initCTA : function(){
+            var _this = this;
+
+            var cta = this._el.find('.cta-msg');
+            this._cta = $(cta[0]);
+            this._cta.css({'left':'150px'});
+
+            setTimeout(function(){
+                // Get the width here
+                _this.animateCTA();
+            },2000);
+        },
+
         animateCTA : function(){
 
             //this._slider.x <= this._slider.maxScrollX
-            var go = ($q.windowWidth + Math.abs(this._slider.x)) - (this._cta.width() + 15);
-            this._cta.animate({ top: '-=100px' }, 600, 'easeOutBounce');
-//            this._cta.css({'left':(go+'px')});
+            var go = ($q.windowWidth + Math.abs(this._slider.x)) - (this._cta.width() + 10);
+            var currentX = Number(this._cta.css('left').split('px')[0]);
+            $log("CTA x:"+currentX+" go:"+go);
+            if(go > currentX)
+                this._cta.animate({ left: (go+'px') }, 600, 'easeOutBounce');
+
 
         },
 
@@ -160,6 +165,8 @@
             this._slider.refresh();
             this.hideLoader();
             this._loader.remove();
+
+            this._cta.fadeOut();
         },
 
         onBeforeScrollStart: function (e) {
@@ -278,7 +285,9 @@
                     'display':'block',
                     'top':'123px',
                     'right':'10px',
-                    'z-index':'50'
+                    'z-index':'50',
+                    'width' : '32',
+                    'height' : 'auto'
                 });
         },
 
@@ -327,6 +336,10 @@
         }
     });
 
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////COLUMNS
     $q.Mosaic.ParentColumn = $q.Mosaic.extend({
         _grid:null,
         _cells:[],
@@ -368,6 +381,10 @@
         }
     });
 
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CELLS
     $q.Mosaic.Cell = $q.Mosaic.extend({
         _parent:null,
         _carousel:null,
@@ -638,7 +655,7 @@
 
     function startMosaic(e){
         $q.Mosaic.Init();
-        if($('#slider-container').length > 0) this.landingContent = new $q.Mosaic.Container('#slider-container');
+        if($('#slider-container').length > 0) Quince._mosaic = new $q.Mosaic.Container('#slider-container');
     }
     $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_COMPLETE, startMosaic.bind(this));
 

@@ -26,10 +26,11 @@
             cell_total_short_width:482
             },
         _currentPopup : null,
-        landingContent:null,
+        _mosaic:null,
         _model:null,
         _mosaic_container:null,
         AncillaryLetters : ["d", "e", "i", "g"], //cell-types that are not CMS data-fed.  pulled from objects above.
+
 
         init: function() {
             if ($.support.touch) $('body').addClass('ipad-iphone');
@@ -530,6 +531,13 @@
     Quince.Event.MODEL_COLUMNS_NODATA = "MODEL_COLUMNS_NODATA";
     Quince.Event.MODEL_TEMPLATES_COMPLETE = "MODEL_TEMPLATES_COMPLETE";
     Quince.Event.JSON_NOT_FOUND = "JSON_NOT_FOUND";
+
+    Quince.Event.ROUTER_CALL = "ROUTER_CALL";
+    Quince.Event.ROUTER_CLIENT = "ROUTER_CLIENT";
+    Quince.Event.ROUTER_POST = "ROUTER_POST";
+    Quince.Event.ROUTER_AUTHOR = "ROUTER_AUTHOR";
+    Quince.Event.ROUTER_TAG = "ROUTER_TAG";
+    Quince.Event.ROUTER_RANDOM = "ROUTER_RANDOM";
 
     
     this.Quince = Quince;

@@ -1,15 +1,13 @@
+/*
+Manages the Backbone data handling and sorting.
+REST integration is not used for server data, so sequential JSON files are loaded until depleted.
+JSON arrays are cast into Column collections with associated Views per block.
+Views use templates which are pre-compiled in Mosaic object and then removed from DOM.
+ */
 (function($, $q) {
 
     $q.Model = Class.extend({
-        _construct : function() {
-//            this._el = $(el);
-            this.components ={
-                Models: {},
-                Collections: {},
-                Views: {},
-                Templates:{}
-            };
-        }
+        _construct : function() {}
     });
 
     $.extend($q.Model,
@@ -23,7 +21,6 @@
                 return klass;
             },
             Init : function() {
-                //$q.Model._selectors;
                 $.each($q.Model._selectors,
                     function(selector, klass) {
                         $(selector).each(function() {
@@ -35,6 +32,16 @@
         }
     );
 
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
     $q.Model.Mosaic = $q.Model.extend({
         _totalDataFiles : 0,
         _totalPreload : 5,
@@ -44,6 +51,8 @@
         _dataFinished : false,
         _directory : null,
         _mosaic:null,
+        cellRouter : null,
+
         _construct : function(el, dir) {
             this._el = $(el);
             this._directory = dir;
@@ -58,7 +67,65 @@
                 dataType: 'html',
                 success: $.proxy(this.getCount, this)
             });
+
+
+
+
+            //BACKBONE
+            this.cellRouter = Backbone.Router.extend({
+                routes: {
+
+                    "posts/:id": "getPost",
+                    // <a href="http://example.com/#/posts/121">Example</a>
+                    "client/:id": "getClient",
+                    "author/:id": "getAuthor",
+                    "tag/:id": "getTag",
+
+                    ":route/:action": "loadView",
+                    // <a href="http://example.com/#/dashboard/graph">Load Route/Action View</a>
+
+                    "*action": "defaultRoute" // Backbone will try match the route above first
+                }
+
+
+            });
+
+
+            var app_router = new this.cellRouter;
+
+            app_router.on('route:loadView', function( route, action ){
+                $log(route + "_" + action); // dashboard_graph
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, this);
+            });
+            app_router.on('route:getPost', function (id) {
+                $log( "Get post number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_POST, this, id);
+            });
+            app_router.on('route:getClient', function (id) {
+                $log( "Get client number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_CLIENT, this, id);
+            });
+            app_router.on('route:getAuthor', function (id) {
+                $log( "Get author number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_AUTHOR, this, id);
+            });
+            app_router.on('route:getTag', function (word) {
+                $log( "Get tag: " + word );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_TAG, this, word);
+            });
+            app_router.on('route:defaultRoute', function (action) {
+                $log( "DEFAULT ROUTE:" + action );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_RANDOM, this, action);
+            });
+
+//            Backbone.emulateHTTP = true;
+//            Backbone.emulateJSON = true;
+
+            // Start Backbone history a necessary step for bookmarkable URL's
+            // - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
+            Backbone.history.start();
         },
+
         getCount : function(e){
             this._totalDataFiles = Number(e) - 1;
 
@@ -67,6 +134,7 @@
             this.initModel();
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
         },
+
         modifyPreload : function(){
             if($q.windowWidth <= 450){
                 this._totalPreload = 3;
@@ -74,9 +142,8 @@
                 this._totalPreload = 7;
             }
         },
-        mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
-//            //$log("MODEL.MOSAIC.SCROLL xdiff:"+xdiff+" dir:"+maxscroll+" dirx:"+directx+" diry:"+directy+" DATAFINISHED:"+this._dataFinished);
 
+        mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
             if(xdiff <= maxscroll && !this._dataFinished) this.nextModel();
         },
         
@@ -110,10 +177,10 @@
         
         initModel : function(){
             //$log("-------------------------MODEL MOSAIC INIT-----------------------------");
-//            this.components.Models.Column = Backbone.Model.extend({});
-//            this.components.Models.Cell = Backbone.Model.extend({});
-//            this.components.Collections.Cells = Backbone.Collection.extend({
-//                model: this.components.Models.Column,
+
+//            this.components.Models.CellModel = Backbone.Model.extend({});
+//            this.components.Collections.Column = Backbone.Collection.extend({
+//                model: this.components.Models.CellModel,
 //                url: "../data/column_0.json",
 //                initialize: function(){
 //                    //$log("JSON INIT:"+this.url);
@@ -123,27 +190,14 @@
         },
         
         nextModel : function(){
-
-//            this._currentColumn+=1;
             var nextup  = (this._currentColumn+=1);
 
             if(nextup < this._totalPreload){
-
-                //$log("==============================LOAD NEXT=========================== nextup:"+nextup);
                 this.loadJsonFile(nextup);
-
             } else if(!this._firstLoad){
-
                 this._firstLoad = true;
-                
-                //$log("==============================FINISH PRELOAD=========================== firstload:"+this._firstLoad);
-
                 Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_COMPLETE, this);
-
             } else if(!this._dataFinished){
-
-                //$log("==============================LOAD REQUEST=========================== firstload:"+this._firstLoad);
-
                 this.loadJsonFile(nextup);
             }
         },
@@ -152,7 +206,6 @@
             var nextInverted = this._totalDataFiles - indexnum;
             //$log("LOAD JSON:"+nextInverted+" index:"+indexnum);
             if(nextInverted == 0) Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_NODATA, this);
-
 
             if(nextInverted >= 0) {
                 Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
@@ -166,7 +219,6 @@
                 });
             } else {
                 this.loadError(null);
-
             }
 
         },
@@ -179,13 +231,9 @@
             var c = new Quince.Model.Column(result, style, el, this._currentColumn);
 
             this._columns.push(c);
-
-            //$log("PARSE COLUMNS current:"+this._currentColumn);
-
             !this._firstLoad ? this.nextModel() : $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
         },
         loadError : function(error){
-            //$log("=============================DATA LOAD ERROR===========================",error);
             this._dataFinished = true;
             Quince.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler);
 //            Quince.EventManager.fireEvent(Quince.Event.JSON_NOT_FOUND, this);
@@ -220,38 +268,90 @@
     });
 
 
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////COLUMNS
     $q.Model.Column = $q.Model.extend({
-        _model:[],
         _cells:[],
         _style:null,
         _index:0,
-
+        _collection:null,
         _construct : function(m, index, el, i) {
             this._el = $(el);
-            this._model = m;
             this._style = index;
             this._index = i;
-            this.initModel();
+
+//            this._model = $(m).each(function(i){return new $q.Model.Mosaic.cellModel(i)});
+            this.initModel(m);
         },
 
-        initModel : function(){
+        initModel : function(_m){
             //$log("-------------------------MODEL COLUMN INIT-----------------------------:"+this._style);
 
-            this.matchStyle();
+            var cellModel = Backbone.Model.extend({
+                defaults:{
+                    _comment : "nothing",
+                    CellType : "i",
+                    Id : "0001",
+                    Portal : "fb",
+                    Ref : "",
+                    Date : new Date(),
+                    Viewed : 0,
+                    Client : 0,
+                    Title : "",
+                    Author : "",
+                    AuthorId : 0,
+                    JobTitle : "Hero",
+                    Article : "",
+                    URL : "",
+                    Image :[],
+                    Tags : "Lorem, Ipsum, Dolor, Sit, Amet"
+                },
+                initialize: function(opt){
+
+
+                    this.on("change:Viewed", function(model){
+                        var name = model.get("Viewed");
+                        alert("Changed Viewed: " + name );
+                    });
+
+
+                    this.on('invalid', function(model, error) {
+                        alert(error);
+                    });
+                },
+                validate: function( attributes ){
+                    if( attributes.age < 0 && attributes.name != "Dr Manhatten" ){
+                        return "You can't be negative years old";
+                    }
+                },
+                addViewed: function(){
+                    var newnum = Number(this.get('Viewed')) + 1;
+                    this.set({ Viewed: newnum });
+                }
+
+            });
+
+            var columnCollection = Backbone.Collection.extend({
+                model: cellModel
+            });
+
+            var patm = this.patternFormatData(_m);
+
+            var castm = patm.map(function(post) {
+                return new cellModel(post);
+            });
+            this._collection = new columnCollection(castm);
+
             this.instantiateCells();
         },
 
         instantiateCells : function(){
-            for(var i = 0; i < this._model.length; i++){
-                //$log("INSTANTIATE CELL:"+this._model[i].CellType);
-                this.generateCell(i);
-            }
-        },
-
-        generateCell : function(ref){
-//            $("#slider-container .mosaic-container").append(obj.toString() + " ");
-            var c = new Quince.Model.Cell(this._model[ref], this._el);
-            this._cells.push(c);
+            var _this = this;
+            this._collection.each(function(model) {
+                var c = new Quince.Model.CellView(model, _this._el);
+            });
         },
 
         sub_template : function (str, data) {
@@ -268,7 +368,7 @@
             );
         },
 
-        matchStyle : function(){
+        patternFormatData : function(_m){ //----------------------------------------------------THIS NEEDS CLEANUP
             var pattern = $q.ancillary_models.column_patterns[this._style];
 
             var newArr = [];
@@ -280,32 +380,25 @@
 //                //$log("INDEX ZERO:", firstobj, newArr);
 //            }
 
-
             for(var i = 0; i < pattern.length; i++){
 
                 var ancil_obj = {};
                 var cell_letter = pattern[i];
-                var uId = "0" + this._index.toString() + i.toString();  //--------------------------------------TEMP this creates a unique ID number for every unit.  no reason really...yet
+                var uId = "0" + this._index.toString() + i.toString();
 
-//                if(this._model.length < 1) return;
                 if($q.AncillaryLetters.indexOf(cell_letter) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
-
-//                    //$log("ANCILLARY CELL:"+cell_letter);
                     ancil_obj = this.pullAncillaryData(cell_letter);
                     ancil_obj.CellType = cell_letter;
 
                 } else {
-                    for (var k = 0; k < this._model.length; k++){
-                        if(this._model[k].CellType == cell_letter) ancil_obj = this._model.splice(k, 1)[0];
+                    for (var k = 0; k < _m.length; k++){
+                        var cl = _m[k].CellType;
+                        if(cl == cell_letter) ancil_obj = _m.splice(k, 1)[0];
 
                     }
 
-//                    ancil_obj = this.getObjects(this._model, 'CellType', cell_letter)[0];
-                    //$log("DATA CELL:"+cell_letter, ancil_obj);
-
                     if($q.isEmpty(ancil_obj)) ancil_obj = {};  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<DISABLE TO FIND OUT IF YOURE MISSING DATA IN THE HARD-CODED FILES
                 }
-
 
                 if($q.isEmpty(ancil_obj) == false){
                     if(ancil_obj.Id) ancil_obj.Id = uId;
@@ -313,10 +406,8 @@
                 }
             }
 
-            //$log("MODEL:");
-            //$dir(newArr);
-            this._model = newArr;
 
+            return newArr;
         },
 
         pullAncillaryData : function(letter){
@@ -354,59 +445,47 @@
 
     });
 
-    $q.Model.Cell = $q.Model.extend({
-        _model:{},
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CELLS
+    $q.Model.CellView = Backbone.View.extend({
+        _tplname:null,
         _compiledTemplate:null,
-        _view:null,
         _style:null,
         _column:null,
-        _construct : function(m, el) {
-            this._model = m;
-//            //$log("-----------MODEL CELL INIT----------:");
-//            $dir(this._model);
-            this._column = el;
-            this._style = this._model.CellType;
-            this.initTemplate();
+        _model:{},
 
+        initialize: function(m, el){
+            this._model = m;
+            this._column = el;
+            this._style = this._model.get("CellType");
+            this._tplname = 'cell_'+this._style;
+//            $log("CELL m:", this._model, " c:", this._column);
+            this.render();
         },
-        initTemplate : function(){
-            var tplname = 'cell-'+ this._style;
-            var tpl = $('#tpl-'+tplname).html();
-            this._view = Quince.templates.cells['cell_'+this._style](this._model);
-//            this._view = new $q.Model.CellView(tplname, this._model);
-//            $dir(this._view);
-            $(this._view).appendTo(this._column);
+
+        render: function(){
+            var template = Quince.templates.cells[this._tplname](this._model.toJSON());
+            this.$el.html( template );
+            this.$el.appendTo(this._column);
+        },
+
+        events: {
+//            "click input[type=button]": "doSearch"
+            "click": "onClick"
+        },
+
+        onClick: function( e ){
+            $log( "CLICK EVENT:"+ e.currentTarget );
         }
     });
 
-//    $q.Model.CellView = Backbone.View.extend({
-//        _tplname:null,
-//        _model:{},
-//        initialize: function(t, m){
-//            this._tplname = t;
-//            this._model = m;
-//            this.render();
-//        },
-//        render: function(){
-//            // Compile the template using underscore
-//            var template = _.template( $("#tpl-"+this._tplname).html(), this._model );
-//            // Load the compiled HTML into the Backbone "el"
-//            this.$el.html( template );
-//        },
-//        events: {
-//            "click input[type=button]": "doSearch"
-//        },
-//        doSearch: function( event ){
-//            // Button clicked, you can access the element that was clicked with event.currentTarget
-//            alert( "Search for " + $("#search_input").val() );
-//        }
-//    });
-//var search_view = new $q.Model.CellView({ el: $("#search_container") });
+
 
     $q.Model.Init();
 
-    this._model = new $q.Model.Mosaic("#slider-container", "data/cells/");
-
-
+    Quince._model = new $q.Model.Mosaic("#slider-container", "data/cells/");
 
 })(jQuery, Quince);

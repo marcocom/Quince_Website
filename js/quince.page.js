@@ -67,6 +67,9 @@
                 //this._el.mouseover($.proxy(this.pageCollapse, this));
 //                this._el.touch($.proxy(this.pageCollapse, this));
 
+                var bg = this.currentContent.find('.content');
+                $dir(bg)
+                $(bg).bind('click', $.proxy(this.pageCollapse, this));
                 this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
             //$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
         },

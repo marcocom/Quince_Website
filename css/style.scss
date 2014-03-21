@@ -283,12 +283,13 @@ body{
     .cta-msg{
       font-size:12px;
       color:$brand-blue;
-      position:relative;
-      top:-10px;
+      position:absolute;
+      top:-24px;
       font-weight:400;
-      padding:0 10px;
+      padding:0;
       display:block;
-      width:250px;
+      width:220px;
+      left:150px;
 
       h5{
         display:block;

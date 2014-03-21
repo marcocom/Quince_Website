@@ -118,7 +118,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div id="slider-container">
                     <div class="scroller">
-                        <div class="cta-msg"><h5>scroll or drag from the right to see more <b>>></b></h5></div>
+                        <div class="cta-msg hidden-xs"><h5>scroll or drag from the right to see more <b>>></b></h5></div>
                         <ul class="mosaic-container container">
 
 
@@ -133,7 +133,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
             </div>
         </div>
 
-        <div class="sub-close-cta">
+        <div class="sub-close-cta hidden-lg">
             <a href="#"><em class="icon"></em><h4>collapse / close</h4></a>
         </div>
 
@@ -342,6 +342,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                         <% } %>
                     </ul>
                 </div>
+                <% if(Article.length > 0){ %>
                 <div class="on-state">
                     <div class="content">
                         <% if(Title && Title.length > 0){ %>
@@ -353,6 +354,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                         <div class="social"></div>
                     </div>
                 </div>
+                <% } %>
             </div>
             </div>
         </script>
@@ -453,8 +455,8 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
 
 
-        <!--        <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>-->
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+                <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>
+<!--        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>-->
 
 <!--        <script type="text/javascript" src="js/main.js"></script>-->
         <script type="text/javascript" src="js/loader.js"></script>
