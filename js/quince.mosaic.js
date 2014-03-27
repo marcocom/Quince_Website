@@ -40,6 +40,7 @@
         _slider : null,
         _loader : null,
         _cta : null,
+        _home : null,
         columnWidths:{
             'xs':480,
             'md':720,
@@ -50,7 +51,8 @@
             this._el = $(el);
             this._super(this._el);
 //            $log("Mosaic init");
-
+            var h = this._el.find('.homepage');
+            this._home = $(h);
             this.initContainer();
 
         },
@@ -158,9 +160,11 @@
 
         onEndOfData : function(e){
             this.loading_items = false;
+            var homew = $q.windowWidth - 50;
+            this._home.width(homew);
 
             var w = $(this._columns[0]).width();
-            var totalw = (this._columns.length * w);
+            var totalw = (this._columns.length * w) + homew;
             $('#slider-container .scroller').width(totalw);
             this._slider.refresh();
             this.hideLoader();
@@ -176,9 +180,11 @@
         },
 
         onResize : function(e){
+            var homew = $q.windowWidth - 50;
+            this._home.width(homew);
 
             var w = $(this._columns[0]).width();
-            var totalw = (this._columns.length * w) + (this.loading_items ? 50 : 0 );
+            var totalw = (this._columns.length * w) + (this.loading_items ? 50 : 0 ) + homew;
             var slider = this._slider;
             var _this = this;
 
@@ -187,35 +193,11 @@
             if(w != this.currentColumnWidth){  //one-time event fire when site shifts through a responsive media-query
 
                 this.currentColumnWidth = w;
-//                this._slider.refresh();
                 setTimeout(function () {
                     _this._slider.refresh();
                 }, 0);
 
-//
-//                if($q.windowWidth < this.columnWidths.xs){
-//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SM_RESPONSE, this);
-//                    this.scaleColumns($q.columnSizes.cell_total_sm_width);
-//                } else
-//                if($q.windowWidth >= this.columnWidths.xs && $q.windowWidth < this.columnWidths.md){
-//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_MED_RESPONSE, this);
-//                    this.scaleColumns($q.columnSizes.cell_total_med_width);
-//                } else
-//                if($q.windowWidth >= this.columnWidths.md){
-//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_LRG_RESPONSE, this);
-//                    this.scaleColumns($q.columnSizes.cell_total_container_width);
-//                }
-//
-//                if($q.windowHeight > this.columnWidths.tl && $q.windowWidth > this.columnWidths.xs){
-//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_TALL_RESPONSE, this);
-//                    this.scaleColumns($q.columnSizes.cell_total_med_width);
-//                } else
-//                if($q.windowHeight < this.columnWidths.sh){
-//                    Quince.EventManager.fireEvent(Quince.Event.RESIZE_SHORT_RESPONSE, this);
-//                    this.scaleColumns($q.columnSizes.cell_total_short_width);
-//                }
             }
-//            $log("COLUMN RESIZE ----  w:"+$q.windowWidth+" columns:"+this.currentColumnWidth);
 
         },
 
@@ -544,7 +526,8 @@
             if(actionString != "none"){
                 this._el.click(function(e){
                     e.preventDefault();
-                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
+//                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
+                    $q._landingPage.cellRouter.navigate(actionString, {trigger:true});
                 })
                 this._el.css({'cursor':'pointer'});
             }

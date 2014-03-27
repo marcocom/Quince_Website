@@ -1,3 +1,8 @@
+/*
+ Manages the Page-level logic.
+ The z-indexed logic of sub-pages are managed here, either through
+ link-actions, or else global events.
+ */
 (function($, $q) {
 
     $q.Page = Class.extend({
@@ -30,53 +35,189 @@
     );
 
     $q.Page.Home = $q.Page.extend({
+        cellRouter:null,
+        toplinks:null,
+        currentContent:null,
+        contentSwap:null,
+        closeButton:null,
+        subcontentOpened:false,
+        _current:null,
         _construct : function(el) {
-           // this._submit = $('#sign-in-button');
-           // this._postUrl = '/login';
             this._el = $(el);
             this._super(this._el);
-            //$log("Register init");
             this.toplinks = $(this._el.find('.header .toplink'));
-            this.subcontentOpened = false;
-            this.currentContent = null;
-            this.contentSwap = null;
-            this.closeButton = null;
             this.initPage();
 
         },
 
         initPage : function(){
-
+            var _this = this;
             this.closeButton = $('.sub-close-cta a').click($.proxy(this.pageCollapse, this));
-            
-            
-            this.toplinks.click($.proxy(this.toplinkAnimate, this));
 
-            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
+            this.toplinks.click($.proxy(this.clickAnimate, this));
+
+//            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
+
+            //BACKBONE ROUTER
+            var router = Backbone.Router.extend({
+                routes: {
+
+                    "posts/:id": "getPost",
+                    // <a href="http://example.com/#/posts/121">Example</a>
+                    "client/:id": "getClient",
+                    "author/:id": "getAuthor",
+                    "tag/:id": "getTag",
+                    "search/:query":        "search",  // #/search/subject
+                    ":route/:action": "loadView",
+                    // <a href="http://example.com/#/dashboard/graph">Load Route/Action View</a>
+                    "*action": "defaultRoute" // Backbone will try match the route above first
+                }
+            });
+
+
+            this.cellRouter = new router;
+
+            this.cellRouter.on('route:loadView', function( route, action ){
+                $log(route + "_" + action); // dashboard_graph
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, this);
+            });
+
+            this.cellRouter.on('route:getPost', function (id) {
+                $log( "Get post number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_POST, this, id);
+            });
+
+            this.cellRouter.on('route:getClient', function (id) {
+                $log( "Get client number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_CLIENT, this, id);
+            });
+
+            this.cellRouter.on('route:getAuthor', function (id) {
+                $log( "Get author number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_AUTHOR, this, id);
+            });
+
+            this.cellRouter.on('route:getTag', function (word) {
+                $log( "Get tag: " + word );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_TAG, this, word);
+            });
+
+            this.cellRouter.on('route:search', function (word) {
+                $log( "Search term: " + word );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_SEARCH, this, word);
+            });
+
+            this.cellRouter.on('route:defaultRoute', function (action) {
+                $log( "DEFAULT ROUTE:" + action + " subcontentOpened:"+this.subcontentOpened);
+                if(action == "jobs" || action == "about" || action == "contact" || action == "people"){
+                    _this.remoteAnimate(action);
+//                $q.EventManager.fireEvent(Quince.Event.ROUTER_PAGE, this, action);
+                } else if(action == null && this.subcontentOpened == true){
+                    this.pageCollapse(null);
+                }
+
+            });
+
+//            Backbone.emulateHTTP = true;
+//            Backbone.emulateJSON = true;
+//
+//            Start Backbone history a necessary step for bookmarkable URL's
+//            - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
+            Backbone.history.start({pushState: true});
 
         },
 
         catchPageChange : function(e, props){
             //$log("PAGECHANGE e:"+e+" props:"+props);
-            this.toplinkAnimate(null,props);
+            this.remoteAnimate(props);
+        },
+
+
+        remoteAnimate : function(remoteLink){
+
+            if(remoteLink != undefined && remoteLink.length < 2) return;
+            this._current = remoteLink;
+            var ref = "."+( remoteLink ? remoteLink : clicksource.id) + "-content";
+            var $content = $(ref);
+            $log("REMOTE ANIMATE subcontentOpened:"+this.subcontentOpened);
+            this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, null);
+        },
+
+        clickAnimate : function(e){
+            e.preventDefault();
+
+            var clicksource = $(e.currentTarget)[0];
+
+            this._current = clicksource.id;
+
+            var ref = "." + clicksource.id + "-content";
+            var $content = $(ref);
+
+            this.cellRouter.navigate(clicksource.id, {trigger:false});
+            $log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
+
+            this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
+        },
+
+        pageAnimateFromClosed : function(el){
+            var _this = this;
+            el.show();
+//                $content.addClass('opened');
+
+            var t = el.find('.content')[0];
+            var targetHeight = $(t).height() + ($('body').hasClass('ipad-iphone') ? 10 : 40);
+            var maxHeight = $q.windowHeight - 30;
+
+            if(targetHeight > maxHeight) targetHeight = maxHeight;
+
+            $log("ANIMATEFROM-CLOSED: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
+
+            this.setScrollable(false);
+
+            this.currentContent = el;
+
+//             this._el.css('top', (targetHeight + 'px'));
+
+            this._el.animate({
+                top:targetHeight
+            }, 500, function(){
+                _this.onOpenTransitionEnd();
+            });
+        },
+
+        pageAnimateFromOpened : function(el, c){
+            var _this = this;
+            $log("ANIMATEFROM-OPEN: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
+            $log("NEW CONTENT:"+el.selector);
+            if(this.currentContent.selector != el.selector){
+                this.contentSwap = c;
+                $log("CONTENTSWAP REASSIGNED-------")
+            } else {
+                this.contentSwap = null;
+            }
+
+            this._el.animate({
+                top:'0'
+            }, 500, function(){
+                _this.onCloseTransitionEnd();
+            });
         },
 
         onOpenTransitionEnd : function(){
 
-                this.subcontentOpened = true;
-                //this._el.mouseover($.proxy(this.pageCollapse, this));
-//                this._el.touch($.proxy(this.pageCollapse, this));
+            this.subcontentOpened = true;
 
-                var bg = this.currentContent.find('.content');
-                $dir(bg)
-                $(bg).bind('click', $.proxy(this.pageCollapse, this));
-                this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
-            //$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
+            var bg = this.currentContent.find('.content');
+            $(bg).bind('click', $.proxy(this.pageCollapse, this));
+            this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
+            $log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
         },
 
         onCloseTransitionEnd : function(){
+//            this.cellRouter.navigate("", {trigger:false})
             // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
-            //$log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened);
+            $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened+" contentSwap:");
+            $dir(this.contentSwap);
             if(this.subcontentOpened == true){
                 this.subcontentOpened = false;
                 this.currentContent.hide();
@@ -84,8 +225,11 @@
                 this.setScrollable(true);
 
                 if(this.contentSwap != null){
+
                     $(this.contentSwap).trigger('click');
-                    //$log("CONTENT SWAP:"+this.contentSwap);
+//                    this.remoteAnimate(this._current);
+
+                    $log("CONTENT SWAP:"+this._current);
                     this.contentSwap = null;
                 }
 
@@ -95,66 +239,15 @@
         pageCollapse : function(e){
 //            if(this.subcontentOpened) this._el.css('top', '0px');
             var _this = this;
-            if(this.subcontentOpened)
-            this._el.animate({
-                top:'0'
-            }, 500, function(){
-                _this.onCloseTransitionEnd();
-            });
-            this._el.mouseover(null);
-            this._el.unbind('tap click swipe focus');
-//            this._el.touch(null);
-        },
-
-        toplinkAnimate : function(e, remoteLink){
-            if(e) e.preventDefault();
-
-            var c = e ? $(e.currentTarget)[0] : null;
-
-            if(remoteLink != undefined && remoteLink.length < 2) return;
-
-            var ref = "."+( remoteLink ? remoteLink : c.id) + "-content";
-            var $content = $(ref);
-            var _this = this;
-            if(this.subcontentOpened == false){
-
-                $content.show();
-//                $content.addClass('opened');
-
-                var t = $content.find('.content')[0];
-                var targetHeight = $(t).height() + ($('body').hasClass('ipad-iphone') ? 10 : 40);
-                var maxHeight = $q.windowHeight - 30;
-
-                if(targetHeight > maxHeight) targetHeight = maxHeight;
-
-                //$log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
-
-                this.setScrollable(false);
-                this.currentContent = $content;
-
-//                this._el.css('top', (targetHeight + 'px'));
-
-                this._el.animate({
-                    top:targetHeight
-                }, 500, function(){
-                    _this.onOpenTransitionEnd();
-                });
-            }
-            else {
-                //$log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
-                //$log("NEW CONTENT:"+$content.selector);
-                if(this.currentContent.selector != $content.selector){
-                    this.contentSwap = c;
-                    //$log("CONTENTSWAP REASSIGNED-------")
-                } else {
-                    this.contentSwap = null;
-                }
-
+            if(this.subcontentOpened){
                 this._el.animate({
                     top:'0'
                 }, 500, function(){
-                    _this.onCloseTransitionEnd();
+//                    _this.onCloseTransitionEnd();
                 });
+                this._el.mouseover(null);
+                this._el.unbind('tap click swipe focus');
+                //            this._el.touch(null);
             }
         },
 
@@ -178,6 +271,6 @@
 
     $q.Page.Init();
 
-    if($('.home-content').length > 0) this.landingContent = new $q.Page.Home('.home-content');
+    if($('.home-content').length > 0) Quince._landingPage = new $q.Page.Home('.home-content');
 
 })(jQuery, Quince);

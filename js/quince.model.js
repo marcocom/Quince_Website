@@ -51,7 +51,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         _dataFinished : false,
         _directory : null,
         _mosaic:null,
-        cellRouter : null,
 
         _construct : function(el, dir) {
             this._el = $(el);
@@ -69,61 +68,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             });
 
 
-
-
-            //BACKBONE
-            this.cellRouter = Backbone.Router.extend({
-                routes: {
-
-                    "posts/:id": "getPost",
-                    // <a href="http://example.com/#/posts/121">Example</a>
-                    "client/:id": "getClient",
-                    "author/:id": "getAuthor",
-                    "tag/:id": "getTag",
-
-                    ":route/:action": "loadView",
-                    // <a href="http://example.com/#/dashboard/graph">Load Route/Action View</a>
-
-                    "*action": "defaultRoute" // Backbone will try match the route above first
-                }
-
-
-            });
-
-
-            var app_router = new this.cellRouter;
-
-            app_router.on('route:loadView', function( route, action ){
-                $log(route + "_" + action); // dashboard_graph
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, this);
-            });
-            app_router.on('route:getPost', function (id) {
-                $log( "Get post number " + id );
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_POST, this, id);
-            });
-            app_router.on('route:getClient', function (id) {
-                $log( "Get client number " + id );
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_CLIENT, this, id);
-            });
-            app_router.on('route:getAuthor', function (id) {
-                $log( "Get author number " + id );
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_AUTHOR, this, id);
-            });
-            app_router.on('route:getTag', function (word) {
-                $log( "Get tag: " + word );
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_TAG, this, word);
-            });
-            app_router.on('route:defaultRoute', function (action) {
-                $log( "DEFAULT ROUTE:" + action );
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_RANDOM, this, action);
-            });
-
-//            Backbone.emulateHTTP = true;
-//            Backbone.emulateJSON = true;
-
-            // Start Backbone history a necessary step for bookmarkable URL's
-            // - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
-            Backbone.history.start();
         },
 
         getCount : function(e){
@@ -192,6 +136,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         nextModel : function(){
             var nextup  = (this._currentColumn+=1);
 
+            $log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload);
+
             if(nextup < this._totalPreload){
                 this.loadJsonFile(nextup);
             } else if(!this._firstLoad){
@@ -204,8 +150,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         
         loadJsonFile : function(indexnum){
             var nextInverted = this._totalDataFiles - indexnum;
-            //$log("LOAD JSON:"+nextInverted+" index:"+indexnum);
-            if(nextInverted == 0) Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_NODATA, this);
+            $log("LOAD JSON:"+nextInverted+" index:"+indexnum);
+
 
             if(nextInverted >= 0) {
                 Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
@@ -223,8 +169,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
         },
         
-        parseColumn : function(result ){
-
+        parseColumn : function(result){
             var style = Math.abs(this._currentColumn % 3);
             var el = this.injectColumn(style);
 
@@ -233,16 +178,20 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             this._columns.push(c);
             !this._firstLoad ? this.nextModel() : $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
         },
+
         loadError : function(error){
             this._dataFinished = true;
             Quince.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler);
+            Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_NODATA, this);
 //            Quince.EventManager.fireEvent(Quince.Event.JSON_NOT_FOUND, this);
         },
+
         injectColumn : function(style){
             var htm = $('<li class="column col-style-'+style+'"></li>');
             var el = htm.appendTo(this._mosaic);
             return el;
         },
+
         loadTemplateFile : function(templateName) {
             var template = $('#tpl-' + templateName);
             if (template.length === 0) {
@@ -309,16 +258,13 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                     Tags : "Lorem, Ipsum, Dolor, Sit, Amet"
                 },
                 initialize: function(opt){
-
-
                     this.on("change:Viewed", function(model){
                         var name = model.get("Viewed");
-                        alert("Changed Viewed: " + name );
+                        $log("Changed Viewed: " + name );
                     });
 
-
                     this.on('invalid', function(model, error) {
-                        alert(error);
+                        $log("invalid error:"+error);
                     });
                 },
                 validate: function( attributes ){
@@ -388,7 +334,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
                 if($q.AncillaryLetters.indexOf(cell_letter) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
                     ancil_obj = this.pullAncillaryData(cell_letter);
-                    ancil_obj.CellType = cell_letter;
+                    if(ancil_obj)ancil_obj.CellType = cell_letter;
 
                 } else {
                     for (var k = 0; k < _m.length; k++){

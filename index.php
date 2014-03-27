@@ -15,7 +15,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Quince :: Welcome</title>
-        <meta name="keywords" content="amsterdam, holland, quince, quince technologies, quince amsterdam bv, dutch creative, holland prin, online offline, web, web design, website design, graphic design, web engineering, website engineering, java, web consulting, web application, web development, web application development, e-commerce, interactive web, streaming video, interactive display unit, dcms, qrs content management system, content management, 3d development, web consulting, lamp, open source">
+        <meta name="keywords" content="amsterdam, holland, quince, quince technologies, quince amsterdam bv, dutch creative, holland print, online offline, web, web design, website design, graphic design, web engineering, website engineering, java, web consulting, web application, web development, web application development, e-commerce, interactive web, streaming video, interactive display unit, dcms, qrs content management system, content management, 3d development, web consulting, lamp, open source, Strategy, Concepting, Digital Media, Events, Print Media, Marcom Software Development, Digital Training, Interactive Displays">
         <meta name="description" content="">
 <!--        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0, target-densitydpi=device-dpi">-->
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -118,11 +118,53 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div id="slider-container">
                     <div class="scroller">
-                        <div class="cta-msg hidden-xs"><h5>scroll or drag from the right to see more <b>>></b></h5></div>
-                        <ul class="mosaic-container container">
-
-
-                        </ul>
+<!--                        <div class="cta-msg hidden-xs"><h5>scroll or drag from the right to see more <b>>></b></h5></div>-->
+                        <div class="cta-msg hidden-xs"><h5>EXPLORE OUR WORLD<em></em></h5></div>
+                        <div class="homepage">
+                            <div class="intro-block">
+                                <div class="left-side">
+                                    <h1 class="static">Quince is</h1>
+                                    <div class="imgs">
+                                        <ul class="img-scroller">
+                                            <li class="active"><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="texts">
+                                        <ul class="txt-scroller">
+                                            <li class="active"><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="words">
+                                    <ul>
+                                        <li class="active"><h1>Branding</h1></li>
+                                        <li><h1>Communications</h1></li>
+                                        <li><h1>Development</h1></li>
+                                        <li><h1>Touchscreens</h1></li>
+                                        <li><h1>Lorem</h1></li>
+                                        <li><h1>Ipsum</h1></li>
+                                        <li><h1>Dolor</h1></li>
+                                        <li><h1>Consequtor</h1></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--div class="intro-cta">
+                                <h5>EXPLORE OUR WORLD<em></em></h5>
+                            </div-->
+                        </div>
+                        <ul class="mosaic-container container"></ul>
 
                     </div>
                 </div>
@@ -146,7 +188,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                         <a class="address" target="_blank" href="https://maps.google.nl/maps?q=Assumburg+73+1081+GB+Amsterdam+the+Netherlands&daddr=Assumburg+73,+1081+GB+Amsterdam&hnear=0x47c60a0b845ef23b:0x79090fe2330b7586,Assumburg+73,+1081+GB+Amsterdam&gl=nl&t=h&z=16">
                             <h5>Assumburg 73</h5>
                             <h5>1081 GB Amsterdam</h5>
-                            <h5>the Netherlands</h5><img src="img/googlemaps_pin.png">
+                            <h5>The Netherlands</h5><img src="img/googlemaps_pin.png">
 
                         </a>
                         <a href="tel:0031203471000"><h5>T +31 (0)20 347 1000</h5></a>
@@ -158,6 +200,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                             <h6>VAT number: 810801152.B.01</h6>
                             <h6>IBAN: NL15DEUT0319822893 </h6>
                             <h6>Swift: DEUTNL2N</h6>
+                            <h6><a href="assets/pdf/Quince_Terms_and_Conditions.pdf">Terms and conditions</a></h6>
                         </div>
                     </li>
                     <li class="contact-section" id="contact-budapest">
@@ -177,25 +220,9 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 							<h6>Unicredit Bank Zrt.</h6>
                             <h6>IBAN: HU621091800100000026-40920010</h6>
                             <h6>Swift: BACXHUHB</h6>
+                            <h6><a href="assets/pdf/Quince_Terms_and_Conditions.pdf">Terms and conditions</a></h6>
                         </div>
                     </li>
-
-                    <!--<div class="contact-section" id="contact-athens">-->
-                    <!--<h3>Quince Greece</h3>-->
-                    <!--<span>XXX</span><br />-->
-                    <!--<span>XXX</span><br />-->
-                    <!--<span>Greece</span><br />-->
-                    <!--<a href="tel:+3618149694">T XXX</a>-->
-                    <!--<br />-->
-
-                    <!--<div class="legal-info">-->
-                    <!--<span>Chamber of commerce: </span><br />-->
-                    <!--<span>VAT number: </span><br />-->
-                    <!--<span>Bank account: </span><br />-->
-                    <!--<span>IBAN: </span><br />-->
-                    <!--<span>Swift: </span><br />-->
-                    <!--</div>-->
-                    <!--</div>-->
                     <div class="clear"></div>
                 </ul>
             </div>
@@ -207,15 +234,15 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 <ul>
                     <li class="contact-section">
                         <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>All-around Java/Grails/Android Developer</h3></a>
-                        <h4>As an All-around Java/Grails/Android developer you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
+                        <h4>As an <a target="_blank" href="assets/pdf/quince_java_dev.pdf">All-around Java/Grails/Android Developer</a> you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
                         <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5><a target="_blank" href="assets/pdf/Quince_Terms_and_Conditions.pdf">Terms and Conditions</a></h5>
+                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
                     </li>
                     <li class="contact-section">
                         <a class="job" target="_blank" href="assets/pdf/quince_fed.pdf"><h3>Front-end Developer</h3></a>
-                        <h4>As a Front-end Developer you will work in the new department Retail Solutions, where touchscreen applications and interactive displays are designed and developed, controlled by an intelligent CMS. What you develop is often rolled-out worldwide, becoming tangible in shops and trade fairs.</h4>
+                        <h4>As a <a target="_blank" href="assets/pdf/quince_fed.pdf">Front-end Developer</a> you will work in the new department Retail Solutions, where touchscreen applications and interactive displays are designed and developed, controlled by an intelligent CMS. What you develop is often rolled-out worldwide, becoming tangible in shops and trade fairs.</h4>
                         <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5><a target="_blank" href="assets/pdf/Quince_Terms_and_Conditions.pdf">Terms and Conditions</a></h5>
+                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
                     </li>
                     <div class="clear"></div>
                 </ul>
@@ -455,8 +482,8 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
 
 
-                <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>
-<!--        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>-->
+        <!--        <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>-->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 
 <!--        <script type="text/javascript" src="js/main.js"></script>-->
         <script type="text/javascript" src="js/loader.js"></script>

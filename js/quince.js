@@ -16,8 +16,8 @@
         googleAccount:"UA-1007198-3",
         _popups : {},
 
-        windowWidth:$(window).width(),
-        windowHeight:$(window).height(),
+        windowWidth:0,
+        windowHeight:0,
         columnSizes : {
             cell_total_container_width:720,
             cell_total_med_width:960,
@@ -29,6 +29,7 @@
         _mosaic:null,
         _model:null,
         _mosaic_container:null,
+        _landingPage:null,
         AncillaryLetters : ["d", "e", "i", "g"], //cell-types that are not CMS data-fed.  pulled from objects above.
 
 
@@ -36,7 +37,11 @@
             if ($.support.touch) $('body').addClass('ipad-iphone');
             this.setupEventManager();
             $log("QUINCE:INIT isHandheld:"+this.isHandheldPortrait+"  --UA:"+navigator.userAgent);
-            $(window).resize(this.onResize);
+
+            this.windowWidth = $(window).width();
+            this.windowHeight = $(window).height();
+
+            $(window).resize($.proxy(this.onResize, this));
 
             $("#slider-container").hide();
            // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
@@ -46,7 +51,6 @@
         onResize: function(){
             this.windowWidth = $(window).width();
             this.windowHeight = $(window).height();
-//            $log("RESIZE!  w:"+this.windowWidth+" h:"+this.windowHeight);
             Quince.EventManager.fireEvent(Quince.Event.RESIZE, this);
         },
         animationHelper: function(target, from, to, options) {
@@ -69,7 +73,7 @@
         setupEventManager : function() {
             this.eventManager = new Quince.Event();
         },
-        fireHashEvents :function() {
+        fireHashEvents :function() { //replaced with Backbone Router logic in Model code
             var name = document.location.hash.toString().replace('#','');
 //            this._getPopup(name);
             if(name.length > 0) Quince.eventManager.fireEvent(Quince.Event.DEEPLINK,name);
@@ -536,8 +540,9 @@
     Quince.Event.ROUTER_CLIENT = "ROUTER_CLIENT";
     Quince.Event.ROUTER_POST = "ROUTER_POST";
     Quince.Event.ROUTER_AUTHOR = "ROUTER_AUTHOR";
+    Quince.Event.ROUTER_SEARCH = "ROUTER_SEARCH";
     Quince.Event.ROUTER_TAG = "ROUTER_TAG";
-    Quince.Event.ROUTER_RANDOM = "ROUTER_RANDOM";
+    Quince.Event.ROUTER_PAGE = "ROUTER_PAGE";
 
     
     this.Quince = Quince;

@@ -281,22 +281,166 @@ body{
     -o-text-size-adjust: none;
     text-size-adjust: none;
     .cta-msg{
-      font-size:12px;
-      color:$brand-blue;
+      //font-size:12px;
+      //color:$brand-blue;
+      //position:absolute;
+      //top:-24px;
+      //font-weight:400;
+      //padding:0;
+      //display:block;
+      //width:220px;
+      //left:150px;
+      //
+      //h5{
+      //  display:block;
+      //  width:auto;
+      //  height:auto;
+      //  b{
+      //    font-weight:800;
+      //  }
+      //}
+
+
       position:absolute;
-      top:-24px;
-      font-weight:400;
+      top:-28px;
       padding:0;
       display:block;
-      width:220px;
+      width:170px;
       left:150px;
-
       h5{
         display:block;
+        position:relative;
+        font-style:italic;
+        text-transform: uppercase;
+        color:$brand_blue;
+        em{
+          display:inline-block;
+          background: transparent url(img/homepage-arrow.png) no-repeat 0 0;
+          width:15px;
+          height:15px;
+          top: 3px;
+          position: relative;
+          margin-left: 6px;
+        }
+      }
+    }
+    .homepage{
+      display: inline-block;
+      float: left;
+      width: 800px;
+      height: 100%;
+      position:relative;
+      overflow:hidden;
+
+      .intro-block{
+        display:block;
+        position:absolute;
+        overflow:hidden;
+        left: 10%;
+        top: 10%;
+        .words{
+          display:block;
+          position:relative;
+          float: left;
+
+          ul{
+            display:block;
+            li{
+              height: 50px;
+              display:block;
+              position:relative;
+              h1{
+                display:block;
+                position:relative;
+                font-style:italic;
+                font-size:4em;
+                font-weight:200;
+                line-height:1em;
+                word-break: normal;
+                margin: 0;
+              }
+            }
+          }
+        }
+        .left-side{
+          width:220px;
+          text-align:right;
+          float: left;
+          margin-right: 10px;
+          h1.static{
+            display:inline-block;
+            position:relative;
+            font-style:italic;
+            font-size:4em;
+            font-weight:200;
+            line-height:1em;
+            word-break: normal;
+            margin: 0;
+          }
+          .imgs{
+            display:inline-block;
+            position:relative;
+            width:167px;
+            overflow:hidden;
+            ul.img-scroller{
+              height:91px;
+              min-width:2000px;
+              li{
+                width:167px;
+                float:left;
+              }
+            }
+          }
+          .texts{
+            display:inline-block;
+            position:relative;
+            width:167px;
+            overflow:hidden;
+            ul.txt-scroller{
+              min-width:2000px;
+              height:300px;
+              li{
+                width:167px;
+                padding:0;
+                float:left;
+                h6{
+                  text-align:right;
+                  margin: 0;
+                }
+              }
+
+
+            }
+          }
+        }
+      }
+
+      .intro-cta{
+        display:block;
+        position:absolute;
         width:auto;
-        height:auto;
-        b{
-          font-weight:800;
+        overflow:hidden;
+        right:0;
+        h5{
+          display:block;
+          position:relative;
+          font-style:italic;
+          text-transform: uppercase;
+          color:$brand_blue;
+          em{
+            display:inline-block;
+            background: transparent url(img/homepage-arrow.png) no-repeat 0 0;
+            width:15px;
+            height:15px;
+            top: 3px;
+            position: relative;
+            margin-left: 6px;
+          }
+        }
+        img{
+
+          display:block;
+          position:relative;
         }
       }
     }
