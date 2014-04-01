@@ -7,7 +7,7 @@
   //  background: transparent url(../img/logo.png) no-repeat 0 0;
   //  position: absolute;
   //}
-
+  z-index:3;
   .content{
 
     .main-logo{
@@ -97,13 +97,117 @@
   top:100px;
   .scroller{
     width:10000px;
-    .mosaic-container li.column{
-      width:$cell-total-sm-width;
-      position:absolute;
-      display:inline-block;
+    .homepage{
+      width: 400px;
 
-      .cell-i{
-        display:none;
+      .intro-block{
+        left: -48px;
+        top: 10%;
+        padding: 10px 0 0;
+        .words{
+          padding:2px 0 0;
+          //padding:6px 0 0;
+          ul{
+            li{
+              height: 34px;
+              h1{
+                font-size:1.6em;
+                font-weight:200;
+                line-height:1em;
+                word-break: normal;
+                margin: 0;
+
+              }
+              &.active h1{
+                font-size:2em;
+                @include transition(font-size 1s);
+                @include transition-timing-function(ease-out);
+              }
+            }
+          }
+        }
+        .left-side{
+          width:220px;
+          text-align:right;
+          float: left;
+          margin-right: 5px;
+          h1.static{
+            font-size:1.6em;
+            font-weight:200;
+            line-height:1em;
+            word-break: normal;
+            margin: 0;
+            span{
+              font-size:2em;
+            }
+          }
+          .texts{
+            display:inline-block;
+            position:relative;
+            width:167px;
+            overflow:hidden;
+            ul.txt-scroller{
+              min-width:2000px;
+              height:200px;
+              li{
+                width:167px;
+                padding:0;
+                float:left;
+                h5{
+                  text-align:right;
+                  margin: 0;
+                  font-size: larger;
+                }
+              }
+
+
+            }
+          }
+        }
+      }
+
+      .intro-cta{
+        display:block;
+        position:absolute;
+        width:auto;
+        overflow:hidden;
+        right:0;
+        h5{
+          display:block;
+          position:relative;
+          font-style:italic;
+          text-transform: uppercase;
+          color:$brand_blue;
+          em{
+            display:inline-block;
+            background: transparent url(img/homepage-arrow.png) no-repeat 0 0;
+            width:15px;
+            height:15px;
+            top: 3px;
+            position: relative;
+            margin-left: 6px;
+          }
+        }
+        img{
+
+          display:block;
+          position:relative;
+        }
+      }
+    }
+
+    .mosaic-container{
+
+       li.column{
+        width:$cell-total-sm-width;
+        position:absolute;
+        display:inline-block;
+
+
+
+        .cell-i{
+          display:none;
+        }
       }
     }
   }

@@ -1,5 +1,8 @@
 /*! iScroll v5.0.6 ~ (c) 2008-2013 Matteo Spinelli ~ http://cubiq.org/license */
+
+
 var IScroll = (function (window, document, Math) {
+var isLegacyIE = (document.all && !document.addEventListener)? true : false;
 var rAF = window.requestAnimationFrame	||
 	window.webkitRequestAnimationFrame	||
 	window.mozRequestAnimationFrame		||
@@ -10,6 +13,7 @@ var rAF = window.requestAnimationFrame	||
 var utils = (function () {
 	var me = {};
 
+    var events = {};
 	var _elementStyle = document.createElement('div').style;
 	var _vendor = (function () {
 		var vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT'],
@@ -40,11 +44,50 @@ var utils = (function () {
 	};
 
 	me.addEvent = function (el, type, fn, capture) {
-		el.addEventListener(type, fn, !!capture);
+//		el.addEventListener(type, fn, !!capture);
+
+        var self = this,
+            tmpElm = (el || this.scroller);
+
+
+        if (!isLegacyIE) {
+            tmpElm.addEventListener(type, fn, !!capture);
+        } else {
+            //console.log(tmpElm);
+            // Store function so we can detachEvent later.
+            if(tmpElm === window) tmpElm = document;
+            if(type == "touchstart" || type == "MSPointerDown")return;
+            events[type] = function(e) {
+
+                fn.handleEvent.call(fn, e);
+            };
+
+            /*$(el).bind(type, function(evt){
+             fn.handleEvent.call(fn, evt);
+             });*/
+
+            tmpElm.attachEvent('on' + type, events[type]);
+        }
 	};
 
 	me.removeEvent = function (el, type, fn, capture) {
-		el.removeEventListener(type, fn, !!capture);
+//		el.removeEventListener(type, fn, !!capture);
+        var self = this,
+            tmpElm = (el || this.scroller);
+        //console.log("_bind ",type, el, bubble);
+        if (!isLegacyIE) {
+            tmpElm.removeEventListener(type, fn, !!capture);
+        } else {
+            // Store function so we can detachEvent later.
+
+            /*$(el).unbind(type, function(evt){
+             fn.handleEvent.call(fn, evt);
+             });*/
+            if(tmpElm === window) tmpElm = document;
+            if (events[type]) {
+                tmpElm.detachEvent('on' + type, events[type]);
+            }
+        }
 	};
 
 	me.momentum = function (current, start, time, lowerMargin, wrapperSize) {
@@ -134,6 +177,7 @@ var utils = (function () {
 	};
 
 	me.preventDefaultException = function (el, exceptions) {
+        if(isLegacyIE) return false;
 		for ( var i in exceptions ) {
 			if ( exceptions[i].test(el[i]) ) {
 				return true;
@@ -218,14 +262,21 @@ var utils = (function () {
 			ev;
 
 		if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA') {
-			ev = document.createEvent('MouseEvents');
-			ev.initMouseEvent('click', true, true, e.view, 1,
-				target.screenX, target.screenY, target.clientX, target.clientY,
-				e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,
-				0, null);
 
-			ev._constructed = true;
-			target.dispatchEvent(ev);
+            if(!isLegacyIE){
+                ev = document.createEvent('MouseEvents');
+                ev.initMouseEvent('click', true, true, e.view, 1,
+                    target.screenX, target.screenY, target.clientX, target.clientY,
+                    e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,
+                    0, null);
+                ev._constructed = true;
+                target.dispatchEvent(ev);
+            } else {
+                ev = $.event.fix(e || window.event);
+                var func = document.createEventObject(ev);
+                func.button = true;
+                target.fireEvent('onmousedown', func);
+            }
 		}
 	};
 
@@ -236,7 +287,6 @@ function IScroll (el, options) {
 	this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
 	this.scroller = this.wrapper.children[0];
 	this.scrollerStyle = this.scroller.style;		// cache style for better performance
-
 	this.options = {
 
 		resizeIndicator: true,
@@ -266,6 +316,7 @@ function IScroll (el, options) {
 	};
 
 	for ( var i in options ) {
+        $log(i + ":"+ options[i]);
 		this.options[i] = options[i];
 	}
 
@@ -360,7 +411,7 @@ IScroll.prototype = {
 	_start: function (e) {
 		// React to left mouse button only
 		if ( utils.eventType[e.type] != 1 ) {
-			if ( e.button !== 0 ) {
+			if ( e.button !== 0) {
 				return;
 			}
 		}
@@ -370,7 +421,12 @@ IScroll.prototype = {
 		}
 
 		if ( this.options.preventDefault && !utils.isAndroidBrowser && !utils.preventDefaultException(e.target, this.options.preventDefaultException) ) {
-			e.preventDefault();		// This seems to break default Android browser
+            if(!isLegacyIE){
+                e.preventDefault();
+
+            } else if(e.stopPropagation){
+                e.stopPropagation();		// This seems to break default Android browser
+            }
 		}
 
 		var point = e.touches ? e.touches[0] : e,
@@ -413,8 +469,12 @@ IScroll.prototype = {
 		}
 
 		if ( this.options.preventDefault ) {	// increases performance on Android? TODO: check!
-			e.preventDefault();
-		}
+            if(!isLegacyIE){
+                e.preventDefault()
+            } else if(e.stopPropagation){
+                e.stopPropagation();		// This seems to break default Android browser
+            }
+        }
 
 		var point		= e.touches ? e.touches[0] : e,
 			deltaX		= point.pageX - this.pointX,
@@ -449,8 +509,12 @@ IScroll.prototype = {
 
 		if ( this.directionLocked == 'h' ) {
 			if ( this.options.eventPassthrough == 'vertical' ) {
-				e.preventDefault();
-			} else if ( this.options.eventPassthrough == 'horizontal' ) {
+                if(!isLegacyIE){
+                    e.preventDefault()
+                } else if(e.stopPropagation){
+                    e.stopPropagation();		// This seems to break default Android browser
+                }
+            } else if ( this.options.eventPassthrough == 'horizontal' ) {
 				this.initiated = false;
 				return;
 			}
@@ -458,8 +522,12 @@ IScroll.prototype = {
 			deltaY = 0;
 		} else if ( this.directionLocked == 'v' ) {
 			if ( this.options.eventPassthrough == 'horizontal' ) {
-				e.preventDefault();
-			} else if ( this.options.eventPassthrough == 'vertical' ) {
+                if(!isLegacyIE){
+                    e.preventDefault()
+                } else if(e.stopPropagation){
+                    e.stopPropagation();		// This seems to break default Android browser
+                }
+            } else if ( this.options.eventPassthrough == 'vertical' ) {
 				this.initiated = false;
 				return;
 			}
@@ -510,7 +578,7 @@ IScroll.prototype = {
 		}
 
 		if ( this.options.preventDefault && !utils.preventDefaultException(e.target, this.options.preventDefaultException) ) {
-			e.preventDefault();
+            !isLegacyIE ? e.preventDefault() : e.stopPropagation();
 		}
 
 		var point = e.changedTouches ? e.changedTouches[0] : e,
@@ -572,6 +640,7 @@ IScroll.prototype = {
 						Math.min(Math.abs(newX - snap.x), 1000),
 						Math.min(Math.abs(newY - snap.y), 1000)
 					), 300);
+
 			newX = snap.x;
 			newY = snap.y;
 
@@ -716,8 +785,9 @@ IScroll.prototype = {
 	},
 
 	scrollTo: function (x, y, time, easing) {
+
 		easing = easing || utils.ease.circular;
-		if ( !time || (this.options.useTransition && easing.style) ) {
+		if ( !time || (this.options.useTransition && easing.style)) {
 			this._transitionTimingFunction(easing.style);
 			this._transitionTime(time);
 			this._translate(x, y);
@@ -792,33 +862,37 @@ IScroll.prototype = {
 	},
 
 	_translate: function (x, y) {
-		if ( this.options.useTransform ) {
 
-/* REPLACE START: _translate */
+		if ( this.options.useTransform ) {
 
 			this.scrollerStyle[utils.style.transform] = 'translate(' + x + 'px,' + y + 'px)' + this.translateZ;
 
-/* REPLACE END: _translate */
-
 		} else {
+
 			x = Math.round(x);
 			y = Math.round(y);
-			this.scrollerStyle.left = x + 'px';
-			this.scrollerStyle.top = y + 'px';
+
+            var isNumber = function isNumber(value) { return typeof value === 'number' && isFinite(value)};
+
+//            if(!isLegacyIE){
+                this.scrollerStyle.left = x + 'px';
+                this.scrollerStyle.top = y + 'px';
+
+//            } else {
+//                if(!isNumber(x)) this.scroller.left = x.toString() + 'px';
+//                if(!isNumber(y)) this.scroller.top = y.toString() + 'px';
+//            }
 		}
 
 		this.x = x;
 		this.y = y;
 
+        if ( this.indicators ) {
+            for ( var i = this.indicators.length; i--; ) {
+                this.indicators[i].updatePosition();
+            }
+        }
 
-	if ( this.indicators ) {
-		for ( var i = this.indicators.length; i--; ) {
-			this.indicators[i].updatePosition();
-		}
-	}
-
-
-// INSERT POINT: _translate
 
 	},
 
@@ -959,10 +1033,13 @@ IScroll.prototype = {
 		if ( !this.enabled ) {
 			return;
 		}
+        if(!isLegacyIE){
+            e.preventDefault()
+        } else if(e.stopPropagation){
+            e.stopPropagation();		// This seems to break default Android browser
+        }
 
-		e.preventDefault();
-
-		var wheelDeltaX, wheelDeltaY,
+        var wheelDeltaX, wheelDeltaY,
 			newX, newY,
 			that = this;
 
@@ -1478,9 +1555,13 @@ IScroll.prototype = {
 				break;
 			case 'click':
 				if ( !e._constructed ) {
-					e.preventDefault();
-					e.stopPropagation();
-				}
+                    if(!isLegacyIE){
+                        e.preventDefault();
+                        e.stopPropagation();
+                    } else if(e.stopPropagation){
+                        e.stopPropagation();		// This seems to break default Android browser
+                    }
+                }
 				break;
 		}
 	}
@@ -1686,6 +1767,7 @@ Indicator.prototype = {
 				this.scroller.directionX = 0;
 				this.scroller.directionY = 0;
 				this.scroller.currentPage = snap;
+
 				this.scroller.scrollTo(snap.x, snap.y, time, this.scroller.options.bounceEasing);
 			}
 		}
@@ -1772,6 +1854,10 @@ Indicator.prototype = {
 	updatePosition: function () {
 		var x = Math.round(this.sizeRatioX * this.scroller.x) || 0,
 			y = Math.round(this.sizeRatioY * this.scroller.y) || 0;
+
+        if(isLegacyIE && this.lastPointX && this.initiated){
+            x=this.lastPointX-700;
+        }
 
 		if ( !this.options.ignoreBoundaries ) {
 			if ( x < 0 ) {

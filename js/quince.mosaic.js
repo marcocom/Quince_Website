@@ -58,19 +58,22 @@
         },
 
         initContainer : function(){
-
+//            if(!$q.isIE8){
             this._slider = new IScroll('#slider-container', {
                 scrollX: true,
                 scrollY: false,
                 mouseWheel: true,
                 click:true,
                 startX:0,
-                useTransform: true,
+                useTransform: !$q.isIE8,
                 //snap: 'li',
                 deceleration:0.05,
-                momentum:true
+//                momentum:!$q.isIE8,
+//                scrollbars:$q.isIE8,
+//                interactiveScrollbars:$q.isIE8
             });
-            this.initCTA();
+
+
 
 //            this._slider.scrollBy(-$q.windowWidth, 0, 2500, IScroll.utils.ease.elastic);
 
@@ -80,6 +83,12 @@
 //            this._slider.on('flick', $.proxy(this.onFlick, this));
 //            this._slider.on('refresh', $.proxy(this.positionMosaic, this));
 //            this._slider.on('beforeScrollStart', this.onBeforeScrollStart.bind(this));
+
+//            } else {
+//                var sl = this._el.find('#slider-container .scroller')
+//                this._slider = $(sl[0]);
+//                this._slider.css({'overflow-y':'hidden', 'overflow-x':'visible'});
+//            }
 
             this.loading_items = true;
             $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
@@ -101,6 +110,7 @@
 
             $q.EventManager.fireEvent($q.Event.RESIZE, this);
 
+            this.initCTA();
             this.initLoader();
             this.hideLoader();
 
@@ -134,6 +144,7 @@
             var cta = this._el.find('.cta-msg');
             this._cta = $(cta[0]);
             this._cta.css({'left':'150px'});
+            if($q.isIE8) this._cta.css({'width':'230px'});
 
             setTimeout(function(){
                 // Get the width here
@@ -181,6 +192,7 @@
 
         onResize : function(e){
             var homew = $q.windowWidth - 50;
+            if(homew <= 350) homew = 350;
             this._home.width(homew);
 
             var w = $(this._columns[0]).width();
@@ -190,7 +202,7 @@
 
             $('#slider-container .scroller').width(totalw);
 
-            if(w != this.currentColumnWidth){  //one-time event fire when site shifts through a responsive media-query
+            if(w != this.currentColumnWidth && !$q.isIE8){  //one-time event fire when site shifts through a responsive media-query
 
                 this.currentColumnWidth = w;
                 setTimeout(function () {

@@ -342,8 +342,14 @@ body{
           display:block;
           position:relative;
           float: left;
-
+          .spacer{
+            display:block;
+            height:0;
+            //@include transition(height 1s);
+            //@include transition-timing-function(ease-in);
+          }
           ul{
+            top: 0;
             display:block;
             li{
               height: 50px;
@@ -358,6 +364,12 @@ body{
                 line-height:1em;
                 word-break: normal;
                 margin: 0;
+
+              }
+              &.active h1{
+                color:$brand-purple;
+                @include transition(color 1s);
+                @include transition-timing-function(ease-out);
               }
             }
           }
@@ -403,7 +415,7 @@ body{
                 width:167px;
                 padding:0;
                 float:left;
-                h6{
+                h5{
                   text-align:right;
                   margin: 0;
                 }

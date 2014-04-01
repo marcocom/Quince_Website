@@ -1,6 +1,6 @@
 <?php
 
-if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
+if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 {
     include ('noie.php');
     exit;
@@ -23,6 +23,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
 
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta http-equiv="cleartype" content="on">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
         <meta name="HandheldFriendly" content="True">
 
 <!--        <link href='http://fonts.googleapis.com/css?family=Exo+2:400,700' rel='stylesheet' type='text/css'>-->
@@ -119,11 +120,13 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 <div id="slider-container">
                     <div class="scroller">
 <!--                        <div class="cta-msg hidden-xs"><h5>scroll or drag from the right to see more <b>>></b></h5></div>-->
-                        <div class="cta-msg hidden-xs"><h5>EXPLORE OUR WORLD<em></em></h5></div>
+                        <div class="cta-msg">
+                                <h5><? if (preg_match ('/(?i)msie 8/', $_SERVER['HTTP_USER_AGENT'])): ?>SCROLL TO <? endif ?>EXPLORE OUR WORLD<em></em></h5>
+                        </div>
                         <div class="homepage">
                             <div class="intro-block">
                                 <div class="left-side">
-                                    <h1 class="static">Quince is</h1>
+                                    <h1 class="static"><span>Quince</span> is</h1>
                                     <div class="imgs">
                                         <ul class="img-scroller">
                                             <li class="active"><img src="img/homepage/img1.jpg"></li>
@@ -137,32 +140,30 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                                     </div>
                                     <div class="texts">
                                         <ul class="txt-scroller">
-                                            <li class="active"><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
-                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
-                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
-                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
-                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
-                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
-                                            <li><h6>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met, consectetur adipiscing elit, sed ut labore et dolore magna aliquam.</h6></li>
+                                            <li class="active"><h5>we are a one-stop digital and retail activation agency, founded in 1996. We provide strategy, branding, print, interactive, production and software for major international brands.</h5></li>
+                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
+                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
+                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
+                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
+                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
+                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="words">
+                                    <div class="spacer"></div>
                                     <ul>
                                         <li class="active"><h1>Branding</h1></li>
-                                        <li><h1>Communications</h1></li>
                                         <li><h1>Development</h1></li>
+                                        <li><h1>Advertising</h1></li>
                                         <li><h1>Touchscreens</h1></li>
-                                        <li><h1>Lorem</h1></li>
-                                        <li><h1>Ipsum</h1></li>
-                                        <li><h1>Dolor</h1></li>
-                                        <li><h1>Consequtor</h1></li>
+                                        <li><h1>Events</h1></li>
+                                        <li><h1>Web</h1></li>
+                                        <li><h1>Print</h1></li>
+                                        <li><h1>Strategy</h1></li>
                                     </ul>
                                 </div>
                             </div>
-                            <!--div class="intro-cta">
-                                <h5>EXPLORE OUR WORLD<em></em></h5>
-                            </div-->
                         </div>
                         <ul class="mosaic-container container"></ul>
 
@@ -244,6 +245,18 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                         <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
                         <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
                     </li>
+                    <li class="contact-section">
+                        <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>All-around Java/Grails/Android Developer</h3></a>
+                        <h4>As an <a target="_blank" href="assets/pdf/quince_java_dev.pdf">All-around Java/Grails/Android Developer</a> you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
+                        <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
+                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
+                    </li>
+                    <li class="contact-section">
+                        <a class="job" target="_blank" href="assets/pdf/quince_fed.pdf"><h3>Front-end Developer</h3></a>
+                        <h4>As a <a target="_blank" href="assets/pdf/quince_fed.pdf">Front-end Developer</a> you will work in the new department Retail Solutions, where touchscreen applications and interactive displays are designed and developed, controlled by an intelligent CMS. What you develop is often rolled-out worldwide, becoming tangible in shops and trade fairs.</h4>
+                        <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
+                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
+                    </li>
                     <div class="clear"></div>
                 </ul>
             </div>
@@ -255,7 +268,7 @@ if (preg_match ('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT']))
                 <ul>
                     <li class="about-section">
                         <h4>
-                            <p>Quince is a one-stop digital and retail activation agency and was founded in 1996. We take care of strategy, branding, print, interactive, production and software for major international brands from the Telecom, IT and Consumer Electronics industry. </p>
+                            <p>Quince is a one-stop digital and retail activation agency and was founded in 1996. We take care of strategy, branding, print, interactive, production and software for major international brands in the Telecom, IT and Consumer Electronics industry. </p>
                             <p>We are a unique, people-oriented company, which is reflected in loyal clients and a low staff turnover. Passion in your work, challenging yourself, taking responsibility, respect, having fun and exceeding expectations are core values.</p>
                             <p>Quince continuously invests in personal growth and in the latest technologies. More than 75 employees of various nationalities work at the headquarters in Amsterdam and at the Budapest office.</p>
                             <p>Our specialties: Strategy, Concepting, Digital Media, Events, Print Media, Marcom Software Development, Digital Training, Interactive Displays</p>

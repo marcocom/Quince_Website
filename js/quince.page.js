@@ -41,11 +41,14 @@
         contentSwap:null,
         closeButton:null,
         subcontentOpened:false,
+        introColumn:null,
         _current:null,
         _construct : function(el) {
             this._el = $(el);
             this._super(this._el);
             this.toplinks = $(this._el.find('.header .toplink'));
+
+            this.introColumn = new $q.Page.IntroColumn(this._el.find('#slider-container .scroller .homepage .intro-block')[0]);
             this.initPage();
 
         },
@@ -139,7 +142,7 @@
             this._current = remoteLink;
             var ref = "."+( remoteLink ? remoteLink : clicksource.id) + "-content";
             var $content = $(ref);
-            $log("REMOTE ANIMATE subcontentOpened:"+this.subcontentOpened);
+//            $log("REMOTE ANIMATE subcontentOpened:"+this.subcontentOpened);
             this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, null);
         },
 
@@ -154,7 +157,7 @@
             var $content = $(ref);
 
             this.cellRouter.navigate(clicksource.id, {trigger:false});
-            $log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
+            //$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
 
             this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
         },
@@ -170,7 +173,7 @@
 
             if(targetHeight > maxHeight) targetHeight = maxHeight;
 
-            $log("ANIMATEFROM-CLOSED: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
+            //$log("ANIMATEFROM-CLOSED: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
 
             this.setScrollable(false);
 
@@ -187,11 +190,11 @@
 
         pageAnimateFromOpened : function(el, c){
             var _this = this;
-            $log("ANIMATEFROM-OPEN: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
-            $log("NEW CONTENT:"+el.selector);
+            //$log("ANIMATEFROM-OPEN: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
+            //$log("NEW CONTENT:"+el.selector);
             if(this.currentContent.selector != el.selector){
                 this.contentSwap = c;
-                $log("CONTENTSWAP REASSIGNED-------")
+                //$log("CONTENTSWAP REASSIGNED-------")
             } else {
                 this.contentSwap = null;
             }
@@ -210,19 +213,19 @@
             var bg = this.currentContent.find('.content');
             $(bg).bind('click', $.proxy(this.pageCollapse, this));
             this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
-            $log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
+            //$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
         },
 
         onCloseTransitionEnd : function(){
-//            this.cellRouter.navigate("", {trigger:false})
             // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
-            $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened+" contentSwap:");
+//            $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened+" contentSwap:");
             $dir(this.contentSwap);
             if(this.subcontentOpened == true){
                 this.subcontentOpened = false;
                 this.currentContent.hide();
                 this.currentContent = null;
                 this.setScrollable(true);
+
 
                 if(this.contentSwap != null){
 
@@ -231,6 +234,8 @@
 
                     $log("CONTENT SWAP:"+this._current);
                     this.contentSwap = null;
+                } else {
+
                 }
 
             }
@@ -239,11 +244,12 @@
         pageCollapse : function(e){
 //            if(this.subcontentOpened) this._el.css('top', '0px');
             var _this = this;
+            this.cellRouter.navigate("/", {trigger:false});
             if(this.subcontentOpened){
                 this._el.animate({
                     top:'0'
                 }, 500, function(){
-//                    _this.onCloseTransitionEnd();
+                    _this.onCloseTransitionEnd();
                 });
                 this._el.mouseover(null);
                 this._el.unbind('tap click swipe focus');
@@ -267,6 +273,72 @@
             }
 
         }
+    });
+
+    $q.Page.IntroColumn = $q.Page.extend({
+        _current:null,
+        _imgrow:null,
+        _textrow:null,
+        _words:null,
+        words_spacer:null,
+        timer:null,
+        highlight:'#5d2278',
+        timerLength:3000,
+
+        _construct : function(el) {
+            this._el = $(el);
+            this._super(this._el);
+            this.initIntro();
+        },
+        initIntro : function(){
+            var _this = this;
+            this._imgrow = $(this._el.find('.left-side .imgs ul.img-scroller')[0]);
+            this._textrow = $(this._el.find('.left-side .texts ul.txt-scroller')[0]);
+            this._words = $(this._el.find('.words ul')[0]);
+            this.words_spacer = $(this._el.find('.words .spacer')[0]);
+
+            $log("INTRO :", this._el, "IMGS:", this._imgrow, "TEXTS:", this._textrow, "WORDS:", this._words);
+
+            this.decorateWords();
+
+            this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
+
+        },
+        decorateWords : function(){
+            var _this = this;
+            this._words = $(this._el.find('.words ul')[0]);
+
+            var list_arr = this._words[0].children;
+
+            $(list_arr[0]).addClass("active");
+            $(list_arr[list_arr.length-1]).css({'opacity':'0'});
+            $(list_arr[list_arr.length-2]).css({'opacity':'0.2'});
+            $(list_arr[list_arr.length-3]).css({'opacity':'0.4'});
+            $(list_arr[list_arr.length-4]).css({'opacity':'0.6'});
+
+            this._words.each(function(i){
+//                $(this).click($.proxy(_this.wordClick, _this));
+            });
+
+        },
+        wordClick : function(e){
+            $log("CLICK");
+        },
+        rotateWords : function(){
+            var _this = this;
+            var firstword = this._words.find('li:first');
+
+            $(firstword[0]).animate({'opacity':0}, 1000, function () {
+                $(this).appendTo(_this._words).css('opacity', 1).removeClass('active');
+                _this.words_spacer.height(firstword.height());
+                _this.words_spacer.animate({'height':0}, 1000);
+                _this.decorateWords();
+            });
+
+
+
+        }
+
     });
 
     $q.Page.Init();

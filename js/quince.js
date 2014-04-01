@@ -7,8 +7,9 @@
         resetpassword : null,
         isUserLoggedIn : false,
         contentManagementSysURL:"",
+        _something:true,
         _uid : 0,
-        isIE : ($('html').is('.ie9, .ie8')), //("v" == "\v"),
+        isIE8 : navigator.userAgent.indexOf('MSIE 8') > -1, //("v" == "\v"),
         isFF : navigator.userAgent.indexOf('Firefox') > 0,
         isHandheldPortrait : $('body').width() < 450 && $('body').height() > $('body').width(),
         msGesture : window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
@@ -36,7 +37,7 @@
         init: function() {
             if ($.support.touch) $('body').addClass('ipad-iphone');
             this.setupEventManager();
-            $log("QUINCE:INIT isHandheld:"+this.isHandheldPortrait+"  --UA:"+navigator.userAgent);
+            $log("QUINCE:INIT isHandheld:"+this.isHandheldPortrait+"  --UA:"+navigator.userAgent+" isIE8:"+this.isIE8);
 
             this.windowWidth = $(window).width();
             this.windowHeight = $(window).height();
@@ -127,7 +128,7 @@
             // Note that this doesn't handle
             // toString and valueOf enumeration bugs in IE < 9
             for (var key in obj) {
-                if (hasOwnProperty.call(obj, key)) return false;
+                if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
             }
 
             return true;
@@ -273,52 +274,6 @@
         checkLength : function(str, num)
         {
             return Boolean(this.trim(str).length >= num);
-        },
-        checkImei: function (str)
-        {
-            str = str.replace(/[ -]/g, "");
-
-            var exp = new RegExp("^[0-9]{15}$");
-
-            if (!exp.exec(str))
-            {
-                return false;
-            }
-
-            var digit;
-            var check = 0;
-
-            for (var i = 0; i < 15; i++)
-            {
-                digit = parseInt (str[i]);
-
-                if (i === 14)
-                {
-                    if ((check + digit) % 10 !== 0)
-                    {
-                        return false;
-                    }
-
-                    break;
-                }
-                if (i % 2 === 1)
-                {
-                    if (digit >= 5)
-                    {
-                        check += 1 + digit * 2 - 10;
-                    }
-                    else
-                    {
-                        check += digit * 2;
-                    }
-                }
-                else
-                {
-                    check += digit;
-                }
-            }
-
-            return true;
         }
     };
 

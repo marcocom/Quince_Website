@@ -3,7 +3,7 @@
     var thisJS = 'loader.js';
     var jsFiles = [ // files to be conditionally included
         'lib/jquery.easing.1.3.js',
-        'lib/iscroll.js',
+        'lib/iscroll.custom.js',
         'lib/hammer.js',
         'lib/jquery.hammer.js',
         'lib/masonry.js',

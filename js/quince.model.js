@@ -33,14 +33,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
     );
 
 
-
-
-
-
-
-
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
     $q.Model.Mosaic = $q.Model.extend({
         _totalDataFiles : 0,
@@ -285,7 +277,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
             var patm = this.patternFormatData(_m);
 
-            var castm = patm.map(function(post) {
+            var castm = $.map(patm, function(post) {
                 return new cellModel(post);
             });
             this._collection = new columnCollection(castm);
@@ -332,7 +324,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 var cell_letter = pattern[i];
                 var uId = "0" + this._index.toString() + i.toString();
 
-                if($q.AncillaryLetters.indexOf(cell_letter) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
+//                if($q.AncillaryLetters.indexOf(cell_letter) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
+                if($.inArray(cell_letter, $q.AncillaryLetters) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
                     ancil_obj = this.pullAncillaryData(cell_letter);
                     if(ancil_obj)ancil_obj.CellType = cell_letter;
 
@@ -403,9 +396,9 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         _column:null,
         _model:{},
 
-        initialize: function(m, el){
+        initialize: function(m, col){
             this._model = m;
-            this._column = el;
+            this._column = col;
             this._style = this._model.get("CellType");
             this._tplname = 'cell_'+this._style;
 //            $log("CELL m:", this._model, " c:", this._column);
@@ -415,6 +408,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         render: function(){
             var template = Quince.templates.cells[this._tplname](this._model.toJSON());
             this.$el.html( template );
+            this.setElement(this.$el);
             this.$el.appendTo(this._column);
         },
 
