@@ -136,17 +136,18 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                                             <li><img src="img/homepage/img1.jpg"></li>
                                             <li><img src="img/homepage/img1.jpg"></li>
                                             <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/img1.jpg"></li>
                                         </ul>
                                     </div>
                                     <div class="texts">
                                         <ul class="txt-scroller">
-                                            <li class="active"><h5>we are a one-stop digital and retail activation agency, founded in 1996. We provide strategy, branding, print, interactive, production and software for major international brands.</h5></li>
-                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
-                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
-                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
-                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
-                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
-                                            <li><h5>Nam liber te conscient to factor tum poen legum odioque civiuda. Et tam neque pecun modut est neque nonor et imper ned libidig met.</h5></li>
+                                            <li class="active"><h5>We are a one-stop digital and retail activation agency, founded in 1996. We provide strategy, branding, print, interactive, production and software for major international brands.</h5></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -154,13 +155,18 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                                     <div class="spacer"></div>
                                     <ul>
                                         <li class="active"><h1>Branding</h1></li>
-                                        <li><h1>Development</h1></li>
+                                        <li><h1>Interactive</h1></li>
                                         <li><h1>Advertising</h1></li>
-                                        <li><h1>Touchscreens</h1></li>
+                                        <li><h1>Development</h1></li>
+                                        <li><h1>Touch</h1></li>
+                                        <li><h1>Displays</h1></li>
                                         <li><h1>Events</h1></li>
                                         <li><h1>Web</h1></li>
                                         <li><h1>Print</h1></li>
+                                        <li><h1>Mobile</h1></li>
                                         <li><h1>Strategy</h1></li>
+                                        <li><h1>Retail</h1></li>
+                                        <li><h1>E-Learning</h1></li>
                                     </ul>
                                 </div>
                             </div>
@@ -180,10 +186,11 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
             <a href="#"><em class="icon"></em><h4>collapse / close</h4></a>
         </div>
 
-        <div class="contact-content container subcontent">
+        <div class="contact-content container subcontent sliding">
             <div class="content">
-                <h1>Contact Information</h1>
-                <ul>
+            <div class="scroller">
+<!--                <h1>Contact Information</h1>-->
+                <ul class="items">
                     <li class="contact-section" id="contact-amsterdam">
                         <h3>Quince Amsterdam B.V.</h3>
                         <a class="address" target="_blank" href="https://maps.google.nl/maps?q=Assumburg+73+1081+GB+Amsterdam+the+Netherlands&daddr=Assumburg+73,+1081+GB+Amsterdam&hnear=0x47c60a0b845ef23b:0x79090fe2330b7586,Assumburg+73,+1081+GB+Amsterdam&gl=nl&t=h&z=16">
@@ -227,12 +234,14 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                     <div class="clear"></div>
                 </ul>
             </div>
+            </div>
         </div>
 
-        <div class="jobs-content container subcontent">
+        <div class="jobs-content container subcontent sliding">
             <div class="content">
-                <h1>Jobs and Opportunities</h1>
-                <ul>
+            <div class="scroller">
+<!--                <h1>Jobs and Opportunities</h1>-->
+                <ul class="items">
                     <li class="contact-section">
                         <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>All-around Java/Grails/Android Developer</h3></a>
                         <h4>As an <a target="_blank" href="assets/pdf/quince_java_dev.pdf">All-around Java/Grails/Android Developer</a> you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
@@ -257,14 +266,26 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
                         <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
                     </li>
-                    <div class="clear"></div>
+                    <li class="contact-section">
+                        <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>All-around Java/Grails/Android Developer</h3></a>
+                        <h4>As an <a target="_blank" href="assets/pdf/quince_java_dev.pdf">All-around Java/Grails/Android Developer</a> you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
+                        <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
+                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
+                    </li>
+                    <li class="contact-section">
+                        <a class="job" target="_blank" href="assets/pdf/quince_fed.pdf"><h3>Front-end Developer</h3></a>
+                        <h4>As a <a target="_blank" href="assets/pdf/quince_fed.pdf">Front-end Developer</a> you will work in the new department Retail Solutions, where touchscreen applications and interactive displays are designed and developed, controlled by an intelligent CMS. What you develop is often rolled-out worldwide, becoming tangible in shops and trade fairs.</h4>
+                        <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
+                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
+                    </li>
                 </ul>
+            </div>
             </div>
         </div>
 
         <div class="about-content container subcontent">
             <div class="content">
-                <h1>About Quince</h1>
+<!--                <h1>About Quince</h1>-->
                 <ul>
                     <li class="about-section">
                         <h4>
@@ -498,8 +519,8 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         <!--        <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>-->
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 
-<!--        <script type="text/javascript" src="js/main.js"></script>-->
-        <script type="text/javascript" src="js/loader.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+<!--        <script type="text/javascript" src="js/loader.js"></script>-->
 
     </body>
 </html>

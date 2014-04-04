@@ -96,7 +96,7 @@ body{
   @include box-shadow($div-shadow);
   background-color:white;
   position: absolute;
-  z-index:3;
+  z-index:3 !important;
 
   .header{
     position: absolute;
@@ -265,21 +265,25 @@ body{
     //min-width: $mosaic-min-width;
     width:auto;
     height: 100%;
+
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
+
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
     -o-text-size-adjust: none;
     text-size-adjust: none;
+
     .cta-msg{
       //font-size:12px;
       //color:$brand-blue;
@@ -336,7 +340,7 @@ body{
         display:block;
         position:absolute;
         overflow:hidden;
-        left: 10%;
+        left: 20%;
         top: 10%;
         .words{
           display:block;
@@ -355,6 +359,9 @@ body{
               height: 50px;
               display:block;
               position:relative;
+              opacity:1;
+              //@include transition(opacity 0.5s);
+              //@include transition-timing-function(ease-out);
               h1{
                 display:block;
                 position:relative;
@@ -396,7 +403,12 @@ body{
             overflow:hidden;
             ul.img-scroller{
               height:91px;
-              min-width:2000px;
+              min-width:3000px;
+              display:block;
+              position:relative;
+              @include transition(left 1s);
+              @include transition-timing-function(ease-out);
+
               li{
                 width:167px;
                 float:left;
@@ -751,17 +763,50 @@ body{
 .subcontent.opened{display:block}
 
 .subcontent{
-  z-index:1;
 
   width:100%;
   height:100%;
   display:none;
   background-color:$gray-light;
   position: fixed;
-
+  padding-top: 10px;
 
   .content{
+    width:100%;
+    height:300px;
+    min-height:300px;
+    position: absolute;
+    z-index: 1;
 
+    .scroller{
+
+      position: absolute;
+      z-index: 1;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      width:2000px;
+      height: auto;
+
+      -webkit-transform: translateZ(0);
+      -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      -o-transform: translateZ(0);
+      transform: translateZ(0);
+
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      -webkit-text-size-adjust: none;
+      -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+      -o-text-size-adjust: none;
+      text-size-adjust: none;
+
+
+      padding-left: 20px;
+    }
     h1{
       color:$white;
       font-weight:200;
@@ -778,22 +823,27 @@ body{
     }
 
     ul{
-      width:90%;
-      margin: 40px auto 0;
+      width:auto;
       vertical-align:top;
+
+
 
       li{
         @include box-shadow($div-shadow);
-        width:33%;
+        width:350px;
         padding:10px;
         //float:left;
-        display:inline-block;
         vertical-align:top;
         background-color:$almostWhite;
         border: solid 2px $white;
         //@include border-top-radius(10px);
-        min-height:250px;
-        margin:20px 5px 0;
+        min-height:350px;
+        margin:20px 15px 0;
+
+        display: inline-block;
+        float: left;
+
+
         a{
           font-weight:200;
           color:$brand-blue;
@@ -803,7 +853,7 @@ body{
           font-weight:600 !important;
           color:$gray;
           margin-bottom:10px;
-          min-height: 84px;
+          min-height: 85px;
         }
       }
     }
@@ -846,33 +896,43 @@ body{
   }
 }
 .contact-content{
-  ul li{
-    .address{
-      display:block;
-      margin: 10px 0;
-      h5{
-        color:black;
-        line-height:1em;
+  h5{
+    margin:0;
+  }
+  ul{
+    min-width:1000px;
+    li{
+      .address{
+        display:block;
+        margin: 10px 0;
+        h5{
+          color:black;
+          line-height:1em;
+          margin:0;
 
-        a{
-          font-weight:400;
-          color:$brand-blue;
+          a{
+            font-weight:400;
+            color:$brand-blue;
+          }
         }
       }
-    }
-    .legal-info{
-      margin-top:10px;
-      h6{
-        color:$gray;
-        //font-size:0.6em;
-        line-height: 1.5em;
-        word-break:auto;
+      .legal-info{
+        margin-top:10px;
+        h6{
+          color:$gray;
+          //font-size:0.6em;
+          line-height: 1.5em;
+          word-break:auto;
+          margin:0;
+        }
+      }
+      h3{
+        min-height:30px !important;
+        margin:0;
       }
     }
-    h3{
-      min-height:none;
-    }
   }
+
 }
 
 .jobs-content{
@@ -901,8 +961,6 @@ body{
 .about-content{
   ul li{
     //width:25% !important;
-    width:70% !important;
-    min-height:150px;
     p{
       //font-size: 1em;
       line-height:120%;
@@ -938,15 +996,31 @@ body{
 
 
 @media (min-height:$mosaic-response-height-max){
-  #slider-container .scroller .mosaic-container li.column{
-    width:$cell-total-short-width;
+  #slider-container .scroller{
+    //margin-top:10%;
+    .mosaic-container li.column{
+      width:$cell-total-short-width;
+      //width:$cell-total-med-width;
+    }
   }
 }
 
 @media (max-height:$mosaic-response-height-mobile) and (max-width:$screen-xs){
-  #slider-container .scroller .mosaic-container li.column{
-    width:$cell-total-med-width;
-  }
+  #slider-container .scroller{
+     .mosaic-container li.column{
+       //width:$cell-total-short-width;
+       width:$cell-total-med-width;
+     }
+   }
+}
+@media (min-height:$mosaic-response-height-mobile) and (max-width:$screen-xs){
+  #slider-container .scroller{
+     margin-top:20%;
+     .mosaic-container li.column{
+       //width:$cell-total-short-width;
+       width:$cell-total-med-width;
+     }
+   }
 }
 
 //@media (min-height: $mosaic-response-height-min) and (max-height:$mosaic-response-height-max){

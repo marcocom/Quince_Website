@@ -66,9 +66,9 @@
                 click:true,
                 startX:0,
                 useTransform: !$q.isIE8,
-                //snap: 'li',
+//                snap: 'li',
                 deceleration:0.05,
-//                momentum:!$q.isIE8,
+                momentum:!$q.isIE8
 //                scrollbars:$q.isIE8,
 //                interactiveScrollbars:$q.isIE8
             });

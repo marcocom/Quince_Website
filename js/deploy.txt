@@ -1,7 +1,9 @@
 
-cat lib/jquery.easing.1.3.js lib/iscroll.custom.js lib/hammer.js lib/jquery.hammer.js lib/masonry.js lib/lodash.underscore.js lib/backbone.js lib/backbone-relational.js jquery.ext.js helper.js lib/jquery.flexslider.js lib/jquery.fancybox.js quince.js quince.model.js quince.page.js quince.mosaic.js plugins.js > cat_main.js
+cat lib/jquery.easing.1.3.js lib/iscroll.custom.js lib/hammer.js lib/jquery.hammer.js lib/masonry.js lib/lodash.underscore.js lib/backbone.js lib/jquery.flexslider.js lib/jquery.fancybox.js jquery.ext.js helper.js quince.js quince.model.js quince.page.js quince.mosaic.js plugins.js > cat_main.js
 
 java -jar compress.jar cat_main.js -o main.js
+uglifyjs cat_main.js -minify -o main.js
+uglifyjs cat_main.js -compressed -o main.js
 
 
 rm cat_main.js

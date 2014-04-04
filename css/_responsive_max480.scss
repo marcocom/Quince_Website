@@ -1,12 +1,6 @@
 
 .home-content{
-  //.logo{
-  //  display:block;
-  //  height:346px;
-  //  width:339px;
-  //  background: transparent url(../img/logo.png) no-repeat 0 0;
-  //  position: absolute;
-  //}
+
   z-index:3;
   .content{
 
@@ -62,27 +56,19 @@
   }
 }
 
-.subcontent{
+.about-content{
 
   .content{
 
-    h1{
-      right:5px;
-      top:2px;
-      font-size: 1.6em;
-    }
-
     ul{
-      width:95%;
-      margin: 20px auto 0;
+      width:auto;
       li{
+        margin:20px 0 0 4px;
         //float:left;
-        min-height:200px;
-        width: 47%;
-        padding:5px;
-        margin: 20px 0 0 5px;
+        width:98%;
         h4,h5, h3{
-          font-size:80%;
+          //font-size:120%;
+          font-size:100% !important;
         }
         h3{
           min-height:30px;
@@ -102,7 +88,7 @@
 
       .intro-block{
         left: -48px;
-        top: 10%;
+        top: 0;
         padding: 10px 0 0;
         .words{
           padding:2px 0 0;
@@ -235,10 +221,6 @@
   }
 }
 
-.about-content{
-  width:100%;
-  ul li{
-    //width:25% !important;
-    width:90% !important;
-  }
+.subcontent ul li{
+  width:310px;
 }
