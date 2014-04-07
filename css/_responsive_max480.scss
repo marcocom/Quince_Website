@@ -60,22 +60,19 @@
 
   .content{
 
-    ul{
-      width:auto;
-      li{
+      .about-section{
         margin:20px 0 0 4px;
         //float:left;
         width:98%;
         h4,h5, h3{
-          //font-size:120%;
-          font-size:100% !important;
+          font-size:1.2em !important;
         }
         h3{
           min-height:30px;
         }
 
       }
-    }
+
   }
 }
 

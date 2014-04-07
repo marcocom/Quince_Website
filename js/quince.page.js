@@ -383,8 +383,14 @@
 //            this._imgrow.animate(
 //                {'left':(img_goto)},
 //                1000 );
-            this._imgrow.css(
-                {'left':(img_goto)});
+
+            setTimeout(function(){
+//                _this._imgrow.css({'left':(img_goto)});
+                _this._imgrow.animate(
+                    {'left':(img_goto)},
+                    1000 );
+            }, 1000);
+
 
 
 
@@ -424,7 +430,6 @@
 
             this._scroller = $(this._content).find('.scroller');
 
-
             this._slider = new IScroll(this._content, {
                 scrollX: true,
                 scrollY: false,
@@ -439,7 +444,6 @@
 //                interactiveScrollbars:$q.isIE8
             });
 
-
 //            this._slider.on('scrollStart', $.proxy(this.onScrollStart, this));
 //            this._slider.on('scrollCancel', $.proxy(this.onScrollCancel, this));
 //            this._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
@@ -450,15 +454,13 @@
             this.loading_items = true;
 //            $log("SUBPAGE INITCONTAINER ()  -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
-
-
             var c = this._mosaic.find('li');
+
             this._columns = $(c);
 
 //            this._columns.each(function(){
 //                var mc = new $q.Page.ParentColumn(this);
 //            });
-
 
             this.addEventHandlers();
 
@@ -483,7 +485,7 @@
         onResize : function(e){
 
             var w = $(this._columns[0]).width();
-            var totalw = (this._columns.length * w);
+            var totalw = (this._columns.length + 1) * w;
             var _this = this;
             $log("SUB RESIZE() w:"+w+" totalwidth:"+totalw);
 

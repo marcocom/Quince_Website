@@ -414,7 +414,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
         events: {
 //            "click input[type=button]": "doSearch"
-            "click": "onClick"
+//            "click": "onClick"
         },
 
         onClick: function( e ){

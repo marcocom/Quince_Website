@@ -16,7 +16,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Quince :: Welcome</title>
         <meta name="keywords" content="amsterdam, holland, quince, quince technologies, quince amsterdam bv, dutch creative, holland print, online offline, web, web design, website design, graphic design, web engineering, website engineering, java, web consulting, web application, web development, web application development, e-commerce, interactive web, streaming video, interactive display unit, dcms, qrs content management system, content management, 3d development, web consulting, lamp, open source, Strategy, Concepting, Digital Media, Events, Print Media, Marcom Software Development, Digital Training, Interactive Displays">
-        <meta name="description" content="">
+        <meta name="description" language="US_en" content="A one-stop digital and retail activation agency and was founded in 1996. We take care of strategy, branding, print, interactive, production and software for major international brands in the Telecom, IT and Consumer Electronics industry.">
 <!--        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0, target-densitydpi=device-dpi">-->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -129,20 +129,19 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                                     <h1 class="static"><span>Quince</span> is</h1>
                                     <div class="imgs">
                                         <ul class="img-scroller">
-                                            <li class="active"><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
-                                            <li><img src="img/homepage/img1.jpg"></li>
+                                            <li><img src="img/homepage/branding.jpg"></li>
+                                            <li><img src="img/homepage/vr_gaming.jpg"></li>
+                                            <li><img src="img/homepage/installations.jpg"></li>
+                                            <li><img src="img/homepage/retail.jpg"></li>
+                                            <li><img src="img/homepage/touch.jpg"></li>
+                                            <li><img src="img/homepage/installations.jpg"></li>
+                                            <li><img src="img/homepage/events.jpg"></li>
+                                            <li><img src="img/homepage/web.jpg"></li>
+                                            <li><img src="img/homepage/print.jpg"></li>
+                                            <li><img src="img/homepage/mobile.jpg"></li>
+                                            <li><img src="img/homepage/strategy.jpg"></li>
+                                            <li><img src="img/homepage/retail.jpg"></li>
+                                            <li><img src="img/homepage/elearning.jpg"></li>
                                         </ul>
                                     </div>
                                     <div class="texts">
@@ -286,16 +285,14 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         <div class="about-content container subcontent">
             <div class="content">
 <!--                <h1>About Quince</h1>-->
-                <ul>
-                    <li class="about-section">
+                    <div class="about-section">
                         <h4>
                             <p>Quince is a one-stop digital and retail activation agency and was founded in 1996. We take care of strategy, branding, print, interactive, production and software for major international brands in the Telecom, IT and Consumer Electronics industry. </p>
                             <p>We are a unique, people-oriented company, which is reflected in loyal clients and a low staff turnover. Passion in your work, challenging yourself, taking responsibility, respect, having fun and exceeding expectations are core values.</p>
                             <p>Quince continuously invests in personal growth and in the latest technologies. More than 75 employees of various nationalities work at the headquarters in Amsterdam and at the Budapest office.</p>
                             <p>Our specialties: Strategy, Concepting, Digital Media, Events, Print Media, Marcom Software Development, Digital Training, Interactive Displays</p>
                         </h4>
-                    </li>
-                </ul>
+                    </div>
             </div>
         </div>
 

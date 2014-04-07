@@ -827,21 +827,20 @@ body{
       vertical-align:top;
 
 
-
       li{
         @include box-shadow($div-shadow);
         width:350px;
         padding:10px;
-        //float:left;
+
         vertical-align:top;
         background-color:$almostWhite;
         border: solid 2px $white;
         //@include border-top-radius(10px);
         min-height:350px;
-        margin:20px 15px 0;
+        margin:20px 20px 0 0;
 
         display: inline-block;
-        float: left;
+        //float: left;
 
 
         a{
@@ -959,8 +958,21 @@ body{
 
 }
 .about-content{
-  ul li{
+  .about-section{
     //width:25% !important;
+    width:600px;
+    @include box-shadow($div-shadow);
+    padding:10px;
+
+    vertical-align:top;
+    background-color:$almostWhite;
+    border: solid 2px $white;
+    //@include border-top-radius(10px);
+    min-height:350px;
+    margin:20px 20px 0 20px;
+
+    display: inline-block;
+    //float: left;
     p{
       //font-size: 1em;
       line-height:120%;
