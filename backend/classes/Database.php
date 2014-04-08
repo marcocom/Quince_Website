@@ -66,7 +66,7 @@ class Database
               from items
 
               left outer join types
-              on types.id = items.type
+              on types.type = items.type
 
               left outer join customers
               on customers.id = items.customer
