@@ -295,6 +295,7 @@
         _imgrow:null,
         _textrow:null,
         _words:null,
+        _preview:null,
         words_spacer:null,
         timer:null,
         highlight:'#5d2278',
@@ -310,13 +311,22 @@
             this._imgrow = $(this._el.find('.left-side .imgs ul.img-scroller')[0]);
             this._words = $(this._el.find('.words ul')[0]);
             this.words_spacer = $(this._el.find('.words .spacer')[0]);
+            this._preview = $(this._el.find('.preview')[0]);
 
 //            $log("INTRO :", this._el, "IMGS:", this._imgrow, "WORDS:", this._words);
 
             this.decorateWords(true);
 
-            this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
+            this.manageRotationTimer(false);
 
+        },
+        manageRotationTimer : function(turnOff){
+            var _this = this;
+            if(!turnOff){
+                this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
+            } else {
+                clearInterval(this.timer);
+            }
         },
         decorateWords : function(firstTime){
             var _this = this;

@@ -169,6 +169,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                                     </ul>
                                 </div>
                             </div>
+                            <div class="preview hidden-md hidden-sm hidden-xs"></div>
                         </div>
                         <ul class="mosaic-container container"></ul>
 
@@ -245,37 +246,19 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>All-around Java/Grails/Android Developer</h3></a>
                         <h4>As an <a target="_blank" href="assets/pdf/quince_java_dev.pdf">All-around Java/Grails/Android Developer</a> you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
                         <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
+                        <h5>Principals only.<br>Recruiters, do not contact Quince on behalf of your clients. This will not be appreciated.</h5>
                     </li>
                     <li class="contact-section">
                         <a class="job" target="_blank" href="assets/pdf/quince_fed.pdf"><h3>Front-end Developer</h3></a>
                         <h4>As a <a target="_blank" href="assets/pdf/quince_fed.pdf">Front-end Developer</a> you will work in the new department Retail Solutions, where touchscreen applications and interactive displays are designed and developed, controlled by an intelligent CMS. What you develop is often rolled-out worldwide, becoming tangible in shops and trade fairs.</h4>
                         <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
+                        <h5>Principals only.<br>Recruiters, do not contact Quince on behalf of your clients. This will not be appreciated.</h5>
                     </li>
                     <li class="contact-section">
-                        <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>All-around Java/Grails/Android Developer</h3></a>
-                        <h4>As an <a target="_blank" href="assets/pdf/quince_java_dev.pdf">All-around Java/Grails/Android Developer</a> you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
+                        <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>Technical Account Manager</h3></a>
+                        <h4>As a <a target="_blank" href="assets/pdf/quince_accnt_mgr.pdf">Technical Account Manager</a> you will work with challenging projects for both Quince and Quince Retail Solutions developing interactive touch screen and digital signage applications (Windows and Android), controlled by an intelligent CMS. </h4>
                         <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
-                    </li>
-                    <li class="contact-section">
-                        <a class="job" target="_blank" href="assets/pdf/quince_fed.pdf"><h3>Front-end Developer</h3></a>
-                        <h4>As a <a target="_blank" href="assets/pdf/quince_fed.pdf">Front-end Developer</a> you will work in the new department Retail Solutions, where touchscreen applications and interactive displays are designed and developed, controlled by an intelligent CMS. What you develop is often rolled-out worldwide, becoming tangible in shops and trade fairs.</h4>
-                        <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
-                    </li>
-                    <li class="contact-section">
-                        <a class="job" target="_blank" href="assets/pdf/quince_java_dev.pdf"><h3>All-around Java/Grails/Android Developer</h3></a>
-                        <h4>As an <a target="_blank" href="assets/pdf/quince_java_dev.pdf">All-around Java/Grails/Android Developer</a> you will work on innovative e-learning solutions. Our platform, used by a number-one, leading telecom and consumer electronics brands, is actively being used by more than 100.000 users worldwide to keep their knowledge up-to-date. </h4>
-                        <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
-                    </li>
-                    <li class="contact-section">
-                        <a class="job" target="_blank" href="assets/pdf/quince_fed.pdf"><h3>Front-end Developer</h3></a>
-                        <h4>As a <a target="_blank" href="assets/pdf/quince_fed.pdf">Front-end Developer</a> you will work in the new department Retail Solutions, where touchscreen applications and interactive displays are designed and developed, controlled by an intelligent CMS. What you develop is often rolled-out worldwide, becoming tangible in shops and trade fairs.</h4>
-                        <h5>Send your motivation and portfolio to <a href="mailto:jobs@quince.nl">jobs@quince.nl</a></h5>
-                        <h5>Principals only.<br>Recruiters, don’t contact Quince on behalf of your clients. This will not be appreciated.</h5>
+                        <h5>Principals only.<br>Recruiters, do not contact Quince on behalf of your clients. This will not be appreciated.</h5>
                     </li>
                 </ul>
             </div>
@@ -516,8 +499,8 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         <!--        <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>-->
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 
-        <script type="text/javascript" src="js/main.js"></script>
-<!--        <script type="text/javascript" src="js/loader.js"></script>-->
+<!--        <script type="text/javascript" src="js/main.js"></script>-->
+        <script type="text/javascript" src="js/loader.js"></script>
 
     </body>
 </html>

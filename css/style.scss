@@ -340,7 +340,7 @@ body{
         display:block;
         position:absolute;
         overflow:hidden;
-        left: 20%;
+        left: 30%;
         top: 10%;
         .words{
           display:block;
@@ -438,7 +438,15 @@ body{
           }
         }
       }
-
+      .preview{
+        display:block;
+        width:241px;
+        height:555px;
+        position:absolute;
+        top:0;
+        right:0;
+        background: transparent url(img/preview.png) no-repeat 0 0;
+      }
       .intro-cta{
         display:block;
         position:absolute;

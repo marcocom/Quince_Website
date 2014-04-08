@@ -43,6 +43,15 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         _dataFinished : false,
         _directory : null,
         _mosaic:null,
+        counters:{
+            'a':0,
+            'a':0,
+            'a':0,
+            'a':0,
+            'a':0,
+            'a':0,
+            'a':0,
+        },
 
         _construct : function(el, dir) {
             this._el = $(el);

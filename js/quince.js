@@ -114,6 +114,40 @@
                 return (typeof v !== "undefined" && v !== null) ? v : "";
             });
         },
+        loadTemplateFile : function(templateName) {
+            var template = $('#tpl-' + templateName);
+            if (template.length === 0) {
+                var tmpl_dir = '/templates';
+                var tmpl_url = tmpl_dir + '/' + templateName + '.tmpl';
+                var tmpl_string = '';
+
+                $.ajax({
+                    url: tmpl_url,
+                    method: 'GET',
+                    async: false,
+                    contentType: 'text',
+                    success: function (data) {
+                        tmpl_string = data;
+                        $('head').append('<script id="tpl-' +
+                            templateName + '" type="text/template">' + tmpl_string + '<\/script>');
+                    }
+                });
+
+            }
+        },
+        sub_template : function (str, data) {
+            // match "<% include template-id %>"
+            return _.template(
+                str.replace(
+                    /<%\s*include\s*(.*?)\s*%>/g,
+                    function(match, templateId) {
+                        var el = $('#' + templateId);
+                        return el ? el.html() : '';
+                    }
+                ),
+                data
+            );
+        },
         isEmpty : function(obj) {
 
             // null and undefined are "empty"

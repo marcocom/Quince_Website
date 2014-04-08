@@ -647,7 +647,6 @@
 
 
 
-
     function startMosaic(e){
         $q.Mosaic.Init();
         if($('#slider-container').length > 0) Quince._mosaic = new $q.Mosaic.Container('#slider-container');
