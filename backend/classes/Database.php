@@ -61,12 +61,12 @@ class Database
       return $items;
     }
 
-    $query = 'select items.id, types.type as type, comment, date, customers.id as customerId, customers.name as customerName, title, authors.id as authorId, authors.name as authorName, url
+    $query = 'select items.id, types.type as type, comment, date, customers.id as customerId, customers.name as customerName, title, `text`, portal, ref, authors.id as authorId, authors.name as authorName, url
 
               from items
 
               left outer join types
-              on types.id = items.type
+              on types.type = items.type
 
               left outer join customers
               on customers.id = items.customer
@@ -89,11 +89,14 @@ class Database
     {
       $item = new Item ($row['id']);
       $item->title        = $row['title'];
+      $item->text         = $row['text'];
       $item->type         = $row['type'];
       $item->customerId   = (int) $row['customerId'];
       $item->customerName = $row['customerName'];
       $item->authorId     = (int) $row['authorId'];
       $item->authorName   = $row['authorName'];
+      $item->portal       = $row['portal'];
+      $item->ref          = $row['ref'];
       $item->date         = $row['date'];
       $item->url          = $row['url'];
       $item->comment      = $row['comment'];
