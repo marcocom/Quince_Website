@@ -1,5 +1,3 @@
-
-
 (function($) {
 
     var $q = Quince = {
@@ -31,7 +29,8 @@
         _model:null,
         _mosaic_container:null,
         _landingPage:null,
-        AncillaryLetters : ["d", "e", "i", "g"], //cell-types that are not CMS data-fed.  pulled from objects above.
+        AncillaryLetters : ["d", "e", "i", "g"], //cell-types that are not CMS data-fed.  pulled from objects below.
+        DataLetters : ["a", "b", "c", "f", "h", "j"], //cell-types that are CMS data-fed.
 
 
         init: function() {
@@ -372,122 +371,150 @@
     Quince.ancillary_models = {
         'quote_data':[
             {
-                'Body':"learn the rules like a pro, so you can break them like an artist.",
-                'Credit':"Pablo Picasso",
-                'Id':""
+                'text':"learn the rules like a pro, so you can break them like an artist.",
+                'authorName':"Pablo Picasso",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"creativity is contagious, pass it on.",
-                'Credit':"Albert Einstein",
-                'Id':""
+                'text':"creativity is contagious, pass it on.",
+                'authorName':"Albert Einstein",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"you can't wait for inspiration, you have to go after it with a club.",
-                'Credit':"Jack London",
-                'Id':""
+                'text':"you can't wait for inspiration, you have to go after it with a club.",
+                'authorName':"Jack London",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"creativity requires the courage to let go of certainties.",
-                'Credit':"Erich Fromm",
-                'Id':""
+                'text':"creativity requires the courage to let go of certainties.",
+                'authorName':"Erich Fromm",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"when the going gets weird, the weird turn pro.",
-                'Credit':"Hunter S. Thompson",
-                'Id':""
+                'text':"when the going gets weird, the weird turn pro.",
+                'authorName':"Hunter S. Thompson",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"we don't make mistakes, just happy little accidents.",
-                'Credit':"Bob Ross",
-                'Id':""
+                'text':"we don't make mistakes, just happy little accidents.",
+                'authorName':"Bob Ross",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"design is not just what it looks like and feels like. Design is how it works.",
-                'Credit':"Steve Jobs",
-                'Id':""
+                'text':"design is not just what it looks like and feels like. design is how it works.",
+                'authorName':"Steve Jobs",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"there is nothing worse than a sharp image of a fuzzy concept.",
-                'Credit':"Ansel Adams",
-                'Id':""
+                'text':"there is nothing worse than a sharp image of a fuzzy concept.",
+                'authorName':"Ansel Adams",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"while they are deciding, make even more art.",
-                'Credit':"Andy Warhol",
-                'Id':""
+                'text':"while they are deciding, make even more art.",
+                'authorName':"Andy Warhol",
+                'id':"",
+                'type':'d'
             },
             {
-                'Body':"Let the blood and the bruises define your legacy.",
-                'Credit':"Lady Gaga",
-                'Id':""
+                'text':"let the blood and the bruises define your legacy.",
+                'authorName':"Lady Gaga",
+                'id':"",
+                'type':'d'
             }
         ],
         'action_data':[
             {
-                'Action':"",
-                'Sentences':["real people", "real passion", "real action"],
-                'Id':""
+                'title':"",
+                'images':["real people", "real passion", "real action"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"jobs",
-                'Sentences':["get to know us", "click here if you are up to the challenge"],
-                'Id':""
+                'title':"jobs",
+                'images':["get to know us", "click here if you are up to the challenge"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"about",
-                'Sentences':["who we are", "click here to find out"],
-                'Id':""
+                'title':"about",
+                'images':["who we are", "click here to find out"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"about",
-                'Sentences':["a team photo has many portraits", "but only one story"],
-                'Id':""
+                'title':"about",
+                'images':["a team photo has many portraits", "but only one story"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"contact",
-                'Sentences':["a place to grow", "click here to find our locations"],
-                'Id':""
+                'title':"contact",
+                'images':["a place to grow", "click here to find our locations"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"",
-                'Sentences':["real people", "real passion", "real action"],
-                'Id':""
+                'title':"",
+                'images':["real people", "real passion", "real action"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"jobs",
-                'Sentences':["get to know us", "click here if you are up to the challenge"],
-                'Id':""
+                'title':"jobs",
+                'images':["get to know us", "click here if you are up to the challenge"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"about",
-                'Sentences':["who we are", "click here to find out"],
-                'Id':""
+                'title':"about",
+                'images':["who we are", "click here to find out"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"about",
-                'Sentences':["a team photo has many portraits", "but only one story"],
-                'Id':""
+                'title':"about",
+                'images':["a team photo has many portraits", "but only one story"],
+                'id':"",
+                'type':'e'
             },
             {
-                'Action':"contact",
-                'Sentences':["a place to grow", "click here to find our locations"],
-                'Id':""
+                'title':"contact",
+                'images':["a place to grow", "click here to find our locations"],
+                'id':"",
+                'type':'e'
             }
         ],
         'long_images':[
             {
-                'Image':"img/cells/longs/cell_g_1.jpg",
-                'Id':""
+                'images':"img/cells/longs/cell_g_1.jpg",
+                'id':"",
+                'type':'g'
             },
             {
-                'Image':"img/cells/longs/cell_g_2.jpg",
-                'Id':""
+                'images':"img/cells/longs/cell_g_2.jpg",
+                'id':"",
+                'type':'g'
             },
             {
-                'Image':"img/cells/longs/cell_g_3.jpg",
-                'Id':""
+                'images':"img/cells/longs/cell_g_3.jpg",
+                'id':"",
+                'type':'g'
             }
         ],
+//        'column_patterns':[
+//            ["d","a","e","c","f","b","j"],
+//            ["a","j","e","f","b","h"],
+//            ["g","a","j","a","e","b","j"]
+//        ]
         'column_patterns':[
            ["d","a","e","b","f","b","c","j"],
            ["a","j","b","e","c","b","h","f","j"],

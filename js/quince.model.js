@@ -33,9 +33,53 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
     );
 
 
+
+    $q.Model.CellModel = Backbone.Model.extend({
+        defaults:{
+            'comment' : "",
+            'type' : "",
+            'id' : "",
+            'portal' : "",
+            'ref' : "",
+            'date' : "",
+            'viewed' : 0,
+            'customerId': 0,
+            'title' : "",
+            'authorName' : "",
+            'authorId' : 0,
+            'authorJob' : "",
+            'text' : "",
+            'url' : "",
+            'images' :[],
+            'tags' : []
+        },
+        initialize: function(){
+//            this.on("change:viewed", function(model){
+//                var name = model.get("viewed");
+//                $log("Changed Viewed: " + name );
+//            });
+
+//            this.on('invalid', function(model, error) {
+//                $log("invalid error:"+error);
+//            });
+            $log("NEW CELL:"+this.get('type'), this);
+        },
+        validate: function( attributes ){
+//            if( attributes.age < 0 && attributes.name != "Dr Manhatten" ){
+//                return "You can't be negative years old";
+//            }
+
+        },
+        addViewed: function(){
+//            var newnum = Number(this.get('viewed')) + 1;
+//            this.set({ 'viewed': newnum });
+        }
+
+    });
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
     $q.Model.Mosaic = $q.Model.extend({
-        _totalDataFiles : 0,
         _totalPreload : 5,
         _currentColumn : 0,
         _columns : [],
@@ -43,41 +87,35 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         _dataFinished : false,
         _directory : null,
         _mosaic:null,
-        counters:{
+        _filterMode:"time",
+        _filterVal:null,
+        offsetCounters:{
             'a':0,
-            'a':0,
-            'a':0,
-            'a':0,
-            'a':0,
-            'a':0,
-            'a':0,
+            'b':0,
+            'c':0,
+            'd':0,
+            'f':0,
+            'h':0,
+            'j':0
         },
 
-        _construct : function(el, dir) {
+        _construct : function(el, dir, filter, val) {
             this._el = $(el);
             this._directory = dir;
             this._super(this._el);
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
 
-            $.ajax({
-                url: dir+"count.php",
-                cache: false,
-                async:true,
-                dataType: 'html',
-                success: $.proxy(this.getCount, this)
-            });
+            this._filterMode = filter || "time";
+            this._filterVal = val || 0;
 
 
-        },
-
-        getCount : function(e){
-            this._totalDataFiles = Number(e) - 1;
 
             this.modifyPreload();
             this.compileTemplates();
             this.initModel();
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
+
         },
 
         modifyPreload : function(){
@@ -86,6 +124,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             } else if($q.windowHeight >= 970 ){
                 this._totalPreload = 7;
             }
+
+            this._totalPreload = 2; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<TESTING!!!!!!!!!!!!!!!
         },
 
         mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
@@ -103,7 +143,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             Quince.templates.cells.cell_h = _.template($('#tpl-cell-h').html());
             Quince.templates.cells.cell_i = _.template($('#tpl-cell-i').html());
             Quince.templates.cells.cell_j = _.template($('#tpl-cell-j').html());
-
             Quince.templates.cells.cell_p = _.template($('#tpl-cell-personnel').html());
 
             $('#tpl-cell-a').remove();
@@ -122,55 +161,102 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         
         initModel : function(){
             //$log("-------------------------MODEL MOSAIC INIT-----------------------------");
-
-//            this.components.Models.CellModel = Backbone.Model.extend({});
-//            this.components.Collections.Column = Backbone.Collection.extend({
-//                model: this.components.Models.CellModel,
-//                url: "../data/column_0.json",
-//                initialize: function(){
-//                    //$log("JSON INIT:"+this.url);
-//                }
-//            });
-            this.loadJsonFile(this._currentColumn);
+            this.requestData(this._currentColumn);
         },
         
         nextModel : function(){
             var nextup  = (this._currentColumn+=1);
 
-            $log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload);
+//            $log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload);
 
             if(nextup < this._totalPreload){
-                this.loadJsonFile(nextup);
+                this.requestData(nextup);
             } else if(!this._firstLoad){
                 this._firstLoad = true;
                 Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_COMPLETE, this);
             } else if(!this._dataFinished){
-                this.loadJsonFile(nextup);
+                this.requestData(nextup);
             }
         },
         
-        loadJsonFile : function(indexnum){
-            var nextInverted = this._totalDataFiles - indexnum;
-            $log("LOAD JSON:"+nextInverted+" index:"+indexnum);
+        requestData : function(indexnum){
+            $log("LOAD JSON - index:"+indexnum);
+            var _this = this;
 
+            var style = Math.abs(this._currentColumn % 3);
+            var sendObj = {
+                'types':[]
+            };
+//            var example = {
+//                'customer':123,
+//                'types':[
+//                    {
+//                        'type':'a',
+//                        'offset':0,
+//                        'limit':1
+//                    },
+//                    {
+//                        'type':'b',
+//                        'offset':0,
+//                        'limit':1
+//                    }
+//                ]
+//            };
 
-            if(nextInverted >= 0) {
-                Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
-                $.ajax({
-                    url: this._directory+"column_"+nextInverted+".json",
-                    cache: false,
-                    async:true,
-                    dataType: 'json',
-                    success: $.proxy(this.parseColumn, this),
-                    error:$.proxy(this.loadError, this)
-                });
-            } else {
-                this.loadError(null);
+            if(this._filterMode != "time"){
+                sendObj[this._filterMode] = this._filterVal;
             }
 
+
+            var pattern = $q.ancillary_models.column_patterns[style];
+            var cleaned = _.difference(pattern, $q.AncillaryLetters); //removed front-end handled types
+
+
+            _.each($q.DataLetters, function(val){
+                var list = _this.returnFiltered(cleaned, val);
+                if(list.length <= 0) return;
+
+                var insertobj = {
+                    'type':val,
+                    'limit':list.length,
+                    'offset':_this.offsetCounters[val] += list.length
+                }
+
+                sendObj.types.push(insertobj);
+            });
+
+
+            Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
+
+
+//            $.ajax({
+//                url: this._directory,
+//                data:{'filters':sendObj},
+//                cache: false,
+//                async:true,
+//                dataType: 'json',
+//                success: $.proxy(this.parseColumn, this),
+//                error:$.proxy(this.loadError, this)
+//            });
+
+//            $log("SEND OBJECT - FILTERS:", sendObj);
+            $.getJSON(this._directory, { filters: JSON.stringify(sendObj) }, $.proxy(this.parseColumn, this));
         },
-        
+        returnFiltered : function(arr, terms){
+            var newarr = _.filter(arr, function(val){
+                return val == terms;
+            });
+            return newarr;
+        },
         parseColumn : function(result){
+//
+//            _.each(result, function(val, ind){
+//                $.trim(val);
+//            });
+
+//            $log("PARSE DATA RETURN:", result);
+
+
             var style = Math.abs(this._currentColumn % 3);
             var el = this.injectColumn(style);
 
@@ -219,8 +305,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
 
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////COLUMNS
     $q.Model.Column = $q.Model.extend({
         _cells:[],
@@ -236,59 +320,20 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             this.initModel(m);
         },
 
-        initModel : function(_m){
-            //$log("-------------------------MODEL COLUMN INIT-----------------------------:"+this._style);
-
-            var cellModel = Backbone.Model.extend({
-                defaults:{
-                    _comment : "nothing",
-                    CellType : "i",
-                    Id : "0001",
-                    Portal : "fb",
-                    Ref : "",
-                    Date : new Date(),
-                    Viewed : 0,
-                    Client : 0,
-                    Title : "",
-                    Author : "",
-                    AuthorId : 0,
-                    JobTitle : "Hero",
-                    Article : "",
-                    URL : "",
-                    Image :[],
-                    Tags : "Lorem, Ipsum, Dolor, Sit, Amet"
-                },
-                initialize: function(opt){
-                    this.on("change:Viewed", function(model){
-                        var name = model.get("Viewed");
-                        $log("Changed Viewed: " + name );
-                    });
-
-                    this.on('invalid', function(model, error) {
-                        $log("invalid error:"+error);
-                    });
-                },
-                validate: function( attributes ){
-                    if( attributes.age < 0 && attributes.name != "Dr Manhatten" ){
-                        return "You can't be negative years old";
-                    }
-                },
-                addViewed: function(){
-                    var newnum = Number(this.get('Viewed')) + 1;
-                    this.set({ Viewed: newnum });
-                }
-
-            });
+        initModel : function(model){
 
             var columnCollection = Backbone.Collection.extend({
-                model: cellModel
+                model: $q.Model.CellModel
             });
 
-            var patm = this.patternFormatData(_m);
+            //fill in for non-backend fed objects
+            var patm = this.patternFormatData(model);
 
+            //cast objects to backbone model class
             var castm = $.map(patm, function(post) {
-                return new cellModel(post);
+                return new $q.Model.CellModel(post);
             });
+
             this._collection = new columnCollection(castm);
 
             this.instantiateCells();
@@ -296,7 +341,9 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
         instantiateCells : function(){
             var _this = this;
+
             this._collection.each(function(model) {
+//                $log("CREATE CELL:"+model.get("type"));
                 var c = new Quince.Model.CellView(model, _this._el);
             });
         },
@@ -315,7 +362,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             );
         },
 
-        patternFormatData : function(_m){ //----------------------------------------------------THIS NEEDS CLEANUP
+        patternFormatData : function(model){ //----------------------------------------------------THIS NEEDS CLEANUP
             var pattern = $q.ancillary_models.column_patterns[this._style];
 
             var newArr = [];
@@ -333,15 +380,15 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 var cell_letter = pattern[i];
                 var uId = "0" + this._index.toString() + i.toString();
 
-//                if($q.AncillaryLetters.indexOf(cell_letter) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
                 if($.inArray(cell_letter, $q.AncillaryLetters) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
                     ancil_obj = this.pullAncillaryData(cell_letter);
-                    if(ancil_obj)ancil_obj.CellType = cell_letter;
+
 
                 } else {
-                    for (var k = 0; k < _m.length; k++){
-                        var cl = _m[k].CellType;
-                        if(cl == cell_letter) ancil_obj = _m.splice(k, 1)[0];
+
+                    for (var k = 0; k < model.length; k++){
+                        var cl = model[k].type;
+                        if(cl == cell_letter) ancil_obj = model.splice(k, 1)[0];
 
                     }
 
@@ -349,7 +396,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 }
 
                 if($q.isEmpty(ancil_obj) == false){
-                    if(ancil_obj.Id) ancil_obj.Id = uId;
+                    if(ancil_obj.id) ancil_obj.id = uId;
                     newArr.push(ancil_obj);
                 }
             }
@@ -359,21 +406,24 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
 
         pullAncillaryData : function(letter){
-            var obj = {};
             if(letter == 'd'){
                 var ran = Math.floor(Math.random() * $q.ancillary_models.action_data.length);
-                obj = $q.ancillary_models.quote_data.splice(ran,1)[0];
+                var obj = $q.ancillary_models.quote_data.splice(ran,1)[0];
+
             } else
             if(letter == 'e'){
-                obj = $q.ancillary_models.action_data.splice(0,1)[0];
+                var obj = $q.ancillary_models.action_data.splice(0,1)[0];
             } else
             if(letter == 'g'){
-                obj = $q.ancillary_models.long_images.splice(0,1)[0];
+                var obj = $q.ancillary_models.long_images.splice(0,1)[0];
             } else
             if(letter == 'i'){
-                obj = {'Id':''};
+                var obj = {
+                    'id':''
+                };
             }
 
+//            return model;
             return obj;
         },
 
@@ -408,7 +458,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         initialize: function(m, col){
             this._model = m;
             this._column = col;
-            this._style = this._model.get("CellType");
+            this._style = this._model.get("type");
             this._tplname = 'cell_'+this._style;
 //            $log("CELL m:", this._model, " c:", this._column);
             this.render();
@@ -435,6 +485,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
     $q.Model.Init();
 
-    Quince._model = new $q.Model.Mosaic("#slider-container", "data/cells/");
+    Quince._model = new $q.Model.Mosaic("#slider-container", "backend/item");   //, "customer", 124  <<  add to arguments if filtering.
 
 })(jQuery, Quince);

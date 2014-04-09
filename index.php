@@ -280,34 +280,36 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         </div>
 
         <div class="people-content container subcontent">
-            <iframe src="people.php" class="content"></iframe>
+<!--            <iframe src="people.php" class="content"></iframe>-->
         </div>
+
+
 
 
 
         <!-- ==================================TEMPLATES======================================== -->
         <script type="text/template" id="tpl-cell-a">
             <!-- PORTRAIT-SIZED IMAGE w/ INFO CLICKTHRU -->
-            <div class="cell-a cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="1" data-sizey="2" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-a cell-box" data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>"  data-sizex="1" data-sizey="2" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state">
-                    <a href="#"><img src="<%= Image %>"></a>
+                    <a href="#"><img src="<%= images %>"></a>
                 </div>
                 <div class="on-state">
                     <div class="content">
-                        <% if(Title && Title.length > 0){ %>
-                        <h3 class="title"><%= Title %></h3>
+                        <% if(title && title.length > 0){ %>
+                            <h3 class="title"><%= title %></h3>
                         <% } %>
-                        <div class="author" id="<%= AuthorId %>">
+                        <div class="author" id="<%= authorId %>">
                             <a href="#">
-                                <h5 class="name"><%= Author %></h5>
-                                <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
+                                <h5 class="name"><%= authorName %></h5>
+                                <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                             </a>
                         </div>
                         <div class="article">
-                            <h5><%= Article %></h5>
+                            <h5><%= text %></h5>
                         </div>
-                        <% if(URL && URL.length > 0){ %>
-                        <a class="cta-text" href="<%= URL %>" target="_blank" >read more &gt;&gt;</a>
+                        <% if(url && url.length > 0){ %>
+                            <a class="cta-text" href="<%= url %>" target="_blank" >read more &gt;&gt;</a>
                         <% } %>
                         <div class="social"></div>
                     </div>
@@ -317,25 +319,25 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-b">
             <!-- QUARTER-SIZED IMAGE w/ INFO -->
-            <div class="cell-b cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-b cell-box" data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state">
-                    <a href="#"><img src="<%= Image %>"></a>
+                    <a href="#"><img src="<%= images %>"></a>
                 </div>
                 <div class="on-state">
                     <div class="content">
-                        <% if(Title && Title.length > 0){ %>
-                            <h3 class="title"><%= Title %></h3>
+                        <% if(title && title.length > 0){ %>
+                            <h3 class="title"><%= title %></h3>
                         <% } %>
-                        <div class="author" id="<%= AuthorId %>">
+                        <div class="author" id="<%= authorId %>">
                             <a href="#">
-                                <h5 class="name"><%= Author %></h5>
-                                <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
+                                <h5 class="name"><%= authorName %></h5>
+                                <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                             </a>
                         </div>
                         <div class="article">
-                            <h5><%= Article %></h5>
+                            <h5><%= text %></h5>
                         </div>
-                        <a class="cta-text" href="<%= URL %>" target="_blank" >read more &gt;&gt;</a>
+                        <a class="cta-text" href="<%= url %>" target="_blank" >read more &gt;&gt;</a>
                         <div class="social"></div>
                     </div>
                 </div>
@@ -344,30 +346,30 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-c">
             <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
-            <div class="cell-c cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>" data-sizex="1" data-sizey="1" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-c cell-box" data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>" data-sizex="1" data-sizey="1" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state">
-                    <a href="#"><img src="<%= Image %>"></a>
+                    <a href="#"><img src="<%= images %>"></a>
                 </div>
             </div>
         </script>
 
         <script type="text/template" id="tpl-cell-d">
             <!-- HALF-HEIGHT/DOUBLE-WIDTH TEXT(Quotes) w/ NO INFO -->
-            <div class="cell-d cell-box"  data-sizex="1" data-sizey="1" id="<%= Id %>">
+            <div class="cell-d cell-box"  data-sizex="1" data-sizey="1" id="<%= id %>">
                 <div class="off-state">
-                    <h3>"<%= Body %>" <em>-- <%= Credit %></em></h3>
+                    <h3>"<%= text %>" <em>-- <%= authorName %></em></h3>
                 </div>
             </div>
         </script>
 
         <script type="text/template" id="tpl-cell-e">
             <!-- COLORED QUARTER-SIZED TEXT w/ NO INFO -->
-            <div class="cell-e cell-box" data-action="<%= Action %>" data-sizex="1" data-sizey="1" id="<%= Id %>">
+            <div class="cell-e cell-box" data-action="<%= title %>" data-sizex="1" data-sizey="1" id="<%= id %>">
                 <div class="off-state">
                     <h3>
-                    <% for (var i=0; i < Sentences.length; i++){ %>
-                        <%= Sentences[i] %></br>
-                    <% } %>
+                        <% for (var i=0; i < images.length; i++){ %>
+                            <%= images[i] %></br>
+                        <% } %>
                     </h3>
                 </div>
             </div>
@@ -375,26 +377,26 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-f">
             <!-- FULL-SIZED IMAGE-CAROUSEL. w/ NO INFO  --  ONLY ONE LARGE SCROLL PER PARENT LIST OBJECT!!!  -->
-            <div class="cell-f cell-box" data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="2" data-sizey="2" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-f cell-box" data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>"  data-sizex="2" data-sizey="2" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state flexslider">
                     <ul class="slides">
-                        <% for (var i=0; i < Image.length; i++) { %>
-                            <li><img src="<%= Image[i] %>"></li>
+                        <% for (var i=0; i < images.length; i++) { %>
+                            <li><img src="<%= images[i] %>"></li>
                         <% } %>
                     </ul>
                 </div>
-                <% if(Article.length > 0){ %>
-                <div class="on-state">
-                    <div class="content">
-                        <% if(Title && Title.length > 0){ %>
-                            <h3 class="title"><%= Title %></h3>
-                        <% } %>
-                        <div class="article">
-                            <h5><%= Article %></h5>
+                <% if(text.length > 0){ %>
+                    <div class="on-state">
+                        <div class="content">
+                            <% if(title && title.length > 0){ %>
+                                <h3 class="title"><%= title %></h3>
+                            <% } %>
+                            <div class="article">
+                                <h5><%= text %></h5>
+                            </div>
+                            <div class="social"></div>
                         </div>
-                        <div class="social"></div>
                     </div>
-                </div>
                 <% } %>
             </div>
             </div>
@@ -402,32 +404,32 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-g">
             <!-- LONG-IMAGE w/ NO INFO -->
-            <div class="cell-g cell-box"  data-sizex="2" data-sizey="1" id="<%= Id %>">
+            <div class="cell-g cell-box"  data-sizex="2" data-sizey="1" id="<%= id %>">
                 <div class="off-state">
-                    <img src="<%= Image %>"">
+                    <img src="<%= images %>"">
                 </div>
             </div>
         </script>
 
         <script type="text/template" id="tpl-cell-h">
             <!-- QUARTER-SIZED TEXT-BLOCK CELL w/ NO INFO & USER INFO IN OFF-STATE -->
-            <div class="cell-h cell-box" data-sizex="1" data-sizey="1" id="<%= Id %>">
+            <div class="cell-h cell-box" data-sizex="1" data-sizey="1" id="<%= id %>">
                 <div class="on-state">
                     <div class="content">
-                        <% if(Title && Title.length > 0){ %>
-                            <h3 class="title"><%= Title %></h3>
+                        <% if(title && title.length > 0){ %>
+                            <h3 class="title"><%= title %></h3>
                         <% } else { %>
-                            <div class="author" id="<%= AuthorId %>">
+                            <div class="author" id="<%= authorId %>">
                                 <a href="#">
-                                    <h5 class="name"><%= Author %></h5>
-                                    <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
+                                    <h5 class="name"><%= authorName %></h5>
+                                    <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                                 </a>
                             </div>
                         <% } %>
                         <div class="article">
-                            <h5><%= Article %></h5>
+                            <h5><%= text %></h5>
                         </div>
-                        <a class="cta-text" href="<%= URL %>" target="_blank" >read more &gt;&gt;</a>
+                        <a class="cta-text" href="<%= url %>" target="_blank" >read more &gt;&gt;</a>
                         <div class="social"></div>
                     </div>
                 </div>
@@ -436,30 +438,30 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-cell-i">
             <!-- EMPTY CELL FOR EMPTY SPACES. ALWAYS QUARTER-SIZED -->
-            <div class="cell-i cell-box"  data-sizex="1" data-sizey="1" id="<%= Id %>">
+            <div class="cell-i cell-box"  data-sizex="1" data-sizey="1" id="<%= id %>">
         </script>
 
         <script type="text/template" id="tpl-cell-j">
             <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
-            <div class="cell-j cell-box"  data-portal="<%= Portal %>" data-ref="<%= Ref %>" data-date="<%= Date %>" data-viewed="<%= Viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= Client %>" id="<%= Id %>">
+            <div class="cell-j cell-box"  data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state">
                     <img class="playbut" src="img/playbut.png">
-                    <img class="thumb" src="<%= Image %>">
+                    <img class="thumb" src="<%= images %>">
                 </div>
                 <div class="on-state">
                     <div class="content">
-                        <% if(Title && Title.length > 0){ %>
-                            <h3 class="title"><%= Title %></h3>
+                        <% if(title && title.length > 0){ %>
+                            <h3 class="title"><%= title %></h3>
                         <% } else { %>
-                        <div class="author" id="<%= AuthorId %>">
-                            <a href="#">
-                                <h5 class="name"><%= Author %></h5>
-                                <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
-                            </a>
-                        </div>
+                            <div class="author" id="<%= authorId %>">
+                                <a href="#">
+                                    <h5 class="name"><%= authorName %></h5>
+                                    <h5 class="jobtitle"><%= authorJob %><em></em></h5>
+                                </a>
+                            </div>
                         <% } %>
                         <div class="article">
-                            <h5><%= Article %></h5>
+                            <h5><%= text %></h5>
                         </div>
                         <a class="cta-text" href="#">view &gt;&gt;</a>
                         <div class="social"></div>
@@ -470,29 +472,30 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
         <script type="text/template" id="tpl-personnel">
             <!-- QUARTER-SIZED IMAGE w/ INFO -->
-            <div class="cell-p cell-box" data-ref="<%= Ref %>" data-author="<%= AuthorId %>" data-sizex="1" data-sizey="1" id="<%= Id %>">
+            <div class="cell-p cell-box" data-ref="<%= ref %>" data-author="<%= authorId %>" data-sizex="1" data-sizey="1" id="<%= id %>">
                 <div class="off-state">
-                    <a href="#"><img src="<%= Image %>"></a>
+                    <a href="#"><img src="<%= images %>"></a>
                 </div>
                 <div class="on-state">
                     <div class="content">
-                        <% if(Title && Title.length > 0){ %>
-                            <h3 class="title"><%= Title %></h3>
+                        <% if(title && title.length > 0){ %>
+                            <h3 class="title"><%= title %></h3>
                         <% } %>
-                        <div class="author" id="<%= AuthorId %>">
+                        <div class="author" id="<%= authorId %>">
                             <a href="#">
-                                <h5 class="name"><%= Author %></h5>
-                                <h5 class="jobtitle"><%= JobTitle %><em></em></h5>
+                                <h5 class="name"><%= authorName %></h5>
+                                <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                             </a>
                         </div>
                         <div class="article">
-                            <h5><%= Article %></h5>
+                            <h5><%= text %></h5>
                         </div>
                         <div class="social"></div>
                     </div>
                 </div>
             </div>
         </script>
+
 
 
 
