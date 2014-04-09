@@ -76,12 +76,15 @@ class Database
 
               where true
 
-              ' . (isset ($filters->id) ? 'and items.id = ' . (int) $filters->id : '') . ' 
-              ' . (isset ($filters->type) ? 'and types.type = "' . static::clean ($filters->type) . '"' : '') . ' 
+              ' . (isset ($filters->id)         ? 'and items.id = ' . (int) $filters->id                          : '') . ' 
+              ' . (isset ($filters->type)       ? 'and types.type = "' . static::clean ($filters->type) . '"'     : '') . ' 
+              ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId          : '') . '
+              ' . (isset ($filters->portal)     ? 'and items.portal = "' . static::clean ($filters->portal) . '"' : '') . '
+              ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '') . '
 
               order by date
 
-              ' . (isset ($filters->limit) ? 'limit ' . (int) $filters->limit : '') . ' 
+              ' . (isset ($filters->limit)  ? 'limit ' . (int) $filters->limit   : '') . ' 
               ' . (isset ($filters->offset) ? 'offset ' . (int) $filters->offset : '');
     $result = static::query ($query);
 
@@ -102,7 +105,7 @@ class Database
       $item->comment      = $row['comment'];
 
       $item->images = static::getImages (array ('itemId' => $item->id));
-      $item->tags = static::getTags (array ('itemId' => $item->id));
+      $item->tags   = static::getTags (array ('itemId' => $item->id));
 
       $items[] = $item;
     }
