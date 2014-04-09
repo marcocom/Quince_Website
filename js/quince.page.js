@@ -296,6 +296,7 @@
         _textrow:null,
         _words:null,
         _preview:null,
+        _isrotating:false,
         words_spacer:null,
         timer:null,
         highlight:'#5d2278',
@@ -315,17 +316,41 @@
 
 //            $log("INTRO :", this._el, "IMGS:", this._imgrow, "WORDS:", this._words);
 
+
             this.decorateWords(true);
 
             this.manageRotationTimer(false);
 
+            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
         },
+
+        mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
+            var homew = $q._mosaic._home.width();
+//            $log("SCROLL HANDLER xdiff:"+xdiff+" maxscroll:"+maxscroll+" directx:"+directx+" directy:"+directy+" COLUMN w:"+$q._mosaic.currentColumnWidth+" HOME w:"+$q._mosaic._home.width());
+            $log("SCROLL HANDLER xdiff:"+xdiff+" HOME w:"+ -homew);
+            if(xdiff < -homew){
+                $log("LESS THAN");
+                this.manageRotationTimer(true);
+            } else {
+                $log("GREATER THAN");
+                this.manageRotationTimer(false);
+            };
+        },
+
         manageRotationTimer : function(turnOff){
             var _this = this;
             if(!turnOff){
-                this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
+                if(!this._isrotating){
+                    this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
+//                    $log("TURN ON HOMEPAGE");
+                    this._isrotating = true;
+                }
             } else {
-                clearInterval(this.timer);
+                if(this._isrotating){
+//                    $log("SHUT OFF HOMEPAGE");
+                    clearInterval(this.timer);
+                    this._isrotating = false;
+                }
             }
         },
         decorateWords : function(firstTime){
@@ -400,10 +425,6 @@
                     {'left':(img_goto)},
                     1000 );
             }, 1000);
-
-
-
-
         }
 
     });

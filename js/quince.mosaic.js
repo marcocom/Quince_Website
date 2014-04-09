@@ -96,8 +96,6 @@
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
 
-
-
             var c = this._mosaic.find('.column');
             this._columns = $(c);
 

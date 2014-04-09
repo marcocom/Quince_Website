@@ -33,7 +33,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
     );
 
 
-
+    ///////////////////////////////////////////////////////////////////////core model backbone class
     $q.Model.CellModel = Backbone.Model.extend({
         defaults:{
             'comment' : "",
@@ -78,7 +78,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
     });
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE WALL CLASS
     $q.Model.Mosaic = $q.Model.extend({
         _totalPreload : 5,
         _currentColumn : 0,
@@ -125,7 +125,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 this._totalPreload = 7;
             }
 
-            this._totalPreload = 2; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<TESTING!!!!!!!!!!!!!!!
         },
 
         mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
@@ -207,10 +206,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 sendObj[this._filterMode] = this._filterVal;
             }
 
-
             var pattern = $q.ancillary_models.column_patterns[style];
             var cleaned = _.difference(pattern, $q.AncillaryLetters); //removed front-end handled types
-
 
             _.each($q.DataLetters, function(val){
                 var list = _this.returnFiltered(cleaned, val);
@@ -219,15 +216,13 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 var insertobj = {
                     'type':val,
                     'limit':list.length,
-                    'offset':_this.offsetCounters[val] += list.length
+                    'offset':(_this.offsetCounters[val] += list.length)
                 }
 
                 sendObj.types.push(insertobj);
             });
 
-
             Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
-
 
 //            $.ajax({
 //                url: this._directory,
@@ -240,7 +235,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 //            });
 
 //            $log("SEND OBJECT - FILTERS:", sendObj);
-            $.getJSON(this._directory, { filters: JSON.stringify(sendObj) }, $.proxy(this.parseColumn, this));
+            $.getJSON(this._directory, { filters: JSON.stringify(sendObj) }, $.proxy(this.parseColumn, this)).error($.proxy(this.loadError, this));
         },
         returnFiltered : function(arr, terms){
             var newarr = _.filter(arr, function(val){
@@ -305,7 +300,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////COLUMNS
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////COLUMN CLASS
     $q.Model.Column = $q.Model.extend({
         _cells:[],
         _style:null,
@@ -321,10 +316,11 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
 
         initModel : function(model){
-
+            //instantiate backbone collection per column container
             var columnCollection = Backbone.Collection.extend({
                 model: $q.Model.CellModel
             });
+            columnCollection.comparator = 'type';
 
             //fill in for non-backend fed objects
             var patm = this.patternFormatData(model);
@@ -406,24 +402,23 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
 
         pullAncillaryData : function(letter){
+            var obj;
             if(letter == 'd'){
                 var ran = Math.floor(Math.random() * $q.ancillary_models.action_data.length);
-                var obj = $q.ancillary_models.quote_data.splice(ran,1)[0];
-
+                obj = $q.ancillary_models.quote_data.splice(ran,1)[0];
             } else
             if(letter == 'e'){
-                var obj = $q.ancillary_models.action_data.splice(0,1)[0];
+                obj = $q.ancillary_models.action_data.splice(0,1)[0];
             } else
             if(letter == 'g'){
-                var obj = $q.ancillary_models.long_images.splice(0,1)[0];
+                obj = $q.ancillary_models.long_images.splice(0,1)[0];
             } else
             if(letter == 'i'){
-                var obj = {
+                obj = {
                     'id':''
                 };
             }
 
-//            return model;
             return obj;
         },
 
@@ -447,7 +442,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CELLS
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CELL CLASS
     $q.Model.CellView = Backbone.View.extend({
         _tplname:null,
         _compiledTemplate:null,
