@@ -307,32 +307,53 @@
             this._super(this._el);
             this.initIntro();
         },
+
         initIntro : function(){
             var _this = this;
             this._imgrow = $(this._el.find('.left-side .imgs ul.img-scroller')[0]);
             this._words = $(this._el.find('.words ul')[0]);
             this.words_spacer = $(this._el.find('.words .spacer')[0]);
             this._preview = $(this._el.find('.preview')[0]);
-
-//            $log("INTRO :", this._el, "IMGS:", this._imgrow, "WORDS:", this._words);
-
-
+            this._textrow = $(this._el.find('.left-side .texts ul.txt-scroller')[0]);
             this.decorateWords(true);
 
-            this.manageRotationTimer(false);
+            this.animateIn();
+//            this.initRotation(); //bypass
+        },
 
+        animateIn : function(){
+            var wordw = $(this._words.parent).width();
+            this._words.css({'left':-wordw });
+            var textw = $(this._textrow.parent).width();
+            this._textrow.css({'left':textw});
+            this._imgrow.hide();
+            var staticTxt = $(this._el.find('.left-side .static')[0]);
+            staticTxt.css({'right':'10px', 'opacity':0});
+
+            var afterText = function(){
+                this._imgrow.fadeIn(2000);
+                this.initRotation();
+                afterStatic = null;
+            };
+            var afterStatic = function(){
+                this._textrow.animate({ 'left': '0' }, 600, 'easeInQuad');
+                this._words.animate({ 'left': '0' }, 600, 'easeInQuad', $.proxy(afterText, this));
+            };
+
+            staticTxt.animate({ 'right': '0', 'opacity':1 }, 2400, 'easeOutQuad', $.proxy(afterStatic, this));
+        },
+
+        initRotation : function(){
+            this.manageRotationTimer(false);
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
         },
 
-        mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
-            var homew = $q._mosaic._home.width();
-//            $log("SCROLL HANDLER xdiff:"+xdiff+" maxscroll:"+maxscroll+" directx:"+directx+" directy:"+directy+" COLUMN w:"+$q._mosaic.currentColumnWidth+" HOME w:"+$q._mosaic._home.width());
-            $log("SCROLL HANDLER xdiff:"+xdiff+" HOME w:"+ -homew);
-            if(xdiff < -homew){
-                $log("LESS THAN");
+        mosaicScrollHandler : function(e, xdiff){
+            var homew = $($q._mosaic._home).width();
+            $log("SCROLL xdiff:"+xdiff+" homew:"+homew)
+            if(xdiff < -homew){//less than
                 this.manageRotationTimer(true);
-            } else {
-                $log("GREATER THAN");
+            } else {//greater than
                 this.manageRotationTimer(false);
             };
         },
@@ -342,60 +363,42 @@
             if(!turnOff){
                 if(!this._isrotating){
                     this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
-//                    $log("TURN ON HOMEPAGE");
+                    $log("TURN ON HOMEPAGE");
                     this._isrotating = true;
                 }
             } else {
                 if(this._isrotating){
-//                    $log("SHUT OFF HOMEPAGE");
+                    $log("SHUT OFF HOMEPAGE");
                     clearInterval(this.timer);
                     this._isrotating = false;
                 }
             }
         },
+
         decorateWords : function(firstTime){
             var _this = this;
             this._words = $(this._el.find('.words ul')[0]);
 
             var list_arr = this._words[0].children;
-
             var ind = Math.floor(Math.random() * $q.Brand.ALL_COLORS.length);
-            //$log("COLORIZE CELL index:"+ind);
-            var newcolor = $q.Brand.ALL_COLORS[ind];
-
-
-            this._words.each(function(i){
-//                $(this).click($.proxy(_this.wordClick, _this));
-//                $(this).css({'opacity':'1'})
-            });
+            var newcolor = firstTime ? $q.Brand.ALL_COLORS[0] : $q.Brand.ALL_COLORS[ind];
 
             $(list_arr[0]).addClass("active").find('h1').css({'color':newcolor, 'opacity':'1'});
-
             $(list_arr[list_arr.length-1]).hide();
-
             $(list_arr[list_arr.length-2]).css({'opacity':'0.2'}).fadeIn();
 
-            if(firstTime){
-                $(list_arr[list_arr.length-3]).css({'opacity':'0.3'});
-                $(list_arr[list_arr.length-4]).css({'opacity':'0.4'});
-                $(list_arr[list_arr.length-5]).css({'opacity':'0.5'});
-                $(list_arr[list_arr.length-6]).css({'opacity':'0.6'});
-                $(list_arr[list_arr.length-7]).css({'opacity':'0.7'});
-                $(list_arr[list_arr.length-8]).css({'opacity':'0.8'});
-            } else {
-//                $(list_arr[list_arr.length-2]).animate({'opacity':'0.2'}, 1000).show();
-                $(list_arr[list_arr.length-3]).animate({'opacity':'0.3'}, 1000);
-                $(list_arr[list_arr.length-4]).animate({'opacity':'0.4'}, 1000);
-                $(list_arr[list_arr.length-5]).animate({'opacity':'0.5'}, 1000);
-                $(list_arr[list_arr.length-6]).animate({'opacity':'0.6'}, 1000);
-                $(list_arr[list_arr.length-7]).animate({'opacity':'0.7'}, 1000);
-                $(list_arr[list_arr.length-8]).animate({'opacity':'0.8'}, 1000);
-                $(list_arr[list_arr.length-9]).animate({'opacity':'1'}, 1000);
+            for (var i = (list_arr.length - 1); i >= 3; i--){
+                var word = $(list_arr[i]);
+                var neg = i - list_arr.length;
+                var val = Math.abs(neg * 0.1);
+                firstTime ? word.css({'opacity':val}) : word.animate({'opacity':val}, 1000);
             }
         },
+
         wordClick : function(e){
             $log("CLICK");
         },
+
         rotateWords : function(){
             var _this = this;
             var firstword = this._words.find('li:first');
@@ -448,7 +451,6 @@
         _construct : function(el) {
             this._el = el;
             this._super(this._el);
-//            $log("Page init");
             this.initContainer();
 
         },
