@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.24, for Win32 (x86)
 --
 -- Host: localhost    Database: quince
 -- ------------------------------------------------------
--- Server version	5.6.12-log
+-- Server version	5.5.24-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `authors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `authors` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `job` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,10 +48,10 @@ DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customers` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Quince Amsterdam');
+INSERT INTO `customers` VALUES (1,'Quince Amsterdam'),(2,'HTC EMEA');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +177,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (3,'a','first item comment','2014-04-08 14:18:53',1,'This is the very first item','text for item 3',1,'http://www.quince.nl','portal 3','ref 3'),(5,'a',NULL,'2014-04-08 14:18:53',1,'test post a 5','text for item 5',1,NULL,'portal 5','ref 5'),(6,'a',NULL,'2014-04-08 14:18:53',1,'test post a 6','text for item 6',1,NULL,'portal 6','ref 6'),(7,'a',NULL,'2014-04-08 14:18:53',1,'test post a 7','text for item 7',1,NULL,'portal 7','ref 7'),(8,'a',NULL,'2014-04-08 14:18:53',1,'test post a 8','text for item 8',1,NULL,'portal 8','ref 8'),(9,'a',NULL,'2014-04-08 14:18:53',1,'test post a 9','text for item 9',1,NULL,'portal 9','ref 9'),(10,'a',NULL,'2014-04-08 14:18:53',1,'test post a 10','text for item 10',1,NULL,'portal 10','ref 10'),(11,'a',NULL,'2014-04-08 14:18:53',1,'test post a 11','text for item 11',1,NULL,'portal 11','ref 11'),(12,'a',NULL,'2014-04-08 14:18:53',1,'test post a 12','text for item 12',1,NULL,'portal 12','ref 12'),(13,'a',NULL,'2014-04-08 14:18:53',1,'test post a 13','text for item 13',1,NULL,'portal 13','ref 13'),(14,'a',NULL,'2014-04-08 14:18:53',1,'test post a 14','text for item 14',1,NULL,'portal 14','ref 14'),(15,'a',NULL,'2014-04-08 14:18:53',1,'test post a 15','text for item 15',1,NULL,'portal 15','ref 15'),(16,'a',NULL,'2014-04-08 14:18:53',1,'test post a 16','text for item 16',1,NULL,'portal 16','ref 16'),(17,'a',NULL,'2014-04-08 14:18:53',1,'test post a 17','text for item 17',1,NULL,'portal 17','ref 17'),(18,'a',NULL,'2014-04-08 14:18:53',1,'test post a 18','text for item 18',1,NULL,'portal 18','ref 18'),(19,'a',NULL,'2014-04-08 14:18:53',1,'test post a 19','text for item 19',1,NULL,'portal 19','ref 19'),(20,'a',NULL,'2014-04-08 14:18:53',1,'test post a 20','text for item 20',1,NULL,'portal 20','ref 20'),(21,'a',NULL,'2014-04-08 14:18:53',1,'test post a 21','text for item 21',1,NULL,'portal 21','ref 21'),(22,'a',NULL,'2014-04-08 14:18:53',1,'test post a 22','text for item 22',1,NULL,'portal 22','ref 22'),(23,'a',NULL,'2014-04-08 14:18:53',1,'test post a 23','text for item 23',1,NULL,'portal 23','ref 23'),(24,'a',NULL,'2014-04-08 14:18:53',1,'test post a 24','text for item 24',1,NULL,'portal 24','ref 24'),(25,'b',NULL,'2014-04-08 14:18:53',1,'test post b 25','text for item 25',1,NULL,'portal 25','ref 25'),(26,'b',NULL,'2014-04-08 14:18:53',1,'test post b 26','text for item 26',1,NULL,'portal 26','ref 26'),(27,'b',NULL,'2014-04-08 14:18:53',1,'test post b 27','text for item 27',1,NULL,'portal 27','ref 27'),(28,'b',NULL,'2014-04-08 14:18:53',1,'test post b 28','text for item 28',1,NULL,'portal 28','ref 28'),(29,'b',NULL,'2014-04-08 14:18:53',1,'test post b 29','text for item 29',1,NULL,'portal 29','ref 29'),(30,'b',NULL,'2014-04-08 14:18:53',1,'test post b 30','text for item 30',1,NULL,'portal 30','ref 30'),(31,'b',NULL,'2014-04-08 14:18:53',1,'test post b 31','text for item 31',1,NULL,'portal 31','ref 31'),(32,'b',NULL,'2014-04-08 14:18:53',1,'test post b 32','text for item 32',1,NULL,'portal 32','ref 32'),(33,'f',NULL,'2014-04-08 14:18:53',1,'test post f 33','text for item 33',1,NULL,'portal 33','ref 33'),(34,'f',NULL,'2014-04-08 14:18:53',1,'test post f 34','text for item 34',1,NULL,'portal 34','ref 34'),(35,'f',NULL,'2014-04-08 14:18:53',1,'test post f 35','text for item 35',1,NULL,'portal 35','ref 35');
+INSERT INTO `items` VALUES (3,'a','first item comment','2014-04-08 14:18:53',2,'This is the very first item','text for item 3',1,'http://www.quince.nl','portal 3','ref 3'),(5,'a',NULL,'2014-04-08 14:18:53',1,'test post a 5','text for item 5',1,NULL,'portal 5','ref 5'),(6,'a',NULL,'2014-04-08 14:18:53',1,'test post a 6','text for item 6',1,NULL,'portal 6','ref 6'),(7,'a',NULL,'2014-04-08 14:18:53',1,'test post a 7','text for item 7',1,NULL,'portal 7','ref 7'),(8,'a',NULL,'2014-04-08 14:18:53',1,'test post a 8','text for item 8',1,NULL,'portal 8','ref 8'),(9,'a',NULL,'2014-04-08 14:18:53',1,'test post a 9','text for item 9',1,NULL,'portal 9','ref 9'),(10,'a',NULL,'2014-04-08 14:18:53',1,'test post a 10','text for item 10',1,NULL,'portal 10','ref 10'),(11,'a',NULL,'2014-04-08 14:18:53',1,'test post a 11','text for item 11',1,NULL,'portal 11','ref 11'),(12,'a',NULL,'2014-04-08 14:18:53',1,'test post a 12','text for item 12',1,NULL,'portal 12','ref 12'),(13,'a',NULL,'2014-04-08 14:18:53',1,'test post a 13','text for item 13',1,NULL,'portal 13','ref 13'),(14,'a',NULL,'2014-04-08 14:18:53',1,'test post a 14','text for item 14',1,NULL,'portal 14','ref 14'),(15,'a',NULL,'2014-04-08 14:18:53',1,'test post a 15','text for item 15',1,NULL,'portal 15','ref 15'),(16,'a',NULL,'2014-04-08 14:18:53',1,'test post a 16','text for item 16',1,NULL,'portal 16','ref 16'),(17,'a',NULL,'2014-04-08 14:18:53',1,'test post a 17','text for item 17',1,NULL,'portal 17','ref 17'),(18,'a',NULL,'2014-04-08 14:18:53',1,'test post a 18','text for item 18',1,NULL,'portal 18','ref 18'),(19,'a',NULL,'2014-04-08 14:18:53',1,'test post a 19','text for item 19',1,NULL,'portal 19','ref 19'),(20,'a',NULL,'2014-04-08 14:18:53',1,'test post a 20','text for item 20',1,NULL,'portal 20','ref 20'),(21,'a',NULL,'2014-04-08 14:18:53',1,'test post a 21','text for item 21',1,NULL,'portal 21','ref 21'),(22,'a',NULL,'2014-04-08 14:18:53',1,'test post a 22','text for item 22',1,NULL,'portal 22','ref 22'),(23,'a',NULL,'2014-04-08 14:18:53',1,'test post a 23','text for item 23',1,NULL,'portal 23','ref 23'),(24,'a',NULL,'2014-04-08 14:18:53',1,'test post a 24','text for item 24',1,NULL,'portal 24','ref 24'),(25,'b',NULL,'2014-04-08 14:18:53',1,'test post b 25','text for item 25',1,NULL,'portal 25','ref 25'),(26,'b',NULL,'2014-04-08 14:18:53',1,'test post b 26','text for item 26',1,NULL,'portal 26','ref 26'),(27,'b',NULL,'2014-04-08 14:18:53',1,'test post b 27','text for item 27',1,NULL,'portal 27','ref 27'),(28,'b',NULL,'2014-04-08 14:18:53',1,'test post b 28','text for item 28',1,NULL,'portal 28','ref 28'),(29,'b',NULL,'2014-04-08 14:18:53',1,'test post b 29','text for item 29',1,NULL,'portal 29','ref 29'),(30,'b',NULL,'2014-04-08 14:18:53',1,'test post b 30','text for item 30',1,NULL,'portal 30','ref 30'),(31,'b',NULL,'2014-04-08 14:18:53',1,'test post b 31','text for item 31',1,NULL,'portal 31','ref 31'),(32,'b',NULL,'2014-04-08 14:18:53',1,'test post b 32','text for item 32',1,NULL,'portal 32','ref 32'),(33,'f',NULL,'2014-04-08 14:18:53',1,'test post f 33','text for item 33',1,NULL,'portal 33','ref 33'),(34,'f',NULL,'2014-04-08 14:18:53',1,'test post f 34','text for item 34',1,NULL,'portal 34','ref 34'),(35,'f',NULL,'2014-04-08 14:18:53',1,'test post f 35','text for item 35',1,NULL,'portal 35','ref 35');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,4 +237,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-08 15:44:18
+-- Dump completed on 2014-04-09 21:56:31
