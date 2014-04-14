@@ -3,7 +3,7 @@
 $db = new mysqli ('localhost', 'quince', null, 'quince');
 
 
-$string = file_get_contents ('items.json');
+$string = file_get_contents ('../data/columns.json');
 $items = json_decode ($string, true);
 
 foreach ($items as $item)
