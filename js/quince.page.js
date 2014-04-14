@@ -43,6 +43,7 @@
         contentSwap:null,
         closeButton:null,
         subcontentOpened:false,
+        refineNav:null,
         introColumn:null,
         _current:null,
         _currentscroller:null,
@@ -51,7 +52,8 @@
             this._super(this._el);
             this.toplinks = $(this._el.find('.header .toplink'));
 
-            this.introColumn = new $q.Page.IntroColumn(this._el.find('#slider-container .scroller .homepage .intro-block')[0]);
+            $q._landingAnimation = new $q.Page.IntroColumn(this._el.find('#slider-container .scroller .homepage .intro-block')[0]);
+            this.refinedNav = new $q.Page.RefineNav(this._el.find('.nav')[0]);
             this.initPage();
 
         },
@@ -74,7 +76,7 @@
                     "author/:id": "getAuthor",
                     "tag/:id": "getTag",
                     "search/:query":        "search",  // #/search/subject
-                    ":route/:action": "loadView",
+//                    ":route/:action": "loadView",
                     // <a href="http://example.com/#/dashboard/graph">Load Route/Action View</a>
                     "*action": "defaultRoute" // Backbone will try match the route above first
                 }
@@ -290,6 +292,44 @@
         }
     });
 
+    $q.Page.RefineNav = $q.Page.extend({
+        portalnav:null,
+        filternav:null,
+        _construct : function(el){
+            this._el = $(el);
+            this._super(this._el);
+
+            this.portalnav = $(this._el.find('ul.social')[0]);
+            this.filternav = $(this._el.find('ul.refinement')[0]);
+
+            this.initPortal();
+            this.initRefine();
+        },
+        initPortal : function(){
+            var _this = this;
+            this.portalnav.find('a').each(function(el){
+                $(this).click(function(e){
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    $q.EventManager.fireEvent($q.Event.REFINE_PORTAL, this, $(this).data('portal'));
+                });
+            })
+        },
+        initRefine : function(){
+            var _this = this;
+
+            this.filternav.find('a').each(function(el){
+                $(this).click(function(e){
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
+
+                });
+            });
+
+        }
+    });
+
     $q.Page.IntroColumn = $q.Page.extend({
         _current:0,
         _imgrow:null,
@@ -303,13 +343,15 @@
         timerLength:3000,
 
         _construct : function(el) {
-            this._el = $(el);
+            this._el = $(el).hide();
             this._super(this._el);
             this.initIntro();
+
         },
 
         initIntro : function(){
             var _this = this;
+//            this._el.css({'opacity':'0'});
             this._imgrow = $(this._el.find('.left-side .imgs ul.img-scroller')[0]);
             this._words = $(this._el.find('.words ul')[0]);
             this.words_spacer = $(this._el.find('.words .spacer')[0]);
@@ -322,24 +364,27 @@
         },
 
         animateIn : function(){
-            var wordw = $(this._words.parent).width();
-            this._words.css({'left':-wordw });
-            var textw = $(this._textrow.parent).width();
+            this._words.css({'left':-300 }).hide();
+
+            var textparent = this._textrow.parent();
+            var textw = $(textparent).outerWidth();
             this._textrow.css({'left':textw});
-            this._imgrow.hide();
+
+            this._imgrow.css({'opacity':'0'});
             var staticTxt = $(this._el.find('.left-side .static')[0]);
             staticTxt.css({'right':'10px', 'opacity':0});
 
             var afterText = function(){
-                this._imgrow.fadeIn(2000);
+                this._imgrow.animate({ 'opacity': '1' }, 2000, 'easeOutQuad');
                 this.initRotation();
                 afterStatic = null;
             };
             var afterStatic = function(){
                 this._textrow.animate({ 'left': '0' }, 600, 'easeInQuad');
-                this._words.animate({ 'left': '0' }, 600, 'easeInQuad', $.proxy(afterText, this));
+                this._words.animate({ 'left': '0' }, 600, 'easeInQuad', $.proxy(afterText, this)).show();
             };
-
+//            this._el.css({'opacity':'1'});
+            this._el.show();
             staticTxt.animate({ 'right': '0', 'opacity':1 }, 2400, 'easeOutQuad', $.proxy(afterStatic, this));
         },
 
@@ -349,13 +394,14 @@
         },
 
         mosaicScrollHandler : function(e, xdiff){
+            if(!Quince._mosaic._enabled) return;
             var homew = $($q._mosaic._home).width();
             $log("SCROLL xdiff:"+xdiff+" homew:"+homew)
             if(xdiff < -homew){//less than
                 this.manageRotationTimer(true);
             } else {//greater than
                 this.manageRotationTimer(false);
-            };
+            }
         },
 
         manageRotationTimer : function(turnOff){
@@ -507,12 +553,6 @@
         removeEventHandlers : function(){
 
             $q.EventManager.removeEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));
-        },
-
-        onBeforeScrollStart: function (e) {
-            var target = e.target;
-            while (target.nodeType != 1) target = target.parentNode;
-            if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA') e.preventDefault();
         },
 
         onResize : function(e){

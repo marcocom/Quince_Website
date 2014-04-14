@@ -38,28 +38,37 @@
         currentColumnWidth:null,
         currentScrollX:0,
         _slider : null,
+        _scrollerChild : null,
         _loader : null,
         _cta : null,
         _home : null,
+        _enabled:true,
+        filteringMode:null,
         columnWidths:{
             'xs':480,
             'md':720,
             'sh':540,
             'tl':700
         },
-        _construct : function(el) {
+        _construct : function(el, filtering) {
             this._el = $(el);
             this._super(this._el);
 //            $log("Mosaic init");
-            var h = this._el.find('.homepage');
-            this._home = $(h);
+
+            this.filteringMode = filtering;
+            if(filtering == $q.Constants.Filters.CHRONOLOGICAL){//default state.  never destroyed
+                this._home = $(this._el.find('.homepage')[0]);
+            }
+
+            this._scrollerChild = $(this._el.find('.scroller')[0]);
+
             this.initContainer();
 
         },
 
         initContainer : function(){
 //            if(!$q.isIE8){
-            this._slider = new IScroll('#slider-container', {
+            this._slider = new IScroll(this._el[0], {
                 scrollX: true,
                 scrollY: false,
                 mouseWheel: true,
@@ -73,17 +82,6 @@
 //                interactiveScrollbars:$q.isIE8
             });
 
-
-
-//            this._slider.scrollBy(-$q.windowWidth, 0, 2500, IScroll.utils.ease.elastic);
-
-            this._slider.on('scrollStart', $.proxy(this.onScrollStart, this));
-//            this._slider.on('scrollCancel', $.proxy(this.onScrollCancel, this));
-            this._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
-//            this._slider.on('flick', $.proxy(this.onFlick, this));
-//            this._slider.on('refresh', $.proxy(this.positionMosaic, this));
-//            this._slider.on('beforeScrollStart', this.onBeforeScrollStart.bind(this));
-
 //            } else {
 //                var sl = this._el.find('#slider-container .scroller')
 //                this._slider = $(sl[0]);
@@ -91,7 +89,7 @@
 //            }
 
             this.loading_items = true;
-            $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
+//            $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
@@ -104,36 +102,33 @@
             });
 
 
-            this.addEventHandlers();
-
             $q.EventManager.fireEvent($q.Event.RESIZE, this);
 
             this.initCTA();
-            this.initLoader();
-            this.hideLoader();
+            this._loader = $(".home-content .loader-anim").hide();
 
+            if(this._home)this._home.show();
             this.onResize(null);
+            this.showMosaic(true);
         },
 
         addEventHandlers : function(){
-            $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
+            this._slider.on('scrollStart', $.proxy(this.onScrollStart, this));
+            this._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
+            $q.EventManager.addEventHandler($q.Event.RESIZE, this.onResize.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
-
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
         },
 
         removeEventHandlers : function(){
 
-            $q.EventManager.removeEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));
-
-            $q.EventManager.removeEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
-
-            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
-            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
-
-            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
+            $q.EventManager.removeEventHandler($q.Event.RESIZE, this.onResize);
+            $q.EventManager.removeEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo);
+            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData);
+            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData);
+            $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMN_LOADED, this.appendMosaic);
         },
 
         initCTA : function(){
@@ -155,8 +150,8 @@
             //this._slider.x <= this._slider.maxScrollX
             var go = ($q.windowWidth + Math.abs(this._slider.x)) - (this._cta.width() + 10);
             var currentX = Number(this._cta.css('left').split('px')[0]);
-            $log("CTA x:"+currentX+" go:"+go);
-            if(go > currentX)
+
+            if(go > currentX && this._enabled)
                 this._cta.animate({ left: (go+'px') }, 600, 'easeOutBounce');
 
 
@@ -164,47 +159,44 @@
 
         onLoadingData : function(e){
             this.loading_items = true;
-            this.showLoader();
+            this._loader.show();
         },
 
         onEndOfData : function(e){
             this.loading_items = false;
-            var homew = $q.windowWidth - 50;
-            this._home.width(homew);
-
+            if(this._home){
+                var homew = $q.windowWidth - 50;
+                this._home.width(homew);
+            }
             var w = $(this._columns[0]).width();
-            var totalw = (this._columns.length * w) + homew;
-            $('#slider-container .scroller').width(totalw);
+            var totalw = (this._columns.length * w) + (homew || 0);
+            this._scrollerChild.width(totalw);
             this._slider.refresh();
-            this.hideLoader();
-            this._loader.remove();
+            this._loader.hide();
 
             this._cta.fadeOut();
         },
 
-        onBeforeScrollStart: function (e) {
-            var target = e.target;
-            while (target.nodeType != 1) target = target.parentNode;
-            if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA') e.preventDefault();
-        },
-
         onResize : function(e){
-            var homew = $q.windowWidth - 50;
-            if(homew <= 350) homew = 350;
-            this._home.width(homew);
+            if(!this._enabled) return;
+            if(this._home){
+                var homew = $q.windowWidth - 50;
+                if(homew <= 350) homew = 350;
+                this._home.width(homew);
+            }
 
             var w = $(this._columns[0]).width();
-            var totalw = (this._columns.length * w) + (this.loading_items ? 50 : 0 ) + homew;
+            var totalw = (this._columns.length * w) + (this.loading_items ? 50 : 0 ) + (homew || 0);
             var slider = this._slider;
-            var _this = this;
 
-            $('#slider-container .scroller').width(totalw);
+            this._scrollerChild.width(totalw);
 
             if(w != this.currentColumnWidth && !$q.isIE8){  //one-time event fire when site shifts through a responsive media-query
 
                 this.currentColumnWidth = w;
+
                 setTimeout(function () {
-                    _this._slider.refresh();
+                    slider.refresh();
                 }, 0);
 
             }
@@ -213,29 +205,56 @@
 
         appendMosaic: function(e){
 
-            $log("REFRESH MOSAIC!!!!!!");
+//            $log("REFRESH MOSAIC!!!!!!");
             var c = this._mosaic.find('.column');
             var newcol = c[c.length-1];
 
             this._columns.push(newcol);
             var totalw = (this._columns.length) * this.currentColumnWidth;
             $('#slider-container .scroller').width(totalw);
-//
+
             var mc = new $q.Mosaic.ParentColumn(newcol);
-//
 
+            this._loader.hide();
 
-            var _this = this;
-
-            this.hideLoader();
-
+            this._home.show();
 
             this._slider.refresh();
-//            setTimeout(function () {
-//                 _this._slider.refresh();
-//                _this._slider.scrollTo(_this.currentScrollX, 0, 0);
-//            }, 200);
 
+        },
+
+        removeMosaic: function(){
+            this._columns.each(function(el){
+                $(this).empty();
+            })
+            this.removeEventHandlers();
+            this._slider.destroy();
+            this._slider = null;
+            this._mosaic.empty();
+            this._mosaic = null;
+            this._el.empty();
+            this._el = null;
+        },
+
+
+        showMosaic : function(reveal){
+            if(reveal){
+                this.addEventHandlers();
+                this._el.show();
+                this._loader.show();
+                this._cta.show();
+                this._slider.enable();
+                this._enabled = true;
+                $log("-----------MOSAIC:"+this.filteringMode+" SHOW!!!");
+            }  else {
+                this.removeEventHandlers();
+                this._el.hide();
+                this._loader.hide();
+                this._cta.hide();
+                this._slider.disable();
+                this._enabled = false;
+                $log("-----------MOSAIC:"+this.filteringMode+" HIDE!!!");
+            }
         },
 
         positionMosaic : function(){
@@ -245,7 +264,7 @@
 
         scaleColumns : function(w){
             var _this = this;
-            $log("SET WIDTH:"+w);
+//            $log("SET WIDTH:"+w);
             this._columns.each(function(e){
                 $(this).width(w);
             })
@@ -253,8 +272,7 @@
 
         onScrollStart : function(e){
 //            $log("SCROLL START----------------");
-            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_START, this);
-//            $q.EventManager.fireEvent(Quince.Event.RESIZE);
+            if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_START, this);
         },
 
         onScrollCancel : function(e){
@@ -265,32 +283,10 @@
 //            $log("SCROLL END---------------- X:"+this.x);
                 this.currentScrollX = this._slider.x;
                 this.animateCTA();
-//            if(this._slider.x <= this._slider.maxScrollX) this.showLoader();
-            $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+//            if(this._slider.x <= this._slider.maxScrollX) this._loader.show();
+            if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
         },
 
-        initLoader : function(){
-            this._loader = $('<img src="img/loading.gif">')
-                .appendTo('.home-content')
-                .css({
-                    'position':'absolute',
-                    'display':'block',
-                    'top':'123px',
-                    'right':'10px',
-                    'z-index':'50',
-                    'width' : '32',
-                    'height' : 'auto'
-                });
-        },
-
-        showLoader : function(){
-            this._loader.show();
-
-        },
-
-        hideLoader : function(){
-            this._loader.hide();
-        },
 
         onFlick : function(e){
             $log("FLICK----------------");
@@ -311,9 +307,7 @@
                 'hideOnOverlayClick' : true,
                 'width'         : 1280,
                 'height'        : 720,
-//                    'href'          : "http://player.vimeo.com/video/82283832", //HD
-                'href'          : url, //SD
-//                    'href'          : "http://vimeo.com/moogaloop.swf?clip_id=82283832",
+                'href'          : url,
                 'type'          : 'iframe',
                 'swf'           : {
                     'wmode'             : 'transparent',
@@ -321,8 +315,8 @@
 
                 },
                 overlay: {
-                    opacity: 0.1, // or the opacity you want
-                    css: {'background-color': '#000000'} // or your preferred hex color value
+                    opacity: 0.2,
+                    css: {'background-color': '#FFFFFF'}
                 } // overlay
             });
         }
@@ -359,15 +353,12 @@
                 columnWidth: 240,
                 isAnimated: true
             }).masonry('bindResize');
-//            this.grid.bindResize();
 
             var c = this._grid.masonry('getItemElements');
             $(c).each(function(e){
                 var mc = new $q.Mosaic.Cell(this, _this._grid);
                 _this._cells.push(mc);
             });
-
-            //$log("INIT PARENT-COLUMN cells:"+ this._cells.length);
 
             $q.EventManager.fireEvent(Quince.Event.RESIZE, this);
         }
@@ -509,13 +500,12 @@
             $q.EventManager.addEventHandler($q.Event.OPEN_CELL, this.onCellClick.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_START, this.closeInfo.bind(this));
 
-            $("#slider-container").show();
+
         },
 
         processVideoAction : function(portal){
 
             var num = this._el.data('ref');
-            //$log("VIDEO ACTION -portal:"+portal+" num:"+num);
 
             var url = "http://";
             if(portal == "vim") url += "player.vimeo.com/video/";
@@ -645,11 +635,19 @@
 
 
 
-    function startMosaic(e){
+    $q.Mosaic.startMosaic = function(e, el, filter){
         $q.Mosaic.Init();
-        if($('#slider-container').length > 0) Quince._mosaic = new $q.Mosaic.Container('#slider-container');
-    }
-    $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_COMPLETE, startMosaic.bind(this));
+        var targetEl = filter == $q.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
+        if(!Quince._mosaic){
+            Quince._mosaic = new $q.Mosaic.Container(el, filter);
+        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
+            $log("NEW MODEL:", Quince._secondaryModel);
+            Quince._secondaryMosaic = new $q.Mosaic.Container(el, filter);
+            $log("CREATE NEW MOSAIC filter:"+filter);
+        }
+    };
+
+    $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_COMPLETE, $q.Mosaic.startMosaic.bind(this));
 
 
 })(jQuery, Quince);

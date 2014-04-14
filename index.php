@@ -102,20 +102,20 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                             </a>
                         </li-->
                     </ul>
-                    <!--ul class="refinement">
+                    <ul class="refinement">
                         <li class="search">
-                            <a href="#"></a>
+                            <a href="#" data-filter="tag"></a>
                         </li>
                         <li class="timeline">
-                            <a href="#"></a>
+                            <a href="#" data-filter="time"></a>
                         </li>
-                        <li class="viewed">
-                            <a href="#"></a>
-                        </li>
+                        <!--li class="viewed">
+                            <a href="#" data-filter="viewed"></a>
+                        </li-->
                         <li class="clients">
-                            <a href="#"></a>
+                            <a href="#" data-filter="customerId"></a>
                         </li>
-                    </ul-->
+                    </ul>
                 </div>
                 <div id="slider-container">
                     <div class="scroller">
@@ -175,7 +175,10 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
                     </div>
                 </div>
+                <div id="second-container">
+                </div>
             </div>
+            <img class="loader-anim" src="img/loading.gif">
 
             <div class="footer hidden-xs">
                 <h6>Copyright 2014 All Rights Reserved</h6>
@@ -494,6 +497,16 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                     </div>
                 </div>
             </div>
+        </script>
+
+        <script type="text/template" id="tpl-slider">
+            <div class="scroller">
+                <div class="cta-msg">
+                    <h5><? if (preg_match ('/(?i)msie 8/', $_SERVER['HTTP_USER_AGENT'])): ?>SCROLL TO <? endif ?>EXPLORE OUR WORLD<em></em></h5>
+                </div>
+                <ul class="mosaic-container container"></ul>
+            </div>
+
         </script>
 
 

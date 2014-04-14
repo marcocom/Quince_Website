@@ -97,7 +97,15 @@ body{
   background-color:white;
   position: absolute;
   z-index:3 !important;
-
+  .loader-anim{
+    position: absolute;
+    display:none;
+    top:123px;
+    right:10px;
+    z-index:50;
+    width:24px;
+    height:auto;
+  }
   .header{
     position: absolute;
     top: 0px;
@@ -249,7 +257,7 @@ body{
 
 }
 
-#slider-container {
+#slider-container, #second-container {
   position: absolute;
   z-index: 1;
   top: 120px;
@@ -347,6 +355,7 @@ body{
           position:relative;
           float: left;
           overflow:hidden;
+          width:auto;
           .spacer{
             display:block;
             height:0;
@@ -502,11 +511,16 @@ body{
     }
   }
 }
+#second-container{
+  display:none;
+}
 
 
 //-------------------CELLS-------------------------
 
-#slider-container .scroller .mosaic-container li.column{
+#slider-container, #second-container{
+
+  .scroller .mosaic-container li.column{
 
   .cell-box{ //general default
     border: 1px solid #cccccc;
@@ -604,7 +618,6 @@ body{
     }
   }
 
-
   .cell-a{ // HALF-SIZED IMAGE w/ INFO CLICKTHRU -->
     width:$cell-half-width;
     height:$cell-full-height;
@@ -665,6 +678,7 @@ body{
         position: absolute;
         display: block;
         font-size: 1.5em;
+        padding: 5px 10px;
         em{
           font-size: 50%;
           color:$gray;
@@ -751,7 +765,6 @@ body{
     background:none;
     border:none;
   }
-
   .cell-j{ // <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
     width:$cell-half-width;
     height:$cell-half-height;
@@ -766,7 +779,7 @@ body{
 
     }
   }
-
+  }
 }
 
 

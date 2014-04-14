@@ -27,8 +27,10 @@
         _currentPopup : null,
         _mosaic:null,
         _model:null,
-        _mosaic_container:null,
+        _secondaryMosaic:null, //controller and model for second 'refined' wall upon use of search/refine features. destroyed and reused.
+        _secondaryModel:null,
         _landingPage:null,
+        _landingAnimation:null,
         AncillaryLetters : ["d", "e", "i", "g"], //cell-types that are not CMS data-fed.  pulled from objects below.
         DataLetters : ["a", "b", "c", "f", "h", "j"], //cell-types that are CMS data-fed.
 
@@ -134,19 +136,7 @@
 
             }
         },
-        sub_template : function (str, data) {
-            // match "<% include template-id %>"
-            return _.template(
-                str.replace(
-                    /<%\s*include\s*(.*?)\s*%>/g,
-                    function(match, templateId) {
-                        var el = $('#' + templateId);
-                        return el ? el.html() : '';
-                    }
-                ),
-                data
-            );
-        },
+
         isEmpty : function(obj) {
 
             // null and undefined are "empty"
@@ -165,36 +155,48 @@
             }
 
             return true;
+        },
+
+        sub_template : function (str, data) {
+            // match "<% include template-id %>"
+            return _.template(
+                str.replace(
+                    /<%\s*include\s*(.*?)\s*%>/g,
+                    function(match, templateId) {
+                        var el = $('#' + templateId);
+                        return el ? el.html() : '';
+                    }
+                ),
+                data
+            );
+        },
+
+        loadTemplateFile : function(templateName) {
+            var template = $('#tpl-' + templateName);
+            if (template.length === 0) {
+                var tmpl_dir = '/templates';
+                var tmpl_url = tmpl_dir + '/' + templateName + '.tmpl';
+                var tmpl_string = '';
+
+                $.ajax({
+                    url: tmpl_url,
+                    method: 'GET',
+                    async: false,
+                    contentType: 'text',
+                    success: function (data) {
+                        tmpl_string = data;
+                        $('head').append('<script id="tpl-' +
+                            templateName + '" type="text/template">' + tmpl_string + '<\/script>');
+                    }
+                });
+
+            }
         }
 
     };
 
 
 
-
-    Quince.SquareItem = Class.extend({
-        _construct : function(el) {
-            //this.api.onClose = this.overlayClose.bind(this);
-
-            Quince.eventManager.addEventHandler(Quince.Event.SHOWPOPUP,this.show.bind(this));
-
-            this._el = el;
-            this._type = el.attr('id');
-        },
-        hide : function() {
-            this.hide();
-        },
-        show : function() {
-
-            if (this.isOpened()) {
-                this.hide();
-//                setTimeout(this.__show.bind(this,type), 300);
-            }
-        },
-        onClick : function(e) {
-            e.preventDefault();
-        }
-    });
 
     Quince.Popup = Class.extend({
         _construct : function(el) {
@@ -345,12 +347,61 @@
         }
     });
 
+    Quince.State = {
+
+        createRefinedModel : function(filter, val){
+            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+            Quince._mosaic.showMosaic(false);
+            //$('#slider-container').hide();
+
+            Quince._landingAnimation.manageRotationTimer(true);
+//            if(Quince._secondaryModel) Quince._secondaryModel.destruct();
+//            if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
+//            Quince._secondaryModel = null;;
+//            Quince._secondaryMosaic = null
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+            Quince._secondaryModel = new $q.Model.Mosaic('#second-container', "backend/item", filter, val);
+
+            $('#second-container').after($('#slider-container'));
+        },
+
+        removeRefinedModel : function(){
+
+            Quince._mosaic.showMosaic(true);
+            //$('#slider-container').show();
+
+            Quince._landingAnimation.manageRotationTimer(false);
+            if(Quince._secondaryModel) Quince._secondaryModel.destruct();
+            if(Quince._secondaryMosaic){
+                Quince._secondaryMosaic.showMosaic(false);
+                Quince._secondaryMosaic.removeMosaic();
+            }
+            Quince._secondaryModel = null;
+            Quince._secondaryMosaic = null;
+
+            var target = $('#second-container').empty();
+            $('#slider-container').after($('#second-container'));
+        }
+
+    }
+
+    Quince.Constants = {
+        'Filters':{
+            'CHRONOLOGICAL':"time",
+            'AUTHOR':"authorId",
+            'CUSTOMER':"customerId",
+            'TAG':"tag",
+            'CHRONOLOGICAL':"time",
+        }
+    };
+
     Quince.Brand = {
-        brand_blue:              '#0172b4',
-        brand_purple:              '#5d2278',
-        brand_orange:              '#f5a81f',
-        brand_red:              '#da061e',
-        brand_green:              '#009339'
+        'brand_blue':              '#0172b4',
+        'brand_purple':              '#5d2278',
+        'brand_orange':              '#f5a81f',
+        'brand_red':              '#da061e',
+        'brand_green':              '#009339'
     };
 
     Quince.templates = {
@@ -366,6 +417,9 @@
             'cell_i':null,
 
             'cell_p':null
+        },
+        containers:{
+            'slider':null
         }
     };
     Quince.ancillary_models = {
@@ -519,7 +573,12 @@
            ["d","a","e","b","f","b","c","j"],
            ["a","j","b","e","c","b","h","f","j"],
            ["g","f","a","j","a","e","b","j"]
-        ]
+        ],
+        'portal_video_pattern':[
+            ["d","j","e", "j","c","j","j"],
+            ["a","j","e","f","b","h"],
+            ["g","a","j","a","e","b","j"]
+        ],
     };
 
 
@@ -563,6 +622,11 @@
     Quince.Event.ROUTER_SEARCH = "ROUTER_SEARCH";
     Quince.Event.ROUTER_TAG = "ROUTER_TAG";
     Quince.Event.ROUTER_PAGE = "ROUTER_PAGE";
+
+
+    Quince.Event.REFINE_PORTAL = "REFINE_PORTAL";
+    Quince.Event.REFINE_FILTER = "REFINE_FILTER";
+
 
     
     this.Quince = Quince;

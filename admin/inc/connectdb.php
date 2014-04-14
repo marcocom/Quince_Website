@@ -2,8 +2,8 @@
 // echo var_dump($_POST);
 
 $host="localhost"; // Host name 
-$username="root"; // Mysql username 
-$password="root"; // Mysql password 
+$username="quince"; // Mysql username
+$password=null; // Mysql password
 $db_name="quince"; // Database name 
 
 // Connect to server and select database.
