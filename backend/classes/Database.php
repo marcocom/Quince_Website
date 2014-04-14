@@ -118,7 +118,7 @@ class Database
   {
     $images = array ();
 
-    $query = 'select images.id, type
+    $query = 'select images.id, type, extension
 
               from images ';
 
@@ -135,6 +135,7 @@ class Database
     {
       $image = new Image ($row['id']);
       $image->type = $row['type'];
+      $image->extension = $row['extension'];
 
       $images[] = $image;
     }
