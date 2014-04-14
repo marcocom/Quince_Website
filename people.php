@@ -16,12 +16,12 @@
             })();
         </script>
 
-		<link href="css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link href="css/people/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 <!--        <link href="css/colorbox.css" media="screen, projection" rel="stylesheet" type="text/css" />-->
 	</head>
 	<body>
+<!--    <h2 class="title">People</h2>-->
  		<section id="section-people">
-            <h2>People</h2>
 			<div class="content">
                 <?php
                     

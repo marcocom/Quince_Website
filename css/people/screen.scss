@@ -1,0 +1,13 @@
+$main-font: "Tahoma";
+
+$body-background-color: #999;
+$link-color: #ffffff;
+$link-color-active: #009cc7;
+$contact-section-background-color: #fff;
+$footer-background-color: $link-color-active;
+
+
+@import "../normalize";
+@import "generic";
+//@import "nav.scss";
+@import "sections";

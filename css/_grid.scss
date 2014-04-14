@@ -3,47 +3,98 @@
 // --------------------------------------------------
 
 
-// Set the container width, and override it for fixed navbars in media queries
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
 .container {
-  @include tb_container-fixed;
+  @include container-fixed();
+
+  @media (min-width: $screen-sm-min) {
+    width: $container-sm;
+  }
+  @media (min-width: $screen-md-min) {
+    width: $container-md;
+  }
+  @media (min-width: $screen-lg-min) {
+    width: $container-lg;
+  }
 }
 
-// Mobile-first defaults
+
+// Fluid container
+//
+// Utilizes the mixin meant for fixed width containers, but without any defined
+// width for fluid, full width layouts.
+
+.container-fluid {
+  @include container-fixed();
+}
+
+
+// Row
+//
+// Rows contain and clear the floats of your columns.
+
 .row {
-  @include tb_makeRow;
-}
-[class^="span"] {
-  position: relative;
-  min-height: 1px;
-  padding-left:  ($gridGutterWidth / 2);
-  padding-right: ($gridGutterWidth / 2);
+  @include make-row();
 }
 
-// Responsive: Tablets and up
-@media screen and (min-width: 768px) {
-  .container {
-    //max-width: 728px;
-  }
-  // Generate the grid columns and offsets
-  [class^="span"] { float: left; }
-  @include tb_grid-core($gridColumnWidth);
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+@include make-grid-columns();
+
+
+// Extra small grid
+//
+// Columns, offsets, pushes, and pulls for extra small devices like
+// smartphones.
+
+@include make-grid-columns-float(xs);
+@include make-grid($grid-columns, xs, width);
+@include make-grid($grid-columns, xs, pull);
+@include make-grid($grid-columns, xs, push);
+@include make-grid($grid-columns, xs, offset);
+
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@media (min-width: $screen-sm-min) {
+  @include make-grid-columns-float(sm);
+  @include make-grid($grid-columns, sm, width);
+  @include make-grid($grid-columns, sm, pull);
+  @include make-grid($grid-columns, sm, push);
+  @include make-grid($grid-columns, sm, offset);
 }
 
-// Responsive: Desktops and up
-@media screen and (min-width: 992px) {
-  .container {
-    //max-width: 940px;
-  }
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@media (min-width: $screen-md-min) {
+  @include make-grid-columns-float(md);
+  @include make-grid($grid-columns, md, width);
+  @include make-grid($grid-columns, md, pull);
+  @include make-grid($grid-columns, md, push);
+  @include make-grid($grid-columns, md, offset);
 }
 
-// Responsive: Large desktops and up
-@media screen and (min-width: 1200px) {
-  .container {
-    //max-width: 1170px;
-  }
-}
 
-// Reset utility classes due to specificity
-[class*="span"].pull-right {
-  float: right;
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@media (min-width: $screen-lg-min) {
+  @include make-grid-columns-float(lg);
+  @include make-grid($grid-columns, lg, width);
+  @include make-grid($grid-columns, lg, pull);
+  @include make-grid($grid-columns, lg, push);
+  @include make-grid($grid-columns, lg, offset);
 }

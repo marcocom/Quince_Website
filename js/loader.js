@@ -2,11 +2,19 @@
 
     var thisJS = 'loader.js';
     var jsFiles = [ // files to be conditionally included
-        'lib/iscroll-lite.js',
-        'lib/jquery.flexslider.js',
+        'lib/jquery.easing.1.3.js',
+        'lib/iscroll.custom.js',
+        'lib/hammer.js',
+        'lib/jquery.hammer.js',
+        'lib/masonry.js',
+        'lib/lodash.underscore.js',
+        'lib/backbone.js',
         'jquery.ext.js',
         'helper.js',
+        'lib/jquery.flexslider.js',
+        'lib/jquery.fancybox.js',
         'quince.js',
+        'quince.model.js',
         'quince.page.js',
         'quince.mosaic.js',
         'plugins.js'

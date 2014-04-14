@@ -1,3 +1,10 @@
+/*
+ Manages the Page-level logic.
+ The z-indexed logic of sub-pages are managed here, either through
+ link-actions, or else global events.
+
+ IntroColumn represents the 'landing-page' first-column of the wall
+ */
 (function($, $q) {
 
     $q.Page = Class.extend({
@@ -30,174 +37,242 @@
     );
 
     $q.Page.Home = $q.Page.extend({
+        cellRouter:null,
+        toplinks:null,
+        currentContent:null,
+        contentSwap:null,
+        closeButton:null,
+        subcontentOpened:false,
+        refineNav:null,
+        introColumn:null,
+        _current:null,
+        _currentscroller:null,
         _construct : function(el) {
-           // this._submit = $('#sign-in-button');
-           // this._postUrl = '/login';
             this._el = $(el);
             this._super(this._el);
-            $log("Register init");
             this.toplinks = $(this._el.find('.header .toplink'));
-            this.subcontentOpened = false;
-            this.currentContent = null;
-            this.contentSwap = null;
+
+            $q._landingAnimation = new $q.Page.IntroColumn(this._el.find('#slider-container .scroller .homepage .intro-block')[0]);
+            this.refinedNav = new $q.Page.RefineNav(this._el.find('.nav')[0]);
             this.initPage();
+
         },
 
         initPage : function(){
+            var _this = this;
+            this.closeButton = $('.sub-close-cta a').click($.proxy(this.pageCollapse, this));
+
+            this.toplinks.click($.proxy(this.clickAnimate, this));
+
+//            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
+
+            //BACKBONE ROUTER
+            var router = Backbone.Router.extend({
+                routes: {
+
+                    "posts/:id": "getPost",
+                    // <a href="http://example.com/#/posts/121">Example</a>
+                    "client/:id": "getClient",
+                    "author/:id": "getAuthor",
+                    "tag/:id": "getTag",
+                    "search/:query":        "search",  // #/search/subject
+//                    ":route/:action": "loadView",
+                    // <a href="http://example.com/#/dashboard/graph">Load Route/Action View</a>
+                    "*action": "defaultRoute" // Backbone will try match the route above first
+                }
+            });
 
 
+            this.cellRouter = new router;
 
-//            $.fancybox({
-//                padding: 0,
-//                'autoScale'     : false,
-//                'transitionIn'  : 'none',
-//                'transitionOut' : 'none',
-//                'title'         : "Christmas Wishes",
-//                'autoPlay'      : true,
-//                'hideOnOverlayClick' : true,
-//                'width'         : 1280,
-//                'height'        : 720,
-////                    'href'          : "http://player.vimeo.com/video/82283832", //HD
-//                'href'          : "http://player.vimeo.com/video/82293470", //SD
-////                    'href'          : "http://vimeo.com/moogaloop.swf?clip_id=82283832",
-//                'type'          : 'iframe',
-//                'swf'           : {
-//                    'wmode'             : 'transparent',
-//                    'allowfullscreen'   : 'true',
-//
-//                },
-//                overlay: {
-//                    opacity: 0.3, // or the opacity you want
-//                    css: {'background-color': '#ff0000'} // or your preferred hex color value
-//                } // overlay
-//            });
+            this.cellRouter.on('route:loadView', function( route, action ){
+                $log(route + "_" + action); // dashboard_graph
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, this);
+            });
 
-//            this._el.css('top', '0');
-//            this.toplinks.click($.proxy((!Quince.isFF ? this.toplinkAction : this.toplinkFirefox), this));
-            this.toplinks.click($.proxy(this.toplinkAnimate, this));
+            this.cellRouter.on('route:getPost', function (id) {
+                $log( "Get post number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_POST, this, id);
+            });
 
-        },
-        onOpenTransitionEnd : function(){
+            this.cellRouter.on('route:getClient', function (id) {
+                $log( "Get client number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_CLIENT, this, id);
+            });
 
-                this.subcontentOpened = true;
-                //this._el.mouseover($.proxy(this.pageOver, this));
-//                this._el.touch($.proxy(this.pageOver, this));
+            this.cellRouter.on('route:getAuthor', function (id) {
+                $log( "Get author number " + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_AUTHOR, this, id);
+            });
 
-                this._el.bind('tap click swipe focus', $.proxy(this.pageOver, this));
-            $log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
-        },
-        onCloseTransitionEnd : function(){
-            // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
-            $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened);
-            if(this.subcontentOpened == true){
-                this.subcontentOpened = false;
-                this.currentContent.hide();
-                this.currentContent = null;
-                this.setScrollable(true);
+            this.cellRouter.on('route:getTag', function (word) {
+                $log( "Get tag: " + word );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_TAG, this, word);
+            });
 
-                if(this.contentSwap != null){
-                    $(this.contentSwap).trigger('click');
-                    $log("CONTENT SWAP:"+this.contentSwap);
-                    this.contentSwap = null;
+            this.cellRouter.on('route:search', function (word) {
+                $log( "Search term: " + word );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_SEARCH, this, word);
+            });
+
+            this.cellRouter.on('route:defaultRoute', function (action) {
+                $log( "DEFAULT ROUTE:" + action + " subcontentOpened:"+this.subcontentOpened);
+                if(action == "jobs" || action == "about" || action == "contact" || action == "people"){
+                    _this.remoteAnimate(action);
+//                $q.EventManager.fireEvent(Quince.Event.ROUTER_PAGE, this, action);
+                } else if(action == null && this.subcontentOpened == true){
+                    this.pageCollapse(null);
                 }
 
-            }
+            });
+
+//            Backbone.emulateHTTP = true;
+//            Backbone.emulateJSON = true;
+//
+//            Start Backbone history a necessary step for bookmarkable URL's
+//            - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
+            Backbone.history.start({pushState: true});
+
         },
-        pageOver : function(e){
-//            if(this.subcontentOpened) this._el.css('top', '0px');
+
+        catchPageChange : function(e, props){
+            //$log("PAGECHANGE e:"+e+" props:"+props);
+            this.remoteAnimate(props);
+        },
+
+        remoteAnimate : function(remoteLink){
+
+            if(remoteLink != undefined && remoteLink.length < 2) return;
+            this._current = remoteLink;
+            var ref = "."+( remoteLink ? remoteLink : clicksource.id) + "-content";
+            var $content = $(ref);
+//            $log("REMOTE ANIMATE subcontentOpened:"+this.subcontentOpened);
+
+            this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, null);
+        },
+
+        clickAnimate : function(e){
+            e.preventDefault();
+
+            var clicksource = $(e.currentTarget)[0];
+
+            this._current = clicksource.id;
+
+            var ref = "." + clicksource.id + "-content";
+            var $content = $(ref);
+
+            this.cellRouter.navigate(clicksource.id, {trigger:false});
+            //$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
+
+            this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
+        },
+
+        pageAnimateFromClosed : function(el){
             var _this = this;
-            if(this.subcontentOpened)
+            el.show();
+//                $content.addClass('opened');
+
+            var t = el.find('.content')[0];
+            var targetHeight = $(t).height() + ($('body').hasClass('ipad-iphone') ? 10 : 40);
+            var maxHeight = $q.windowHeight - 30;
+
+            if(targetHeight > maxHeight) targetHeight = maxHeight;
+
+            //$log("ANIMATEFROM-CLOSED: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
+
+            this.setScrollable(false);
+
+            this.currentContent = el;
+            var hasSlider = this.currentContent.hasClass('sliding');
+            $log("PAGE ANIMATE has slider:"+hasSlider );
+
+            if(hasSlider) this._currentscroller = new $q.Page.SubPage(this.currentContent);
+
+//             this._el.css('top', (targetHeight + 'px'));
+
+            this._el.animate({
+                top:targetHeight
+            }, 500, function(){
+                _this.onOpenTransitionEnd();
+            });
+        },
+
+        pageAnimateFromOpened : function(el, c){
+            var _this = this;
+            //$log("ANIMATEFROM-OPEN: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
+            //$log("NEW CONTENT:"+el.selector);
+            if(this.currentContent.selector != el.selector){
+                this.contentSwap = c;
+                //$log("CONTENTSWAP REASSIGNED-------")
+            } else {
+                this.contentSwap = null;
+            }
+
             this._el.animate({
                 top:'0'
             }, 500, function(){
                 _this.onCloseTransitionEnd();
             });
-            this._el.mouseover(null);
-            this._el.unbind('tap click swipe focus');
-//            this._el.touch(null);
         },
-        toplinkAnimate : function(e){
-            e.preventDefault();
 
-            var c = $(e.currentTarget)[0];
-            var ref = "."+c.id + "-content";
-            var $content = $(ref);
-            var _this = this;
-            if(this.subcontentOpened == false){
+        onOpenTransitionEnd : function(){
 
-                $content.show();
-//                $content.addClass('opened');
+            this.subcontentOpened = true;
 
-                var t = $content.find('.content')[0];
-                var targetHeight = $(t).height() + ($('body').hasClass('ipad-iphone') ? 10 : 40);
+            ////////////////////////////////////////BACKGROUND CLICK TO CLOSE
+            var bg = this.currentContent.find('.content');
+            $(bg).bind('click', $.proxy(this.pageCollapse, this));
+            this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
 
-                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:", this.currentContent);
 
-                this.setScrollable(false);
-                this.currentContent = $content;
+            //$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
+        },
 
-//                this._el.css('top', (targetHeight + 'px'));
+        onCloseTransitionEnd : function(){
+            // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
+//            $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened+" contentSwap:");
+            $dir(this.contentSwap);
+            if(this.subcontentOpened == true){
+                this.subcontentOpened = false;
+                this.currentContent.hide();
+                this.currentContent = null;
+                this.setScrollable(true);
+                if(this._currentscroller){
+                    this._currentscroller._slider.destroy();
+                    this._currentscroller.removeEventHandlers();
+                    this._currentscroller = null;
+                }
 
-                this._el.animate({
-                    top:targetHeight
-                }, 500, function(){
-                    _this.onOpenTransitionEnd();
-                });
+                if(this.contentSwap != null){
+
+                    $(this.contentSwap).trigger('click');
+//                    this.remoteAnimate(this._current);
+
+                    $log("CONTENT SWAP:"+this._current);
+                    this.contentSwap = null;
+                } else {
+                    this.cellRouter.navigate("/", {trigger:false});
+
+                }
+
             }
-            else {
-                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:", this.currentContent);
-                if(this.currentContent !== $content) this.contentSwap = c;
+        },
 
+        pageCollapse : function(e){
+//            if(this.subcontentOpened) this._el.css('top', '0px');
+            var _this = this;
+            this.cellRouter.navigate("/", {trigger:false});
+            if(this.subcontentOpened){
                 this._el.animate({
                     top:'0'
                 }, 500, function(){
                     _this.onCloseTransitionEnd();
                 });
+                this._el.mouseover(null);
+                this._el.unbind('tap click swipe focus');
+                //            this._el.touch(null);
             }
         },
-
-        onRevealComplete : function(){
-          $log("--GREENSOCK WORKS");
-        },
-
-//
-//        toplinkAction : function(e){
-//            e.preventDefault();
-//
-//            var c = $(e.currentTarget)[0];
-//            var ref = "."+c.id + "-content";
-//            var $content = $(ref);
-//
-//            var _this = this;
-//
-//            if(this.subcontentOpened == false){
-//
-//                $content.show();
-////                $content.addClass('opened');
-//
-//                var t = $content.find('.content')[0];
-//                var targetHeight = $(t).height() + 40;
-//
-//                this.setScrollable(false);
-//                this.currentContent = $content;
-//                this._el.css('top', (targetHeight + 'px'));
-//                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:", this.currentContent);
-//                this.subcontentOpened = true;
-//            } else {
-//
-//                this._el.bind("webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd", function(){
-//                    _this.subcontentOpened = false;
-//                    _this.currentContent = null;
-//                    _this.setScrollable(true);
-//                    $content.hide();
-//                    $log("TRANS_END (after): subOpened:"+_this.subcontentOpened+" currentContent:", _this.currentContent);
-//                });
-//
-//                this._el.css('top', '0');
-//                this.subcontentOpened = false;
-//                $log("TOPLINKACTION: subOpened:"+this.subcontentOpened+" currentContent:", this.currentContent);
-//            }
-//        },
 
         setScrollable : function(setOn){
             var topdoc = $('html, body');
@@ -217,8 +292,308 @@
         }
     });
 
+    $q.Page.RefineNav = $q.Page.extend({
+        portalnav:null,
+        filternav:null,
+        _construct : function(el){
+            this._el = $(el);
+            this._super(this._el);
+
+            this.portalnav = $(this._el.find('ul.social')[0]);
+            this.filternav = $(this._el.find('ul.refinement')[0]);
+
+            this.initPortal();
+            this.initRefine();
+        },
+        initPortal : function(){
+            var _this = this;
+            this.portalnav.find('a').each(function(el){
+                $(this).click(function(e){
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    $q.EventManager.fireEvent($q.Event.REFINE_PORTAL, this, $(this).data('portal'));
+                });
+            })
+        },
+        initRefine : function(){
+            var _this = this;
+
+            this.filternav.find('a').each(function(el){
+                $(this).click(function(e){
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
+
+                });
+            });
+
+        }
+    });
+
+    $q.Page.IntroColumn = $q.Page.extend({
+        _current:0,
+        _imgrow:null,
+        _textrow:null,
+        _words:null,
+        _preview:null,
+        _isrotating:false,
+        words_spacer:null,
+        timer:null,
+        highlight:'#5d2278',
+        timerLength:3000,
+
+        _construct : function(el) {
+            this._el = $(el).hide();
+            this._super(this._el);
+            this.initIntro();
+
+        },
+
+        initIntro : function(){
+            var _this = this;
+//            this._el.css({'opacity':'0'});
+            this._imgrow = $(this._el.find('.left-side .imgs ul.img-scroller')[0]);
+            this._words = $(this._el.find('.words ul')[0]);
+            this.words_spacer = $(this._el.find('.words .spacer')[0]);
+            this._preview = $(this._el.find('.preview')[0]);
+            this._textrow = $(this._el.find('.left-side .texts ul.txt-scroller')[0]);
+            this.decorateWords(true);
+
+            this.animateIn();
+//            this.initRotation(); //bypass
+        },
+
+        animateIn : function(){
+            this._words.css({'left':-300 }).hide();
+
+            var textparent = this._textrow.parent();
+            var textw = $(textparent).outerWidth();
+            this._textrow.css({'left':textw});
+
+            this._imgrow.css({'opacity':'0'});
+            var staticTxt = $(this._el.find('.left-side .static')[0]);
+            staticTxt.css({'right':'10px', 'opacity':0});
+
+            var afterText = function(){
+                this._imgrow.animate({ 'opacity': '1' }, 2000, 'easeOutQuad');
+                this.initRotation();
+                afterStatic = null;
+            };
+            var afterStatic = function(){
+                this._textrow.animate({ 'left': '0' }, 600, 'easeInQuad');
+                this._words.animate({ 'left': '0' }, 600, 'easeInQuad', $.proxy(afterText, this)).show();
+            };
+//            this._el.css({'opacity':'1'});
+            this._el.show();
+            staticTxt.animate({ 'right': '0', 'opacity':1 }, 2400, 'easeOutQuad', $.proxy(afterStatic, this));
+        },
+
+        initRotation : function(){
+            this.manageRotationTimer(false);
+            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
+        },
+
+        mosaicScrollHandler : function(e, xdiff){
+            if(!Quince._mosaic._enabled) return;
+            var homew = $($q._mosaic._home).width();
+            $log("SCROLL xdiff:"+xdiff+" homew:"+homew)
+            if(xdiff < -homew){//less than
+                this.manageRotationTimer(true);
+            } else {//greater than
+                this.manageRotationTimer(false);
+            }
+        },
+
+        manageRotationTimer : function(turnOff){
+            var _this = this;
+            if(!turnOff){
+                if(!this._isrotating){
+                    this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
+                    $log("TURN ON HOMEPAGE");
+                    this._isrotating = true;
+                }
+            } else {
+                if(this._isrotating){
+                    $log("SHUT OFF HOMEPAGE");
+                    clearInterval(this.timer);
+                    this._isrotating = false;
+                }
+            }
+        },
+
+        decorateWords : function(firstTime){
+            var _this = this;
+            this._words = $(this._el.find('.words ul')[0]);
+
+            var list_arr = this._words[0].children;
+            var ind = Math.floor(Math.random() * $q.Brand.ALL_COLORS.length);
+            var newcolor = firstTime ? $q.Brand.ALL_COLORS[0] : $q.Brand.ALL_COLORS[ind];
+
+            $(list_arr[0]).addClass("active").find('h1').css({'color':newcolor, 'opacity':'1'});
+            $(list_arr[list_arr.length-1]).hide();
+            $(list_arr[list_arr.length-2]).css({'opacity':'0.2'}).fadeIn();
+
+            for (var i = (list_arr.length - 1); i >= 3; i--){
+                var word = $(list_arr[i]);
+                var neg = i - list_arr.length;
+                var val = Math.abs(neg * 0.1);
+                firstTime ? word.css({'opacity':val}) : word.animate({'opacity':val}, 1000);
+            }
+        },
+
+        wordClick : function(e){
+            $log("CLICK");
+        },
+
+        rotateWords : function(){
+            var _this = this;
+            var firstword = this._words.find('li:first');
+
+            this._current >= (this._imgrow[0].children.length-1) ? this._current = 0 : this._current++;
+
+            $(firstword[0]).animate(
+                {'opacity':0},
+                1000,
+                function () {
+                    $(this).appendTo(_this._words).removeClass('active').find('h1').css({'color':'inherit'});
+                    _this.words_spacer.height(firstword.height());
+                    _this.words_spacer.animate({'height':0}, 1000);
+                    _this.decorateWords();
+                });
+
+
+            var imgw = $(this._imgrow[0].children[0]).width()
+            var img_goto = -(this._current * imgw) + 'px';
+//            this._imgrow.animate(
+//                {'left':(img_goto)},
+//                1000 );
+
+            setTimeout(function(){
+//                _this._imgrow.css({'left':(img_goto)});
+                _this._imgrow.animate(
+                    {'left':(img_goto)},
+                    1000 );
+            }, 1000);
+        }
+
+    });
+
+    $q.Page.SubPage = $q.Page.extend({
+        _mosaic:null,
+        _columns:null,
+        loading_items:false,
+        building:false,
+        currentColumnWidth:null,
+        currentScrollX:0,
+        _slider : null,
+        _scroller : null,
+        _content:null,
+        columnWidths:{
+            'xs':480,
+            'md':720,
+            'sh':540,
+            'tl':700
+        },
+        _construct : function(el) {
+            this._el = el;
+            this._super(this._el);
+            this.initContainer();
+
+        },
+
+        initContainer : function(){
+//            if(!$q.isIE8){
+            this._content = this._el.find('.content')[0];
+            var m = $(this._content).find('.items');
+            this._mosaic = $(m[0]);
+
+            this._scroller = $(this._content).find('.scroller');
+
+            this._slider = new IScroll(this._content, {
+                scrollX: true,
+                scrollY: false,
+                mouseWheel: true,
+                click:true,
+                startX:0,
+                useTransform: !$q.isIE8,
+                snap: 'li'
+//                deceleration:0.05,
+//                momentum:!$q.isIE8
+//                scrollbars:$q.isIE8,
+//                interactiveScrollbars:$q.isIE8
+            });
+
+//            this._slider.on('scrollStart', $.proxy(this.onScrollStart, this));
+//            this._slider.on('scrollCancel', $.proxy(this.onScrollCancel, this));
+//            this._slider.on('scrollEnd', $.proxy(this.onScrollEnd, this));
+//            this._slider.on('flick', $.proxy(this.onFlick, this));
+//            this._slider.on('refresh', $.proxy(this.positionMosaic, this));
+//            this._slider.on('beforeScrollStart', this.onBeforeScrollStart.bind(this));
+
+            this.loading_items = true;
+//            $log("SUBPAGE INITCONTAINER ()  -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
+
+            var c = this._mosaic.find('li');
+
+            this._columns = $(c);
+
+//            this._columns.each(function(){
+//                var mc = new $q.Page.ParentColumn(this);
+//            });
+
+            this.addEventHandlers();
+
+            this.onResize(null);
+        },
+
+        addEventHandlers : function(){
+            $q.EventManager.addEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));//this.onResize.bind(this));
+        },
+
+        removeEventHandlers : function(){
+
+            $q.EventManager.removeEventHandler($q.Event.RESIZE, $.proxy(this.onResize, this));
+        },
+
+        onResize : function(e){
+
+            var w = $(this._columns[0]).width();
+            var totalw = (this._columns.length + 1) * w;
+            var _this = this;
+            $log("SUB RESIZE() w:"+w+" totalwidth:"+totalw);
+
+
+            $(this._scroller).width( totalw );
+
+            if(w != this.currentColumnWidth && !$q.isIE8){  //one-time event fire when site shifts through a responsive media-query
+                this.currentColumnWidth = w;
+                setTimeout(function () {
+                    _this._slider.refresh();
+                }, 0);
+            }
+
+        },
+
+        scaleColumns : function(w){
+            var _this = this;
+            $log("SET WIDTH:"+w);
+            this._columns.each(function(e){
+                $(this).width(w);
+            })
+        },
+
+        onFlick : function(e){
+            $log("FLICK----------------");
+            $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
+        }
+
+    });
+
+
+
+
     $q.Page.Init();
 
-    if($('.home-content').length > 0) this.landingContent = new $q.Page.Home('.home-content');
+    if($('.home-content').length > 0) Quince._landingPage = new $q.Page.Home('.home-content');
 
 })(jQuery, Quince);

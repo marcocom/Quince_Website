@@ -27,17 +27,7 @@
         }
     }
 }());
-//
-//(function(b,o,i,l,e,r){
-//    b.GoogleAnalyticsObject = l;
-//    b[l]||(b[l] = function(){(b[l].q = b[l].q||[]).push(arguments)});
-//    b[l].l = +new Date;
-//    e = o.createElement(i);
-//    r = o.getElementsByTagName(i)[0];
-//    e.src = '//www.google-analytics.com/analytics.js';
-//    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-//    ga('create',Quince.googleAccount);
-//ga('send','pageview');
+
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', Quince.googleAccount]);
@@ -48,5 +38,72 @@ console.log("GA: "+Quince.googleAccount);
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
+
+
+
+/*
+ TopZIndex plugin for jQuery
+ Version: 1.2
+
+ http://topzindex.googlecode.com/
+
+ ------------------------------------------------------*/
+
+(function ($) {
+
+    $.topZIndex = function (selector) {
+        /// <summary>
+        ///     Returns the highest (top-most) zIndex in the document
+        ///     (minimum value returned: 0).
+        /// </summary>
+        /// <param name="selector" type="String" optional="true">
+        ///     (optional, default = "*") jQuery selector specifying
+        ///     the elements to use for calculating the highest zIndex.
+        /// </param>
+        /// <returns type="Number">
+        ///     The minimum number returned is 0 (zero).
+        /// </returns>
+
+        return Math.max(0, Math.max.apply(null, $.map(((selector || "*") === "*")? $.makeArray(document.getElementsByTagName("*")) : $(selector),
+            function (v) {
+                return parseFloat($(v).css("z-index")) || null;
+            }
+        )));
+    };
+
+    $.fn.topZIndex = function (opt) {
+        /// <summary>
+        ///     Increments the CSS z-index of each element in the matched set
+        ///     to a value larger than the highest current zIndex in the document.
+        ///     (i.e., brings all elements in the matched set to the top of the
+        ///     z-index order.)
+        /// </summary>
+        /// <param name="opt" type="Object" optional="true">
+        ///     (optional) Options, with the following possible values:
+        ///     increment: (Number, default = 1) increment value added to the
+        ///             highest z-index number to bring an element to the top.
+        ///     selector: (String, default = "*") jQuery selector specifying
+        ///             the elements to use for calculating the highest zIndex.
+        /// </param>
+        /// <returns type="jQuery" />
+
+        // Do nothing if matched set is empty
+        if (this.length === 0) {
+            return this;
+        }
+
+        opt = $.extend({increment: 1}, opt);
+
+        // Get the highest current z-index value
+        var zmax = $.topZIndex(opt.selector),
+            inc = opt.increment;
+
+        // Increment the z-index of each element in the matched set to the next highest number
+        return this.each(function () {
+            this.style.zIndex = (zmax += inc);
+        });
+    };
+
+})(jQuery);
 
 
