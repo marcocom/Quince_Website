@@ -1,3 +1,5 @@
 .idea
 .DS_Store
 .sass-cache
+/backend/quince.sublime-workspace
+/backend/quince.sublime-project
