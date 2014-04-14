@@ -357,9 +357,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
             this._collection = new columnCollection(castm);
 
-//            $log("Column Created - Data Return:", castm);
-
-            this._collection = new columnCollection(castm);
+            $log("Column Created - Data Return:", castm);
 
             this.instantiateCells();
         },
@@ -367,10 +365,34 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         instantiateCells : function(){
             var _this = this;
 
+
             this._collection.each(function(model) {
 //                $log("CREATE CELL:"+model.get("type"));
-                var c = new Quince.Model.CellView(model, _this._el);
+                var m = _this.generateImageLink(model);
+                var c = new Quince.Model.CellView(m, _this._el);
             });
+        },
+
+        generateImageLink : function(model){
+            var newImages = [];
+            var images = model.get('images');
+            var type = model.get('type');
+            var isAncillary = $.inArray(type, $q.AncillaryLetters) > -1;
+
+//            if(images.length == 0 || type == "e" || type == "d" || type == "g" || type == 'i' || type == 'h'){
+            if(!(images.length == 0 || isAncillary || type == 'h')){
+                _(images).each(function(val){
+                   var newtxt = Quince.cellImageDirectory + val.id + "." + val.extension;
+                   newImages.push(newtxt);
+                });
+                
+                model.set('images', newImages, false);
+            }
+
+            $log("NEW IMAGES - is:"+isAncillary, model);
+
+
+            return model;
         },
 
         sub_template : function (str, data) {
@@ -405,7 +427,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                     for (var k = 0; k < model.length; k++){
                         var cl = model[k].type;
                         if(cl == cell_letter) ancil_obj = model.splice(k, 1)[0];
-
                     }
 
                     if($q.isEmpty(ancil_obj)) ancil_obj = {};  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<DISABLE TO FIND OUT IF YOURE MISSING DATA IN THE HARD-CODED FILES
@@ -492,7 +513,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             var template = Quince.templates.cells[this._tplname](this._model.toJSON());
             this.$el.html( template );
             this.setElement(this.$el);
-            $log("CELL m:", this._model, " el:", this.$el);
+//            $log("CELL m:", this._model, " el:", this.$el);
             this.$el.appendTo(this._column);
         },
 

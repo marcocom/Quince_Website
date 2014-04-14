@@ -13,6 +13,7 @@
         msGesture : window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
         isTouch : (( "ontouchstart" in window ) || this.msGesture || window.DocumentTouch && document instanceof DocumentTouch),
         googleAccount:"UA-1007198-3",
+        cellImageDirectory:"img/cells/",
         _popups : {},
 
         windowWidth:0,
