@@ -254,7 +254,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 var list = _this.returnFiltered(cleaned, val);
                 if(list.length <= 0) return;
                 var nextup = _this.offsetCounters[val] += list.length;
-                $log("REQUEST type:"+val+" COUNTER:"+nextup);
+//                $log("REQUEST type:"+val+" COUNTER:"+nextup);
 
                 var insertobj = {
                     'type':val,
@@ -492,7 +492,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             var template = Quince.templates.cells[this._tplname](this._model.toJSON());
             this.$el.html( template );
             this.setElement(this.$el);
-//            $log("CELL m:", this._model, " el:", this.$el);
+            $log("CELL m:", this._model, " el:", this.$el);
             this.$el.appendTo(this._column);
         },
 
