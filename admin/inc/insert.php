@@ -6,7 +6,7 @@ include ('connectdb.php');
 // select customer from customers table 
 $resultClient =  mysql_query("SELECT id, name FROM customers");
 $resultAuthor =  mysql_query("SELECT id, name FROM authors");
-$resultType =  mysql_query("SELECT id, type, name FROM types");
+$resultType =  mysql_query("SELECT type, name FROM types");
 
     if (!empty($_POST['title'])) {
 		// Get values from form 

@@ -26,7 +26,7 @@ if(isset($_FILES['files'])){
             }
 
             if ( is_dir("$desired_dir/".$img_name) === false ){
-                move_uploaded_file($img_tmp,"/imgs".  $last_imgid  .".". $img_extentsion );
+                move_uploaded_file($img_tmp,"/img/cells".  $last_imgid  .".". $img_extentsion );
             }
            			
         } else {
