@@ -1,0 +1,334 @@
+[
+  {
+    "id":"108",
+    "name":"Quince"
+  },
+  {
+    "id":"112",
+    "name":"Samsung Benelux ITD: Algemeen"
+  },
+  {
+    "id":"113",
+    "name":"Samsung Benelux Corporate"
+  },
+  {
+    "id":"150",
+    "name":"Samsung Benelux TED"
+  },
+  {
+    "id":"151",
+    "name":"Samsung Benelux AVD: TV"
+  },
+  {
+    "id":"162",
+    "name":"The Phone House"
+  },
+  {
+    "id":"214",
+    "name":"Tommy Hilfiger"
+  },
+  {
+    "id":"233",
+    "name":"Bauknecht"
+  },
+  {
+    "id":"246",
+    "name":"Samsung Benelux HAD"
+  },
+  {
+    "id":"257",
+    "name":"Goodyear-Dunlop NL-BE"
+  },
+  {
+    "id":"270",
+    "name":"KPN"
+  },
+  {
+    "id":"277",
+    "name":"Apple"
+  },
+  {
+    "id":"289",
+    "name":"HTC EMEA"
+  },
+  {
+    "id":"315",
+    "name":"Samsung Benelux Service"
+  },
+  {
+    "id":"317",
+    "name":"HTC Benelux"
+  },
+  {
+    "id":"334",
+    "name":"Alrec"
+  },
+  {
+    "id":"338",
+    "name":"Samsung Benelux ITD: Printing"
+  },
+  {
+    "id":"345",
+    "name":"QYN"
+  },
+  {
+    "id":"346",
+    "name":"HTC France"
+  },
+  {
+    "id":"351",
+    "name":"Samsung Benelux ITD: Monitoren"
+  },
+  {
+    "id":"359",
+    "name":"Samsung Benelux AVD: HES"
+  },
+  {
+    "id":"360",
+    "name":"Holland Casino AA hoofdkantoor Hoofddorp"
+  },
+  {
+    "id":"368",
+    "name":"Quince HU"
+  },
+  {
+    "id":"369",
+    "name":"Samsung Benelux AVD: DSC"
+  },
+  {
+    "id":"370",
+    "name":"MMD"
+  },
+  {
+    "id":"382",
+    "name":"Kirkman Company"
+  },
+  {
+    "id":"410",
+    "name":"Holland Casino Amsterdam"
+  },
+  {
+    "id":"411",
+    "name":"Holland Casino Breda"
+  },
+  {
+    "id":"412",
+    "name":"Holland Casino Eindhoven"
+  },
+  {
+    "id":"413",
+    "name":"Holland Casino Enschede"
+  },
+  {
+    "id":"414",
+    "name":"Holland Casino Groningen"
+  },
+  {
+    "id":"415",
+    "name":"Holland Casino Leeuwarden"
+  },
+  {
+    "id":"416",
+    "name":"Holland Casino Nijmegen"
+  },
+  {
+    "id":"417",
+    "name":"Holland Casino Rotterdam"
+  },
+  {
+    "id":"418",
+    "name":"Holland Casino Schiphol"
+  },
+  {
+    "id":"419",
+    "name":"Holland Casino Scheveningen"
+  },
+  {
+    "id":"420",
+    "name":"Holland Casino Utrecht"
+  },
+  {
+    "id":"421",
+    "name":"Holland Casino Valkenburg"
+  },
+  {
+    "id":"422",
+    "name":"Holland Casino Venlo"
+  },
+  {
+    "id":"423",
+    "name":"Holland Casino Zandvoort"
+  },
+  {
+    "id":"440",
+    "name":"Goodyear-Dunlop UK"
+  },
+  {
+    "id":"441",
+    "name":"Platform Outsourcing Nederland"
+  },
+  {
+    "id":"450",
+    "name":"Samsung Benelux ITD: Notebooks"
+  },
+  {
+    "id":"451",
+    "name":"Philips Consumer Lifestyle"
+  },
+  {
+    "id":"457",
+    "name":"NAGA"
+  },
+  {
+    "id":"460",
+    "name":"Media Markt & Saturn"
+  },
+  {
+    "id":"489",
+    "name":"Setar"
+  },
+  {
+    "id":"497",
+    "name":"HTC Australia"
+  },
+  {
+    "id":"499",
+    "name":"Cambridge"
+  },
+  {
+    "id":"505",
+    "name":"Stage Entertainment"
+  },
+  {
+    "id":"506",
+    "name":"Nokia"
+  },
+  {
+    "id":"510",
+    "name":"Green Hill"
+  },
+  {
+    "id":"511",
+    "name":"ING Retail Nederland"
+  },
+  {
+    "id":"513",
+    "name":"Whirlpool"
+  },
+  {
+    "id":"518",
+    "name":"HTC South Asia"
+  },
+  {
+    "id":"521",
+    "name":"Philips TV / TP Vision Netherlands B.V."
+  },
+  {
+    "id":"526",
+    "name":"HTC UK"
+  },
+  {
+    "id":"527",
+    "name":"Korstjens Crossmedia Consultancy"
+  },
+  {
+    "id":"528",
+    "name":"ID&T"
+  },
+  {
+    "id":"537",
+    "name":"InVue Security Products"
+  },
+  {
+    "id":"538",
+    "name":"Infopact"
+  },
+  {
+    "id":"547",
+    "name":"Teradata Netherlands B.V."
+  },
+  {
+    "id":"560",
+    "name":"ABN-AMRO"
+  },
+  {
+    "id":"561",
+    "name":"CTOUCH"
+  },
+  {
+    "id":"562",
+    "name":"Bissell"
+  },
+  {
+    "id":"565",
+    "name":"Quince Retail Solutions B.V. (QRS)"
+  },
+  {
+    "id":"568",
+    "name":"Fox Sports"
+  },
+  {
+    "id":"575",
+    "name":"HTC Canada"
+  },
+  {
+    "id":"576",
+    "name":"HTC USA"
+  },
+  {
+    "id":"577",
+    "name":"Telfort"
+  },
+  {
+    "id":"579",
+    "name":"Hema"
+  },
+  {
+    "id":"586",
+    "name":"Nederland Schoon"
+  },
+  {
+    "id":"587",
+    "name":"HTC HQ (Taiwan)"
+  },
+  {
+    "id":"589",
+    "name":"Scheer & Foppe"
+  },
+  {
+    "id":"590",
+    "name":"Calvin Klein"
+  },
+  {
+    "id":"594",
+    "name":"Intergamma"
+  },
+  {
+    "id":"595",
+    "name":"Quince Platforms"
+  },
+  {
+    "id":"596",
+    "name":"HTC Turkey"
+  },
+  {
+    "id":"598",
+    "name":"Holmatro"
+  },
+  {
+    "id":"599",
+    "name":"VNU"
+  },
+  {
+    "id":"600",
+    "name":"brandXtension BV"
+  },
+  {
+    "id":"602",
+    "name":"Oxxio"
+  },
+  {
+    "id":"NULL",
+    "name":"NULL"
+  }
+]
