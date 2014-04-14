@@ -3,7 +3,7 @@
 include ('inc/connectdb.php');
 
 //$query = "SELECT * FROM items";
-$query = "SELECT items.id as id, items.type as type, customers.name as customer, items.title as title, items.url as url, items.comment as comment, items.date as date, authors.name as author
+$query = "SELECT items.id as id, items.type as type, customers.name as customer, items.title as title, items.url as url, items.text as text, items.date as date, authors.name as author
 		FROM (items LEFT JOIN customers ON customers.id = items.customer) LEFT JOIN authors ON authors.id = items.author";
 
 $result = mysql_query($query);
@@ -31,7 +31,7 @@ include 'inc/nav.php';
 					<th>customer</th>
 					<th>title</th>
 					<th>url</th>
-					<th>comment</th>
+					<th>text</th>
 					<th>date</th>
 					<th>author</th>
 					<th>edit</th>
@@ -46,7 +46,7 @@ include 'inc/nav.php';
 						"<td>" . $row['customer'] . "</td>".
 						"<td>" . $row['title'] . "</td>".
 						"<td>" . $row['url'] . "</td>".
-						"<td>" . $row['comment'] . "</td>".
+						"<td>" . $row['text'] . "</td>".
 						"<td>" . $row['date'] . "</td>".
 						"<td>" . $row['author'] . "</td>".
 						'<td><a href="update.php?id=' . $row["id"] .'"' . '>update</a></td>'.

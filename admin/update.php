@@ -84,7 +84,7 @@ include 'inc/nav.php';
 				<tr>
 						<td width="10%"><?= $image['id'] ?></td>
 						<td width="10%"><?= $image['extension'] ?></td>
-						<td width="70%"><img style="width: 50%; height: auto;" src="imgs/<?= $image['id'] ?>.<?= $image['extension'] ?>"></td>
+						<td width="70%"><img style="width: 50%; height: auto;" src="../img/cells/<?= $image['id'] ?>.<?= $image['extension'] ?>"></td>
 						<td><a href="?id=<?= $getid ?>&action=delete&img=<?= $image['id'] ?>">Delete</a></td>
 				</tr>
 			<? endforeach ?>

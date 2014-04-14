@@ -12,14 +12,15 @@ $resultType =  mysql_query("SELECT type, name FROM types");
 		// Get values from form 
 		$title=mysql_real_escape_string($_POST['title']);
 		$type=mysql_real_escape_string($_POST['type']);
-		$comment=mysql_real_escape_string($_POST['comment']);
+		$text=mysql_real_escape_string($_POST['textarea']);
+		$portal=mysql_real_escape_string($_POST['portal']);
 		$customer= mysql_real_escape_string((int) $_POST['customer']);
 		$date=mysql_real_escape_string($_POST['date']);
 		$url=mysql_real_escape_string( $_POST[ 'url' ] );
 		$author=mysql_real_escape_string($_POST['author']);
 
 		// Insert data into mysql 
-		$sqlproject="INSERT INTO items ( type, comment, date, customer, title, author, url ) VALUES ('" . $type . "', '$comment', '$date', " . $customer . ", '$title', '$author', '$url' )";
+		$sqlproject="INSERT INTO items ( type, text, date, customer, title, author, url, portal ) VALUES ('".$type."', '".htmlentities($text, ENT_QUOTES)."', '".$date."', " . $customer . ", '".htmlentities($title, ENT_QUOTES)."', '".$author."', '".$url."', '".$portal."' )";
 		$result=mysql_query($sqlproject);
 
 		// if successfully insert data into database, displays message "Successful". 

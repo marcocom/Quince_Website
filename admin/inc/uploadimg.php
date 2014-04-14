@@ -16,7 +16,7 @@ if(isset($_FILES['files'])){
         $query="INSERT INTO images (type, extension) VALUES ('".$img_type."', '".$img_extentsion."'); ";
 
 
-        $desired_dir="imgs";
+        $desired_dir="../img/cells/";
         if ( empty($errors) === true ){
             mysql_query($query);
             $last_imgid = mysql_insert_id();
@@ -26,7 +26,7 @@ if(isset($_FILES['files'])){
             }
 
             if ( is_dir("$desired_dir/".$img_name) === false ){
-                move_uploaded_file($img_tmp,"/img/cells".  $last_imgid  .".". $img_extentsion );
+                move_uploaded_file($img_tmp, $desired_dir . $last_imgid  .".". $img_extentsion );
             }
            			
         } else {

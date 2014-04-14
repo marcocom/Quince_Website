@@ -109,6 +109,15 @@ label {
 	margin-bottom: 5px;
 }
 
+.portal span {
+	display: block;
+}
+
+.portal label {
+	float: left;
+	margin-right: 5px;
+}
+
 form input {
 	border: 1px solid #ccc;
 }

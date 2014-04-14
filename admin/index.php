@@ -18,15 +18,28 @@ include 'inc/nav.php';
 					<option>Choose a type...</option>
 					<?php
 						while($row = mysql_fetch_assoc( $resultType )) { 
-	        				echo '<option value="'.$row['id'].'">' . $row['name'] . '</option>' . "\n";   
+	        				echo '<option value="'.$row['type'].'">' . $row['name'] . '</option>' . "\n";   
 						}
 					?>
 				</select>
 			</div>
 
 			<div class="inputblock">
-				<label>Comment</label>
-				<textarea name="comment"  rows="10" cols="50"></textarea>
+				<label>Text</label>
+				<textarea name="textarea"  rows="10" cols="50"></textarea>
+			</div>
+
+			<div class="inputblock portal clearhack">
+				<label>Portal</label>
+				<select name="portal">
+					<option>Choose a portal...</option>
+					<option value="fb">Facebook</option>
+					<option value="tw">Twitter</option>
+					<option value="link">Linkedin</option>
+					<option value="pin">Pinterest</option>
+					<option value="yt">Youtube</option>
+					<option value="vim">Vimeo</option>
+				</select>
 			</div>
 
 			<div class="inputblock">
@@ -140,13 +153,6 @@ include 'inc/nav.php';
 	<footer></footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<!-- <script type="text/javascript" src="js/jquery-autocomplete.min.js"></script>
- --><!--  $(document).ready(function(){
-  $("#tag").autocomplete({
-  	source:'inc/autocomplete.php', 
-	minLength:2
-  });
- }); -->
 
 
 </body>
