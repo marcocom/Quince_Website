@@ -1,5 +1,6 @@
 <?php
 
+require 'Author.php';
 require 'Item.php';
 require 'Image.php';
 
@@ -36,6 +37,43 @@ class Database
     $value = static::$db->real_escape_string ($value);
 
     return $value;
+  }
+
+  public static function getAuthors ($filters)
+  {
+    $authors = array ();
+
+    $query = 'select id, name, job, email, useFbImage, facebook, linkedin, mobile, details, section
+
+              from authors
+
+              where true
+
+              ' . (isset ($filters->id) ? 'and id = ' . (int) $filters->id : '') . ' 
+
+              order by id
+
+              ' . (isset ($filters->limit)  ? 'limit ' . (int) $filters->limit   : '') . ' 
+              ' . (isset ($filters->offset) ? 'offset ' . (int) $filters->offset : '');
+    $result = static::$db->query ($query);
+
+    while ($row = $result->fetch_assoc ())
+    {
+      $author = new Author ($row['id']);
+      $author->name       = $row['name'];
+      $author->job        = $row['job'];
+      $author->email      = $row['email'];
+      $author->useFbImage = (bool) $row['useFbImage'];
+      $author->facebook   = $row['facebook'];
+      $author->linkedin   = $row['linkedin'];
+      $author->mobile     = $row['mobile'];
+      $author->details    = $row['details'];
+      $author->section    = $row['section'];
+
+      $authors[] = $author;
+    }
+
+    return $authors;
   }
 
   /* retrieve items based on a set of filters */
