@@ -25,12 +25,16 @@ article {
 }
 
 aside {
-	background: #f2f2f2;
-	width: 310px;
 	float: left;
-	padding: 20px;
-	margin-bottom: 20px;
+	width: 310px;
 
+}
+
+aside .addinfo {
+	background: #f2f2f2;
+	width: 100%;
+	padding: 5%;
+	margin-bottom: 20px;
 }
 
 form {

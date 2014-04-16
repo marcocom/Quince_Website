@@ -85,69 +85,72 @@ include 'inc/nav.php';
 		</form>
 		</article>
 
-		<aside>
-		<form id="postcustomers" name="postcustomers" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+		<aside id="advanceoption">
+			<div class="addinfo">
+			<form id="postcustomers" name="postcustomers" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
-			<div class="inputblock">
-				<label>Customer name</label>
-				<input type="text" name="customername" value="">
+				<div class="inputblock">
+					<label>Customer name</label>
+					<input type="text" name="customername" value="">
+				</div>
+
+				<div class="inputblock classid">
+					<label>Customer ID</label>
+					<input type="text" name="customerid" value="">
+				</div>
+
+				<div class="inputblock"> 
+					<button type="submit" name="customer_submit">add customer</button>
+					<div id="formerror"></div>
+				</div>
+			</form>
 			</div>
 
-			<div class="inputblock classid">
-				<label>Customer ID</label>
-				<input type="text" name="customerid" value="">
+			<div class="addinfo">
+			<form id="postauthors" name="postauthors" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+
+				<div class="inputblock">
+					<label>Author name</label>
+					<input type="text" name="authorname" value="">
+				</div>
+
+				<div class="inputblock classid">
+					<label>Author ID</label>
+					<input type="text" name="authorid" value="">
+				</div>
+
+				<div class="inputblock">
+					<label>Author job title</label>
+					<input type="text" name="authorjob" value="">
+				</div>
+
+				<div class="inputblock"> 
+					<button type="submit" name="author_submit">add author</button>
+					<div id="formerror"></div>
+				</div>
+			</form>
 			</div>
 
-			<div class="inputblock"> 
-				<button type="submit" name="customer_submit">add customer</button>
-				<div id="formerror"></div>
-			</div>
-		</form>
-		</aside>
+			<div class="addinfo">
+			<form name="posttypes" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
-		<aside>
-		<form id="postauthors" name="postauthors" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+				<div class="inputblock">
+					<label>Type character</label>
+					<input type="text" name="typecharacter" value="">
+				</div>
 
-			<div class="inputblock">
-				<label>Author name</label>
-				<input type="text" name="authorname" value="">
-			</div>
+				<div class="inputblock">
+					<label>Type Name</label>
+					<input type="text" name="typename" value="">
+				</div>
 
-			<div class="inputblock classid">
-				<label>Author ID</label>
-				<input type="text" name="authorid" value="">
-			</div>
-
-			<div class="inputblock">
-				<label>Author job title</label>
-				<input type="text" name="authorjob" value="">
+				<div class="inputblock"> 
+					<button type="submit" name="type_submit">add type</button>
+					<div id="formerror"></div>
+				</div>
+			</form>
 			</div>
 
-			<div class="inputblock"> 
-				<button type="submit" name="author_submit">add author</button>
-				<div id="formerror"></div>
-			</div>
-		</form>
-		</aside>
-
-		<aside>
-		<form name="posttypes" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-
-			<div class="inputblock">
-				<label>Type character</label>
-				<input type="text" name="typecharacter" value="">
-			</div>
-
-			<div class="inputblock">
-				<label>Type Name</label>
-				<input type="text" name="typename" value="">
-			</div>
-
-			<div class="inputblock"> 
-				<button type="submit" name="type_submit">add type</button>
-				<div id="formerror"></div>
-			</div>
-		</form>
 		</aside>
 		
 
