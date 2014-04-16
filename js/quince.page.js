@@ -133,7 +133,8 @@
                     if(_this.subcontentOpened == true) _this.pageCollapse(null);
                 }
 
-                if(!Quince._mosaic) $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, _this, action || null);
+//                if(!Quince._mosaic)
+                    $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, _this, action || null);
             });
 
 //            Backbone.emulateHTTP = true;
@@ -333,7 +334,12 @@
                 $(this).click(function(e){
                     e.preventDefault();
                     e.stopImmediatePropagation();
-                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
+                    var f = $(this).data('filter');
+
+                    f == "time" ?
+                        $q.cellRouter.navigate("/", {trigger:true}) :
+                        $q.cellRouter.navigate("filter/"+f, {trigger:true});
+//                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
                 });
             });
 
@@ -357,9 +363,10 @@
             this._super(this._el);
 
 
-                var homew = $q.windowWidth - 50;
-                if(homew <= 350) homew = 350;
-                this._el.width(homew);
+            var homew = $q.windowWidth - 50;
+            if(homew <= 350) homew = 350;
+            //this._el.css({'width':(homew + 'px')});
+            this._el.width(homew);
 
             this._el.hide();
             this.initIntro();
@@ -367,7 +374,6 @@
         },
 
         initIntro : function(){
-
             var _this = this;
 //            this._el.css({'opacity':'0'});
             this._imgrow = $(this._el.find('.left-side .imgs ul.img-scroller')[0]);

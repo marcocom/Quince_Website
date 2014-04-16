@@ -384,11 +384,9 @@
             var target = $('#second-container').empty();
             $('#slider-container').after($('#second-container'));
 
-
             if(Quince._mosaic){
                 Quince._mosaic.showMosaic(true);
                 //$('#slider-container').show();
-
                 Quince._landingAnimation.manageRotationTimer(false);
             } else {
 
@@ -626,6 +624,57 @@
 
 
 
+    }
+
+    Quince.customerHash = {
+        '560':'ABN-AMRO',
+        '334':'Alrec',
+        '277':'Apple',
+        '233':'Bauknecht',
+        '562':'Bissell',
+        '600':'brandXtension',
+        '590':'Calvin Klein',
+        '499':'Cambridge',
+        '561':'CTOUCH',
+        '568':'Fox Sports',
+        '257':'Goodyear-Dunlop NL-BE',
+        '510':'Green Hill',
+        '579':'Hema',
+        '360':'Holland Casino',
+        '598':'Holmatro',
+        '289':'HTC EMEA',
+        '528':'ID&T',
+        '538':'Infopact',
+        '511':'ING Retail Nederland',
+        '594':'Intergamma',
+        '537':'InVue Security Products',
+        '382':'Kirkman Company',
+        '527':'Korstjens Crossmedia Consultancy',
+        '270':'KPN',
+        '460':'Media Markt & Saturn',
+        '370':'MMD',
+        '457':'NAGA',
+        '586':'Nederland Schoon',
+        '506':'Nokia',
+        '602':'Oxxio',
+        '451':'Philips Consumer Lifestyle',
+        '521':'Philips TV / TP Vision',
+        '441':'Platform Outsourcing',
+        '108':'Quince',
+        '368':'Quince Hungary',
+        '595':'Quince Platforms',
+        '565':'Quince Retail Solutions',
+        '345':'QYN',
+        '113':'Samsung Benelux',
+        '589':'Scheer & Foppe',
+        '489':'Setar',
+        '505':'Stage Entertainment',
+        '577':'Telfort',
+        '547':'Teradata',
+        '162':'The Phone House',
+        '214':'Tommy Hilfiger',
+        '599':'VNU',
+        '513':'Whirlpool'
     }
 
 

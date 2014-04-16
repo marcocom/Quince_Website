@@ -123,7 +123,8 @@
         },
 
         removeEventHandlers : function(){
-
+            this._slider.off('scrollStart');
+            this._slider.off('scrollEnd');
             $q.EventManager.removeEventHandler($q.Event.RESIZE, this.onResize);
             $q.EventManager.removeEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo);
             $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData);

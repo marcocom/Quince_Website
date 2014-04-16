@@ -545,8 +545,11 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
     $q.Model.createMainMosaic = function(e){
+        $log("createMainMosaic() _model:"+$q._model+" _secondmodel:"+$q._secondaryModel);
+
         if(!Quince._model){
             Quince._model = new $q.Model.Mosaic("#slider-container", "/backend/item");
+            if(Quince._secondaryModel) $q.State.removeRefinedModel();
         } else {
             $q.State.removeRefinedModel();
         }
