@@ -13,7 +13,7 @@
         msGesture : window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
         isTouch : (( "ontouchstart" in window ) || this.msGesture || window.DocumentTouch && document instanceof DocumentTouch),
         googleAccount:"UA-1007198-3",
-        cellImageDirectory:"img/cells/",
+        cellImageDirectory:"/img/cells/",
         _popups : {},
 
         windowWidth:0,
@@ -352,37 +352,48 @@
 
         createRefinedModel : function(filter, val){
             if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
-            Quince._mosaic.showMosaic(false);
-            //$('#slider-container').hide();
 
-            Quince._landingAnimation.manageRotationTimer(true);
-//            if(Quince._secondaryModel) Quince._secondaryModel.destruct();
-//            if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
-//            Quince._secondaryModel = null;;
-//            Quince._secondaryMosaic = null
+            if(Quince._mosaic){
+                Quince._mosaic.showMosaic(false);
+                Quince._landingAnimation.manageRotationTimer(true);
+            }
+            if(Quince._secondaryMosaic){
+                if(Quince._secondaryModel) Quince._secondaryModel.destruct();
+                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;;
+                Quince._secondaryMosaic = null
+            }
 
             $('#second-container').empty().html(Quince.templates.containers.slider);
-            Quince._secondaryModel = new $q.Model.Mosaic('#second-container', "backend/item", filter, val);
+
+            Quince._secondaryModel = new $q.Model.Mosaic('#second-container', "/backend/item", filter, val);
 
             $('#second-container').after($('#slider-container'));
         },
 
         removeRefinedModel : function(){
 
-            Quince._mosaic.showMosaic(true);
-            //$('#slider-container').show();
-
-            Quince._landingAnimation.manageRotationTimer(false);
-            if(Quince._secondaryModel) Quince._secondaryModel.destruct();
             if(Quince._secondaryMosaic){
+                Quince._secondaryModel.destruct();
                 Quince._secondaryMosaic.showMosaic(false);
                 Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;
+                Quince._secondaryMosaic = null;
             }
-            Quince._secondaryModel = null;
-            Quince._secondaryMosaic = null;
 
             var target = $('#second-container').empty();
             $('#slider-container').after($('#second-container'));
+
+
+            if(Quince._mosaic){
+                Quince._mosaic.showMosaic(true);
+                //$('#slider-container').show();
+
+                Quince._landingAnimation.manageRotationTimer(false);
+            } else {
+
+                Quince._model = new $q.Model.Mosaic('#slider-container', "/backend/item");
+            }
         }
 
     }
@@ -392,8 +403,7 @@
             'CHRONOLOGICAL':"time",
             'AUTHOR':"authorId",
             'CUSTOMER':"customerId",
-            'TAG':"tag",
-            'CHRONOLOGICAL':"time",
+            'TAG':"tag"
         }
     };
 
@@ -428,61 +438,61 @@
             {
                 'text':"learn the rules like a pro, so you can break them like an artist.",
                 'authorName':"Pablo Picasso",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"creativity is contagious, pass it on.",
                 'authorName':"Albert Einstein",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"you can't wait for inspiration, you have to go after it with a club.",
                 'authorName':"Jack London",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"creativity requires the courage to let go of certainties.",
                 'authorName':"Erich Fromm",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"when the going gets weird, the weird turn pro.",
                 'authorName':"Hunter S. Thompson",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"we don't make mistakes, just happy little accidents.",
                 'authorName':"Bob Ross",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"design is not just what it looks like and feels like. design is how it works.",
                 'authorName':"Steve Jobs",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"there is nothing worse than a sharp image of a fuzzy concept.",
                 'authorName':"Ansel Adams",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"while they are deciding, make even more art.",
                 'authorName':"Andy Warhol",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"let the blood and the bruises define your legacy.",
                 'authorName':"Lady Gaga",
-                'id':"",
+                'id':"3",
                 'type':'d'
             }
         ],
@@ -490,97 +500,133 @@
             {
                 'title':"",
                 'images':["real people", "real passion", "real action"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"jobs",
                 'images':["get to know us", "click here if you are up to the challenge"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["who we are", "click here to find out"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["a team photo has many portraits", "but only one story"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"contact",
                 'images':["a place to grow", "click here to find our locations"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"",
                 'images':["real people", "real passion", "real action"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"jobs",
                 'images':["get to know us", "click here if you are up to the challenge"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["who we are", "click here to find out"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["a team photo has many portraits", "but only one story"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"contact",
                 'images':["a place to grow", "click here to find our locations"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             }
         ],
         'long_images':[
             {
-                'images':"img/cells/longs/cell_g_1.jpg",
-                'id':"",
+                'images':Quince.cellImageDirectory+"longs/cell_g_1.jpg",
+                'id':"2",
                 'type':'g'
             },
             {
-                'images':"img/cells/longs/cell_g_2.jpg",
-                'id':"",
+                'images':Quince.cellImageDirectory+"longs/cell_g_2.jpg",
+                'id':"2",
                 'type':'g'
             },
             {
-                'images':"img/cells/longs/cell_g_3.jpg",
-                'id':"",
+                'images':Quince.cellImageDirectory+"longs/cell_g_3.jpg",
+                'id':"2",
                 'type':'g'
             }
-        ],
-//        'column_patterns':[
-//            ["d","a","e","c","f","b","j"],
-//            ["a","j","e","f","b","h"],
-//            ["g","a","j","a","e","b","j"]
-//        ]
-        'column_patterns':[
-           ["d","a","e","b","f","b","c","j"],
-           ["a","j","b","e","c","b","h","f","j"],
-           ["g","f","a","j","a","e","b","j"]
-        ],
-        'portal_video_pattern':[
-            ["d","j","e", "j","c","j","j"],
-            ["a","j","e","f","b","h"],
-            ["g","a","j","a","e","b","j"]
-        ],
+        ]
+
     };
+
+    Quince.Patterns = {
+        'time':{
+            'default':[
+                ["d","a","e","c","f","b","j"],
+                ["a","j","c","f","b","h"],
+                ["g","a","j","a","e","b","j"]
+            ]
+//        'column_patterns':[
+//            ["d","a","e","b","f","b","c","j"],
+//            ["a","j","b","e","c","b","h","f","j"],
+//            ["g","f","a","j","a","e","b","j"]
+//        ],
+        },
+        'portal':{
+            'fb':[
+                ["g","a","e","c","b","j"],
+                ["a","j","c","b","h"],
+                ["i","a","j","a","e","b","j"]
+            ],
+            'vim':[
+                ["j","i","j","j","g"],
+                ["j","j","i","j","j"],
+                ["g","j","j","j","j"]
+            ],
+            'yt':[
+                ["g","i","j","j","j"],
+                ["j","j","i","j","j"],
+                ["i","j","j","j","g"]
+            ],
+            'pin':[
+                ["a","a","i","a","a","g"],
+                ["a","i","a","a","a"],
+                ["a","a","i","a","a"]
+            ],
+            'tw':[
+                ["g","e","e","i","e"],
+                ["e","i","e","e","g"],
+                ["g","e","i","e","e"]
+            ],
+            'link':[
+                ["e","e","e","e"],
+                ["e","e","e","e"],
+                ["e","e","e","e"]
+            ]
+        },
+
+
+
+    }
 
 
 
@@ -620,6 +666,7 @@
     Quince.Event.ROUTER_CLIENT = "ROUTER_CLIENT";
     Quince.Event.ROUTER_POST = "ROUTER_POST";
     Quince.Event.ROUTER_AUTHOR = "ROUTER_AUTHOR";
+    Quince.Event.ROUTER_PORTAL = "ROUTER_PORTAL";
     Quince.Event.ROUTER_SEARCH = "ROUTER_SEARCH";
     Quince.Event.ROUTER_TAG = "ROUTER_TAG";
     Quince.Event.ROUTER_PAGE = "ROUTER_PAGE";

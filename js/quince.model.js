@@ -52,11 +52,11 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             'portal' : "",
             'ref' : "",
             'date' : "",
-            'viewed' : 0,
-            'customerId': 0,
+            'viewed' : "",
+            'customerId': "",
             'title' : "",
             'authorName' : "",
-            'authorId' : 0,
+            'authorId' : "",
             'authorJob' : "",
             'text' : "",
             'url' : "",
@@ -115,14 +115,16 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         offsetCounters:{},
 
         _construct : function(el, dir, filter, val) {
-            this._el = $(el);
+            this._el = $(el).hide();
             this._directory = dir;
             this._super(this._el);
+
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
 
             this._filterMode = filter || $q.Constants.Filters.CHRONOLOGICAL;
-            this._filterVal = val || 0;
+            this._filterVal = val || "default";
+
             this._currentColumn = 0;
             this.offsetCounters = {
                 'a':-1,
@@ -247,7 +249,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             }
 
             var style = Math.abs(this._currentColumn % 3);
-            var pattern = $q.ancillary_models.column_patterns[style];
+            var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
             var cleaned = _.difference(pattern, $q.AncillaryLetters); //removed front-end handled types
 
             _.each($q.DataLetters, function(val){
@@ -278,13 +280,16 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             return newarr;
         },
 
-        parseColumn : function(result){
+        parseColumn : function($result){
 
             var style = Math.abs(this._currentColumn % 3);
 
             var el = this.injectColumn(style);
+            var style = Math.abs(this._currentColumn % 3);
+            var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
 
-            var c = new Quince.Model.Column(result, style, el, this._currentColumn);
+
+            var c = new Quince.Model.Column($result, style, el, this._currentColumn, pattern);
 
             this._columns.push(c);
 
@@ -331,11 +336,12 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         _style:null,
         _index:0,
         _collection:null,
-        _construct : function(m, index, el, i) {
+        _pattern:null,
+        _construct : function(m, index, el, i, pat) {
             this._el = $(el);
             this._style = index;
             this._index = i;
-
+            this._pattern = pat;
 //            this._model = $(m).each(function(i){return new $q.Model.Mosaic.cellModel(i)});
             this.initModel(m);
         },
@@ -357,7 +363,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
             this._collection = new columnCollection(castm);
 
-            $log("Column Created - Data Return:", castm);
+//            $log("Column Created - Data Return:", castm);
 
             this.instantiateCells();
         },
@@ -365,9 +371,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         instantiateCells : function(){
             var _this = this;
 
-
             this._collection.each(function(model) {
-//                $log("CREATE CELL:"+model.get("type"));
+
                 var m = _this.generateImageLink(model);
                 var c = new Quince.Model.CellView(m, _this._el);
             });
@@ -379,7 +384,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             var type = model.get('type');
             var isAncillary = $.inArray(type, $q.AncillaryLetters) > -1;
 
-//            if(images.length == 0 || type == "e" || type == "d" || type == "g" || type == 'i' || type == 'h'){
             if(!(images.length == 0 || isAncillary || type == 'h')){
                 _(images).each(function(val){
                    var newtxt = Quince.cellImageDirectory + val.id + "." + val.extension;
@@ -388,9 +392,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 
                 model.set('images', newImages, false);
             }
-
-            $log("NEW IMAGES - is:"+isAncillary, model);
-
 
             return model;
         },
@@ -410,51 +411,61 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
 
         patternFormatData : function(model){ //----------------------------------------------------THIS NEEDS CLEANUP
-            var pattern = $q.ancillary_models.column_patterns[this._style];
+
 
             var newArr = [];
 
-            for(var i = 0; i < pattern.length; i++){
+            for(var i = 0; i < this._pattern.length; i++){
 
                 var ancil_obj = {};
-                var cell_letter = pattern[i];
+                var cell_letter = this._pattern[i];
                 var uId = "0" + this._index.toString() + i.toString();
 
                 if($.inArray(cell_letter, $q.AncillaryLetters) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
-                    ancil_obj = this.pullAncillaryData(cell_letter);
+
+                    cell_letter != "i" ? ancil_obj = this.pullAncillaryData(cell_letter) : ancil_obj = {'id':'4', 'type':'i'};
+
                 } else {
 
                     for (var k = 0; k < model.length; k++){
                         var cl = model[k].type;
-                        if(cl == cell_letter) ancil_obj = model.splice(k, 1)[0];
+                        if(cl == cell_letter)
+                            ancil_obj = model.splice(k, 1)[0];
                     }
 
-                    if($q.isEmpty(ancil_obj)) ancil_obj = {};  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<DISABLE TO FIND OUT IF YOURE MISSING DATA IN THE HARD-CODED FILES
-                }
 
-                if($q.isEmpty(ancil_obj) == false){
-                    if(ancil_obj.id) ancil_obj.id = uId;
-                    newArr.push(ancil_obj);
                 }
+//
+//                if($q.isEmpty(ancil_obj) == false){
+//                    if(ancil_obj.id) ancil_obj.id = uId;
+//
+//                }
+                if(!$q.isEmpty(ancil_obj)) newArr.push(ancil_obj);
             }
             return newArr;
         },
 
         pullAncillaryData : function(letter){
+            var ran;
             var obj;
             if(letter == 'd'){
-                var ran = Math.floor(Math.random() * $q.ancillary_models.action_data.length);
-                obj = $q.ancillary_models.quote_data.splice(ran,1)[0];
+                ran = Math.floor(Math.random() * $q.ancillary_models.quote_data.length);
+                obj = $q.ancillary_models.quote_data[ran];
+//                obj = $q.ancillary_models.quote_data.splice(ran,1)[0];
             } else
             if(letter == 'e'){
-                obj = $q.ancillary_models.action_data.splice(0,1)[0];
+                ran = Math.floor(Math.random() * $q.ancillary_models.action_data.length);
+                obj = $q.ancillary_models.action_data[ran];
+//                obj = $q.ancillary_models.action_data.splice(0,1)[0];
             } else
             if(letter == 'g'){
-                obj = $q.ancillary_models.long_images.splice(0,1)[0];
+                ran = Math.floor(Math.random() * $q.ancillary_models.long_images.length);
+                obj = $q.ancillary_models.long_images[ran];
+//                obj = $q.ancillary_models.long_images.splice(0,1)[0];
             } else
             if(letter == 'i'){
                 obj = {
-                    'id':''
+                    'id':'4'
                 };
             }
             return obj;
@@ -506,14 +517,15 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             this._column = col;
             this._style = this._model.get("type");
             this._tplname = 'cell_'+this._style;
+
             this.render();
         },
 
         render: function(){
+            $log("CELL:"+this._style, this._model, " el:", this.$el);
             var template = Quince.templates.cells[this._tplname](this._model.toJSON());
             this.$el.html( template );
             this.setElement(this.$el);
-//            $log("CELL m:", this._model, " el:", this.$el);
             this.$el.appendTo(this._column);
         },
 
@@ -532,28 +544,32 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
 
-
-
-
+    $q.Model.createMainMosaic = function(e){
+        if(!Quince._model){
+            Quince._model = new $q.Model.Mosaic("#slider-container", "/backend/item");
+        } else {
+            $q.State.removeRefinedModel();
+        }
+    }
 
     $q.Model.refineByPortal = function(e, filter){
-        $log("RECIEVED FILTER:"+filter);
+        $log("refineByPortal FILTER:"+filter);
         $q.State.createRefinedModel("portal", filter);
     };
+
     $q.Model.refineByFilter = function(e, filter){
-        $log("RECIEVED FILTER:"+filter);
+        $log("refineByFilter FILTER:"+filter);
 
         if(filter == $q.Constants.Filters.CHRONOLOGICAL)
-            $q.State.removeRefinedModel(); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<TEMPDEV. REMOVE
+            $q.cellRouter.navigate("/", {trigger:true});
     };
-    $q.EventManager.addEventHandler($q.Event.REFINE_PORTAL, $q.Model.refineByPortal.bind(this));
+
+    $q.EventManager.addEventHandler($q.Event.ROUTER_PORTAL, $q.Model.refineByPortal.bind(this));
+    $q.EventManager.addEventHandler($q.Event.ROUTER_CALL, $q.Model.createMainMosaic.bind(this));
     $q.EventManager.addEventHandler($q.Event.REFINE_FILTER, $q.Model.refineByFilter.bind(this));
-
-
 
     $q.Model.Init();
 
-    Quince._model = new $q.Model.Mosaic("#slider-container", "backend/item");
 
 
 

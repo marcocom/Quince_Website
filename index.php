@@ -91,16 +91,6 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                                 <!--                            <img src="img/icon_vim.png">-->
                             </a>
                         </li>
-                        <!--li class="gplus">
-                            <a target="_blank" href="http://plus.google.com/QuinceAmsterdam" data-portal="gp"  target="_blank">
-                                <img src="img/icon_gp.png">
-                            </a>
-                        </li-->
-                        <!--li class="rss">
-                            <a target="_blank" href="http://rss.quince.nl" data-portal="rss"  target="_blank">
-                                <img src="img/icon_rss.png">
-                            </a>
-                        </li-->
                     </ul>
                     <ul class="refinement">
                         <li class="search">

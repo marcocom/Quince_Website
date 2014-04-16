@@ -118,7 +118,7 @@
             $q.EventManager.addEventHandler($q.Event.RESIZE, this.onResize.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
-            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, $.proxy(this.onLoadingData, this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
         },
 
@@ -241,7 +241,7 @@
             if(reveal){
                 this.addEventHandlers();
                 this._el.show();
-                this._loader.show();
+//                this._loader.show();
                 this._cta.show();
                 this._slider.enable();
                 this._enabled = true;
@@ -527,7 +527,7 @@
                 this._el.click(function(e){
                     e.preventDefault();
 //                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
-                    $q._landingPage.cellRouter.navigate(actionString, {trigger:true});
+                    $q.cellRouter.navigate(actionString, {trigger:true});
                 })
                 this._el.css({'cursor':'pointer'});
             }
@@ -641,9 +641,9 @@
         if(!Quince._mosaic){
             Quince._mosaic = new $q.Mosaic.Container(el, filter);
         } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
-            $log("NEW MODEL:", Quince._secondaryModel);
-            Quince._secondaryMosaic = new $q.Mosaic.Container(el, filter);
+            $log("NEW MODEL:");
             $log("CREATE NEW MOSAIC filter:"+filter);
+            Quince._secondaryMosaic = new $q.Mosaic.Container(el, filter);
         }
     };
 
