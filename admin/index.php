@@ -44,14 +44,15 @@ include 'inc/nav.php';
 
 			<div class="inputblock">
 				<label>Client</label>
-				<select name="customer">
+				<!-- <select name="customer">
 					<option>Choos a customer...</option>
 					<?php
-						while($row = mysql_fetch_assoc( $resultClient )) { 
-	        			echo '<option value="'.$row['id'].'">' . $row['name'] . '</option>' . "\n";   
-						}
+						// while($row = mysql_fetch_assoc( $resultClient )) { 
+	     				// echo '<option value="'.$row['id'].'">' . $row['name'] . '</option>' . "\n";   
+						// }
 					?>
-				</select>
+				</select> -->
+				<input type="text" id="customer" name="customer">
 			</div>
 
 			<div class="inputblock">
@@ -66,14 +67,15 @@ include 'inc/nav.php';
 
 			<div class="inputblock">
 				<label>Author</label>
-				<select name="author">
+				<!-- <select name="author">
 					<option>Choose authors...</option>
 					<?php
-						while($row = mysql_fetch_assoc( $resultAuthor )) { 
-	        				echo '<option value="'.$row['id'].'">' . $row['name'] . '</option>' . "\n";   
-						}
+						// while($row = mysql_fetch_assoc( $resultAuthor )) { 
+	     				//   echo '<option value="'.$row['id'].'">' . $row['name'] . '</option>' . "\n";   
+						// }
 					?>
-				</select>
+				</select> -->
+				<input type="text" id="author" name="author">
 			</div>
 
 			<div class="inputblock"> 
@@ -153,7 +155,22 @@ include 'inc/nav.php';
 	<footer></footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	    $("#customer").autocomplete({
+	        source:'inc/autocomplete_customers.php',
+	        minLength: 2
+	    });
 
+	    $("#author").autocomplete({
+	        source:'inc/autocomplete_authors.php',
+	        minLength: 2
+	    });
+
+	});
+
+</script>
 
 </body>
 </head>

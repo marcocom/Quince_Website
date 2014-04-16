@@ -5,10 +5,14 @@ include ('inc/uploadimg.php');
 
 $getid = (int) isset($_GET['id']) ? $_GET['id'] : '';
 
+// add unlik to folder img
 if( isset($_GET['action']) && $_GET['action'] === 'delete' ){
 	$imgid = $_GET['img'];
+	$selectimg = mysql_query("SELECT extension FROM images WHERE id=".$imgid);
+	$row = mysql_fetch_assoc ($selectimg);
 	mysql_query("DELETE FROM itemImages WHERE image=".$imgid);
 	mysql_query("DELETE FROM images WHERE id=".$imgid);
+	unlink('../img/cells/' . $imgid . '.' . $row['extension']);
 }
 
 // Retrieve data from database 
