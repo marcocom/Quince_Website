@@ -188,7 +188,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 this._firstLoad = true;
                 $log("FIRSTLOAD MODELS COMPLETE - INITIALIZING MOSAIC CONTROLLER");
                 Quince.EventManager.fireEvent($q.Event.MODEL_COLUMNS_COMPLETE, this, this._el, this._filterMode);
-//                $q.Mosaic.startMosaic(null, this._el, this._filterMode);
+//                $q.State.startMosaic(null, this._el, this._filterMode);
             } else if(!this._dataFinished){
                 this.requestData(nextup);
             }
@@ -514,37 +514,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
 
-
-
-
-    $q.Model.createMainMosaic = function(e){
-        $log("createMainMosaic() _model:"+$q._model+" _secondmodel:"+$q._secondaryModel);
-
-        if(!Quince._model){
-            Quince._model = new $q.Model.Mosaic("#slider-container", "/backend/item");
-            if(Quince._secondaryModel) $q.State.removeRefinedModel();
-        } else {
-            $q.State.removeRefinedModel();
-        }
-    }
-
-    $q.Model.refineByPortal = function(e, filter){
-        $log("refineByPortal FILTER:"+filter);
-        $q.State.createRefinedModel("portal", filter);
-    };
-
-    $q.Model.refineByFilter = function(e, filter){
-        $log("refineByFilter FILTER:"+filter);
-
-        if(filter == $q.Constants.Filters.CHRONOLOGICAL)
-            $q.cellRouter.navigate("/", {trigger:true});
-    };
-
-    $q.EventManager.addEventHandler($q.Event.ROUTER_PORTAL, $q.Model.refineByPortal.bind(this));
-    $q.EventManager.addEventHandler($q.Event.ROUTER_CALL, $q.Model.createMainMosaic.bind(this));
-    $q.EventManager.addEventHandler($q.Event.REFINE_FILTER, $q.Model.refineByFilter.bind(this));
-
-    $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_COMPLETE, $q.Mosaic.startMosaic.bind(this));
 
     $q.Model.Init();
 

@@ -126,11 +126,11 @@
 
                 if(action == "jobs" || action == "about" || action == "contact" || action == "people"){
                     _this.remoteAnimate(action);
-//                $q.EventManager.fireEvent(Quince.Event.ROUTER_PAGE, this, action);
 
                 } else if(action == null){
                     $log("DEFAULT ROUTE - NO ACTION");
                     if(_this.subcontentOpened == true) _this.pageCollapse(null);
+
                 }
 
 //                if(!Quince._mosaic)
@@ -303,6 +303,26 @@
         }
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $q.Page.RefineNav = $q.Page.extend({
         portalnav:null,
         filternav:null,
@@ -335,16 +355,40 @@
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     var f = $(this).data('filter');
-
-                    f == "time" ?
-                        $q.cellRouter.navigate("/", {trigger:true}) :
+                    if(f == $q.Constants.Filters.CHRONOLOGICAL){
+                        $q.cellRouter.navigate("/", {trigger:true})
+                    } else {
                         $q.cellRouter.navigate("filter/"+f, {trigger:true});
 //                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
+                    }
                 });
             });
 
         }
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $q.Page.IntroColumn = $q.Page.extend({
         _current:0,
@@ -418,7 +462,7 @@
         },
 
         mosaicScrollHandler : function(e, xdiff){
-            if(!Quince._mosaic._enabled) return;
+            if(!$q._mosaic || !$q._mosaic._enabled) return;
             var homew = $($q._mosaic._home).width();
             $log("SCROLL xdiff:"+xdiff+" homew:"+homew)
             if(xdiff < -homew){//less than
@@ -501,6 +545,21 @@
         }
 
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $q.Page.SubPage = $q.Page.extend({
         _mosaic:null,
@@ -617,7 +676,5 @@
 
 
     $q.Page.Init();
-
-    if($('.home-content').length > 0) Quince._landingPage = new $q.Page.Home('.home-content');
 
 })(jQuery, Quince);

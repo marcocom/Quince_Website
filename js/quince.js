@@ -379,56 +379,8 @@
         }
     });
 
-    Quince.State = {
 
-        createRefinedModel : function(filter, val){
-            $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+$q._mosaic+" _second:"+$q._secondaryMosaic);
-            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
 
-            if(Quince._mosaic && Quince._mosaic._enabled){
-                Quince._mosaic.showMosaic(false);
-                Quince._landingAnimation.manageRotationTimer(true);
-                $log("_mosaic suppressed:");
-            }
-            if(Quince._secondaryMosaic){
-                if(Quince._secondaryModel) Quince._secondaryModel.destruct();
-                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
-                Quince._secondaryModel = null;
-                Quince._secondaryMosaic = null
-                console.log("_secondaryMosaic destroyed:"+Quince._secondaryMosaic);
-            }
-
-            $('#second-container').empty().html(Quince.templates.containers.slider);
-
-            Quince._secondaryModel = new $q.Model.Mosaic('#second-container', "/backend/item", filter, val);
-
-            $('#second-container').after($('#slider-container'));
-        },
-
-        removeRefinedModel : function(){
-
-            if(Quince._secondaryMosaic){
-                Quince._secondaryModel.destruct();
-                Quince._secondaryMosaic.showMosaic(false);
-                Quince._secondaryMosaic.removeMosaic();
-                Quince._secondaryModel = null;
-                Quince._secondaryMosaic = null;
-            }
-
-            var target = $('#second-container').empty();
-
-            $('#slider-container').after($('#second-container'));
-
-            if(Quince._mosaic){
-                Quince._mosaic.showMosaic(true);
-                //$('#slider-container').show();
-                Quince._landingAnimation.manageRotationTimer(false);
-            } else {
-                Quince._model = new $q.Model.Mosaic('#slider-container', "/backend/item");
-            }
-        }
-
-    }
 
     Quince.Constants = {
         'Filters':{
@@ -446,6 +398,9 @@
         'brand_red':              '#da061e',
         'brand_green':              '#009339'
     };
+    Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
+
+
 
     Quince.templates = {
         cells:{
@@ -712,9 +667,100 @@
     }
 
 
+    Quince.State = {
+
+        createRefinedModel : function(filter, val){
+            $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+            if(Quince._mosaic && Quince._mosaic._enabled){
+                Quince._mosaic.showMosaic(false);
+                Quince._landingAnimation.manageRotationTimer(true);
+                $log("_mosaic suppressed:");
+            }
+            if(Quince._secondaryMosaic){
+                if(Quince._secondaryModel) Quince._secondaryModel.destruct();
+                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;
+                Quince._secondaryMosaic = null
+                console.log("_secondaryMosaic destroyed:"+Quince._secondaryMosaic);
+            }
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", filter, val);
+
+            $('#second-container').after($('#slider-container'));
+        },
+
+        removeRefinedModel : function(){
+
+            if(Quince._secondaryMosaic){
+                Quince._secondaryModel.destruct();
+                Quince._secondaryMosaic.showMosaic(false);
+                Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;
+                Quince._secondaryMosaic = null;
+            }
+
+            var target = $('#second-container').empty();
+
+            $('#slider-container').after($('#second-container'));
+
+            if(Quince._mosaic){
+                Quince._mosaic.showMosaic(true);
+                Quince._landingAnimation.manageRotationTimer(false);
+
+            } else {
+                Quince._model = new Quince.Model.Mosaic('#slider-container', "/backend/item");
+            }
+        },
+
+        startMosaic : function(e, el, filter){
+
+            $log("STARTMOSAIC() filter:"+filter);
+
+            var targetEl = filter == Quince.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
+            //        if(!Quince._mosaic){
+            if(filter == Quince.Constants.Filters.CHRONOLOGICAL){
+                Quince._mosaic = new Quince.Mosaic.Container(el, filter);
+                $log("CREATE MAIN MOSAIC")
+                //        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
+            } else {
+                $log("NEW SECONDARY MODEL EXISTS!");
+                $log("CREATE NEW MOSAIC filter:"+filter);
+                Quince._secondaryMosaic = new Quince.Mosaic.Container(el, filter);
+            }
+        },
+
+        createMainModel : function(e){
+            $log("createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+
+            if(!Quince._model){
+                if(Quince._secondaryModel) Quince.State.removeRefinedModel();
+                Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");
+            } else {
+                Quince.State.removeRefinedModel();
+            }
+        },
+
+        refineByPortal : function(e, filter){
+            $log("refineByPortal FILTER:"+filter);
+            Quince.State.createRefinedModel("portal", filter);
+        },
+
+        refineByFilter : function(e, filter){
+            $log("refineByFilter FILTER:"+filter);
+
+            if(filter == Quince.Constants.Filters.CHRONOLOGICAL)
+                Quince.cellRouter.navigate("/", {trigger:true});
+        }
+
+    }
 
 
-    Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
+
+
 
     Quince.EventManager = new Quince.Event();
 
@@ -759,8 +805,15 @@
     Quince.Event.REFINE_FILTER = "REFINE_FILTER";
 
 
-    
     this.Quince = Quince;
+
+
+    Quince.EventManager.addEventHandler(Quince.Event.ROUTER_PORTAL, Quince.State.refineByPortal.bind(this));
+    Quince.EventManager.addEventHandler(Quince.Event.ROUTER_CALL, Quince.State.createMainModel.bind(this));
+    Quince.EventManager.addEventHandler(Quince.Event.REFINE_FILTER, Quince.State.refineByFilter.bind(this));
+
+    Quince.EventManager.addEventHandler(Quince.Event.MODEL_COLUMNS_COMPLETE, Quince.State.startMosaic.bind(this));
+
 
 })(jQuery);
 Quince.init();

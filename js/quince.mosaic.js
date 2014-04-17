@@ -54,9 +54,7 @@
             this._super(this._el);
 
             this.filteringMode = filtering;
-            if(filtering == $q.Constants.Filters.CHRONOLOGICAL){//default state.  never destroyed
-                this._home = $(this._el.find('.homepage')[0]);
-            }
+            if(filtering == $q.Constants.Filters.CHRONOLOGICAL) this._home = $(this._el.find('.homepage')[0]);
 
             this._scrollerChild = $(this._el.find('.scroller')[0]);
 
@@ -634,24 +632,7 @@
 
     $q.Mosaic.Init();
 
-
-    $q.Mosaic.startMosaic = function(e, el, filter){
-
-        $log("STARTMOSAIC() filter:"+filter);
-        var targetEl = filter == $q.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
-//        if(!Quince._mosaic){
-        if(filter == $q.Constants.Filters.CHRONOLOGICAL){
-            Quince._mosaic = new $q.Mosaic.Container(el, filter);
-            $log("CREATE MAIN MOSAIC")
-//        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
-        } else {
-            $log("NEW SECONDARY MODEL EXISTS!");
-            $log("CREATE NEW MOSAIC filter:"+filter);
-            Quince._secondaryMosaic = new $q.Mosaic.Container(el, filter);
-        }
-    };
-
-    $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_COMPLETE, $q.Mosaic.startMosaic.bind(this));
+    if($('.home-content').length > 0) Quince._landingPage = new $q.Page.Home('.home-content');
 
 
 })(jQuery, Quince);
