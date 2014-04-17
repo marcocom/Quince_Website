@@ -112,15 +112,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         _mosaic:null,
         _filterMode:null,
         _filterVal:null,
-        offsetCounters:{
-            'a':-1,
-            'b':-1,
-            'c':-1,
-            'd':-1,
-            'f':-1,
-            'h':-1,
-            'j':-1
-        },
+        offsetCounters:{},
+        remainderCounters:{},
 
         _construct : function(el, dir, filter, val) {
             this._el = $(el).hide();
@@ -144,6 +137,15 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 'j':-1
             };
 
+            this.remainderCounters = {
+                'a':null,
+                'b':null,
+                'c':null,
+                'd':null,
+                'f':null,
+                'h':null,
+                'j':null
+            };
 
             this.modifyPreload();
             this.initModel();
@@ -236,12 +238,14 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             var cleaned = _.difference(pattern, $q.AncillaryLetters); //removed front-end handled types
 
             _.each($q.DataLetters, function(val){
+
                 var list = _this.returnFiltered(cleaned, val);
                 if(list.length <= 0) return;
 
-                $log("GET OFFSET-cell:"+val+" CURRENT offset:"+_this.offsetCounters[val]);
+//                if(_this.remainderCounters[val] > list.length)
+
                 var offset = _this.offsetCounters[val] += list.length;
-                $log("SET OFFSET-cell:"+val+" CURRENT offset:"+offset+" list:"+list+" length:"+list.length);
+                $log("SET OFFSET-cell:"+val+" CURRENT offset:"+offset+" list:"+list+" length:"+list.length+" remainder:"+_this.remainderCounters[val]);
 
                 var insertobj = {
                     'type':val,
@@ -265,15 +269,22 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
 
         parseColumn : function($result){
+            var _this = this;
+            var data = $result.items;
+            var remainders = $result.remaining;
+
+            _.each(remainders, function(val, key){
+                _this.remainderCounters[key] = val;
+            });
+
 
             var style = Math.abs(this._currentColumn % 3);
 
             var el = this.injectColumn(style);
             var style = Math.abs(this._currentColumn % 3);
             var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
-            $log('parseColumn() el:', el);
 
-            var c = new Quince.Model.Column($result, style, el, this._currentColumn, pattern);
+            var c = new Quince.Model.Column(data, style, el, this._currentColumn, pattern);
 
             this._columns.push(c);
 

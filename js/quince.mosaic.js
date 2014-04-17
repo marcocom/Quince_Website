@@ -30,7 +30,7 @@
     );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
     $q.Mosaic.Container = $q.Mosaic.extend({
-        _mosaic:null,
+        _mosaic_container:null,
         _columns:null,
         loading_items:false,
         building:false,
@@ -88,9 +88,10 @@
             this.loading_items = true;
 
             var m = this._el.find('.mosaic-container');
-            this._mosaic = $(m);
+            this._mosaic_container = $(m);
 
-            var c = this._mosaic.find('.column');
+
+            var c = this._mosaic_container.find('.column');
             this._columns = $(c);
 
             this._columns.each(function(){
@@ -103,7 +104,9 @@
             this.initCTA();
             this._loader = $(".home-content .loader-anim").hide();
 
-            if(this._home)this._home.show();
+            if(this._home)
+                this._home.show();
+
             this.onResize(null);
             this.showMosaic(true);
         },
@@ -205,7 +208,9 @@
         appendMosaic: function(e){
 
 //            $log("REFRESH MOSAIC!!!!!!");
-            var c = this._mosaic.find('.column');
+
+
+            var c = this._mosaic_container.find('.column');
             var newcol = c[c.length-1];
 
             this._columns.push(newcol);
@@ -216,23 +221,24 @@
 
             this._loader.hide();
 
-            this._home.show();
+            if(this._home) this._home.show();
 
             this._slider.refresh();
 
         },
 
         removeMosaic: function(){
+
             this._columns.each(function(el){
                 $(this).empty();
             })
             this.removeEventHandlers();
             this._slider.destroy();
-            this._slider = null;
-            this._mosaic.empty();
-            this._mosaic = null;
+//            this._slider = null;
+            this._mosaic_container.empty();
+//            this._mosaic_container = null;
             this._el.empty();
-            this._el = null;
+//            this._el = null;
         },
 
 
