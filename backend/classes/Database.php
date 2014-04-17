@@ -41,7 +41,7 @@ class Database
 
   public static function getAuthors ($filters)
   {
-    $authors = array ();
+    $authors = array ('authors' => array ());
 
     $query = 'select id, name, job, email, useFbImage, facebook, linkedin, mobile, details, section
 
@@ -70,7 +70,22 @@ class Database
       $author->details    = $row['details'];
       $author->section    = $row['section'];
 
-      $authors[] = $author;
+      $authors['authors'][] = $author;
+    }
+
+    /* if we're requesting an offset/limit, return the number of items remaining as well */
+    if (isset ($filters->limit))
+    {
+      $query = 'select count(id)
+
+                from authors
+
+                where true
+
+                ' . (isset ($filters->id) ? 'and id = ' . (int) $filters->id : '');
+      $result = static::$db->query ($query);
+
+      $authors['remaining'] = max ($result->num_rows, 0);
     }
 
     return $authors;
@@ -79,7 +94,7 @@ class Database
   /* retrieve items based on a set of filters */
   public static function getItems ($filters)
   {
-    $items = array ();
+    $items = array ('items' => array ());
 
     /* if we're requesting an array of types, process each type individually and merge the results */
     if (isset ($filters->types))
@@ -89,11 +104,19 @@ class Database
         $copy = clone ($filters);
         unset ($copy->types);
 
-        $copy->type = $type->type;
+        $copy->type   = $type->type;
         $copy->offset = $type->offset;
-        $copy->limit = $type->limit;
+        $copy->limit  = $type->limit;
 
-        $items = array_merge (static::getItems ($copy), $items);
+        $temp = static::getItems ($copy);
+
+        $items['items'] = array_merge ($temp['items'], $items['items']);
+
+        if (isset ($temp['remaining']))
+        {
+          $items['remaining'] = isset ($items['remaining']) ? $items['remaining'] : array ();
+          $items['remaining'][$type->type] = isset ($items['remaining'][$type->type]) ? $items['remaining'][$type->type] + $temp['remaining'] : $temp['remaining'];
+        }
       }
 
       return $items;
@@ -145,8 +168,31 @@ class Database
       $item->images = static::getImages (array ('itemId' => $item->id));
       $item->tags   = static::getTags (array ('itemId' => $item->id));
 
-      $items[] = $item;
+      $items['items'][] = $item;
     }
+
+    /* if we're requesting an offset/limit, return the number of items remaining as well */
+    if (isset ($filters->limit))
+    {
+      $query = 'select count(id) as count
+
+                from items
+
+                where true
+
+                ' . (isset ($filters->id)         ? 'and items.id = ' . (int) $filters->id                          : '') . ' 
+                ' . (isset ($filters->type)       ? 'and items.type = "' . static::clean ($filters->type) . '"'     : '') . ' 
+                ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId          : '') . '
+                ' . (isset ($filters->portal)     ? 'and items.portal = "' . static::clean ($filters->portal) . '"' : '') . '
+                ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '');
+      $result = static::$db->query ($query);
+
+      $row = $result->fetch_assoc ();
+
+
+      $items['remaining'] = max ($row['count'] - $filters->limit - $filters->offset, 0);
+    }
+
 
     return $items;
   }
