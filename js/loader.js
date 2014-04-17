@@ -14,9 +14,9 @@
         'lib/jquery.flexslider.js',
         'lib/jquery.fancybox.js',
         'quince.js',
+        'quince.mosaic.js',
         'quince.model.js',
         'quince.page.js',
-        'quince.mosaic.js',
         'plugins.js'
     ];
 

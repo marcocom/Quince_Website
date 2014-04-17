@@ -438,7 +438,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
             <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
             <div class="cell-j cell-box"  data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state">
-                    <img class="playbut" src="img/playbut.png">
+                    <img class="playbut" src="/img/playbut.png">
                     <img class="thumb" src="<%= images %>">
                 </div>
                 <div class="on-state">

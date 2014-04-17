@@ -50,6 +50,8 @@
            // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
 //            Quince.eventManager.addEventHandler(Quince.Event.LOGIN_SUCCESS_FB_USER,this.fbLoggedIn.bind(this));
+
+            this.compileTemplates();
         },
         onResize: function(){
             this.windowWidth = $(window).width();
@@ -192,8 +194,37 @@
                 });
 
             }
-        }
+        },
 
+        compileTemplates : function(){
+            Quince.templates.cells.cell_a = _.template($('#tpl-cell-a').html());
+            Quince.templates.cells.cell_b = _.template($('#tpl-cell-b').html());
+            Quince.templates.cells.cell_c = _.template($('#tpl-cell-c').html());
+            Quince.templates.cells.cell_d = _.template($('#tpl-cell-d').html());
+            Quince.templates.cells.cell_e = _.template($('#tpl-cell-e').html());
+            Quince.templates.cells.cell_f = _.template($('#tpl-cell-f').html());
+            Quince.templates.cells.cell_g = _.template($('#tpl-cell-g').html());
+            Quince.templates.cells.cell_h = _.template($('#tpl-cell-h').html());
+            Quince.templates.cells.cell_i = _.template($('#tpl-cell-i').html());
+            Quince.templates.cells.cell_j = _.template($('#tpl-cell-j').html());
+
+            Quince.templates.cells.cell_p = _.template($('#tpl-personnel').html());
+            Quince.templates.containers.slider = _.template($('#tpl-slider').html());
+
+            $('#tpl-cell-a').remove();
+            $('#tpl-cell-b').remove();
+            $('#tpl-cell-c').remove();
+            $('#tpl-cell-d').remove();
+            $('#tpl-cell-e').remove();
+            $('#tpl-cell-f').remove();
+            $('#tpl-cell-g').remove();
+            $('#tpl-cell-h').remove();
+            $('#tpl-cell-i').remove();
+            $('#tpl-cell-j').remove();
+
+            $('#tpl-personnel').remove();
+            $('#tpl-slider').remove();
+        }
     };
 
 
@@ -351,17 +382,20 @@
     Quince.State = {
 
         createRefinedModel : function(filter, val){
+            $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+$q._mosaic+" _second:"+$q._secondaryMosaic);
             if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
 
-            if(Quince._mosaic){
+            if(Quince._mosaic && Quince._mosaic._enabled){
                 Quince._mosaic.showMosaic(false);
                 Quince._landingAnimation.manageRotationTimer(true);
+                $log("_mosaic suppressed:");
             }
             if(Quince._secondaryMosaic){
                 if(Quince._secondaryModel) Quince._secondaryModel.destruct();
                 if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
-                Quince._secondaryModel = null;;
+                Quince._secondaryModel = null;
                 Quince._secondaryMosaic = null
+                console.log("_secondaryMosaic destroyed:"+Quince._secondaryMosaic);
             }
 
             $('#second-container').empty().html(Quince.templates.containers.slider);
@@ -382,6 +416,7 @@
             }
 
             var target = $('#second-container').empty();
+
             $('#slider-container').after($('#second-container'));
 
             if(Quince._mosaic){
@@ -389,7 +424,6 @@
                 //$('#slider-container').show();
                 Quince._landingAnimation.manageRotationTimer(false);
             } else {
-
                 Quince._model = new $q.Model.Mosaic('#slider-container', "/backend/item");
             }
         }

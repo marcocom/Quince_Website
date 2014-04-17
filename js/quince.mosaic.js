@@ -3,7 +3,6 @@
     $q.Mosaic = Class.extend({
         _construct : function(el) {
             this._el = $(el);
-            this.slider = null;
         }
     });
 
@@ -53,7 +52,6 @@
         _construct : function(el, filtering) {
             this._el = $(el);
             this._super(this._el);
-//            $log("Mosaic init");
 
             this.filteringMode = filtering;
             if(filtering == $q.Constants.Filters.CHRONOLOGICAL){//default state.  never destroyed
@@ -63,6 +61,7 @@
             this._scrollerChild = $(this._el.find('.scroller')[0]);
 
             this.initContainer();
+            $log("Mosaic init :"+filtering);
 
         },
 
@@ -89,7 +88,6 @@
 //            }
 
             this.loading_items = true;
-//            $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
@@ -239,6 +237,7 @@
 
 
         showMosaic : function(reveal){
+            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
             if(reveal){
                 this.addEventHandlers();
                 this._el.show();
@@ -633,16 +632,20 @@
 
 
 
-
+    $q.Mosaic.Init();
 
 
     $q.Mosaic.startMosaic = function(e, el, filter){
-        $q.Mosaic.Init();
+
+        $log("STARTMOSAIC() filter:"+filter);
         var targetEl = filter == $q.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
-        if(!Quince._mosaic){
+//        if(!Quince._mosaic){
+        if(filter == $q.Constants.Filters.CHRONOLOGICAL){
             Quince._mosaic = new $q.Mosaic.Container(el, filter);
-        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
-            $log("NEW MODEL:");
+            $log("CREATE MAIN MOSAIC")
+//        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
+        } else {
+            $log("NEW SECONDARY MODEL EXISTS!");
             $log("CREATE NEW MOSAIC filter:"+filter);
             Quince._secondaryMosaic = new $q.Mosaic.Container(el, filter);
         }

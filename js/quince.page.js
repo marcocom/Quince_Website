@@ -142,7 +142,7 @@
 //
 //            Start Backbone history a necessary step for bookmarkable URL's
 //            - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
-            Backbone.history.start({pushState: true});
+            Backbone.history.start({pushState: true, root: '/'});
 
         },
 
@@ -430,7 +430,7 @@
 
         manageRotationTimer : function(turnOff){
             var _this = this;
-            if(!turnOff){
+            if(!turnOff && !Quince._secondaryMosaic){
                 if(!this._isrotating){
                     this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
                     $log("TURN ON HOMEPAGE");
