@@ -345,11 +345,12 @@ body{
       overflow:hidden;
 
       .intro-block{
-        display:block;
+        display:none;
         position:absolute;
         overflow:hidden;
         left: 30%;
         top: 10%;
+        z-index: 1;
         .words{
           display:block;
           position:relative;
@@ -987,7 +988,7 @@ body{
 .about-content{
   .about-section{
     //width:25% !important;
-    width:600px;
+    width:auto;
     @include box-shadow($div-shadow);
     padding:10px;
 
@@ -1000,22 +1001,24 @@ body{
 
     display: inline-block;
     //float: left;
-    p{
-      //font-size: 1em;
-      line-height:120%;
-      font-weight:200;
-      font-style:italic;
-      color:#000;
-      font-size:0.9em
-    }
     h4, h6, h5{
       font-weight:200;
       margin-top:10px;
-      a{
-        font-weight:400;
-        color:$brand-blue;
+      max-width:800px;
+      p{
+        //font-size: 1em;
+        line-height:120%;
+        font-weight:200;
+        font-style:italic;
+        color:#000;
+        font-size:0.9em;
+        a{
+          font-weight:400;
+          color:$brand-blue;
+        }
       }
     }
+
   }
 
 }

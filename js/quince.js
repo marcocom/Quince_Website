@@ -13,7 +13,7 @@
         msGesture : window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
         isTouch : (( "ontouchstart" in window ) || this.msGesture || window.DocumentTouch && document instanceof DocumentTouch),
         googleAccount:"UA-1007198-3",
-        cellImageDirectory:"img/cells/",
+        cellImageDirectory:"/img/cells/",
         _popups : {},
 
         windowWidth:0,
@@ -50,6 +50,8 @@
            // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
 //            Quince.eventManager.addEventHandler(Quince.Event.LOGIN_SUCCESS_FB_USER,this.fbLoggedIn.bind(this));
+
+            this.compileTemplates();
         },
         onResize: function(){
             this.windowWidth = $(window).width();
@@ -192,8 +194,37 @@
                 });
 
             }
-        }
+        },
 
+        compileTemplates : function(){
+            Quince.templates.cells.cell_a = _.template($('#tpl-cell-a').html());
+            Quince.templates.cells.cell_b = _.template($('#tpl-cell-b').html());
+            Quince.templates.cells.cell_c = _.template($('#tpl-cell-c').html());
+            Quince.templates.cells.cell_d = _.template($('#tpl-cell-d').html());
+            Quince.templates.cells.cell_e = _.template($('#tpl-cell-e').html());
+            Quince.templates.cells.cell_f = _.template($('#tpl-cell-f').html());
+            Quince.templates.cells.cell_g = _.template($('#tpl-cell-g').html());
+            Quince.templates.cells.cell_h = _.template($('#tpl-cell-h').html());
+            Quince.templates.cells.cell_i = _.template($('#tpl-cell-i').html());
+            Quince.templates.cells.cell_j = _.template($('#tpl-cell-j').html());
+
+            Quince.templates.cells.cell_p = _.template($('#tpl-personnel').html());
+            Quince.templates.containers.slider = _.template($('#tpl-slider').html());
+
+            $('#tpl-cell-a').remove();
+            $('#tpl-cell-b').remove();
+            $('#tpl-cell-c').remove();
+            $('#tpl-cell-d').remove();
+            $('#tpl-cell-e').remove();
+            $('#tpl-cell-f').remove();
+            $('#tpl-cell-g').remove();
+            $('#tpl-cell-h').remove();
+            $('#tpl-cell-i').remove();
+            $('#tpl-cell-j').remove();
+
+            $('#tpl-personnel').remove();
+            $('#tpl-slider').remove();
+        }
     };
 
 
@@ -348,52 +379,15 @@
         }
     });
 
-    Quince.State = {
 
-        createRefinedModel : function(filter, val){
-            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
-            Quince._mosaic.showMosaic(false);
-            //$('#slider-container').hide();
 
-            Quince._landingAnimation.manageRotationTimer(true);
-//            if(Quince._secondaryModel) Quince._secondaryModel.destruct();
-//            if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
-//            Quince._secondaryModel = null;;
-//            Quince._secondaryMosaic = null
-
-            $('#second-container').empty().html(Quince.templates.containers.slider);
-            Quince._secondaryModel = new $q.Model.Mosaic('#second-container', "backend/item", filter, val);
-
-            $('#second-container').after($('#slider-container'));
-        },
-
-        removeRefinedModel : function(){
-
-            Quince._mosaic.showMosaic(true);
-            //$('#slider-container').show();
-
-            Quince._landingAnimation.manageRotationTimer(false);
-            if(Quince._secondaryModel) Quince._secondaryModel.destruct();
-            if(Quince._secondaryMosaic){
-                Quince._secondaryMosaic.showMosaic(false);
-                Quince._secondaryMosaic.removeMosaic();
-            }
-            Quince._secondaryModel = null;
-            Quince._secondaryMosaic = null;
-
-            var target = $('#second-container').empty();
-            $('#slider-container').after($('#second-container'));
-        }
-
-    }
 
     Quince.Constants = {
         'Filters':{
             'CHRONOLOGICAL':"time",
             'AUTHOR':"authorId",
             'CUSTOMER':"customerId",
-            'TAG':"tag",
-            'CHRONOLOGICAL':"time",
+            'TAG':"tag"
         }
     };
 
@@ -404,6 +398,9 @@
         'brand_red':              '#da061e',
         'brand_green':              '#009339'
     };
+    Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
+
+
 
     Quince.templates = {
         cells:{
@@ -428,61 +425,61 @@
             {
                 'text':"learn the rules like a pro, so you can break them like an artist.",
                 'authorName':"Pablo Picasso",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"creativity is contagious, pass it on.",
                 'authorName':"Albert Einstein",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"you can't wait for inspiration, you have to go after it with a club.",
                 'authorName':"Jack London",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"creativity requires the courage to let go of certainties.",
                 'authorName':"Erich Fromm",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"when the going gets weird, the weird turn pro.",
                 'authorName':"Hunter S. Thompson",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"we don't make mistakes, just happy little accidents.",
                 'authorName':"Bob Ross",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"design is not just what it looks like and feels like. design is how it works.",
                 'authorName':"Steve Jobs",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"there is nothing worse than a sharp image of a fuzzy concept.",
                 'authorName':"Ansel Adams",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"while they are deciding, make even more art.",
                 'authorName':"Andy Warhol",
-                'id':"",
+                'id':"3",
                 'type':'d'
             },
             {
                 'text':"let the blood and the bruises define your legacy.",
                 'authorName':"Lady Gaga",
-                'id':"",
+                'id':"3",
                 'type':'d'
             }
         ],
@@ -490,102 +487,280 @@
             {
                 'title':"",
                 'images':["real people", "real passion", "real action"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"jobs",
                 'images':["get to know us", "click here if you are up to the challenge"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["who we are", "click here to find out"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["a team photo has many portraits", "but only one story"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"contact",
                 'images':["a place to grow", "click here to find our locations"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"",
                 'images':["real people", "real passion", "real action"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"jobs",
                 'images':["get to know us", "click here if you are up to the challenge"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["who we are", "click here to find out"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"about",
                 'images':["a team photo has many portraits", "but only one story"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             },
             {
                 'title':"contact",
                 'images':["a place to grow", "click here to find our locations"],
-                'id':"",
+                'id':"1",
                 'type':'e'
             }
         ],
         'long_images':[
             {
-                'images':"img/cells/longs/cell_g_1.jpg",
-                'id':"",
+                'images':Quince.cellImageDirectory+"longs/cell_g_1.jpg",
+                'id':"2",
                 'type':'g'
             },
             {
-                'images':"img/cells/longs/cell_g_2.jpg",
-                'id':"",
+                'images':Quince.cellImageDirectory+"longs/cell_g_2.jpg",
+                'id':"2",
                 'type':'g'
             },
             {
-                'images':"img/cells/longs/cell_g_3.jpg",
-                'id':"",
+                'images':Quince.cellImageDirectory+"longs/cell_g_3.jpg",
+                'id':"2",
                 'type':'g'
             }
-        ],
-//        'column_patterns':[
-//            ["d","a","e","c","f","b","j"],
-//            ["a","j","e","f","b","h"],
-//            ["g","a","j","a","e","b","j"]
-//        ]
-        'column_patterns':[
-           ["d","a","e","b","f","b","c","j"],
-           ["a","j","b","e","c","b","h","f","j"],
-           ["g","f","a","j","a","e","b","j"]
-        ],
-        'portal_video_pattern':[
-            ["d","j","e", "j","c","j","j"],
-            ["a","j","e","f","b","h"],
-            ["g","a","j","a","e","b","j"]
-        ],
+        ]
+
     };
 
+    Quince.Patterns = {
+        'time':{
+            'default':[
+                ["d","a","e","c","f","b","j"],
+                ["a","j","c","f","b","h"],
+                ["g","a","j","a","e","b","j"]
+            ]
+//        'column_patterns':[
+//            ["d","a","e","b","f","b","c","j"],
+//            ["a","j","b","e","c","b","h","f","j"],
+//            ["g","f","a","j","a","e","b","j"]
+//        ],
+        },
+        'portal':{
+            'fb':[
+                ["g","a","e","c","b","j"],
+                ["a","j","c","b","h"],
+                ["i","a","j","a","e","b","j"]
+            ],
+            'vim':[
+                ["j","i","j","j","g"],
+                ["j","j","i","j","j"],
+                ["g","j","j","j","j"]
+            ],
+            'yt':[
+                ["g","i","j","j","j"],
+                ["j","j","i","j","j"],
+                ["i","j","j","j","g"]
+            ],
+            'pin':[
+                ["a","a","i","a","a","g"],
+                ["a","i","a","a","a"],
+                ["a","a","i","a","a"]
+            ],
+            'tw':[
+                ["g","e","e","i","e"],
+                ["e","i","e","e","g"],
+                ["g","e","i","e","e"]
+            ],
+            'link':[
+                ["e","e","e","e"],
+                ["e","e","e","e"],
+                ["e","e","e","e"]
+            ]
+        },
 
 
 
-    Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
+    }
+
+    Quince.customerHash = {
+        '560':'ABN-AMRO',
+        '334':'Alrec',
+        '277':'Apple',
+        '233':'Bauknecht',
+        '562':'Bissell',
+        '600':'brandXtension',
+        '590':'Calvin Klein',
+        '499':'Cambridge',
+        '561':'CTOUCH',
+        '568':'Fox Sports',
+        '257':'Goodyear-Dunlop NL-BE',
+        '510':'Green Hill',
+        '579':'Hema',
+        '360':'Holland Casino',
+        '598':'Holmatro',
+        '289':'HTC EMEA',
+        '528':'ID&T',
+        '538':'Infopact',
+        '511':'ING Retail Nederland',
+        '594':'Intergamma',
+        '537':'InVue Security Products',
+        '382':'Kirkman Company',
+        '527':'Korstjens Crossmedia Consultancy',
+        '270':'KPN',
+        '460':'Media Markt & Saturn',
+        '370':'MMD',
+        '457':'NAGA',
+        '586':'Nederland Schoon',
+        '506':'Nokia',
+        '602':'Oxxio',
+        '451':'Philips Consumer Lifestyle',
+        '521':'Philips TV / TP Vision',
+        '441':'Platform Outsourcing',
+        '108':'Quince',
+        '368':'Quince Hungary',
+        '595':'Quince Platforms',
+        '565':'Quince Retail Solutions',
+        '345':'QYN',
+        '113':'Samsung Benelux',
+        '589':'Scheer & Foppe',
+        '489':'Setar',
+        '505':'Stage Entertainment',
+        '577':'Telfort',
+        '547':'Teradata',
+        '162':'The Phone House',
+        '214':'Tommy Hilfiger',
+        '599':'VNU',
+        '513':'Whirlpool'
+    }
+
+
+    Quince.State = {
+
+        createRefinedModel : function(filter, val){
+            $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+            if(Quince._mosaic && Quince._mosaic._enabled){
+                Quince._mosaic.showMosaic(false);
+                Quince._landingAnimation.manageRotationTimer(true);
+                $log("_mosaic suppressed:");
+            }
+            if(Quince._secondaryMosaic){
+                if(Quince._secondaryModel) Quince._secondaryModel.destruct();
+                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;
+                Quince._secondaryMosaic = null
+                console.log("_secondaryMosaic destroyed:"+Quince._secondaryMosaic);
+            }
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", filter, val);
+
+            $('#second-container').after($('#slider-container'));
+        },
+
+        removeRefinedModel : function(){
+
+            if(Quince._secondaryMosaic){
+                Quince._secondaryModel.destruct();
+                Quince._secondaryMosaic.showMosaic(false);
+                Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;
+                Quince._secondaryMosaic = null;
+            }
+
+            var target = $('#second-container').empty();
+
+            $('#slider-container').after($('#second-container'));
+
+            if(Quince._mosaic){
+                Quince._mosaic.showMosaic(true);
+                Quince._landingAnimation.manageRotationTimer(false);
+
+            } else {
+                Quince._model = new Quince.Model.Mosaic('#slider-container', "/backend/item");
+            }
+        },
+
+        startMosaic : function(e, el, filter){
+
+            $log("STARTMOSAIC() filter:"+filter);
+
+            var targetEl = filter == Quince.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
+            //        if(!Quince._mosaic){
+            if(filter == Quince.Constants.Filters.CHRONOLOGICAL){
+                Quince._mosaic = new Quince.Mosaic.Container(el, filter);
+                $log("CREATE MAIN MOSAIC")
+                //        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
+            } else {
+                $log("NEW SECONDARY MODEL EXISTS!");
+                $log("CREATE NEW MOSAIC filter:"+filter);
+                Quince._secondaryMosaic = new Quince.Mosaic.Container(el, filter);
+            }
+        },
+
+        createMainModel : function(e){
+            $log("createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+
+            if(!Quince._model){
+                if(Quince._secondaryModel) Quince.State.removeRefinedModel();
+                Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");
+            } else {
+                Quince.State.removeRefinedModel();
+            }
+        },
+
+        refineByPortal : function(e, filter){
+            $log("refineByPortal FILTER:"+filter);
+            Quince.State.createRefinedModel("portal", filter);
+        },
+
+        refineByFilter : function(e, filter){
+            $log("refineByFilter FILTER:"+filter);
+
+            if(filter == Quince.Constants.Filters.CHRONOLOGICAL)
+                Quince.cellRouter.navigate("/", {trigger:true});
+        }
+
+    }
+
+
+
+
 
     Quince.EventManager = new Quince.Event();
 
@@ -620,6 +795,7 @@
     Quince.Event.ROUTER_CLIENT = "ROUTER_CLIENT";
     Quince.Event.ROUTER_POST = "ROUTER_POST";
     Quince.Event.ROUTER_AUTHOR = "ROUTER_AUTHOR";
+    Quince.Event.ROUTER_PORTAL = "ROUTER_PORTAL";
     Quince.Event.ROUTER_SEARCH = "ROUTER_SEARCH";
     Quince.Event.ROUTER_TAG = "ROUTER_TAG";
     Quince.Event.ROUTER_PAGE = "ROUTER_PAGE";
@@ -629,8 +805,15 @@
     Quince.Event.REFINE_FILTER = "REFINE_FILTER";
 
 
-    
     this.Quince = Quince;
+
+
+    Quince.EventManager.addEventHandler(Quince.Event.ROUTER_PORTAL, Quince.State.refineByPortal.bind(this));
+    Quince.EventManager.addEventHandler(Quince.Event.ROUTER_CALL, Quince.State.createMainModel.bind(this));
+    Quince.EventManager.addEventHandler(Quince.Event.REFINE_FILTER, Quince.State.refineByFilter.bind(this));
+
+    Quince.EventManager.addEventHandler(Quince.Event.MODEL_COLUMNS_COMPLETE, Quince.State.startMosaic.bind(this));
+
 
 })(jQuery);
 Quince.init();

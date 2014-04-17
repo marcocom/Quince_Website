@@ -74,6 +74,7 @@
                     // <a href="http://example.com/#/posts/121">Example</a>
                     "client/:id": "getClient",
                     "author/:id": "getAuthor",
+                    "portal/:id": "getPortal",
                     "tag/:id": "getTag",
                     "search/:query":        "search",  // #/search/subject
 //                    ":route/:action": "loadView",
@@ -83,47 +84,57 @@
             });
 
 
-            this.cellRouter = new router;
+            $q.cellRouter = new router;
 
-            this.cellRouter.on('route:loadView', function( route, action ){
+            $q.cellRouter.on('route:loadView', function( route, action ){
                 $log(route + "_" + action); // dashboard_graph
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, this);
             });
 
-            this.cellRouter.on('route:getPost', function (id) {
+            $q.cellRouter.on('route:getPost', function (id) {
                 $log( "Get post number " + id );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_POST, this, id);
             });
 
-            this.cellRouter.on('route:getClient', function (id) {
+            $q.cellRouter.on('route:getClient', function (id) {
                 $log( "Get client number " + id );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_CLIENT, this, id);
             });
 
-            this.cellRouter.on('route:getAuthor', function (id) {
+            $q.cellRouter.on('route:getPortal', function (id) {
+                $log( "Get portal:" + id );
+                $q.EventManager.fireEvent(Quince.Event.ROUTER_PORTAL, this, id);
+            });
+
+            $q.cellRouter.on('route:getAuthor', function (id) {
                 $log( "Get author number " + id );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_AUTHOR, this, id);
             });
 
-            this.cellRouter.on('route:getTag', function (word) {
+            $q.cellRouter.on('route:getTag', function (word) {
                 $log( "Get tag: " + word );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_TAG, this, word);
             });
 
-            this.cellRouter.on('route:search', function (word) {
+            $q.cellRouter.on('route:search', function (word) {
                 $log( "Search term: " + word );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_SEARCH, this, word);
             });
 
-            this.cellRouter.on('route:defaultRoute', function (action) {
+            $q.cellRouter.on('route:defaultRoute', function (action) {
                 $log( "DEFAULT ROUTE:" + action + " subcontentOpened:"+this.subcontentOpened);
+
                 if(action == "jobs" || action == "about" || action == "contact" || action == "people"){
                     _this.remoteAnimate(action);
-//                $q.EventManager.fireEvent(Quince.Event.ROUTER_PAGE, this, action);
-                } else if(action == null && this.subcontentOpened == true){
-                    this.pageCollapse(null);
+
+                } else if(action == null){
+                    $log("DEFAULT ROUTE - NO ACTION");
+                    if(_this.subcontentOpened == true) _this.pageCollapse(null);
+
                 }
 
+//                if(!Quince._mosaic)
+                    $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, _this, action || null);
             });
 
 //            Backbone.emulateHTTP = true;
@@ -131,7 +142,7 @@
 //
 //            Start Backbone history a necessary step for bookmarkable URL's
 //            - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
-            Backbone.history.start({pushState: true});
+            Backbone.history.start({pushState: true, root: '/'});
 
         },
 
@@ -161,7 +172,7 @@
             var ref = "." + clicksource.id + "-content";
             var $content = $(ref);
 
-            this.cellRouter.navigate(clicksource.id, {trigger:false});
+            $q.cellRouter.navigate(clicksource.id, {trigger:false});
             //$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
 
             this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
@@ -251,7 +262,7 @@
                     $log("CONTENT SWAP:"+this._current);
                     this.contentSwap = null;
                 } else {
-                    this.cellRouter.navigate("/", {trigger:false});
+                    $q.cellRouter.navigate("/", {trigger:false});
 
                 }
 
@@ -261,7 +272,7 @@
         pageCollapse : function(e){
 //            if(this.subcontentOpened) this._el.css('top', '0px');
             var _this = this;
-            this.cellRouter.navigate("/", {trigger:false});
+            $q.cellRouter.navigate("/", {trigger:false});
             if(this.subcontentOpened){
                 this._el.animate({
                     top:'0'
@@ -292,6 +303,26 @@
         }
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $q.Page.RefineNav = $q.Page.extend({
         portalnav:null,
         filternav:null,
@@ -311,7 +342,8 @@
                 $(this).click(function(e){
                     e.preventDefault();
                     e.stopImmediatePropagation();
-                    $q.EventManager.fireEvent($q.Event.REFINE_PORTAL, this, $(this).data('portal'));
+                    //$q.EventManager.fireEvent($q.Event.REFINE_PORTAL, this, $(this).data('portal'));
+                    $q.cellRouter.navigate("portal/"+$(this).data('portal'), {trigger:true});
                 });
             })
         },
@@ -322,13 +354,41 @@
                 $(this).click(function(e){
                     e.preventDefault();
                     e.stopImmediatePropagation();
-                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
-
+                    var f = $(this).data('filter');
+                    if(f == $q.Constants.Filters.CHRONOLOGICAL){
+                        $q.cellRouter.navigate("/", {trigger:true})
+                    } else {
+                        $q.cellRouter.navigate("filter/"+f, {trigger:true});
+//                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
+                    }
                 });
             });
 
         }
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $q.Page.IntroColumn = $q.Page.extend({
         _current:0,
@@ -343,8 +403,16 @@
         timerLength:3000,
 
         _construct : function(el) {
-            this._el = $(el).hide();
+            this._el = $(el);
             this._super(this._el);
+
+
+            var homew = $q.windowWidth - 50;
+            if(homew <= 350) homew = 350;
+            //this._el.css({'width':(homew + 'px')});
+            this._el.width(homew);
+
+            this._el.hide();
             this.initIntro();
 
         },
@@ -394,7 +462,7 @@
         },
 
         mosaicScrollHandler : function(e, xdiff){
-            if(!Quince._mosaic._enabled) return;
+            if(!$q._mosaic || !$q._mosaic._enabled) return;
             var homew = $($q._mosaic._home).width();
             $log("SCROLL xdiff:"+xdiff+" homew:"+homew)
             if(xdiff < -homew){//less than
@@ -406,7 +474,7 @@
 
         manageRotationTimer : function(turnOff){
             var _this = this;
-            if(!turnOff){
+            if(!turnOff && !Quince._secondaryMosaic){
                 if(!this._isrotating){
                     this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
                     $log("TURN ON HOMEPAGE");
@@ -477,6 +545,21 @@
         }
 
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $q.Page.SubPage = $q.Page.extend({
         _mosaic:null,
@@ -593,7 +676,5 @@
 
 
     $q.Page.Init();
-
-    if($('.home-content').length > 0) Quince._landingPage = new $q.Page.Home('.home-content');
 
 })(jQuery, Quince);

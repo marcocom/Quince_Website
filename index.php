@@ -91,16 +91,6 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                                 <!--                            <img src="img/icon_vim.png">-->
                             </a>
                         </li>
-                        <!--li class="gplus">
-                            <a target="_blank" href="http://plus.google.com/QuinceAmsterdam" data-portal="gp"  target="_blank">
-                                <img src="img/icon_gp.png">
-                            </a>
-                        </li-->
-                        <!--li class="rss">
-                            <a target="_blank" href="http://rss.quince.nl" data-portal="rss"  target="_blank">
-                                <img src="img/icon_rss.png">
-                            </a>
-                        </li-->
                     </ul>
                     <ul class="refinement">
                         <li class="search">
@@ -448,7 +438,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
             <!-- VIDEO THUMBS. ALWAYS QUARTER-SIZED -->
             <div class="cell-j cell-box"  data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>"  data-sizex="1" data-sizey="1" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state">
-                    <img class="playbut" src="img/playbut.png">
+                    <img class="playbut" src="/img/playbut.png">
                     <img class="thumb" src="<%= images %>">
                 </div>
                 <div class="on-state">

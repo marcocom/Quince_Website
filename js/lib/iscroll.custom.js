@@ -758,6 +758,13 @@ IScroll.prototype = {
 
 		this._events[type].push(fn);
 	},
+	off: function (type) {
+		if ( !this._events[type] ) {
+			this._events[type] = [];
+		}
+
+		this._events[type].length = 0;
+	},
 
 	_execEvent: function (type) {
 		if ( !this._events[type] ) {

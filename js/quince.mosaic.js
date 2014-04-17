@@ -3,7 +3,6 @@
     $q.Mosaic = Class.extend({
         _construct : function(el) {
             this._el = $(el);
-            this.slider = null;
         }
     });
 
@@ -53,16 +52,14 @@
         _construct : function(el, filtering) {
             this._el = $(el);
             this._super(this._el);
-//            $log("Mosaic init");
 
             this.filteringMode = filtering;
-            if(filtering == $q.Constants.Filters.CHRONOLOGICAL){//default state.  never destroyed
-                this._home = $(this._el.find('.homepage')[0]);
-            }
+            if(filtering == $q.Constants.Filters.CHRONOLOGICAL) this._home = $(this._el.find('.homepage')[0]);
 
             this._scrollerChild = $(this._el.find('.scroller')[0]);
 
             this.initContainer();
+            $log("Mosaic init :"+filtering);
 
         },
 
@@ -89,7 +86,6 @@
 //            }
 
             this.loading_items = true;
-//            $log("MOSAIC INITCONTAINER () -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
             var m = this._el.find('.mosaic-container');
             this._mosaic = $(m);
@@ -118,12 +114,13 @@
             $q.EventManager.addEventHandler($q.Event.RESIZE, this.onResize.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
-            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, $.proxy(this.onLoadingData, this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
         },
 
         removeEventHandlers : function(){
-
+            this._slider.off('scrollStart');
+            this._slider.off('scrollEnd');
             $q.EventManager.removeEventHandler($q.Event.RESIZE, this.onResize);
             $q.EventManager.removeEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo);
             $q.EventManager.removeEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData);
@@ -238,10 +235,11 @@
 
 
         showMosaic : function(reveal){
+            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
             if(reveal){
                 this.addEventHandlers();
                 this._el.show();
-                this._loader.show();
+//                this._loader.show();
                 this._cta.show();
                 this._slider.enable();
                 this._enabled = true;
@@ -527,7 +525,7 @@
                 this._el.click(function(e){
                     e.preventDefault();
 //                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
-                    $q._landingPage.cellRouter.navigate(actionString, {trigger:true});
+                    $q.cellRouter.navigate(actionString, {trigger:true});
                 })
                 this._el.css({'cursor':'pointer'});
             }
@@ -632,22 +630,9 @@
 
 
 
+    $q.Mosaic.Init();
 
-
-
-    $q.Mosaic.startMosaic = function(e, el, filter){
-        $q.Mosaic.Init();
-        var targetEl = filter == $q.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
-        if(!Quince._mosaic){
-            Quince._mosaic = new $q.Mosaic.Container(el, filter);
-        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
-            $log("NEW MODEL:", Quince._secondaryModel);
-            Quince._secondaryMosaic = new $q.Mosaic.Container(el, filter);
-            $log("CREATE NEW MOSAIC filter:"+filter);
-        }
-    };
-
-    $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_COMPLETE, $q.Mosaic.startMosaic.bind(this));
+    if($('.home-content').length > 0) Quince._landingPage = new $q.Page.Home('.home-content');
 
 
 })(jQuery, Quince);
