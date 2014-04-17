@@ -145,12 +145,14 @@
         animateCTA : function(){
 
             //this._slider.x <= this._slider.maxScrollX
-            var go = ($q.windowWidth + Math.abs(this._slider.x)) - (this._cta.width() + 10);
-            var currentX = Number(this._cta.css('left').split('px')[0]);
+            if(this._slider){
 
-            if(go > currentX && this._enabled)
-                this._cta.animate({ left: (go+'px') }, 600, 'easeOutBounce');
+                var go = ($q.windowWidth + Math.abs(this._slider.x)) - (this._cta.width() + 10);
+                var currentX = Number(this._cta.css('left').split('px')[0]);
 
+                if(go > currentX && this._enabled)
+                    this._cta.animate({ left: (go+'px') }, 600, 'easeOutBounce');
+            }
 
         },
 
@@ -284,7 +286,6 @@
 //            if(this._slider.x <= this._slider.maxScrollX) this._loader.show();
             if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
         },
-
 
         onFlick : function(e){
             $log("FLICK----------------");
