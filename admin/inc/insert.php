@@ -23,9 +23,14 @@ $resultType =  mysql_query("SELECT type, name FROM types");
 		$sqlproject="INSERT INTO items ( type, text, date, customer, title, author, url, portal ) VALUES ('".$type."', '".htmlentities($text, ENT_QUOTES)."', '".$date."', " . $customer . ", '".htmlentities($title, ENT_QUOTES)."', '".$author."', '".$url."', '".$portal."' )";
 		$result=mysql_query($sqlproject);
 
+
 		// if successfully insert data into database, displays message "Successful". 
 		if($result){
-			echo " Successful: Post Form";
+			ob_start();
+			$itemid = mysql_insert_id();
+		//	header('Location: http://www.quince.nl/admin/update.php?id=' . $itemid)
+			header('Location: http://localhost/~imredo/website/admin/update.php?id=' . $itemid);
+			ob_end_flush();
 		}
 
 		else {

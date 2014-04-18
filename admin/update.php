@@ -110,7 +110,7 @@ include 'inc/nav.php';
 			<form name="posttags" action="" method="POST">
 				<div class="inputblock">
 					<label>Item tag</label>
-					<input type="text" name="tag" value="">
+					<input id="tag" type="text" name="tag" value="">
 				</div>
 	
 				<div class="inputblock"> 
@@ -120,6 +120,6 @@ include 'inc/nav.php';
 			</form>
 		</aside>
 	</section>
-
-</body>
-</head>
+<?php
+include 'inc/footer.php';
+?>
