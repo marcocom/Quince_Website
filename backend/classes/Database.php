@@ -11,7 +11,7 @@ class Database
   /* set up the database connection */
   public static function init ()
   {
-    static::$db = new mysqli (null, 'quince_site', "", 'quince_site');
+    static::$db = new mysqli (null, 'quince', "", 'quince');
     static::$db->set_charset ('utf8');
     static::query ("set sql_mode = 'IGNORE_SPACE'");
   }
@@ -51,7 +51,7 @@ class Database
 
               ' . (isset ($filters->id) ? 'and id = ' . (int) $filters->id : '') . ' 
 
-              order by id
+              order by name
 
               ' . (isset ($filters->limit)  ? 'limit ' . (int) $filters->limit   : '') . ' 
               ' . (isset ($filters->offset) ? 'offset ' . (int) $filters->offset : '');
@@ -188,9 +188,15 @@ class Database
     /* if we're requesting an offset/limit, return the number of items remaining as well */
     if (isset ($filters->limit))
     {
-      $query = 'select count(id) as count
+      $query = 'select count(items.id) as count
 
                 from items
+
+                left outer join itemTags
+                on itemTags.item = items.id
+
+                left outer join tags
+                on tags.id = itemTags.tag
 
                 where true
 
@@ -198,15 +204,14 @@ class Database
                 ' . (isset ($filters->type)       ? 'and items.type = "' . static::clean ($filters->type) . '"'     : '') . ' 
                 ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId          : '') . '
                 ' . (isset ($filters->portal)     ? 'and items.portal = "' . static::clean ($filters->portal) . '"' : '') . '
-                ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '');
+                ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '') . '
+                ' . (isset ($filters->tag)        ? 'and tags.tag = "' . static::clean ($filters->tag) . '"'        : '');
       $result = static::$db->query ($query);
 
       $row = $result->fetch_assoc ();
 
-
       $items['remaining'] = max ($row['count'] - $filters->limit - $filters->offset, 0);
     }
-
 
     return $items;
   }
