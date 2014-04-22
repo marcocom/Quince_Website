@@ -11,7 +11,7 @@ class Database
   /* set up the database connection */
   public static function init ()
   {
-    static::$db = new mysqli (null, 'quince', null, 'quince');
+    static::$db = new mysqli (null, 'quince_site', "", 'quince_site');
     static::$db->set_charset ('utf8');
     static::query ("set sql_mode = 'IGNORE_SPACE'");
   }
