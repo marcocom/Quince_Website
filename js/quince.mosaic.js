@@ -28,6 +28,7 @@
             }
         }
     );
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
     $q.Mosaic.Container = $q.Mosaic.extend({
         _mosaic_container:null,
@@ -211,28 +212,27 @@
 
         appendMosaic: function(e){
 
-
-
-            var c = this._mosaic_container.find('.column');
-            var newcol = c[c.length-1];
+            var newcol = $(this._mosaic_container.find('.column').filter(":last"));
 
             this._columns.push(newcol);
+
             var totalw = (this._columns.length) * this.currentColumnWidth;
             $('#slider-container .scroller').width(totalw);
 
-            var mc = new $q.Mosaic.ParentColumn(newcol);
+            $log("MOSAIC APPEND:");
+            $dir(newcol);
+            new $q.Mosaic.ParentColumn(newcol);
 
 
+            this._slider.refresh();
 
             this._loader.hide();
 
             if(this._home){
                 this._home.show();
-
                 Quince._landingAnimation.manageRotationTimer(true);
             }
 
-            this._slider.refresh();
 
         },
 
@@ -249,7 +249,6 @@
             this._el.empty();
 //            this._el = null;
         },
-
 
         showMosaic : function(reveal){
 //            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
@@ -296,11 +295,11 @@
 
         onScrollEnd : function(e){
 //            $log("SCROLL END---------------- X:"+this.x);
-                this.currentScrollX = this._slider.x;
-                this.animateCTA();
-//            if(this._slider.x <= this._slider.maxScrollX) this._loader.show();
-            if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
-//            if(this._enabled && $q._currentModel) $q._currentModel.mosaicScrollHandler(null, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+            this.currentScrollX = this._slider.x;
+            this.animateCTA();
+
+//            if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+            if(this._enabled && $q._currentModel) $q._currentModel.mosaicScrollHandler(null, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
         },
 
 
@@ -340,7 +339,6 @@
 
 
 
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////COLUMNS
     $q.Mosaic.ParentColumn = $q.Mosaic.extend({
         _grid:null,
@@ -359,7 +357,7 @@
             this._super(this._el);
 
 
-            $log("APPEND COLUMN newcol:");
+            $log("MOSAIC COLUMN newcol:");
             $dir(this._el);
             this.initContainer();
         },
@@ -383,7 +381,6 @@
             $q.EventManager.fireEvent(Quince.Event.RESIZE, this);
         }
     });
-
 
 
 
@@ -419,7 +416,6 @@
             this.sizeLetter = this.getItemSize(this._el);
             $log("MOSAIC CELL CONTROLLER -- TYPE:"+this.sizeLetter);
 
-
             var n = this._el.find('.on-state');
             var f = this._el.find('.off-state');
 
@@ -427,7 +423,6 @@
             this.onContent = n.length > 0 ? $(n) : null;
 
             if(this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j" || this.sizeLetter == "f" || this.sizeLetter == "p"){
-
                 if($q.msGesture){
                     this._el.on('MSPointerDown', $.proxy(this.onMsPress, this));
                     this._el.on('MSGestureEnd', $.proxy(this.onMsRelease, this));
@@ -439,11 +434,7 @@
             if(this.sizeLetter == "e"){
                 this.colorizeCell();
                 this.processPageAction(this._el.data('action'));
-
             }
-
-
-
 
             if(this.sizeLetter == "f"){
                 this._carousel = this._el.find('.flexslider').flexslider({
@@ -666,7 +657,6 @@
         }
 
     });
-
 
 
 

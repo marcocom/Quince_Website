@@ -224,6 +224,14 @@
 
 
 
+
+
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Quince.Popup = Class.extend({
         _construct : function(el) {
             //this.api.onClose = this.overlayClose.bind(this);
@@ -675,7 +683,7 @@
 
             if(Quince._mosaic && Quince._mosaic._enabled){
                 Quince._mosaic.showMosaic(false);
-//                Quince._model.removeEventListeners();
+                Quince._model.removeEventListeners();
                 Quince._landingAnimation.manageRotationTimer(true);
                 $log("_mosaic suppressed:");
             }
@@ -683,7 +691,7 @@
 
         destroySecondary : function(){
             if(Quince._secondaryMosaic){
-//                Quince._secondaryModel.removeEventListeners();
+                Quince._secondaryModel.removeEventListeners();
                 Quince._secondaryMosaic.showMosaic(false);
                 if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
                 Quince._secondaryModel = null;
@@ -695,12 +703,14 @@
             $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
 //            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
 
+
             this.destroyPrimary();
 
             this.destroySecondary();
 
             $('#second-container').empty().html(Quince.templates.containers.slider);
 
+            Quince._currentFiltering = filter;
             Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", filter, val);
             Quince._currentModel = Quince._secondaryModel;
 
@@ -711,7 +721,6 @@
             $log("createPeopleModel() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
 //            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
 
-            Quince._currentFiltering = Quince.Constants.Filters.PEOPLE;
 
             Quince.State.destroyPrimary();
 
@@ -719,6 +728,7 @@
 
             $('#second-container').empty().html(Quince.templates.containers.slider);
 
+            Quince._currentFiltering = Quince.Constants.Filters.PEOPLE;
             Quince._secondaryModel = new Quince.Model.People('#second-container', "/backend/author");
             Quince._currentModel = Quince._secondaryModel;
 
@@ -733,6 +743,7 @@
             $('#slider-container').after($('#second-container'));
 
             if(Quince._mosaic){
+                Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
                 Quince._mosaic.showMosaic(true);
                 Quince._model.addEventListeners();
                 Quince._landingAnimation.manageRotationTimer(false);
@@ -747,6 +758,8 @@
         startMosaic : function(e, el, filter){
 
             $log("STARTMOSAIC() filter:"+filter);
+
+            Quince._currentFiltering = filter;
 
             var targetEl = filter == Quince.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
 
@@ -764,6 +777,7 @@
 
         createMainModel : function(e){
             $log("createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+            Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
             if(!Quince._model){
                  Quince.State.removeRefinedModel();
                 Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");

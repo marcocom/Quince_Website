@@ -35,16 +35,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
     );
 
 
-
-
-
-
-
-
-
-
-
-
     ///////////////////////////////////////////////////////////////////////core model backbone class
     $q.Model.CellModel = Backbone.Model.extend({
         defaults:{
@@ -87,6 +77,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         }
 
     });
+
     $q.Model.Person = Backbone.Model.extend({
         defaults:{
             'type' : "p",
@@ -119,8 +110,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         }
 
     });
-
-
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE WALL CLASS
@@ -160,13 +149,13 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             };
 
             this.remainderCounters = {
-                'a':null,
-                'b':null,
-                'c':null,
-                'd':null,
-                'f':null,
-                'h':null,
-                'j':null
+                'a':1,
+                'b':1,
+                'c':1,
+                'd':1,
+                'f':1,
+                'h':1,
+                'j':1
             };
 
             this.modifyPreload();
@@ -188,7 +177,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
         addEventListeners : function(){
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, $.proxy(this.mosaicScrollHandler, this));
-
         },
 
         removeEventListeners : function(){
@@ -207,7 +195,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         nextModel : function(){
             var nextup  = (this._currentColumn+=1);
 
-            $log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload+" firstLoad:"+this._firstLoad+" dataFinished:"+this._dataFinished);
+            $log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload+" firstLoad:"+this._firstLoad+" dataFinished:"+this._dataFinished+" filterMode:"+this._filterMode);
 
             if(nextup < this._totalPreload){
                 this.requestData(nextup);
@@ -255,7 +243,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             _.each($q.DataLetters, function(val){
 
                 var list = _this.returnFiltered(cleaned, val);
-                if(!list.length) return;
+                if(!list.length || _this.remainderCounters[val] <= 0) return;
 
 //                if(_this.remainderCounters[val] > list.length)
 
@@ -268,14 +256,12 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                     'type':val,
                     'limit':list.length,
                     'offset':offset
-                }
+                };
 
                 sendObj.types.push(insertobj);
 
-                if(this._filterMode != $q.Constants.Filters.CHRONOLOGICAL ){
-                    sendObj[this._filterMode] = this._filterVal;
-                }
             });
+            if(this._filterMode != $q.Constants.Filters.CHRONOLOGICAL ) sendObj[this._filterMode] = this._filterVal;
 
             Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
 
@@ -297,20 +283,23 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             _.each(remainders, function(val, key){
                 _this.remainderCounters[key] = val;
             });
-            $log("REMAINDERS:",this.remainderCounters);
-
-
             var style = Math.abs(this._currentColumn % 3);
+
 
             var el = this.injectColumn(style);
+
+
+            $log("MODEL PARSE el:",el);
+
             var style = Math.abs(this._currentColumn % 3);
             var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
-
             var c = new Quince.Model.Column(data, style, el, this._currentColumn, pattern);
 
             this._columns.push(c);
 
-            $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
+            !$q._currentMosaic ? $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this) :
+                $q._currentMosaic.appendMosaic(null);
+
             if(!this._firstLoad) this.nextModel();
         },
 
@@ -328,8 +317,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         }
 
     });
-
-
 
 
 
@@ -516,9 +503,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
 
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////PEOPLE INHERITANCE CLASSES
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////PEOPLE INHERITED CLASSES
     $q.Model.People = $q.Model.Mosaic.extend({
 
         _construct : function(el, dir, filter, val) {
@@ -629,8 +614,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 sendObj = insertobj;
             });
 
-            Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
             $log("SENDOBJ:", sendObj);
+            Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
             $.getJSON(this._directory, { filters: JSON.stringify(sendObj) }, $.proxy(this.parseColumn, this)).error($.proxy(this.loadError, this));
         },
 
@@ -660,13 +645,13 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
             this._columns.push(c);
 
-            $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
+            !$q._currentMosaic ? $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this) :
+                $q._currentMosaic.appendMosaic(null);
+
             if(!this._firstLoad) this.nextModel();
         }
 
     });
-
-
 
     $q.Model.PeopleColumn = $q.Model.Column.extend({
         _cells:[],
