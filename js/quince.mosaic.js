@@ -104,8 +104,10 @@
             this.initCTA();
             this._loader = $(".home-content .loader-anim").hide();
 
-            if(this._home)
+            if(this._home){
                 this._home.show();
+
+            }
 
             this.onResize(null);
             this.showMosaic(true);
@@ -140,9 +142,10 @@
             if($q.isIE8) this._cta.css({'width':'230px'});
 
             setTimeout(function(){
-                // Get the width here
                 _this.animateCTA();
             },2000);
+
+//            _.delay(_this.animateCTA, 2000);
         },
 
         animateCTA : function(){
@@ -201,13 +204,13 @@
                     slider.refresh();
                 }, 0);
 
+//                _.defer(slider.refresh);
             }
 
         },
 
         appendMosaic: function(e){
 
-//            $log("REFRESH MOSAIC!!!!!!");
 
 
             var c = this._mosaic_container.find('.column');
@@ -219,9 +222,15 @@
 
             var mc = new $q.Mosaic.ParentColumn(newcol);
 
+
+
             this._loader.hide();
 
-            if(this._home) this._home.show();
+            if(this._home){
+                this._home.show();
+
+                Quince._landingAnimation.manageRotationTimer(true);
+            }
 
             this._slider.refresh();
 
@@ -243,7 +252,7 @@
 
 
         showMosaic : function(reveal){
-            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
+//            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
             if(reveal){
                 this.addEventHandlers();
                 this._el.show();
@@ -291,7 +300,9 @@
                 this.animateCTA();
 //            if(this._slider.x <= this._slider.maxScrollX) this._loader.show();
             if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+//            if(this._enabled && $q._currentModel) $q._currentModel.mosaicScrollHandler(null, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
         },
+
 
         onFlick : function(e){
             $log("FLICK----------------");
@@ -348,6 +359,8 @@
             this._super(this._el);
 
 
+            $log("APPEND COLUMN newcol:");
+            $dir(this._el);
             this.initContainer();
         },
 
@@ -360,8 +373,10 @@
             }).masonry('bindResize');
 
             var c = this._grid.masonry('getItemElements');
+
             $(c).each(function(e){
                 var mc = new $q.Mosaic.Cell(this, _this._grid);
+
                 _this._cells.push(mc);
             });
 
@@ -402,7 +417,7 @@
 
         initContainer : function(){
             this.sizeLetter = this.getItemSize(this._el);
-//            $log("CELL INIT -- SIZE:"+this.sizeLetter+" parent:"+this._parent);
+            $log("MOSAIC CELL CONTROLLER -- TYPE:"+this.sizeLetter);
 
 
             var n = this._el.find('.on-state');
@@ -411,20 +426,14 @@
             this.offContent = $(f);
             this.onContent = n.length > 0 ? $(n) : null;
 
-            if(this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j" || this.sizeLetter == "f"){
+            if(this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j" || this.sizeLetter == "f" || this.sizeLetter == "p"){
 
                 if($q.msGesture){
                     this._el.on('MSPointerDown', $.proxy(this.onMsPress, this));
                     this._el.on('MSGestureEnd', $.proxy(this.onMsRelease, this));
                 } else {
                     this._el.hammer().on('touch', $.proxy(this.onPress, this));
-//                                    this._el.on('mousedown, touchstart', $.proxy(this.onPress, this));
-                    //                this._el.mousedown($.proxy(this.onPress, this));
-
                     this._el.hammer().on('release', $.proxy(this.onRelease, this));
-//                                    this._el.on('mouseup, touchend', $.proxy(this.onRelease, this));
-                    //                this._el.mouseup($.proxy(this.onRelease, this));
-
                 }
             } else
             if(this.sizeLetter == "e"){
@@ -562,29 +571,51 @@
         },
 
         openInfo : function(){
+
+            var ypoints = {
+                'a':'30%',
+                'b':'0',
+                'f':'50%',
+                'j':'0',
+                'p':'20%'
+            }
+
             if(!this.opened){
                 $q.EventManager.fireEvent($q.Event.OPEN_CELL, this);
                 var t = Math.round(this._el.height() - 20);
                 //if($q.platformDetect.android || $q.platformDetect.blackberry || $q.platformDetect.iphone)
                     this.offContent.addClass('desaturate');
-                if(this.onContent) this.onContent.topZIndex();
+//                if(this.onContent) this.onContent.topZIndex();
                 this.opened = true;
-                if(this.sizeLetter == "f"){
-                    this._carousel.flexslider("pause");
-                    if(this.onContent) this.onContent.css({'top':'60%'});
-                } else {
-                    this.onContent.css({'top':(this.sizeLetter == 'a' ? '30%' : '0')});
-
+                if(this.sizeLetter == "f") this._carousel.flexslider("pause");
+                if(this.onContent){
+                    $q.isIE8 ?
+                        this.onContent.animate({ 'top': ypoints[this.sizeLetter] }, 1000, 'easeOutQuad'):
+                        this.onContent.css({'top':ypoints[this.sizeLetter]});
                 }
+
             }
         },
 
         closeInfo : function(){
+
+            var ypoints = {
+                'a':'100%',
+                'b':'100%',
+                'f':'90%',
+                'j':'100%',
+                'p':'88%'
+            }
             if(this.opened){
                 this.offContent.removeClass('desaturate');
-                if(this.onContent) this.onContent.css({'top':'100%'});
                 this.opened = false;
                 if(this.sizeLetter == "f") this._carousel.flexslider("play");
+
+                if(this.onContent){
+                    $q.isIE8 ?
+                        this.onContent.animate({ 'top': ypoints[this.sizeLetter] }, 1000, 'easeOutQuad'):
+                        this.onContent.css({'top':ypoints[this.sizeLetter]});
+                }
             }
         },
 
@@ -630,10 +661,12 @@
             if(item.hasClass('cell-h')) return 'h';
             if(item.hasClass('cell-i')) return 'i';
             if(item.hasClass('cell-j')) return 'j';
+            if(item.hasClass('cell-p')) return 'p';
             return '';
         }
 
     });
+
 
 
 

@@ -17,14 +17,13 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         <title>Quince :: Welcome</title>
         <meta name="keywords" content="amsterdam, holland, quince, quince technologies, quince amsterdam bv, dutch creative, holland print, online offline, web, web design, website design, graphic design, web engineering, website engineering, java, web consulting, web application, web development, web application development, e-commerce, interactive web, streaming video, interactive display unit, dcms, qrs content management system, content management, 3d development, web consulting, lamp, open source, Strategy, Concepting, Digital Media, Events, Print Media, Marcom Software Development, Digital Training, Interactive Displays">
         <meta name="description" language="US_en" content="A one-stop digital and retail activation agency and was founded in 1996. We take care of strategy, branding, print, interactive, production and software for major international brands in the Telecom, IT and Consumer Electronics industry.">
-<!--        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0, target-densitydpi=device-dpi">-->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta name="HandheldFriendly" content="True">
+
         <meta http-equiv="cleartype" content="on">
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
-        <meta name="HandheldFriendly" content="True">
 
 <!--        <link href='http://fonts.googleapis.com/css?family=Exo+2:400,700' rel='stylesheet' type='text/css'>-->
         <script type="text/javascript" src="//use.typekit.net/lef7vlr.js"></script>
@@ -56,7 +55,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
             <div class="content">
                 <div class="main-logo">
-                    <img id="logo" src="img/logo.png">
+                    <a href="#" data-filter="time"><img id="logo" src="img/logo.png"></a>
                 </div>
                 <div class="nav">
                     <ul class="social">
@@ -381,9 +380,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                 <% if(text.length > 0){ %>
                     <div class="on-state">
                         <div class="content">
-                            <% if(title && title.length > 0){ %>
-                                <h3 class="title"><%= title %></h3>
-                            <% } %>
+                            <h3 class="title"><%= title %></h3>
                             <div class="article">
                                 <h5><%= text %></h5>
                             </div>
@@ -464,26 +461,27 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         </script>
 
         <script type="text/template" id="tpl-personnel">
-            <!-- QUARTER-SIZED IMAGE w/ INFO -->
-            <div class="cell-p cell-box" data-ref="<%= ref %>" data-author="<%= authorId %>" data-sizex="1" data-sizey="1" id="<%= id %>">
+            <div class="cell-p cell-box" data-author="<%= id %>" data-action="author/"<%= id %> data-sizex="2" data-sizey="1">
                 <div class="off-state">
-                    <a href="#"><img src="<%= images %>"></a>
+                    <a href="#"><img src="<%= image %>"></a>
                 </div>
                 <div class="on-state">
                     <div class="content">
-                        <% if(title && title.length > 0){ %>
-                            <h3 class="title"><%= title %></h3>
-                        <% } %>
-                        <div class="author" id="<%= authorId %>">
-                            <a href="#">
-                                <h5 class="name"><%= authorName %></h5>
-                                <h5 class="jobtitle"><%= authorJob %><em></em></h5>
+                        <div class="author" id="<%= id %>">
+                            <a href="<%='#/author/' + id %>">
+                                <h5 class="name"><%= name %></h5>
+                                <h5 class="jobtitle"><%= section %><em></em></h5>
                             </a>
                         </div>
                         <div class="article">
-                            <h5><%= text %></h5>
+                            <h5><%= details %></h5>
                         </div>
-                        <div class="social"></div>
+
+                        <div class="social">
+                            <% if(linkedin.length > 0){ %><a href="<%= linkedin %>" target="_blank"><img src="/img/icon_li.png" ></a><% } %>
+                            <% if(facebook.length > 0){ %><a href="https://www.facebook.com/<%= facebook %>" target="_blank"><img src="/img/icon_fb.png" ></a><% } %>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -510,27 +508,3 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
     </body>
 </html>
-<?php
-function getIdFromUrl($url)
-{
-    $url = preg_replace('/^https:\/\/www.facebook.com/', '', $url);
-    $pos = strrpos($url, '/');
-    if ($pos === false)
-    {
-        return false;
-    }
-
-    $id = trim(substr($url, $pos));
-    if(stripos($id,'?') > 0){
-        $id = trim(substr($id,0,stripos($id,'?')));
-    }
-    if ( empty($id) )
-    {
-        return false;
-    }
-
-
-
-    return $id;
-}
-?>

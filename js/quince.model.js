@@ -7,7 +7,9 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 (function($, $q) {
 
     $q.Model = Class.extend({
-        _construct : function() {}
+        _construct : function() {
+
+        }
     });
 
     $.extend($q.Model,
@@ -85,18 +87,38 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         }
 
     });
+    $q.Model.Person = Backbone.Model.extend({
+        defaults:{
+            'type' : "p",
+            'id' : "",
+            'name' : "",
+            'job' : "",
+            'email' : "",
+            'useFbImage' : "",
+            'facebook': "",
+            'linkedin' : "",
+            'mobile' : "",
+            'details' : "",
+            'section' : "",
+            'image':"/img/people/avatar.jpg"
+        },
+        //{
+        // "id":7,
+        // "name":"Martijn Thieme",
+        // "job":null,
+        // "email":"martijn@quince.nl",
+        // "useFbImage":true,
+        // "facebook":"https:\/\/www.facebook.com\/martijnt?fref=ts",
+        // "linkedin":"http:\/\/www.linkedin.com\/profile\/view?id=2777140&locale=en_US&trk=tyah",
+        // "mobile":"",
+        // "details":"",
+        // "section":"Project leader"
+        // },
+        initialize: function(){
 
+        }
 
-
-
-
-
-
-
-
-
-
-
+    });
 
 
 
@@ -128,13 +150,13 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             this._firstLoad = false;
             this._currentColumn = 0;
             this.offsetCounters = {
-                'a':-1,
-                'b':-1,
-                'c':-1,
-                'd':-1,
-                'f':-1,
-                'h':-1,
-                'j':-1
+                'a':0,
+                'b':0,
+                'c':0,
+                'd':0,
+                'f':0,
+                'h':0,
+                'j':0
             };
 
             this.remainderCounters = {
@@ -153,10 +175,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
         },
 
-        destruct : function(){
-            this.removeEventListeners();
-
-        },
 
         modifyPreload : function(){
             if($q.windowWidth <= 450){
@@ -169,12 +187,12 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
 
         addEventListeners : function(){
-            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
+            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, $.proxy(this.mosaicScrollHandler, this));
 
         },
 
         removeEventListeners : function(){
-            $q.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
+            $q.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler);
         },
 
         mosaicScrollHandler : function(e, xdiff, maxscroll, directx, directy){
@@ -189,7 +207,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         nextModel : function(){
             var nextup  = (this._currentColumn+=1);
 
-//            $log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload+" firstLoad:"+this._firstLoad);
+            $log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload+" firstLoad:"+this._firstLoad+" dataFinished:"+this._dataFinished);
 
             if(nextup < this._totalPreload){
                 this.requestData(nextup);
@@ -198,7 +216,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 this._firstLoad = true;
                 $log("FIRSTLOAD MODELS COMPLETE - INITIALIZING MOSAIC CONTROLLER");
                 Quince.EventManager.fireEvent($q.Event.MODEL_COLUMNS_COMPLETE, this, this._el, this._filterMode);
-//                $q.State.startMosaic(null, this._el, this._filterMode);
 
             } else if(!this._dataFinished){
                 this.requestData(nextup);
@@ -206,7 +223,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
         
         requestData : function(indexnum){
-            $log("LOAD JSON - index:"+indexnum+"  counters:", this.offsetCounters);
+            $log(">>>REQUEST DATA - index:"+indexnum+"  FILTER:"+this._filterMode);
 
 
             var _this = this;
@@ -229,9 +246,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 //                    }
 //                ]
 //            };
-            if(this._filterMode != $q.Constants.Filters.CHRONOLOGICAL ){
-                sendObj[this._filterMode] = this._filterVal;
-            }
+
 
             var style = Math.abs(this._currentColumn % 3);
             var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
@@ -240,12 +255,14 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             _.each($q.DataLetters, function(val){
 
                 var list = _this.returnFiltered(cleaned, val);
-                if(list.length <= 0) return;
+                if(!list.length) return;
 
 //                if(_this.remainderCounters[val] > list.length)
 
-                var offset = _this.offsetCounters[val] += list.length;
-                $log("SET OFFSET-cell:"+val+" CURRENT offset:"+offset+" list:"+list+" length:"+list.length+" remainder:"+_this.remainderCounters[val]);
+                var offset = _this.offsetCounters[val];
+                _this.offsetCounters[val] += list.length;
+
+                $log("DATARETURN EACH-cell:"+val+" CURRENT offset:"+offset+" list:"+list+" length:"+list.length+" remainder:"+_this.remainderCounters[val]);
 
                 var insertobj = {
                     'type':val,
@@ -254,6 +271,10 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 }
 
                 sendObj.types.push(insertobj);
+
+                if(this._filterMode != $q.Constants.Filters.CHRONOLOGICAL ){
+                    sendObj[this._filterMode] = this._filterVal;
+                }
             });
 
             Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
@@ -264,7 +285,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         returnFiltered : function(arr, terms){
             var newarr = _.filter(arr, function(val){
                 return val == terms;
-            });
+            }, this);
             return newarr;
         },
 
@@ -276,6 +297,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             _.each(remainders, function(val, key){
                 _this.remainderCounters[key] = val;
             });
+            $log("REMAINDERS:",this.remainderCounters);
 
 
             var style = Math.abs(this._currentColumn % 3);
@@ -288,13 +310,12 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
             this._columns.push(c);
 
-//            !this._firstLoad ? this.nextModel() : $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
-
             $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
             if(!this._firstLoad) this.nextModel();
         },
 
         loadError : function(error){
+            $log("\n\n======================================\nDATAERROR!!!!!!!\n===========================================\n\n\n");
             this._dataFinished = true;
             Quince.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler);
             Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_NODATA, this);
@@ -307,19 +328,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         }
 
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -365,7 +373,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
         instantiateCells : function(){
             var _this = this;
-
+            $log("MAIN COLUMN INSTANTIATECELLS()");
             this._collection.each(function(model) {
 
                 var m = _this.generateImageLink(model);
@@ -378,8 +386,9 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             var images = model.get('images');
             var type = model.get('type');
             var isAncillary = $.inArray(type, $q.AncillaryLetters) > -1;
+//            $log("IMAGE GENERATE:"+type);
 
-            if(!(images.length == 0 || isAncillary || type == 'h')){
+            if(!(images.length == 0 || isAncillary || type == 'h' || type == 'i')){
                 _(images).each(function(val){
                    var newtxt = Quince.cellImageDirectory + val.id + "." + val.extension;
                    newImages.push(newtxt);
@@ -389,20 +398,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             }
 
             return model;
-        },
-
-        sub_template : function (str, data) {
-            // match "<% include template-id %>"
-            return _.template(
-                str.replace(
-                    /<%\s*include\s*(.*?)\s*%>/g,
-                    function(match, templateId) {
-                        var el = $('#' + templateId);
-                        return el ? el.html() : '';
-                    }
-                ),
-                data
-            );
         },
 
         patternFormatData : function(model){ //----------------------------------------------------THIS NEEDS CLEANUP
@@ -418,7 +413,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
                 if($.inArray(cell_letter, $q.AncillaryLetters) > -1){ //insert ancillary object when pattern calls for it. (not CMS fed)
 
-                    cell_letter != "i" ? ancil_obj = this.pullAncillaryData(cell_letter) : ancil_obj = {'id':'4', 'type':'i'};
+                    cell_letter != "i" ? ancil_obj = this.pullAncillaryData(cell_letter) : ancil_obj = {'id':uId, 'type':'i'};
 
                 } else {
 
@@ -427,16 +422,10 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                         if(cl == cell_letter)
                             ancil_obj = model.splice(k, 1)[0];
                     }
-
-
                 }
-//
-//                if($q.isEmpty(ancil_obj) == false){
-//                    if(ancil_obj.id) ancil_obj.id = uId;
-//
-//                }
-                if(!$q.isEmpty(ancil_obj)) newArr.push(ancil_obj);
+                if(!_.isEmpty(ancil_obj)) newArr.push(ancil_obj);
             }
+
             return newArr;
         },
 
@@ -484,21 +473,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CELL CLASS
     $q.Model.CellView = Backbone.View.extend({
         _tplname:null,
@@ -512,7 +486,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             this._column = col;
             this._style = this._model.get("type");
             this._tplname = 'cell_'+this._style;
-
+//            $log("CELL CREATED", this._model.toJSON());
             this.render();
         },
 
@@ -532,6 +506,239 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         onClick: function( e ){
             $log( "CLICK EVENT:"+ e.currentTarget );
         }
+    });
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////PEOPLE INHERITANCE CLASSES
+    $q.Model.People = $q.Model.Mosaic.extend({
+
+        _construct : function(el, dir, filter, val) {
+            this._el = $(el).hide();
+            this._directory = dir;
+//            this._super(this._el);
+
+            var m = this._el.find('.mosaic-container');
+            this._mosaic = $(m);
+
+            this._filterMode = $q.Constants.Filters.PEOPLE;
+            this._filterVal = "default";
+            this._firstLoad = false;
+
+            this._totalPreload = 3;
+            this._currentColumn = 0;
+
+            this.offsetCounters = {
+                'a':0,
+                'b':0,
+                'c':0,
+                'd':0,
+                'f':0,
+                'h':0,
+                'j':0,
+                'p':0
+            };
+
+            this.remainderCounters = {
+                'a':null,
+                'b':null,
+                'c':null,
+                'd':null,
+                'f':null,
+                'h':null,
+                'j':null,
+                'p':null
+            };
+
+            this.modifyPreload();
+            this.initModel();
+            this.addEventListeners();
+
+        },
+
+        modifyPreload : function(){
+            if($q.windowWidth <= 450){
+                this._totalPreload = 3;
+            } else if($q.windowHeight >= 970 ){
+                this._totalPreload = 7;
+            }
+        },
+
+
+        initModel : function(){
+            $log("-------------------------MODEL PEOPLE INIT-----------------------------");
+            this.requestData(this._currentColumn);
+        },
+
+        requestData : function(indexnum){
+//            $log("LOAD JSON - index:"+indexnum+"  counters:", this.offsetCounters);
+
+
+            var _this = this;
+
+            var sendObj = {
+                'types':[]
+            };
+//            var example = {
+//                'customer':123,
+//                'types':[
+//                    {
+//                        'type':'a',
+//                        'offset':0,
+//                        'limit':1
+//                    },
+//                    {
+//                        'type':'b',
+//                        'offset':0,
+//                        'limit':1
+//                    }
+//                ]
+//            };
+
+
+            var style = Math.abs(this._currentColumn % 3);
+            var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
+            var cleaned = _.difference(pattern, $q.AncillaryLetters); //removed front-end handled types
+
+            $log("IMPLIMENT PATTERN:"+pattern+" requestTypes:"+cleaned);
+            _.each($q.DataLetters, function(val){
+
+                var list = _this.returnFiltered(cleaned, val);
+                if(list.length <= 0) return;
+
+//                if(_this.remainderCounters[val] > list.length)
+
+                var offset = _this.offsetCounters[val];
+                _this.offsetCounters[val] += list.length;
+
+                $log("SET OFFSET-cell:"+val+" CURRENT:"+indexnum+" offset:"+offset+" list:"+list+" INCR:"+_this.offsetCounters[val]);
+
+                var insertobj = {
+                    'limit':list.length,
+                    'offset':offset
+                }
+
+                sendObj = insertobj;
+            });
+
+            Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
+            $log("SENDOBJ:", sendObj);
+            $.getJSON(this._directory, { filters: JSON.stringify(sendObj) }, $.proxy(this.parseColumn, this)).error($.proxy(this.loadError, this));
+        },
+
+        returnFiltered : function(arr, terms){
+            var newarr = _.filter(arr, function(val){
+                return val == terms;
+            }, this);
+            return newarr;
+        },
+
+        parseColumn : function($result){
+            var _this = this;
+            var data = $result["authors"];//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<TEMP PATCH: slize
+
+
+
+            $log("PARSE:", data);
+
+
+            var style = Math.abs(this._currentColumn % 3);
+
+            var el = this.injectColumn(style);
+
+            var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
+
+            var c = new Quince.Model.PeopleColumn(data, style, el, this._currentColumn, pattern);
+
+            this._columns.push(c);
+
+            $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this);
+            if(!this._firstLoad) this.nextModel();
+        }
+
+    });
+
+
+
+    $q.Model.PeopleColumn = $q.Model.Column.extend({
+        _cells:[],
+        _style:null,
+        _index:0,
+        _collection:null,
+        _pattern:null,
+        _construct : function(m, index, el, i, pat) {
+            this._el = $(el);
+            this._style = index;
+            this._index = i;
+            this._pattern = pat;
+
+
+
+            this.initModel(m);
+        },
+
+        initModel : function(model){
+
+            //collection is not used, just plain array, since mixed-model types of unique Author data attributes
+            var columnCollection = Backbone.Collection.extend({
+                model: $q.Model.Person
+            });
+            var patm = this.patternFormatData(model);
+
+            var newarr = $.merge(model, patm);
+
+            var cleaned = newarr.filter(function(n){ return _.isEmpty(n) != true });
+
+            var castm = $.map($.makeArray(cleaned), function(post) {
+                var isAncillary = _.has(post, 'type');
+                var mc = isAncillary ?
+                    new Quince.Model.CellModel(post):
+                    new Quince.Model.Person(post);
+                return mc;
+            });
+
+            this._collection = _.shuffle(castm);
+
+            $log("COLLECTION:",this._collection);
+
+
+            this.instantiateCells();
+        },
+
+        instantiateCells : function(){
+            var _this = this;
+            _.each(this._collection, function(model) {
+
+                var m = model.get('type') == "p" ? _this.generatePersonImageLink(model) :_this.generateImageLink(model);
+                var c = new Quince.Model.CellView(m, _this._el);
+            });
+        },
+
+        generatePersonImageLink : function(model){
+            var id = model.get('id');
+            var type = model.get('type');
+            var useFB = model.get('useFbImage');
+            var isAncillary = $.inArray(type, $q.AncillaryLetters) > -1;
+
+            var img = useFB ?
+                "https://graph.facebook.com/"+model.get('facebook')+"/picture?width=235&height=272": //272 full 134 half
+                "img/people/"+id+".jpg";
+
+            model.set('image', img, false);
+
+//            $log("IMAGE PEOPLE LINK:"+img);
+
+            return model;
+        }
+
     });
 
 

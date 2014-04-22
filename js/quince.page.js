@@ -38,6 +38,7 @@
 
     $q.Page.Home = $q.Page.extend({
         cellRouter:null,
+        _logo:null,
         toplinks:null,
         currentContent:null,
         contentSwap:null,
@@ -51,7 +52,7 @@
             this._el = $(el);
             this._super(this._el);
             this.toplinks = $(this._el.find('.header .toplink'));
-
+            this._logo = $('#logo').parent('a');
             $q._landingAnimation = new $q.Page.IntroColumn(this._el.find('#slider-container .scroller .homepage .intro-block')[0]);
             this.refinedNav = new $q.Page.RefineNav(this._el.find('.nav')[0]);
             this.initPage();
@@ -63,6 +64,13 @@
             this.closeButton = $('.sub-close-cta a').click($.proxy(this.pageCollapse, this));
 
             this.toplinks.click($.proxy(this.clickAnimate, this));
+            $log("LOGO:");
+            $dir(this._logo)
+            this._logo.click(function(e){
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                $q.cellRouter.navigate("/", {trigger:true});
+            });
 
 //            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
 
@@ -85,11 +93,11 @@
 
 
             $q.cellRouter = new router;
-
-            $q.cellRouter.on('route:loadView', function( route, action ){
-                $log(route + "_" + action); // dashboard_graph
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, this);
-            });
+//
+//            $q.cellRouter.on('route:loadView', function( route, action ){
+//                $log(route + "_" + action); // dashboard_graph
+//                $q.EventManager.fireEvent(Quince.Event.ROUTER_MAIN_MOSAIC, this);
+//            });
 
             $q.cellRouter.on('route:getPost', function (id) {
                 $log( "Get post number " + id );
@@ -124,17 +132,16 @@
             $q.cellRouter.on('route:defaultRoute', function (action) {
                 $log( "DEFAULT ROUTE:" + action + " subcontentOpened:"+this.subcontentOpened);
 
-                if(action == "jobs" || action == "about" || action == "contact" || action == "people"){
+                if(action == "jobs" || action == "about" || action == "contact"){
                     _this.remoteAnimate(action);
-
+                } else if(action == "people"){
+                    $q.EventManager.fireEvent(Quince.Event.REFINE_PEOPLE, _this);
+                    $log("--------------------POEPLE ROUTE-------------------")
                 } else if(action == null){
                     $log("DEFAULT ROUTE - NO ACTION");
                     if(_this.subcontentOpened == true) _this.pageCollapse(null);
-
+                    $q.EventManager.fireEvent(Quince.Event.ROUTER_MAIN_MOSAIC, _this, action || null);
                 }
-
-//                if(!Quince._mosaic)
-                    $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, _this, action || null);
             });
 
 //            Backbone.emulateHTTP = true;
@@ -172,10 +179,10 @@
             var ref = "." + clicksource.id + "-content";
             var $content = $(ref);
 
-            $q.cellRouter.navigate(clicksource.id, {trigger:false});
+            $q.cellRouter.navigate(clicksource.id, {trigger:true});
             //$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
 
-            this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
+            //this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
         },
 
         pageAnimateFromClosed : function(el){
