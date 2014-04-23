@@ -148,12 +148,13 @@ class Database
 
               where true
 
-              ' . (isset ($filters->id)         ? 'and items.id = ' . (int) $filters->id                          : '') . ' 
-              ' . (isset ($filters->type)       ? 'and types.type = "' . static::clean ($filters->type) . '"'     : '') . ' 
-              ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId            : '') . '
-              ' . (isset ($filters->portal)     ? 'and items.portal = "' . static::clean ($filters->portal) . '"' : '') . '
-              ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '') . '
-              ' . (isset ($filters->tag)        ? 'and tags.tag = "' . static::clean ($filters->tag) . '"'        : '') . '
+              ' . (isset ($filters->id)         ? 'and items.id = ' .       (int) $filters->id                     : '') . ' 
+              ' . (isset ($filters->type)       ? 'and types.type = "' .    static::clean ($filters->type)   . '"' : '') . ' 
+              ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId             : '') . '
+              ' . (isset ($filters->authorId)   ? 'and items.author = ' .   (int) $filters->authorId               : '') . '
+              ' . (isset ($filters->portal)     ? 'and items.portal = "' .  static::clean ($filters->portal) . '"' : '') . '
+              ' . (isset ($filters->ref)        ? 'and items.ref = "' .     static::clean ($filters->ref)    . '"' : '') . '
+              ' . (isset ($filters->tag)        ? 'and tags.tag = "' .      static::clean ($filters->tag)    . '"' : '') . '
 
               order by date
 
@@ -204,12 +205,13 @@ class Database
 
                 where true
 
-                ' . (isset ($filters->id)         ? 'and items.id = ' . (int) $filters->id                          : '') . ' 
-                ' . (isset ($filters->type)       ? 'and items.type = "' . static::clean ($filters->type) . '"'     : '') . ' 
-                ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId          : '') . '
-                ' . (isset ($filters->portal)     ? 'and items.portal = "' . static::clean ($filters->portal) . '"' : '') . '
-                ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '') . '
-                ' . (isset ($filters->tag)        ? 'and tags.tag = "' . static::clean ($filters->tag) . '"'        : '');
+                ' . (isset ($filters->id)         ? 'and items.id = ' .       (int) $filters->id                     : '') . ' 
+                ' . (isset ($filters->type)       ? 'and items.type = "' .    static::clean ($filters->type) . '"'   : '') . ' 
+                ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId             : '') . '
+                ' . (isset ($filters->authorId)   ? 'and items.author = ' .   (int) $filters->authorId               : '') . '
+                ' . (isset ($filters->portal)     ? 'and items.portal = "' .  static::clean ($filters->portal) . '"' : '') . '
+                ' . (isset ($filters->ref)        ? 'and items.ref = "' .     static::clean ($filters->ref) . '"'    : '') . '
+                ' . (isset ($filters->tag)        ? 'and tags.tag = "' .      static::clean ($filters->tag) . '"'    : '');
       $result = static::$db->query ($query);
 
       $row = $result->fetch_assoc ();
