@@ -136,6 +136,9 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
             this._filterMode = filter || $q.Constants.Filters.CHRONOLOGICAL;
             this._filterVal = val || "default";
+
+            this._filterDefault = (this._filterMode == $q.Constants.Filters.CUSTOMER || this._filterMode == $q.Constants.Filters.AUTHOR) && this._filterVal != 'all';
+
             this._firstLoad = false;
             this._currentColumn = 0;
             this.offsetCounters = {
@@ -188,7 +191,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
         
         initModel : function(){
-//            $log("-------------------------MODEL MOSAIC INIT-----------------------------");
+            $log("-------------------------MODEL MOSAIC INIT-----------------------------filterMode:"+this._filterMode+" filterVal:"+this._filterVal);
             this.requestData(this._currentColumn);
         },
         
@@ -211,7 +214,6 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
         },
         
         requestData : function(indexnum){
-//            $log(">>>REQUEST DATA - index:"+indexnum+"  FILTER:"+this._filterMode);
 
 
             var _this = this;
@@ -237,7 +239,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
             var style = Math.abs(this._currentColumn % 3);
-            var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
+
+            var pattern =  $q.Patterns[this._filterMode][(this._filterDefault ? "default" : this._filterVal)][style];
             var cleaned = _.difference(pattern, $q.AncillaryLetters); //removed front-end handled types
 
             _.each($q.DataLetters, function(val){
@@ -261,10 +264,12 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
                 sendObj.types.push(insertobj);
 
             });
-            if(this._filterMode != $q.Constants.Filters.CHRONOLOGICAL ) sendObj[this._filterMode] = this._filterVal;
+            if((this._filterMode != $q.Constants.Filters.CHRONOLOGICAL || this._filterDefault) && this._filterVal != 'all') sendObj[this._filterMode] = this._filterVal;
 
             Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADING , this);
 
+            $log(">>>REQUEST DATA - index:"+indexnum+"  FILTER:"+this._filterMode+" SENDOBJ:");
+            $dir(sendObj);
             $.getJSON(this._directory, { filters: JSON.stringify(sendObj) }, $.proxy(this.parseColumn, this)).error($.proxy(this.loadError, this));
         },
 
@@ -289,16 +294,18 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             var el = this.injectColumn(style);
 
 
-//            $log("MODEL PARSE el:",el);
+            $log("MODEL PARSE result:");
+            $dir(data);
+            $log("REMAINDERS:");
+            $dir(this.remainderCounters);
 
             var style = Math.abs(this._currentColumn % 3);
-            var pattern = $q.Patterns[this._filterMode][this._filterVal][style];
+            var pattern =  $q.Patterns[this._filterMode][(this._filterDefault ? "default" : this._filterVal)][style];
             var c = new Quince.Model.Column(data, style, el, this._currentColumn, pattern);
 
             this._columns.push(c);
 
-            !$q._currentMosaic ? $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this) :
-                $q._currentMosaic.appendMosaic(null);
+            !$q._currentMosaic ? $q.EventManager.fireEvent(Quince.Event.MODEL_COLUMN_LOADED, this) : $q._currentMosaic.appendMosaic(null);
 
             if(!this._firstLoad) this.nextModel();
         },

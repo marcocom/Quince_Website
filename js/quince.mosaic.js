@@ -434,6 +434,10 @@
             if(this.sizeLetter == "e"){
                 this.colorizeCell();
                 this.processPageAction(this._el.data('action'));
+            } else
+            if(this.sizeLetter == "c"){
+                this.colorizeCell();
+                this.processClientAction(this._el.data('client'));
             }
 
             if(this.sizeLetter == "f"){
@@ -533,6 +537,18 @@
                     e.preventDefault();
 //                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
                     $q.cellRouter.navigate(actionString, {trigger:true});
+                })
+                this._el.css({'cursor':'pointer'});
+            }
+        },
+        processClientAction : function(actionString){
+            //$log("ACTION:"+actionString);
+
+            if(actionString != "none"){
+                this._el.click(function(e){
+                    e.preventDefault();
+//                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
+                    $q.cellRouter.navigate("client/"+actionString, {trigger:true});
                 })
                 this._el.css({'cursor':'pointer'});
             }

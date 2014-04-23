@@ -345,7 +345,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
             <!-- QUARTER-SIZED CLIENT-LOGO w/ NO INFO -->
             <div class="cell-c cell-box" data-portal="<%= portal %>" data-ref="<%= ref %>" data-date="<%= date %>" data-viewed="<%= viewed %>" data-sizex="1" data-sizey="1" data-client="<%= customerId %>" id="<%= id %>">
                 <div class="off-state">
-                    <a href="#"><img src="<%= images %>"></a>
+                    <a href="/#/client/<%= customerId %>"><img src="<%= images %>"></a>
                 </div>
             </div>
         </script>
@@ -473,7 +473,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                 <div class="on-state">
                     <div class="content">
                         <div class="author" id="<%= id %>">
-                            <a href="<%='#/author/' + id %>">
+                            <a href="<%='/#/author/' + id %>">
                                 <h5 class="name"><%= name %></h5>
                                 <h5 class="jobtitle"><%= section %><em></em></h5>
                             </a>
