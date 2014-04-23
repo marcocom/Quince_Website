@@ -219,7 +219,7 @@
             var totalw = (this._columns.length) * this.currentColumnWidth;
             $('#slider-container .scroller').width(totalw);
 
-            $log("MOSAIC APPEND:");
+//            $log("MOSAIC APPEND:");
             $dir(newcol);
             new $q.Mosaic.ParentColumn(newcol);
 
@@ -259,7 +259,7 @@
                 this._cta.show();
                 this._slider.enable();
                 this._enabled = true;
-                $log("-----------MOSAIC:"+this.filteringMode+" SHOW!!!");
+//                $log("-----------MOSAIC:"+this.filteringMode+" SHOW!!!");
             }  else {
                 this.removeEventHandlers();
                 this._el.hide();
@@ -267,7 +267,7 @@
                 this._cta.hide();
                 this._slider.disable();
                 this._enabled = false;
-                $log("-----------MOSAIC:"+this.filteringMode+" HIDE!!!");
+//                $log("-----------MOSAIC:"+this.filteringMode+" HIDE!!!");
             }
         },
 
@@ -304,7 +304,7 @@
 
 
         onFlick : function(e){
-            $log("FLICK----------------");
+//            $log("FLICK----------------");
             $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
         },
 
@@ -357,7 +357,7 @@
             this._super(this._el);
 
 
-            $log("MOSAIC COLUMN newcol:");
+//            $log("MOSAIC COLUMN newcol:");
             $dir(this._el);
             this.initContainer();
         },
@@ -414,7 +414,7 @@
 
         initContainer : function(){
             this.sizeLetter = this.getItemSize(this._el);
-            $log("MOSAIC CELL CONTROLLER -- TYPE:"+this.sizeLetter);
+//            $log("MOSAIC CELL CONTROLLER -- TYPE:"+this.sizeLetter);
 
             var n = this._el.find('.on-state');
             var f = this._el.find('.off-state');

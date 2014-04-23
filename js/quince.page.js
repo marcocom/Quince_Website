@@ -85,19 +85,12 @@
                     "portal/:id": "getPortal",
                     "tag/:id": "getTag",
                     "search/:query":        "search",  // #/search/subject
-//                    ":route/:action": "loadView",
-                    // <a href="http://example.com/#/dashboard/graph">Load Route/Action View</a>
                     "*action": "defaultRoute" // Backbone will try match the route above first
                 }
             });
 
 
             $q.cellRouter = new router;
-//
-//            $q.cellRouter.on('route:loadView', function( route, action ){
-//                $log(route + "_" + action); // dashboard_graph
-//                $q.EventManager.fireEvent(Quince.Event.ROUTER_MAIN_MOSAIC, this);
-//            });
 
             $q.cellRouter.on('route:getPost', function (id) {
                 $log( "Get post number " + id );
@@ -137,6 +130,9 @@
                 } else if(action == "people"){
                     $q.EventManager.fireEvent(Quince.Event.REFINE_PEOPLE, _this);
                     $log("--------------------POEPLE ROUTE-------------------")
+                } else if(action == "clients"){
+                    $q.EventManager.fireEvent(Quince.Event.REFINE_CLIENTS, _this);
+                    $log("--------------------CLIENT ROUTE-------------------")
                 } else if(action == null){
                     $log("DEFAULT ROUTE - NO ACTION");
                     if(_this.subcontentOpened == true) _this.pageCollapse(null);
@@ -333,6 +329,11 @@
     $q.Page.RefineNav = $q.Page.extend({
         portalnav:null,
         filternav:null,
+        searchform:null,
+        searchfield:null,
+        searchbutton:null,
+        _defaultSearchText:null,
+        _searchIsOpened:false,
         _construct : function(el){
             this._el = $(el);
             this._super(this._el);
@@ -340,8 +341,10 @@
             this.portalnav = $(this._el.find('ul.social')[0]);
             this.filternav = $(this._el.find('ul.refinement')[0]);
 
+
             this.initPortal();
             this.initRefine();
+            this.initSearch();
         },
         initPortal : function(){
             var _this = this;
@@ -357,41 +360,68 @@
         initRefine : function(){
             var _this = this;
 
+
             this.filternav.find('a').each(function(el){
                 $(this).click(function(e){
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     var f = $(this).data('filter');
                     if(f == $q.Constants.Filters.CHRONOLOGICAL){
-                        $q.cellRouter.navigate("/", {trigger:true})
-                    } else {
-                        $q.cellRouter.navigate("filter/"+f, {trigger:true});
-//                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
+                        $q.cellRouter.navigate("/", {trigger:true});
+                    } else if (f == $q.Constants.Filters.CUSTOMER) {
+                        $q.cellRouter.navigate("/clients", {trigger:true});
+                    } else if(f == $q.Constants.Filters.TAG){
+//                        $q.cellRouter.navigate("filter/"+f, {trigger:true});
+
                     }
                 });
             });
 
+        },
+        initSearch : function(){
+            this.searchform = $(this.filternav.find('.search-bar-body form')[0]);
+            this.searchfield = $(this.searchform.find('.text')[0]);
+            this.searchbutton = $(this.searchform.find('.submit')[0]);
+
+            this.searchbutton.click(this.searchButtonAction.bind(this));
+            this.searchfield.focus(this.searchTextFocus.bind(this))
+                .blur(this.searchTextBlur.bind(this)).hide();
+
+            this._defaultSearchText = this.searchfield.val();
+        },
+        searchTextFocus : function(e) {
+
+            if(this.searchfield.val() == this._defaultSearchText)
+                this.searchfield.val("");
+        },
+        searchTextBlur : function(e) {
+            if(this.searchfield.val() == "")
+                this.searchfield.val(this._defaultSearchText);
+        },
+        searchButtonAction : function(e){
+            if (e instanceof $.Event) {
+                var target = $(e.target);
+                e.preventDefault();
+            }
+            if(!this._searchIsOpened){
+
+                this._searchIsOpened = true;
+                this.searchfield.mouseleave(this.hideField.bind(this)).show();
+            } else {
+                var searchQuery = this.searchfield.val()  == this._defaultSearchText ? "default" : encodeURIComponent(this.searchfield.val());
+                $log("========SEARCH:"+searchQuery);
+                this.hideField(null);
+            }
+
+
+        },
+        hideField:function(e){
+            this.searchfield.hide();
+            this.searchfield.val(this._defaultSearchText);
+
+            this._searchIsOpened = false;
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -552,17 +582,6 @@
         }
 
     });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
