@@ -4,7 +4,7 @@
 $host="localhost"; // Host name 
 $username="quince_site"; // Mysql username
 $password=""; // Mysql password
-$db_name="quince_site"; // Database name 
+$db_name="quince_site"; // Database name
 
 // Connect to server and select database.
 mysql_connect("$host", "$username", "$password")or die("cannot connect"); 

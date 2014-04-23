@@ -11,7 +11,7 @@ class Database
   /* set up the database connection */
   public static function init ()
   {
-    static::$db = new mysqli (null, 'quince', null, 'quince');
+    static::$db = new mysqli (null, 'quince_site', "", 'quince_site');
     static::$db->set_charset ('utf8');
     static::query ("set sql_mode = 'IGNORE_SPACE'");
   }
@@ -51,7 +51,7 @@ class Database
 
               ' . (isset ($filters->id) ? 'and id = ' . (int) $filters->id : '') . ' 
 
-              order by id
+              order by name
 
               ' . (isset ($filters->limit)  ? 'limit ' . (int) $filters->limit   : '') . ' 
               ' . (isset ($filters->offset) ? 'offset ' . (int) $filters->offset : '');
@@ -108,6 +108,11 @@ class Database
         $copy->offset = $type->offset;
         $copy->limit  = $type->limit;
 
+        if (isset ($type->tag))
+        {
+          $copy->tag = $type->tag;
+        }
+
         $temp = static::getItems ($copy);
 
         $items['items'] = array_merge ($temp['items'], $items['items']);
@@ -135,13 +140,20 @@ class Database
               left outer join authors
               on authors.id = items.author
 
+              left outer join itemTags
+              on itemTags.item = items.id
+
+              left outer join tags
+              on tags.id = itemTags.tag
+
               where true
 
               ' . (isset ($filters->id)         ? 'and items.id = ' . (int) $filters->id                          : '') . ' 
               ' . (isset ($filters->type)       ? 'and types.type = "' . static::clean ($filters->type) . '"'     : '') . ' 
-              ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId          : '') . '
+              ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId            : '') . '
               ' . (isset ($filters->portal)     ? 'and items.portal = "' . static::clean ($filters->portal) . '"' : '') . '
               ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '') . '
+              ' . (isset ($filters->tag)        ? 'and tags.tag = "' . static::clean ($filters->tag) . '"'        : '') . '
 
               order by date
 
@@ -149,34 +161,46 @@ class Database
               ' . (isset ($filters->offset) ? 'offset ' . (int) $filters->offset : '');
     $result = static::query ($query);
 
+    $itemId = null;
     while ($row = $result->fetch_assoc ())
     {
-      $item = new Item ($row['id']);
-      $item->title        = $row['title'];
-      $item->text         = $row['text'];
-      $item->type         = $row['type'];
-      $item->customerId   = (int) $row['customerId'];
-      $item->customerName = $row['customerName'];
-      $item->authorId     = (int) $row['authorId'];
-      $item->authorName   = $row['authorName'];
-      $item->portal       = $row['portal'];
-      $item->ref          = $row['ref'];
-      $item->date         = $row['date'];
-      $item->url          = $row['url'];
-      $item->comment      = $row['comment'];
+      if ($itemId != $row['id'])
+      {
+        $itemId = $row['id'];
 
-      $item->images = static::getImages (array ('itemId' => $item->id));
-      $item->tags   = static::getTags (array ('itemId' => $item->id));
+        $item = new Item ($itemId);
+        $item->title        = $row['title'];
+        $item->text         = $row['text'];
+        $item->type         = $row['type'];
+        $item->customerId   = (int) $row['customerId'];
+        $item->customerName = $row['customerName'];
+        $item->authorId     = (int) $row['authorId'];
+        $item->authorName   = $row['authorName'];
+        $item->portal       = $row['portal'];
+        $item->ref          = $row['ref'];
+        $item->date         = $row['date'];
+        $item->url          = $row['url'];
+        $item->comment      = $row['comment'];
 
-      $items['items'][] = $item;
+        $item->images = static::getImages (array ('itemId' => $item->id));
+        $item->tags   = static::getTags (array ('itemId' => $item->id));
+
+        $items['items'][] = $item;
+      }
     }
 
     /* if we're requesting an offset/limit, return the number of items remaining as well */
     if (isset ($filters->limit))
     {
-      $query = 'select count(id) as count
+      $query = 'select count(items.id) as count
 
                 from items
+
+                left outer join itemTags
+                on itemTags.item = items.id
+
+                left outer join tags
+                on tags.id = itemTags.tag
 
                 where true
 
@@ -184,15 +208,14 @@ class Database
                 ' . (isset ($filters->type)       ? 'and items.type = "' . static::clean ($filters->type) . '"'     : '') . ' 
                 ' . (isset ($filters->customerId) ? 'and items.customer = ' . (int) $filters->customerId          : '') . '
                 ' . (isset ($filters->portal)     ? 'and items.portal = "' . static::clean ($filters->portal) . '"' : '') . '
-                ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '');
+                ' . (isset ($filters->ref)        ? 'and items.ref = "' . static::clean ($filters->ref) . '"'       : '') . '
+                ' . (isset ($filters->tag)        ? 'and tags.tag = "' . static::clean ($filters->tag) . '"'        : '');
       $result = static::$db->query ($query);
 
       $row = $result->fetch_assoc ();
 
-
       $items['remaining'] = max ($row['count'] - $filters->limit - $filters->offset, 0);
     }
-
 
     return $items;
   }

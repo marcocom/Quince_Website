@@ -38,6 +38,7 @@
 
     $q.Page.Home = $q.Page.extend({
         cellRouter:null,
+        _logo:null,
         toplinks:null,
         currentContent:null,
         contentSwap:null,
@@ -51,7 +52,7 @@
             this._el = $(el);
             this._super(this._el);
             this.toplinks = $(this._el.find('.header .toplink'));
-
+            this._logo = $('#logo').parent('a');
             $q._landingAnimation = new $q.Page.IntroColumn(this._el.find('#slider-container .scroller .homepage .intro-block')[0]);
             this.refinedNav = new $q.Page.RefineNav(this._el.find('.nav')[0]);
             this.initPage();
@@ -63,6 +64,13 @@
             this.closeButton = $('.sub-close-cta a').click($.proxy(this.pageCollapse, this));
 
             this.toplinks.click($.proxy(this.clickAnimate, this));
+            $log("LOGO:");
+            $dir(this._logo)
+            this._logo.click(function(e){
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                $q.cellRouter.navigate("/", {trigger:true});
+            });
 
 //            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
 
@@ -77,19 +85,12 @@
                     "portal/:id": "getPortal",
                     "tag/:id": "getTag",
                     "search/:query":        "search",  // #/search/subject
-//                    ":route/:action": "loadView",
-                    // <a href="http://example.com/#/dashboard/graph">Load Route/Action View</a>
                     "*action": "defaultRoute" // Backbone will try match the route above first
                 }
             });
 
 
             $q.cellRouter = new router;
-
-            $q.cellRouter.on('route:loadView', function( route, action ){
-                $log(route + "_" + action); // dashboard_graph
-                $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, this);
-            });
 
             $q.cellRouter.on('route:getPost', function (id) {
                 $log( "Get post number " + id );
@@ -124,17 +125,19 @@
             $q.cellRouter.on('route:defaultRoute', function (action) {
                 $log( "DEFAULT ROUTE:" + action + " subcontentOpened:"+this.subcontentOpened);
 
-                if(action == "jobs" || action == "about" || action == "contact" || action == "people"){
+                if(action == "jobs" || action == "about" || action == "contact"){
                     _this.remoteAnimate(action);
-
+                } else if(action == "people"){
+                    $q.EventManager.fireEvent(Quince.Event.REFINE_PEOPLE, _this);
+                    $log("--------------------POEPLE ROUTE-------------------")
+                } else if(action == "clients"){
+                    $q.EventManager.fireEvent(Quince.Event.REFINE_CLIENTS, _this);
+                    $log("--------------------CLIENT ROUTE-------------------")
                 } else if(action == null){
                     $log("DEFAULT ROUTE - NO ACTION");
                     if(_this.subcontentOpened == true) _this.pageCollapse(null);
-
+                    $q.EventManager.fireEvent(Quince.Event.ROUTER_MAIN_MOSAIC, _this, action || null);
                 }
-
-//                if(!Quince._mosaic)
-                    $q.EventManager.fireEvent(Quince.Event.ROUTER_CALL, _this, action || null);
             });
 
 //            Backbone.emulateHTTP = true;
@@ -172,10 +175,10 @@
             var ref = "." + clicksource.id + "-content";
             var $content = $(ref);
 
-            $q.cellRouter.navigate(clicksource.id, {trigger:false});
+            $q.cellRouter.navigate(clicksource.id, {trigger:true});
             //$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
 
-            this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
+            //this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
         },
 
         pageAnimateFromClosed : function(el){
@@ -326,6 +329,11 @@
     $q.Page.RefineNav = $q.Page.extend({
         portalnav:null,
         filternav:null,
+        searchform:null,
+        searchfield:null,
+        searchbutton:null,
+        _defaultSearchText:null,
+        _searchIsOpened:false,
         _construct : function(el){
             this._el = $(el);
             this._super(this._el);
@@ -333,8 +341,10 @@
             this.portalnav = $(this._el.find('ul.social')[0]);
             this.filternav = $(this._el.find('ul.refinement')[0]);
 
+
             this.initPortal();
             this.initRefine();
+            this.initSearch();
         },
         initPortal : function(){
             var _this = this;
@@ -350,41 +360,68 @@
         initRefine : function(){
             var _this = this;
 
+
             this.filternav.find('a').each(function(el){
                 $(this).click(function(e){
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     var f = $(this).data('filter');
                     if(f == $q.Constants.Filters.CHRONOLOGICAL){
-                        $q.cellRouter.navigate("/", {trigger:true})
-                    } else {
-                        $q.cellRouter.navigate("filter/"+f, {trigger:true});
-//                    $q.EventManager.fireEvent($q.Event.REFINE_FILTER, this, $(this).data('filter'));
+                        $q.cellRouter.navigate("/", {trigger:true});
+                    } else if (f == $q.Constants.Filters.CUSTOMER) {
+                        $q.cellRouter.navigate("/clients", {trigger:true});
+                    } else if(f == $q.Constants.Filters.TAG){
+//                        $q.cellRouter.navigate("filter/"+f, {trigger:true});
+
                     }
                 });
             });
 
+        },
+        initSearch : function(){
+            this.searchform = $(this.filternav.find('.search-bar-body form')[0]);
+            this.searchfield = $(this.searchform.find('.text')[0]);
+            this.searchbutton = $(this.searchform.find('.submit')[0]);
+
+            this.searchbutton.click(this.searchButtonAction.bind(this));
+            this.searchfield.focus(this.searchTextFocus.bind(this))
+                .blur(this.searchTextBlur.bind(this)).hide();
+
+            this._defaultSearchText = this.searchfield.val();
+        },
+        searchTextFocus : function(e) {
+
+            if(this.searchfield.val() == this._defaultSearchText)
+                this.searchfield.val("");
+        },
+        searchTextBlur : function(e) {
+            if(this.searchfield.val() == "")
+                this.searchfield.val(this._defaultSearchText);
+        },
+        searchButtonAction : function(e){
+            if (e instanceof $.Event) {
+                var target = $(e.target);
+                e.preventDefault();
+            }
+            if(!this._searchIsOpened){
+
+                this._searchIsOpened = true;
+                this.searchfield.mouseleave(this.hideField.bind(this)).show();
+            } else {
+                var searchQuery = this.searchfield.val()  == this._defaultSearchText ? "default" : encodeURIComponent(this.searchfield.val());
+                $log("========SEARCH:"+searchQuery);
+                this.hideField(null);
+            }
+
+
+        },
+        hideField:function(e){
+            this.searchfield.hide();
+            this.searchfield.val(this._defaultSearchText);
+
+            this._searchIsOpened = false;
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -545,17 +582,6 @@
         }
 
     });
-
-
-
-
-
-
-
-
-
-
-
 
 
 

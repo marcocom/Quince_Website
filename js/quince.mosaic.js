@@ -28,9 +28,10 @@
             }
         }
     );
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////BASE
     $q.Mosaic.Container = $q.Mosaic.extend({
-        _mosaic:null,
+        _mosaic_container:null,
         _columns:null,
         loading_items:false,
         building:false,
@@ -88,9 +89,10 @@
             this.loading_items = true;
 
             var m = this._el.find('.mosaic-container');
-            this._mosaic = $(m);
+            this._mosaic_container = $(m);
 
-            var c = this._mosaic.find('.column');
+
+            var c = this._mosaic_container.find('.column');
             this._columns = $(c);
 
             this._columns.each(function(){
@@ -103,7 +105,11 @@
             this.initCTA();
             this._loader = $(".home-content .loader-anim").hide();
 
-            if(this._home)this._home.show();
+            if(this._home){
+                this._home.show();
+
+            }
+
             this.onResize(null);
             this.showMosaic(true);
         },
@@ -137,9 +143,10 @@
             if($q.isIE8) this._cta.css({'width':'230px'});
 
             setTimeout(function(){
-                // Get the width here
                 _this.animateCTA();
             },2000);
+
+//            _.delay(_this.animateCTA, 2000);
         },
 
         animateCTA : function(){
@@ -198,46 +205,53 @@
                     slider.refresh();
                 }, 0);
 
+//                _.defer(slider.refresh);
             }
 
         },
 
         appendMosaic: function(e){
 
-//            $log("REFRESH MOSAIC!!!!!!");
-            var c = this._mosaic.find('.column');
-            var newcol = c[c.length-1];
+            var newcol = $(this._mosaic_container.find('.column').filter(":last"));
 
             this._columns.push(newcol);
+
             var totalw = (this._columns.length) * this.currentColumnWidth;
             $('#slider-container .scroller').width(totalw);
 
-            var mc = new $q.Mosaic.ParentColumn(newcol);
+//            $log("MOSAIC APPEND:");
+            $dir(newcol);
+            new $q.Mosaic.ParentColumn(newcol);
+
+
+            this._slider.refresh();
 
             this._loader.hide();
 
-            this._home.show();
+            if(this._home){
+                this._home.show();
+                Quince._landingAnimation.manageRotationTimer(true);
+            }
 
-            this._slider.refresh();
 
         },
 
         removeMosaic: function(){
+
             this._columns.each(function(el){
                 $(this).empty();
             })
             this.removeEventHandlers();
             this._slider.destroy();
-            this._slider = null;
-            this._mosaic.empty();
-            this._mosaic = null;
+//            this._slider = null;
+            this._mosaic_container.empty();
+//            this._mosaic_container = null;
             this._el.empty();
-            this._el = null;
+//            this._el = null;
         },
 
-
         showMosaic : function(reveal){
-            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
+//            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
             if(reveal){
                 this.addEventHandlers();
                 this._el.show();
@@ -245,7 +259,7 @@
                 this._cta.show();
                 this._slider.enable();
                 this._enabled = true;
-                $log("-----------MOSAIC:"+this.filteringMode+" SHOW!!!");
+//                $log("-----------MOSAIC:"+this.filteringMode+" SHOW!!!");
             }  else {
                 this.removeEventHandlers();
                 this._el.hide();
@@ -253,7 +267,7 @@
                 this._cta.hide();
                 this._slider.disable();
                 this._enabled = false;
-                $log("-----------MOSAIC:"+this.filteringMode+" HIDE!!!");
+//                $log("-----------MOSAIC:"+this.filteringMode+" HIDE!!!");
             }
         },
 
@@ -281,14 +295,16 @@
 
         onScrollEnd : function(e){
 //            $log("SCROLL END---------------- X:"+this.x);
-                this.currentScrollX = this._slider.x;
-                this.animateCTA();
-//            if(this._slider.x <= this._slider.maxScrollX) this._loader.show();
-            if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+            this.currentScrollX = this._slider.x;
+            this.animateCTA();
+
+//            if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+            if(this._enabled && $q._currentModel) $q._currentModel.mosaicScrollHandler(null, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
         },
 
+
         onFlick : function(e){
-            $log("FLICK----------------");
+//            $log("FLICK----------------");
             $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
         },
 
@@ -323,7 +339,6 @@
 
 
 
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////COLUMNS
     $q.Mosaic.ParentColumn = $q.Mosaic.extend({
         _grid:null,
@@ -342,6 +357,8 @@
             this._super(this._el);
 
 
+//            $log("MOSAIC COLUMN newcol:");
+            $dir(this._el);
             this.initContainer();
         },
 
@@ -354,15 +371,16 @@
             }).masonry('bindResize');
 
             var c = this._grid.masonry('getItemElements');
+
             $(c).each(function(e){
                 var mc = new $q.Mosaic.Cell(this, _this._grid);
+
                 _this._cells.push(mc);
             });
 
             $q.EventManager.fireEvent(Quince.Event.RESIZE, this);
         }
     });
-
 
 
 
@@ -396,8 +414,7 @@
 
         initContainer : function(){
             this.sizeLetter = this.getItemSize(this._el);
-//            $log("CELL INIT -- SIZE:"+this.sizeLetter+" parent:"+this._parent);
-
+//            $log("MOSAIC CELL CONTROLLER -- TYPE:"+this.sizeLetter);
 
             var n = this._el.find('.on-state');
             var f = this._el.find('.off-state');
@@ -405,30 +422,23 @@
             this.offContent = $(f);
             this.onContent = n.length > 0 ? $(n) : null;
 
-            if(this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j" || this.sizeLetter == "f"){
-
+            if(this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j" || this.sizeLetter == "f" || this.sizeLetter == "p"){
                 if($q.msGesture){
                     this._el.on('MSPointerDown', $.proxy(this.onMsPress, this));
                     this._el.on('MSGestureEnd', $.proxy(this.onMsRelease, this));
                 } else {
                     this._el.hammer().on('touch', $.proxy(this.onPress, this));
-//                                    this._el.on('mousedown, touchstart', $.proxy(this.onPress, this));
-                    //                this._el.mousedown($.proxy(this.onPress, this));
-
                     this._el.hammer().on('release', $.proxy(this.onRelease, this));
-//                                    this._el.on('mouseup, touchend', $.proxy(this.onRelease, this));
-                    //                this._el.mouseup($.proxy(this.onRelease, this));
-
                 }
             } else
             if(this.sizeLetter == "e"){
                 this.colorizeCell();
                 this.processPageAction(this._el.data('action'));
-
+            } else
+            if(this.sizeLetter == "c"){
+                this.colorizeCell();
+                this.processClientAction(this._el.data('client'));
             }
-
-
-
 
             if(this.sizeLetter == "f"){
                 this._carousel = this._el.find('.flexslider').flexslider({
@@ -531,6 +541,18 @@
                 this._el.css({'cursor':'pointer'});
             }
         },
+        processClientAction : function(actionString){
+            //$log("ACTION:"+actionString);
+
+            if(actionString != "none"){
+                this._el.click(function(e){
+                    e.preventDefault();
+//                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
+                    $q.cellRouter.navigate("client/"+actionString, {trigger:true});
+                })
+                this._el.css({'cursor':'pointer'});
+            }
+        },
 
         colorizeCell : function(){
             var ind = Math.floor(Math.random() * $q.Brand.ALL_COLORS.length);
@@ -556,29 +578,51 @@
         },
 
         openInfo : function(){
+
+            var ypoints = {
+                'a':'30%',
+                'b':'0',
+                'f':'50%',
+                'j':'0',
+                'p':'20%'
+            }
+
             if(!this.opened){
                 $q.EventManager.fireEvent($q.Event.OPEN_CELL, this);
                 var t = Math.round(this._el.height() - 20);
                 //if($q.platformDetect.android || $q.platformDetect.blackberry || $q.platformDetect.iphone)
                     this.offContent.addClass('desaturate');
-                if(this.onContent) this.onContent.topZIndex();
+//                if(this.onContent) this.onContent.topZIndex();
                 this.opened = true;
-                if(this.sizeLetter == "f"){
-                    this._carousel.flexslider("pause");
-                    if(this.onContent) this.onContent.css({'top':'60%'});
-                } else {
-                    this.onContent.css({'top':(this.sizeLetter == 'a' ? '30%' : '0')});
-
+                if(this.sizeLetter == "f") this._carousel.flexslider("pause");
+                if(this.onContent){
+                    $q.isIE8 ?
+                        this.onContent.animate({ 'top': ypoints[this.sizeLetter] }, 1000, 'easeOutQuad'):
+                        this.onContent.css({'top':ypoints[this.sizeLetter]});
                 }
+
             }
         },
 
         closeInfo : function(){
+
+            var ypoints = {
+                'a':'100%',
+                'b':'100%',
+                'f':'90%',
+                'j':'100%',
+                'p':'88%'
+            }
             if(this.opened){
                 this.offContent.removeClass('desaturate');
-                if(this.onContent) this.onContent.css({'top':'100%'});
                 this.opened = false;
                 if(this.sizeLetter == "f") this._carousel.flexslider("play");
+
+                if(this.onContent){
+                    $q.isIE8 ?
+                        this.onContent.animate({ 'top': ypoints[this.sizeLetter] }, 1000, 'easeOutQuad'):
+                        this.onContent.css({'top':ypoints[this.sizeLetter]});
+                }
             }
         },
 
@@ -624,6 +668,7 @@
             if(item.hasClass('cell-h')) return 'h';
             if(item.hasClass('cell-i')) return 'i';
             if(item.hasClass('cell-j')) return 'j';
+            if(item.hasClass('cell-p')) return 'p';
             return '';
         }
 

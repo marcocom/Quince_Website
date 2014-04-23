@@ -149,14 +149,20 @@ body{
       display: block;
       position: relative;
       top:15px;
-      #logo{
-        max-width: 520px;
-        height: auto;
-        width:100px;
-        display:block;
-        position:relative;
-        left:20px;
+      a{
+        cursor:pointer;
+        width:auto;
+        height:auto;
+        #logo{
+          max-width: 520px;
+          height: auto;
+          width:100px;
+          display:block;
+          position:relative;
+          left:20px;
+        }
       }
+
       h6{
         display: block;
         width: 100%;
@@ -220,12 +226,48 @@ body{
       }
       &.refinement{
         float:right;
-        margin-right: 10px;
+        //margin-right: 10px;
         padding-left:0;
         //display:none;
         li{
           &.search{
-            a{background-position:-349px 0;&:hover{background-position:-349px -29px;}}
+            position:relative;
+            left: -50px;
+            .search-bar-body{
+
+              position:relative;
+              form{
+                position:absolute;
+                .text{
+                  z-index:0;
+                  position:absolute;
+                  height:40px;
+                  width:170px;
+                  @include border-all-radius(20px);
+                  border:2px solid $brand-ltgray;
+                  left: -133px;
+                  top: -5px;
+                  text-indent: 1em;
+                  padding-top: 3px;
+                  display:none;
+                  &:focus {outline:none;}
+                }
+                .submit{
+                  z-index:1;
+                  position:absolute;
+                  display:block;
+                  width:29px;
+                  height:29px;
+                  border: none;
+                  background:transparent url(img/nav_sprite.png) no-repeat -349px 0;
+
+                  &:hover{
+                    background-position:-349px -29px;
+                  }
+                  &:focus {outline:none;}
+                }
+              }
+            }
           }
           &.timeline{
             a{background-position:-382px 0;&:hover{background-position:-382px -29px;}}
@@ -661,7 +703,7 @@ body{
     border:0;
     cursor:inherit;
     .off-state a{ //button for this unit. will act as 'refine-by-client' functionality later
-      cursor:default;
+      cursor:pointer;
     }
   }
   .cell-d{ // HALF-HEIGHT/DOUBLE-WIDTH TEXT (quotes) w/ NO CLICKTHRU
@@ -710,6 +752,11 @@ body{
     width:$cell-full-width;
     height:$cell-full-height;
     .on-state{
+      top:90%;
+      z-index:20;
+      .title{
+        margin-top:5px;
+      }
       .article h5{
         line-height: 110%;
         margin: 0;
@@ -719,7 +766,7 @@ body{
     .off-state{
       box-sizing: content-box;
       -moz-box-sizing:padding-box;
-
+      z-index:1;
       h1{
         display: block;
         //font-size: 3em;
@@ -780,6 +827,42 @@ body{
 
     }
   }
+    .cell-p{ // QUARTER-SIZED IMAGE w/ INFO CLICKTHRU -->
+      width:$cell-half-width;
+      height:$cell-full-height;
+      .off-state img{
+        width:auto;
+        height:100%;
+      }
+      .on-state{
+        top:88%;
+        .content{
+          margin-top:4px;
+          .article h5{
+            max-height: 130px;
+            overflow-y: hidden;
+            display: block;
+          }
+        }
+        .social{
+          display:block;
+          position:absolute;
+          top:65%;
+          a{
+            width: 30px;
+            height: 30px;
+            margin-right:10px;
+            float:left;
+            img{
+              width:100%;
+              height:100%;
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
   }
 }
 

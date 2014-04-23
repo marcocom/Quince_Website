@@ -26,14 +26,17 @@
             cell_total_short_width:482
             },
         _currentPopup : null,
+        _currentFiltering : null,
         _mosaic:null,
         _model:null,
         _secondaryMosaic:null, //controller and model for second 'refined' wall upon use of search/refine features. destroyed and reused.
         _secondaryModel:null,
+        _currentMosaic:null,
+        _currentModel:null,
         _landingPage:null,
         _landingAnimation:null,
         AncillaryLetters : ["d", "e", "i", "g"], //cell-types that are not CMS data-fed.  pulled from objects below.
-        DataLetters : ["a", "b", "c", "f", "h", "j"], //cell-types that are CMS data-fed.
+        DataLetters : ["a", "b", "c", "f", "h", "j", "p"], //cell-types that are CMS data-fed.
 
 
         init: function() {
@@ -47,11 +50,18 @@
             $(window).resize($.proxy(this.onResize, this));
 
             $("#slider-container").hide();
-           // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-
-//            Quince.eventManager.addEventHandler(Quince.Event.LOGIN_SUCCESS_FB_USER,this.fbLoggedIn.bind(this));
 
             this.compileTemplates();
+
+
+            Quince.EventManager.addEventHandler(Quince.Event.ROUTER_PORTAL, Quince.State.refineByPortal.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.ROUTER_MAIN_MOSAIC, Quince.State.createMainModel.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.REFINE_FILTER, Quince.State.refineByFilter.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.REFINE_CLIENTS, Quince.State.showAllClients.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.ROUTER_CLIENT, Quince.State.refineByClient.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.REFINE_PEOPLE, Quince.State.createPeopleModel.bind(this));
+
+            Quince.EventManager.addEventHandler(Quince.Event.MODEL_COLUMNS_COMPLETE, Quince.State.startMosaic.bind(this));
         },
         onResize: function(){
             this.windowWidth = $(window).width();
@@ -140,24 +150,10 @@
             }
         },
 
-        isEmpty : function(obj) {
 
-            // null and undefined are "empty"
-            if (obj == null) return true;
-
-            // Assume if it has a length property with a non-zero value
-            // that that property is correct.
-            if (obj.length > 0)    return false;
-            if (obj.length === 0)  return true;
-
-            // Otherwise, does it have any properties of its own?
-            // Note that this doesn't handle
-            // toString and valueOf enumeration bugs in IE < 9
-            for (var key in obj) {
-                if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
-            }
-
-            return true;
+        strpos : function (haystack, needle, offset) {
+            var i = (haystack+'').indexOf(needle, (offset || 0));
+            return i === -1 ? false : i;
         },
 
         sub_template : function (str, data) {
@@ -230,6 +226,14 @@
 
 
 
+
+
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Quince.Popup = Class.extend({
         _construct : function(el) {
             //this.api.onClose = this.overlayClose.bind(this);
@@ -386,6 +390,7 @@
         'Filters':{
             'CHRONOLOGICAL':"time",
             'AUTHOR':"authorId",
+            'PEOPLE':"people",
             'CUSTOMER':"customerId",
             'TAG':"tag"
         }
@@ -566,6 +571,11 @@
 
     };
 
+//        'column_patterns':[
+//            ["d","a","e","b","f","b","c","j"],
+//            ["a","j","b","e","c","b","h","f","j"],
+//            ["g","f","a","j","a","e","b","j"]
+//        ],
     Quince.Patterns = {
         'time':{
             'default':[
@@ -573,44 +583,58 @@
                 ["a","j","c","f","b","h"],
                 ["g","a","j","a","e","b","j"]
             ]
-//        'column_patterns':[
-//            ["d","a","e","b","f","b","c","j"],
-//            ["a","j","b","e","c","b","h","f","j"],
-//            ["g","f","a","j","a","e","b","j"]
-//        ],
+        },
+        'people':{
+            'default':[
+                ["d","p","p","g","p","p","p"],
+                ["e","p","p","c","p","p","p"],
+                ["g","p","p","e","p","p","p"]
+            ]
+        },
+        'customerId':{
+            'default':[
+                ["g","a","e","c","b","j"],
+                ["a","j","c","b","h"],
+                ["a","j","a","e","b","j"]
+            ],
+            'all':[
+                ["c","e","c","c","c", "g"],
+                ["d","c","c","c","c","c"],
+                ["c","c","c","e","c","c"]
+            ]
         },
         'portal':{
             'fb':[
                 ["g","a","e","c","b","j"],
                 ["a","j","c","b","h"],
-                ["i","a","j","a","e","b","j"]
+                ["a","j","a","e","b","j"]
             ],
             'vim':[
-                ["j","i","j","j","j","i","j","j","g"],
-                ["j","j","i","j","j","j","i","j","j"],
-                ["g","j","j","j","g","j","j","j","j"]
+                ["j","c","j","j","j","c","j","j","g"],
+                ["j","j","c","j","e","j","c","j","j"],
+                ["g","j","j","j","g","j","j","e","j"]
             ],
             'yt':[
-                ["j","i","j","j","j","i","j","j","g"],
-                ["j","j","i","j","j","j","i","j","j"],
+                ["j","c","j","j","j","c","j","j","g"],
+                ["j","j","c","j","j","j","c","j","j"],
                 ["g","j","j","j","g","j","j","j","j"]
             ],
             'pin':[
-                ["a","a","i","a","a","g"],
-                ["a","i","a","a","a"],
-                ["a","a","i","a","a"]
+                ["a","a","c","a","a","g"],
+                ["a","c","a","a","a"],
+                ["a","a","c","a","a"]
             ],
             'tw':[
-                ["g","e","e","i","e"],
-                ["e","i","e","e","g"],
-                ["g","e","i","e","e"]
+                ["g","e","e","c","e"],
+                ["e","c","e","e","g"],
+                ["g","e","c","e","e"]
             ],
             'link':[
                 ["e","e","e","e"],
                 ["e","e","e","e"],
                 ["e","e","e","e"]
             ]
-        },
+        }
 
 
 
@@ -669,84 +693,135 @@
 
     Quince.State = {
 
+        destroyPrimary : function(){
+
+            if(Quince._mosaic && Quince._mosaic._enabled){
+                Quince._mosaic.showMosaic(false);
+                Quince._model.removeEventListeners();
+                Quince._landingAnimation.manageRotationTimer(true);
+                $log("_mosaic suppressed:");
+            }
+        },
+
+        destroySecondary : function(){
+            if(Quince._secondaryMosaic){
+                Quince._secondaryModel.removeEventListeners();
+                Quince._secondaryMosaic.showMosaic(false);
+                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;
+                Quince._secondaryMosaic = null;
+            }
+        },
+
+        showAllClients : function(){
+            $log("STATE - showAllClients() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+
+            Quince.State.destroyPrimary();
+
+            Quince.State.destroySecondary();
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._currentFiltering = Quince.Constants.Filters.CUSTOMER;
+            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", Quince.Constants.Filters.CUSTOMER, "all");
+            Quince._currentModel = Quince._secondaryModel;
+
+            $('#second-container').after($('#slider-container'));
+        },
+
         createRefinedModel : function(filter, val){
             $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
 //            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
 
-            if(Quince._mosaic && Quince._mosaic._enabled){
-                Quince._mosaic.showMosaic(false);
-                Quince._landingAnimation.manageRotationTimer(true);
-                $log("_mosaic suppressed:");
-            }
-            if(Quince._secondaryMosaic){
-                if(Quince._secondaryModel) Quince._secondaryModel.destruct();
-                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
-                Quince._secondaryModel = null;
-                Quince._secondaryMosaic = null
-                console.log("_secondaryMosaic destroyed:"+Quince._secondaryMosaic);
-            }
+
+            this.destroyPrimary();
+
+            this.destroySecondary();
 
             $('#second-container').empty().html(Quince.templates.containers.slider);
 
+            Quince._currentFiltering = filter;
             Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", filter, val);
+            Quince._currentModel = Quince._secondaryModel;
+
+            $('#second-container').after($('#slider-container'));
+        },
+
+        createPeopleModel : function(){
+            $log("createPeopleModel() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+
+            Quince.State.destroyPrimary();
+
+            Quince.State.destroySecondary();
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._currentFiltering = Quince.Constants.Filters.PEOPLE;
+            Quince._secondaryModel = new Quince.Model.People('#second-container', "/backend/author");
+            Quince._currentModel = Quince._secondaryModel;
 
             $('#second-container').after($('#slider-container'));
         },
 
         removeRefinedModel : function(){
-
-            if(Quince._secondaryMosaic){
-                Quince._secondaryModel.destruct();
-                Quince._secondaryMosaic.showMosaic(false);
-                Quince._secondaryMosaic.removeMosaic();
-                Quince._secondaryModel = null;
-                Quince._secondaryMosaic = null;
-            }
-
+            $log("STATE removeRefinedModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+            this.destroySecondary();
             var target = $('#second-container').empty();
 
             $('#slider-container').after($('#second-container'));
 
             if(Quince._mosaic){
+                Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
                 Quince._mosaic.showMosaic(true);
+                Quince._model.addEventListeners();
                 Quince._landingAnimation.manageRotationTimer(false);
-
+                Quince._currentModel = Quince._model;
+                Quince._currentMosaic = Quince._mosaic;
+                Quince._currentMosaic.onResize();
             } else {
-                Quince._model = new Quince.Model.Mosaic('#slider-container', "/backend/item");
+                Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");
+                Quince._currentModel = Quince._model;
             }
+
         },
 
         startMosaic : function(e, el, filter){
 
             $log("STARTMOSAIC() filter:"+filter);
 
+            Quince._currentFiltering = filter;
+
             var targetEl = filter == Quince.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
-            //        if(!Quince._mosaic){
-            if(filter == Quince.Constants.Filters.CHRONOLOGICAL){
-                Quince._mosaic = new Quince.Mosaic.Container(el, filter);
-                $log("CREATE MAIN MOSAIC")
-                //        } else if(!Quince._secondaryMosaic && Quince._secondaryModel){
-            } else {
-                $log("NEW SECONDARY MODEL EXISTS!");
-                $log("CREATE NEW MOSAIC filter:"+filter);
-                Quince._secondaryMosaic = new Quince.Mosaic.Container(el, filter);
-            }
+
+                if(filter == Quince.Constants.Filters.CHRONOLOGICAL){
+                    $log("===============================CREATE MAIN MOSAIC===================================");
+                    Quince._mosaic = new Quince.Mosaic.Container(el, filter);
+                    Quince._currentMosaic = Quince._mosaic;
+                } else {
+                    $log("NEW SECONDARY MODEL EXISTS!");
+                    $log("===============================CREATE NEW SECOND MOSAIC filter:"+filter+"===============================");
+                    Quince._secondaryMosaic = new Quince.Mosaic.Container(el, filter);
+                    Quince._currentMosaic = Quince._secondaryMosaic;
+                }
         },
 
         createMainModel : function(e){
-            $log("createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
-
-            if(!Quince._model){
-                if(Quince._secondaryModel) Quince.State.removeRefinedModel();
-                Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");
-            } else {
-                Quince.State.removeRefinedModel();
-            }
+            $log("STATE createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+            Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
+            Quince.State.removeRefinedModel();
         },
 
         refineByPortal : function(e, filter){
             $log("refineByPortal FILTER:"+filter);
             Quince.State.createRefinedModel("portal", filter);
+        },
+        refineByClient : function(e, filter){
+            $log("refineByPortal FILTER:"+filter);
+            Quince.State.createRefinedModel(Quince.Constants.Filters.CUSTOMER, filter);
         },
 
         refineByFilter : function(e, filter){
@@ -792,6 +867,7 @@
     Quince.Event.JSON_NOT_FOUND = "JSON_NOT_FOUND";
 
     Quince.Event.ROUTER_CALL = "ROUTER_CALL";
+    Quince.Event.ROUTER_MAIN_MOSAIC = "ROUTER_MAIN_MOSAIC";
     Quince.Event.ROUTER_CLIENT = "ROUTER_CLIENT";
     Quince.Event.ROUTER_POST = "ROUTER_POST";
     Quince.Event.ROUTER_AUTHOR = "ROUTER_AUTHOR";
@@ -803,16 +879,13 @@
 
     Quince.Event.REFINE_PORTAL = "REFINE_PORTAL";
     Quince.Event.REFINE_FILTER = "REFINE_FILTER";
+    Quince.Event.REFINE_PEOPLE = "REFINE_PEOPLE";
+    Quince.Event.REFINE_CLIENTS = "REFINE_CLIENTS";
 
 
     this.Quince = Quince;
 
 
-    Quince.EventManager.addEventHandler(Quince.Event.ROUTER_PORTAL, Quince.State.refineByPortal.bind(this));
-    Quince.EventManager.addEventHandler(Quince.Event.ROUTER_CALL, Quince.State.createMainModel.bind(this));
-    Quince.EventManager.addEventHandler(Quince.Event.REFINE_FILTER, Quince.State.refineByFilter.bind(this));
-
-    Quince.EventManager.addEventHandler(Quince.Event.MODEL_COLUMNS_COMPLETE, Quince.State.startMosaic.bind(this));
 
 
 })(jQuery);
