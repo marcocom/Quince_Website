@@ -237,7 +237,7 @@ class Database
     while ($row = $result->fetch_assoc ())
     {
       $image = new Image ($row['id']);
-      $image->type = $row['type'];
+      $image->type      = $row['type'];
       $image->extension = $row['extension'];
 
       $images[] = $image;
@@ -258,7 +258,7 @@ class Database
     if (isset ($filters['itemId']))
     {
       $query .= 'inner join itemTags
-                 on itemTags.tag = tags.id
+                 on itemTags.tag   = tags.id
                  and itemTags.item = ' . (int) $filters['itemId'];
     }
 
