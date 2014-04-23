@@ -46,7 +46,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
         <div class="home-content">
             <div class="header">
                 <ul>
-                    <li><a class="toplink hidden-xs" id="people" href="#"><h5>PEOPLE</h5></a></li>
+                    <li><a class="toplink hidden-xs" id="people" href="#/people"><h5>PEOPLE</h5></a></li>
                     <li><a class="toplink" id="about" href="#"><h5>ABOUT US</h5></a></li>
                     <li><a class="toplink" id="jobs" href="#"><h5>JOBS</h5></a></li>
                     <li><a class="toplink" id="contact" href="#"><h5>CONTACT US</h5></a></li>
@@ -93,7 +93,12 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                     </ul>
                     <ul class="refinement">
                         <li class="search">
-                            <a href="#" data-filter="tag"></a>
+                            <div class="search-bar-body">
+                                <form id="fSearch" action="#search">
+                                    <input class="submit" type="submit" value="" data-filter="tag"/>
+                                    <input class="text" type="text" value="Search..." maxlength="17"/>
+                                </form>
+                            </div>
                         </li>
                         <li class="timeline">
                             <a href="#" data-filter="time"></a>
