@@ -11,7 +11,7 @@ class Database
   /* set up the database connection */
   public static function init ()
   {
-    static::$db = new mysqli (null, 'quince', "", 'quince');
+    static::$db = new mysqli (null, 'quince_site', "", 'quince_site');
     static::$db->set_charset ('utf8');
     static::query ("set sql_mode = 'IGNORE_SPACE'");
   }
@@ -107,7 +107,11 @@ class Database
         $copy->type   = $type->type;
         $copy->offset = $type->offset;
         $copy->limit  = $type->limit;
-        $copy->tag    = $type->tag;
+
+        if (isset ($type->tag))
+        {
+          $copy->tag = $type->tag;
+        }
 
         $temp = static::getItems ($copy);
 

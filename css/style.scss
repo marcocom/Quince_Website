@@ -149,14 +149,20 @@ body{
       display: block;
       position: relative;
       top:15px;
-      #logo{
-        max-width: 520px;
-        height: auto;
-        width:100px;
-        display:block;
-        position:relative;
-        left:20px;
+      a{
+        cursor:pointer;
+        width:auto;
+        height:auto;
+        #logo{
+          max-width: 520px;
+          height: auto;
+          width:100px;
+          display:block;
+          position:relative;
+          left:20px;
+        }
       }
+
       h6{
         display: block;
         width: 100%;
@@ -220,12 +226,48 @@ body{
       }
       &.refinement{
         float:right;
-        margin-right: 10px;
+        //margin-right: 10px;
         padding-left:0;
         //display:none;
         li{
           &.search{
-            a{background-position:-349px 0;&:hover{background-position:-349px -29px;}}
+            position:relative;
+            left: -50px;
+            .search-bar-body{
+
+              position:relative;
+              form{
+                position:absolute;
+                .text{
+                  z-index:0;
+                  position:absolute;
+                  height:40px;
+                  width:170px;
+                  @include border-all-radius(20px);
+                  border:2px solid $brand-ltgray;
+                  left: -133px;
+                  top: -5px;
+                  text-indent: 1em;
+                  padding-top: 3px;
+                  display:none;
+                  &:focus {outline:none;}
+                }
+                .submit{
+                  z-index:1;
+                  position:absolute;
+                  display:block;
+                  width:29px;
+                  height:29px;
+                  border: none;
+                  background:transparent url(img/nav_sprite.png) no-repeat -349px 0;
+
+                  &:hover{
+                    background-position:-349px -29px;
+                  }
+                  &:focus {outline:none;}
+                }
+              }
+            }
           }
           &.timeline{
             a{background-position:-382px 0;&:hover{background-position:-382px -29px;}}
