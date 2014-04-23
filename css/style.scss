@@ -703,7 +703,7 @@ body{
     border:0;
     cursor:inherit;
     .off-state a{ //button for this unit. will act as 'refine-by-client' functionality later
-      cursor:default;
+      cursor:pointer;
     }
   }
   .cell-d{ // HALF-HEIGHT/DOUBLE-WIDTH TEXT (quotes) w/ NO CLICKTHRU

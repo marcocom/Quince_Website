@@ -434,6 +434,9 @@
             if(this.sizeLetter == "e"){
                 this.colorizeCell();
                 this.processPageAction(this._el.data('action'));
+            } else
+            if(this.sizeLetter == "c"){
+                this.processClientAction(this._el.data('client'));
             }
 
             if(this.sizeLetter == "f"){
@@ -502,6 +505,7 @@
                 });
             }
 
+
             $q.EventManager.addEventHandler($q.Event.OPEN_CELL, this.onCellClick.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_START, this.closeInfo.bind(this));
 
@@ -533,6 +537,18 @@
                     e.preventDefault();
 //                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
                     $q.cellRouter.navigate(actionString, {trigger:true});
+                })
+                this._el.css({'cursor':'pointer'});
+            }
+        },
+        processClientAction : function(actionString){
+            //$log("ACTION:"+actionString);
+
+            if(actionString != "none"){
+                this._el.click(function(e){
+                    e.preventDefault();
+//                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
+                    $q.cellRouter.navigate("client/"+actionString, {trigger:true});
                 })
                 this._el.css({'cursor':'pointer'});
             }
@@ -585,6 +601,14 @@
                         this.onContent.css({'top':ypoints[this.sizeLetter]});
                 }
 
+                if(this.sizeLetter == "p"){
+                    var link = $(this.onContent.find('.author a')[0]);
+                    link.click(function(e){
+                        e.preventDefault();
+//                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
+                        $q.cellRouter.navigate("author/"+ $(this).data('author'), {trigger:true});
+                    }).css({'cursor':'pointer'});
+                }
             }
         },
 
@@ -601,7 +625,10 @@
                 this.offContent.removeClass('desaturate');
                 this.opened = false;
                 if(this.sizeLetter == "f") this._carousel.flexslider("play");
-
+                if(this.sizeLetter == "p"){
+                    var link = $(this.onContent.find('.author a')[0]);
+                    link.click(null).css({'cursor':'default'});
+                }
                 if(this.onContent){
                     $q.isIE8 ?
                         this.onContent.animate({ 'top': ypoints[this.sizeLetter] }, 1000, 'easeOutQuad'):

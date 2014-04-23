@@ -107,31 +107,6 @@ include 'inc/nav.php';
 			</div>
 
 			<div class="addinfo">
-			<form id="postauthors" name="postauthors" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-
-				<div class="inputblock">
-					<label>Author name</label>
-					<input type="text" name="authorname" value="">
-				</div>
-
-				<div class="inputblock classid">
-					<label>Author ID</label>
-					<input type="text" name="authorid" value="">
-				</div>
-
-				<div class="inputblock">
-					<label>Author job title</label>
-					<input type="text" name="authorjob" value="">
-				</div>
-
-				<div class="inputblock"> 
-					<button type="submit" name="author_submit">add author</button>
-					<div id="formerror"></div>
-				</div>
-			</form>
-			</div>
-
-			<div class="addinfo">
 			<form name="posttypes" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
 				<div class="inputblock">

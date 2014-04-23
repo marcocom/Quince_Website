@@ -10,8 +10,10 @@ if( isset($_GET['action']) && $_GET['action'] === 'delete' ){
 	$imgid = $_GET['img'];
 	$selectimg = mysql_query("SELECT extension FROM images WHERE id=".$imgid);
 	$row = mysql_fetch_assoc ($selectimg);
+
 	mysql_query("DELETE FROM itemImages WHERE image=".$imgid);
 	mysql_query("DELETE FROM images WHERE id=".$imgid);
+
 	unlink('../img/cells/' . $imgid . '.' . $row['extension']);
 }
 
@@ -19,11 +21,10 @@ if( isset($_GET['action']) && $_GET['action'] === 'delete' ){
 // $sql="SELECT images WHERE id=" . (int) $getid;
 $sqljoin = "SELECT images.id AS imageid, images.extension AS imagex 
             FROM images
-
             INNER JOIN itemImages 
             ON images.id = itemImages.image
+            WHERE itemImages.item = " . $getid;
 
-            where itemImages.item = " . (int) $getid;
 $result = mysql_query($sqljoin);
 
 $images = array ();
@@ -68,6 +69,22 @@ if (!empty($_POST['tag'])) {
         }
 }
 
+if ( isset($_GET['action']) && $_GET['action'] === 'deleteTag' ) {
+	$tagname = $_GET['tag'];
+	mysql_query( "DELETE FROM itemTags 
+				  WHERE tag=" . (int) $_GET['tag'] . '
+				  AND item = ' . (int) $_GET['id']);
+
+}
+
+$resultTags =  mysql_query( "SELECT tags.tag, tags.id
+	                         FROM itemTags 
+							 INNER JOIN tags 
+							 ON tags.id = itemTags.tag 
+							 WHERE itemTags.item = " . $getid );
+
+
+
 include 'inc/header.php';
 include 'inc/nav.php';
 
@@ -95,29 +112,45 @@ include 'inc/nav.php';
 			</tbody>
 			
 		</table>
+		
 		</article>
 		
 
 		<aside>
-			<form action="" method="POST" enctype="multipart/form-data">
-				<label>Upload Images</label>
-			    <input type="file" name="files[]" />
-			    <input type="submit" value="upload">
-			</form>
-		</aside>
+			<div class="addinfo">
+				<form action="" method="POST" enctype="multipart/form-data">
+					<label>Upload Images</label>
+			    	<input type="file" name="files[]" />
+			    	<input type="submit" value="upload">
+				</form>
+			</div>
 
-		<aside>
-			<form name="posttags" action="" method="POST">
-				<div class="inputblock">
-					<label>Item tag</label>
-					<input id="tag" type="text" name="tag" value="">
-				</div>
+			<div class="addinfo">
+				<form name="posttags" action="" method="POST">
+					<div class="inputblock">
+						<label>Item tag</label>
+						<input id="tag" type="text" name="tag" value="">
+					</div>
 	
-				<div class="inputblock"> 
-					<button type="submit" name="type_submit">add tag</button>
-					<div id="formerror"></div>
+					<div class="inputblock"> 
+						<button type="submit" name="type_submit">add tag</button>
+						<div id="formerror"></div>
+					</div>
+				</form>
+			</div>
+			<div class="addinfo clearhack">
+				<div id="tagprev">
+					<label>Tags on item <?php echo $getid ?> :</label>
+					<ul>
+						<?php
+							while($row = mysql_fetch_assoc( $resultTags )) { 
+			     				echo '<li>' . '<a href="?id='.$getid.'&action=deleteTag&tag='.$row['id'].'">' . $row['tag'] . '</a>' . '</li>';   
+							}
+						?>
+					</ul>
 				</div>
-			</form>
+			</div>
+			
 		</aside>
 	</section>
 <?php
