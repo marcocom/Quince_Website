@@ -57,6 +57,7 @@
             Quince.EventManager.addEventHandler(Quince.Event.ROUTER_PORTAL, Quince.State.refineByPortal.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.ROUTER_MAIN_MOSAIC, Quince.State.createMainModel.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.REFINE_FILTER, Quince.State.refineByFilter.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.REFINE_CLIENTS, Quince.State.showAllClients.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.REFINE_PEOPLE, Quince.State.createPeopleModel.bind(this));
 
             Quince.EventManager.addEventHandler(Quince.Event.MODEL_COLUMNS_COMPLETE, Quince.State.startMosaic.bind(this));
@@ -586,7 +587,14 @@
             'default':[
                 ["d","p","p","g","p","p","p"],
                 ["e","p","p","c","p","p","p"],
-                ["g","p","p","e","p","p","p"],
+                ["g","p","p","e","p","p","p"]
+            ]
+        },
+        'customerId':{
+            'default':[
+                ["g","a","e","c","b","j"],
+                ["a","j","c","b","h"],
+                ["a","j","a","e","b","j"]
             ]
         },
         'portal':{
@@ -699,6 +707,24 @@
             }
         },
 
+        showAllClients : function(){
+            $log("STATE - showAllClients() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+
+            Quince.State.destroyPrimary();
+
+            Quince.State.destroySecondary();
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._currentFiltering = Quince.Constants.Filters.CUSTOMER;
+            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", Quince.Constants.Filters.CUSTOMER);
+            Quince._currentModel = Quince._secondaryModel;
+
+            $('#second-container').after($('#slider-container'));
+        },
+
         createRefinedModel : function(filter, val){
             $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
 //            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
@@ -736,7 +762,7 @@
         },
 
         removeRefinedModel : function(){
-
+            $log("STATE removeRefinedModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
             this.destroySecondary();
             var target = $('#second-container').empty();
 
@@ -776,10 +802,11 @@
         },
 
         createMainModel : function(e){
-            $log("createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+            $log("STATE createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
             Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
+            Quince.State.removeRefinedModel();
             if(!Quince._model){
-                 Quince.State.removeRefinedModel();
+
                 Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");
                 Quince._currentModel = Quince._model;
             }
@@ -846,6 +873,7 @@
     Quince.Event.REFINE_PORTAL = "REFINE_PORTAL";
     Quince.Event.REFINE_FILTER = "REFINE_FILTER";
     Quince.Event.REFINE_PEOPLE = "REFINE_PEOPLE";
+    Quince.Event.REFINE_CLIENTS = "REFINE_CLIENTS";
 
 
     this.Quince = Quince;
