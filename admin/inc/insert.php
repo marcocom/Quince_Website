@@ -55,24 +55,7 @@ $resultType =  mysql_query("SELECT type, name FROM types");
 			echo mysql_error();
 		}
 
-    } else if (!empty($_POST['authorname'])) {
-    	$author_id=mysql_real_escape_string($_POST['authorid']);
-    	$author_name=mysql_real_escape_string($_POST['authorname']);
-    	$author_job=mysql_real_escape_string($_POST['authorjob']);
-
-		// Insert data into mysql 
-		$sqlauthor="INSERT INTO authors ( id, name, job ) VALUES ( '" . $author_id . "','" . $author_name . "', '" . $author_job . "')";
-		$result=mysql_query($sqlauthor);
-
-		if($result){
-			echo " Successful: Author Form";
-		}
-
-		else {
-			echo " ERROR: Author Form";
-			echo mysql_error();
-		}
-    } else if (!empty($_POST['typecharacter'])) {
+    } else if  (!empty($_POST['typecharacter'])) {
 		$type_char=mysql_real_escape_string($_POST['typecharacter']);
 		$type_name=mysql_real_escape_string($_POST['typename']);
 
