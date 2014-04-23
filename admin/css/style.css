@@ -8,6 +8,21 @@ body {
 	font-size: 16px;
 }
 
+nav li {
+	float: left;
+	margin-right: 10px;
+}
+
+nav li a {
+	text-transform: uppercase;
+	text-decoration: none;
+	letter-spacing: 1px;
+	border: 1px solid #333;
+	background: #333;
+	padding: 3px 7px;
+	color: #fff;
+}
+
 section {
 	padding: 50px 0;
 }
@@ -165,4 +180,17 @@ select {
 #postauthors .inputblock:nth-child(2), #postcustomers .inputblock:nth-child(2) {
 	width: 30%;
 	float: left;
+}
+
+#tagprev li {
+	float: left;
+	margin-right: 10px;
+	border: 1px solid #ccc;
+	padding: 3px;
+	color: #a2a2a2;
+}
+
+#tagprev li:hover:after {
+	content:" x";
+	color: red;
 }
