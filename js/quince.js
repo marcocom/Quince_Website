@@ -59,6 +59,7 @@
             Quince.EventManager.addEventHandler(Quince.Event.REFINE_FILTER, Quince.State.refineByFilter.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.REFINE_CLIENTS, Quince.State.showAllClients.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.ROUTER_CLIENT, Quince.State.refineByClient.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.ROUTER_AUTHOR, Quince.State.refineByAuthor.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.REFINE_PEOPLE, Quince.State.createPeopleModel.bind(this));
 
             Quince.EventManager.addEventHandler(Quince.Event.MODEL_COLUMNS_COMPLETE, Quince.State.startMosaic.bind(this));
@@ -591,6 +592,13 @@
                 ["g","p","p","e","p","p","p"]
             ]
         },
+        'authorId':{
+            'default':[
+                ["g","a","e","c","b","j"],
+                ["a","j","c","b","h"],
+                ["a","j","a","e","b","j"]
+            ]
+        },
         'customerId':{
             'default':[
                 ["g","a","e","c","b","j"],
@@ -816,12 +824,17 @@
         },
 
         refineByPortal : function(e, filter){
-            $log("refineByPortal FILTER:"+filter);
+            $log("STATE refineByPortal FILTER:"+filter);
             Quince.State.createRefinedModel("portal", filter);
         },
         refineByClient : function(e, filter){
-            $log("refineByPortal FILTER:"+filter);
+            $log("STATE refineByClient FILTER:"+filter);
             Quince.State.createRefinedModel(Quince.Constants.Filters.CUSTOMER, filter);
+        },
+
+        refineByAuthor : function(e, filter){
+            $log("STATE refineByClient FILTER:"+filter);
+            Quince.State.createRefinedModel(Quince.Constants.Filters.AUTHOR, filter);
         },
 
         refineByFilter : function(e, filter){
