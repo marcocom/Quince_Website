@@ -408,9 +408,12 @@
                 this._searchIsOpened = true;
                 this.searchfield.mouseleave(this.hideField.bind(this)).show();
             } else {
-                var searchQuery = this.searchfield.val()  == this._defaultSearchText ? "default" : encodeURIComponent(this.searchfield.val());
-                $log("========SEARCH:"+searchQuery);
+                var searchQuery = this.searchfield.val()  == this._defaultSearchText ? "" : encodeURIComponent(this.searchfield.val());
                 this.hideField(null);
+                $log("========SEARCH:"+searchQuery);
+                if(searchQuery != "")
+                    $q.cellRouter.navigate(("/search/"+searchQuery), {trigger:true});
+
             }
 
 
