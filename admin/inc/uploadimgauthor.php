@@ -19,7 +19,7 @@ if( isset($_FILES['files']) ){
         if ( empty($errors) === true && $author_facebookImg  === 0 )  {
             
             if ( is_dir($desired_dir) === false ){
-                mkdir("$desired_dir", 0777);        // Create directory if it does not exist
+                mkdir("$desired_dir", 0775);        // Create directory if it does not exist
             }
 
             if ( is_dir("$desired_dir/".$img_name) === false ){
