@@ -7,7 +7,7 @@ if (!empty($_POST['authorname'])) {
     $author_email = mysql_real_escape_string($_POST['authoremail']);
     $author_fb = mysql_real_escape_string($_POST['authorfacebook']);
     $author_linkedin = mysql_real_escape_string($_POST['authorlinkedin']);
-    $author_facebookImg = (int) isset($_GET['usefbimage']) ? $_GET['usefbimage'] : '';
+    $author_facebookImg = (int) (isset($_POST['usefbimage']) ? $_POST['usefbimage'] : '');
     $author_details = mysql_real_escape_string($_POST['authordetails']);
     //$author_ = mysql_real_escape_string($_POST['']);
 
@@ -17,14 +17,13 @@ if (!empty($_POST['authorname'])) {
                 details = '$author_details', section = '$author_section'";
 				
 
-    if($author_facebookImg === 0 || $author_facebookImg === 1){
-        $updateAuthores .= ", usefbimage =" .$author_facebookImg. "";
-    }
+     if( $author_facebookImg === 0 || $author_facebookImg === 1 ){
+         $updateAuthores .= ", usefbimage = " .$author_facebookImg. " ";
+     }
 
     $updateAuthores .= "WHERE id=" . $author_id;
 
 	mysql_query($updateAuthores);
-
 }
 
 if ( isset($_GET['action']) && $_GET['action'] === 'deleteAuthor' ) {
