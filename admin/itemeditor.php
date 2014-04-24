@@ -70,7 +70,7 @@ include 'inc/nav.php';
 			</div>
 
 			<div class="inputblock">
-				<label>Url</label>
+				<label>Url <span>URL to social site page. Videos should use only reference number!</span></label>
 				<input type="text" name="url" value="<?php echo $item['url'] ?>">
 			</div>
 

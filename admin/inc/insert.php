@@ -6,6 +6,8 @@ include ('connectdb.php');
 // select customer from customers table 
 $resultClient =  mysql_query("SELECT id, name FROM customers");
 $resultAuthor =  mysql_query("SELECT id, name FROM authors");
+
+# if 
 $resultType =  mysql_query("SELECT type, name FROM types");
 
     if (!empty($_POST['title'])) {
@@ -28,8 +30,8 @@ $resultType =  mysql_query("SELECT type, name FROM types");
 		if($result){
 			ob_start();
 			$itemid = mysql_insert_id();
-			//header('Location: http://www.quince.nl/admin/update.php?id=' . $itemid)
-		 header('Location: http://localhost/~imredo/website/admin/update.php?id=' . $itemid);
+			header('Location: http://www.quince.nl/admin/update.php?id=' . $itemid);
+//		 header('Location: http://localhost/~imredo/website/admin/update.php?id=' . $itemid);
 			ob_end_flush();
 		}
 

@@ -33,7 +33,7 @@ include 'inc/nav.php';
 				
 
 				<div class="inputblock">
-					<label>Facebook</label>
+					<label>Facebook ID</label>
 					<input type="text" name="authorfacebook" value="">
 				</div>
 
@@ -43,7 +43,7 @@ include 'inc/nav.php';
 				</div>
 
 				<div class="inputblock">
-					<label>Use Facebook Image</label>
+					<label>Use Facebook Image <span>(image must be added below)</span></label>
 					<label class="radioFacebook"> Yes 
 						<input type="radio" name="usefbimage" value="1">
 					</lable>
@@ -53,7 +53,7 @@ include 'inc/nav.php';
 				</div>
 
 				<div class="inputblock">
-					<label>Upload Images</label>
+					<label>Upload Images <span>(235x272px)</span></label>
 			    	<input type="file" name="files[]" />
 				</div>
 
