@@ -472,8 +472,8 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                 </div>
                 <div class="on-state">
                     <div class="content">
-                        <div class="author" id="<%= id %>">
-                            <a href="<%='/#/author/' + id %>">
+                        <div class="author">
+                            <a href="#" data-author="<%= id %>">
                                 <h5 class="name"><%= name %></h5>
                                 <h5 class="jobtitle"><%= section %><em></em></h5>
                             </a>
