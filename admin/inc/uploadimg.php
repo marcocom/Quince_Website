@@ -5,13 +5,16 @@ if(isset($_FILES['files'])){
 		$img_name = $_FILES['files']['name'][$key];
 		$img_size =$_FILES['files']['size'][$key];
 		$img_tmp =$_FILES['files']['tmp_name'][$key];
-		$img_type=$_FILES['files']['type'][$key];	
-
-        $img_extentsion = pathinfo($img_name, PATHINFO_EXTENSION);
+		$img_type=$_FILES['files']['type'][$key];
 
         if($img_size > 2097152){
-			$errors[] = 'File size must be less than 2 MB';
+            $errors[] = 'File size must be less than 2 MB';
         }	
+
+        // Set original name to the viewer  
+        mysql_query("INSERT INTO images (name) VALUES ('".$img_name."') ");
+        
+        $img_extentsion = pathinfo($img_name, PATHINFO_EXTENSION); 
 
         $query="INSERT INTO images (type, extension) VALUES ('".$img_type."', '".$img_extentsion."'); ";
 

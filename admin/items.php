@@ -2,10 +2,17 @@
 
 include ('inc/connectdb.php');
 
-//$query = "SELECT * FROM items";
-$query = "SELECT items.id as id, items.type as type, customers.name as customer, items.title as title, items.url as url, items.text as text, items.date as date, authors.name as author
-		FROM (items LEFT JOIN customers ON customers.id = items.customer) LEFT JOIN authors ON authors.id = items.author";
+if ( isset($_GET['action']) && $_GET['action'] === 'deleteItem' ) {
+	mysql_query("DELETE FROM itemTags WHERE item=". (int) $_GET['id']);
+	mysql_query("DELETE FROM itemImages WHERE item=". (int) $_GET['id']);
+    mysql_query( "DELETE FROM items WHERE id=" . (int) $_GET['id']);
+}
 
+//$query = "SELECT * FROM items";
+$query = "SELECT items.id as id, items.type as type, customers.name as customer, items.title as title, 
+		items.url as url, items.text as text, items.date as date, authors.name as author
+		FROM (items LEFT JOIN customers ON customers.id = items.customer) 
+		LEFT JOIN authors ON authors.id = items.author ORDER BY items.id DESC";
 $result = mysql_query($query);
 
 // $queryjoin = "SELECT customers.name as customerName FROM customer
@@ -35,6 +42,8 @@ include 'inc/nav.php';
 					<th>date</th>
 					<th>author</th>
 					<th>edit</th>
+					<th>update</th>
+					<th>delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -49,7 +58,9 @@ include 'inc/nav.php';
 						"<td>" . $row['text'] . "</td>".
 						"<td>" . $row['date'] . "</td>".
 						"<td>" . $row['author'] . "</td>".
+						'<td><a href="itemeditor.php?id=' . $row["id"] .'"' . '>edit</a></td>'.
 						'<td><a href="update.php?id=' . $row["id"] .'"' . '>update</a></td>'.
+						'<td><a href="?action=deleteItem&id='.$row['id'].'">delete</a>'.'</td>'.
 						"</tr>";  //$row['index'] the index here is a field name
 				}
 			?>

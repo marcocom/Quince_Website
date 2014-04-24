@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Items Page</title>
     <link href="css/reset.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />

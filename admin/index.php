@@ -5,6 +5,9 @@ include 'inc/nav.php';
 ?>
 
 	<section class="container clearhack" >
+		<header class="formheader">
+			<h1>Post Item:</h1>
+		</header>
 		<article>
 		<form name="postprojects" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
 			<div class="inputblock">

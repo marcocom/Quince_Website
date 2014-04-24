@@ -30,4 +30,14 @@ if (!empty($_POST['authorname'])) {
 			echo mysql_error();
 		}
     } 
+
+    if ( isset($_GET['action']) && $_GET['action'] === 'deleteAuthor' ) {
+   		 mysql_query( "DELETE FROM authors 
+                  		WHERE id=" . (int) $_GET['id']);
+
+	}
+
+    $resultAuthor =  mysql_query("SELECT id, name, useFbImage FROM authors");
+
+    
 ?>

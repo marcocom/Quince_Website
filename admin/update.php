@@ -19,11 +19,12 @@ if( isset($_GET['action']) && $_GET['action'] === 'delete' ){
 
 // Retrieve data from database 
 // $sql="SELECT images WHERE id=" . (int) $getid;
-$sqljoin = "SELECT images.id AS imageid, images.extension AS imagex 
+$sqljoin = "SELECT images.id AS imageid, images.extension AS imagex, images.name AS imagename
             FROM images
             INNER JOIN itemImages 
             ON images.id = itemImages.image
-            WHERE itemImages.item = " . $getid;
+            WHERE itemImages.item = " . $getid . "
+            ORDER BY images.id DESC";
 
 $result = mysql_query($sqljoin);
 
@@ -31,6 +32,7 @@ $images = array ();
 
 while ($row = mysql_fetch_assoc ($result)){
 	$image = array ('id' => (int) $row['imageid'],
+					'name' =>  $row['imagename'],
 					'extension' => $row['imagex']);
 
 	$images[] = $image;
@@ -95,6 +97,7 @@ include 'inc/nav.php';
 			<thead>
 				<tr>
 					<th>image</th>
+					<th>name</th>
 					<th>extension</th>
 					<th>preview</th>
 					<th>delete</th>
@@ -104,6 +107,7 @@ include 'inc/nav.php';
 			<? foreach ($images as $image): ?>
 				<tr>
 						<td width="10%"><?= $image['id'] ?></td>
+						<td width="10%"><?= $image['name'] ?></td>
 						<td width="10%"><?= $image['extension'] ?></td>
 						<td width="70%"><img style="width: 50%; height: auto;" src="../img/cells/<?= $image['id'] ?>.<?= $image['extension'] ?>"></td>
 						<td><a href="?id=<?= $getid ?>&action=delete&img=<?= $image['id'] ?>">Delete</a></td>
