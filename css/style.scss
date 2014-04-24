@@ -552,6 +552,10 @@ body{
         //font-size: 14px;
       }
     }
+    .mosaic-container.filtered li.column{
+      width: 239px;
+
+    }
   }
 }
 #second-container{
@@ -1144,7 +1148,10 @@ body{
      .mosaic-container li.column{
        //width:$cell-total-short-width;
        width:$cell-total-med-width;
+
      }
+
+
    }
 }
 

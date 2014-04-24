@@ -55,39 +55,39 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
             <div class="content">
                 <div class="main-logo">
-                    <a href="#" data-filter="time"><img id="logo" src="img/logo.png"></a>
+                    <a href="#" data-filter="time"><img id="logo" src="/img/logo.png"></a>
                 </div>
                 <div class="nav">
                     <ul class="social">
                         <li class="facebook">
                             <a target="_blank" href="http://www.facebook.com/QuinceAmsterdam" data-portal="fb"  target="_blank">
-                                <!--                            <img src="img/icon_fb.png">-->
+                                <!--                            <img src="/img/icon_fb.png">-->
                             </a>
                         </li>
 
                         <li class="twitter">
                             <a target="_blank" href="http://www.twitter.com/QuinceAmsterdam" data-portal="tw"  target="_blank">
-                                <!--                            <img src="img/icon_twit.png">-->
+                                <!--                            <img src="/img/icon_twit.png">-->
                             </a>
                         </li>
                         <li class="linkedin">
                             <a target="_blank" href="http://www.linkedin.com/company/quince" data-portal="link"  target="_blank">
-                                <!--                            <img src="img/icon_li.png">-->
+                                <!--                            <img src="/img/icon_li.png">-->
                             </a>
                         </li>
                         <li class="pinterest">
                             <a target="_blank" href="http://www.pinterest.com/QuinceAmsterdam" data-portal="pin"  target="_blank">
-                                <!--                            <img src="img/icon_pin.png">-->
+                                <!--                            <img src="/img/icon_pin.png">-->
                             </a>
                         </li>
                         <li class="youtube">
                             <a target="_blank" href="http://www.youtube.com/QuinceBV" data-portal="yt"  target="_blank">
-                                <!--                            <img src="img/icon_yt.png">-->
+                                <!--                            <img src="/img/icon_yt.png">-->
                             </a>
                         </li>
                         <li class="vimeo">
                             <a target="_blank" href="http://vimeo.com/quinceamsterdam " data-portal="vim"  target="_blank">
-                                <!--                            <img src="img/icon_vim.png">-->
+                                <!--                            <img src="/img/icon_vim.png">-->
                             </a>
                         </li>
                     </ul>
@@ -123,19 +123,19 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                                     <h1 class="static"><span>Quince</span> is</h1>
                                     <div class="imgs">
                                         <ul class="img-scroller">
-                                            <li><img src="img/homepage/branding.jpg"></li>
-                                            <li><img src="img/homepage/vr_gaming.jpg"></li>
-                                            <li><img src="img/homepage/installations.jpg"></li>
-                                            <li><img src="img/homepage/retail.jpg"></li>
-                                            <li><img src="img/homepage/touch.jpg"></li>
-                                            <li><img src="img/homepage/installations.jpg"></li>
-                                            <li><img src="img/homepage/events.jpg"></li>
-                                            <li><img src="img/homepage/web.jpg"></li>
-                                            <li><img src="img/homepage/print.jpg"></li>
-                                            <li><img src="img/homepage/mobile.jpg"></li>
-                                            <li><img src="img/homepage/strategy.jpg"></li>
-                                            <li><img src="img/homepage/retail.jpg"></li>
-                                            <li><img src="img/homepage/elearning.jpg"></li>
+                                            <li><img src="/img/homepage/branding.jpg"></li>
+                                            <li><img src="/img/homepage/vr_gaming.jpg"></li>
+                                            <li><img src="/img/homepage/installations.jpg"></li>
+                                            <li><img src="/img/homepage/retail.jpg"></li>
+                                            <li><img src="/img/homepage/touch.jpg"></li>
+                                            <li><img src="/img/homepage/installations.jpg"></li>
+                                            <li><img src="/img/homepage/events.jpg"></li>
+                                            <li><img src="/img/homepage/web.jpg"></li>
+                                            <li><img src="/img/homepage/print.jpg"></li>
+                                            <li><img src="/img/homepage/mobile.jpg"></li>
+                                            <li><img src="/img/homepage/strategy.jpg"></li>
+                                            <li><img src="/img/homepage/retail.jpg"></li>
+                                            <li><img src="/img/homepage/elearning.jpg"></li>
                                         </ul>
                                     </div>
                                     <div class="texts">
@@ -172,7 +172,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                 <div id="second-container">
                 </div>
             </div>
-            <img class="loader-anim" src="img/loading.gif">
+            <img class="loader-anim" src="/img/loading.gif">
 
             <div class="footer hidden-xs">
                 <h6>Copyright 2014 All Rights Reserved</h6>
@@ -193,7 +193,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <a class="address" target="_blank" href="https://maps.google.nl/maps?q=Assumburg+73+1081+GB+Amsterdam+the+Netherlands&daddr=Assumburg+73,+1081+GB+Amsterdam&hnear=0x47c60a0b845ef23b:0x79090fe2330b7586,Assumburg+73,+1081+GB+Amsterdam&gl=nl&t=h&z=16">
                             <h5>Assumburg 73</h5>
                             <h5>1081 GB Amsterdam</h5>
-                            <h5>The Netherlands</h5><img src="img/googlemaps_pin.png">
+                            <h5>The Netherlands</h5><img src="/img/googlemaps_pin.png">
 
                         </a>
                         <a href="tel:0031203471000"><h5>T +31 (0)20 347 1000</h5></a>
@@ -213,7 +213,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <a class="address" target="_blank" href="https://maps.google.nl/maps?q=Marcius+15.+t%C3%A9r+1+1056+Budapest+Hungary&hl=en&ie=UTF8&sll=47.737938,18.557968&sspn=0.53613,1.338959&t=h&gl=nl&hnear=1056+Budapest,+V.+ker%C3%BClet,+M%C3%A1rcius+15.+t%C3%A9r+1,+Hungary&z=17">
                             <h5>Marcius 15. tér 1 [4th floor]</h5>
                             <h5>1056 Budapest</h5>
-                            <h5>Hungary</h5><img src="img/googlemaps_pin.png">
+                            <h5>Hungary</h5><img src="/img/googlemaps_pin.png">
                         </a>
 
                         <a href="tel:003618149694"><h5>T +36 1 814 9694</h5></a>
@@ -483,6 +483,7 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         </div>
 
                         <div class="social">
+                            <% if(email.length > 0){ %><a href="mailto:<%= email %>" target="_blank"><img src="/img/icon_email.png" ></a><% } %>
                             <% if(linkedin.length > 0){ %><a href="<%= linkedin %>" target="_blank"><img src="/img/icon_li.png" ></a><% } %>
                             <% if(facebook.length > 0){ %><a href="https://www.facebook.com/<%= facebook %>" target="_blank"><img src="/img/icon_fb.png" ></a><% } %>
                         </div>

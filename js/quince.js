@@ -55,6 +55,8 @@
 
 
             Quince.EventManager.addEventHandler(Quince.Event.ROUTER_PORTAL, Quince.State.refineByPortal.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.ROUTER_SEARCH, Quince.State.refineBySearch.bind(this));
+            Quince.EventManager.addEventHandler(Quince.Event.ROUTER_TAG, Quince.State.refineByTag.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.ROUTER_MAIN_MOSAIC, Quince.State.createMainModel.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.REFINE_FILTER, Quince.State.refineByFilter.bind(this));
             Quince.EventManager.addEventHandler(Quince.Event.REFINE_CLIENTS, Quince.State.showAllClients.bind(this));
@@ -387,13 +389,258 @@
 
 
 
+
+    Quince.Patterns = {
+        'time':{
+            'default':[
+                ["d","a","e","c","f","b","j"],
+                ["a","j","c","f","b","h"],
+                ["g","a","j","a","e","b","j"]
+            ]
+        },
+        'search':{
+            'default':[
+                ["d","a","e","c","f","b","j"],
+                ["a","j","c","f","b","h"],
+                ["g","a","j","a","e","b","j"]
+            ]
+        },
+        'tag':{
+            'default':[
+                ["d","a","e","c","f","b","j"],
+                ["a","j","c","f","b","h"],
+                ["g","a","j","a","e","b","j"]
+            ]
+        },
+        'people':{
+            'default':[
+                ["d","p","p","g","p","p","p"],
+                ["e","p","p","c","p","p"],
+                ["g","p","p","e","p","p","p"]
+            ]
+        },
+        'authorId':{
+            'default':[
+                ["g","a","e","c","b","j"],
+                ["a","j","c","b","h"],
+                ["a","j","a","e","b","j"]
+            ]
+        },
+        'customerId':{
+            'default':[
+                ["g","a","e","c","b","j"],
+                ["a","j","c","b","h"],
+                ["a","j","a","e","b","j"]
+            ],
+            'all':[
+                ["c","c","c","c","c","c"],
+                ["c","c","c","c","c"],
+                ["c","c","c","c","c","c"]
+            ]
+        },
+        'portal':{
+            'fb':[
+                ["d","a","e","c","f","b","j"],
+                ["a","j","c","f","b","h"],
+                ["g","a","j","a","e","b","j"]
+            ],
+            'vim':[
+                ["c","j","j","j","j","c","j","j","g"],
+                ["j","j","c","j","e","j","c","j","j"],
+                ["g","j","j","j","g","j","j","e","j"]
+            ],
+            'yt':[
+                ["j","c","j","j","j","c","j","j","g"],
+                ["j","j","c","j","j","j","c","j","j"],
+                ["g","j","j","j","g","j","j","j","j"]
+            ],
+            'pin':[
+                ["a","a","c","a","a","g"],
+                ["a","c","a","a","a"],
+                ["a","a","c","a","a"]
+            ],
+            'tw':[
+                ["g","e","e","c","e"],
+                ["e","c","e","e","g"],
+                ["g","e","c","e","e"]
+            ],
+            'link':[
+                ["e","e","e","e"],
+                ["e","e","e","e"],
+                ["e","e","e","e"]
+            ]
+        }
+    }
+
+
+    Quince.State = {
+
+        destroyPrimary : function(){
+
+            if(Quince._mosaic && Quince._mosaic._enabled){
+                Quince._mosaic.showMosaic(false);
+                Quince._model.removeEventListeners();
+                Quince._landingAnimation.manageRotationTimer(true);
+                $log("_mosaic suppressed:");
+            }
+        },
+
+        destroySecondary : function(){
+            if(Quince._secondaryMosaic){
+                Quince._secondaryModel.removeEventListeners();
+                Quince._secondaryMosaic.showMosaic(false);
+                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
+                Quince._secondaryModel = null;
+                Quince._secondaryMosaic = null;
+            }
+        },
+
+        showAllClients : function(){
+            $log("STATE - showAllClients() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+
+            Quince.State.destroyPrimary();
+
+            Quince.State.destroySecondary();
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._currentFiltering = Quince.Constants.Filters.CUSTOMER;
+            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", Quince.Constants.Filters.CUSTOMER, "all");
+            Quince._currentModel = Quince._secondaryModel;
+
+            $('#second-container').after($('#slider-container'));
+        },
+
+        createRefinedModel : function(filter, val){
+            $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+
+            this.destroyPrimary();
+
+            this.destroySecondary();
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._currentFiltering = filter;
+            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", filter, val);
+            Quince._currentModel = Quince._secondaryModel;
+
+            $('#second-container').after($('#slider-container'));
+        },
+
+        createPeopleModel : function(){
+            $log("createPeopleModel() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
+//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
+
+
+            Quince.State.destroyPrimary();
+
+            Quince.State.destroySecondary();
+
+            $('#second-container').empty().html(Quince.templates.containers.slider);
+
+            Quince._currentFiltering = Quince.Constants.Filters.PEOPLE;
+            Quince._secondaryModel = new Quince.Model.People('#second-container', "/backend/author");
+            Quince._currentModel = Quince._secondaryModel;
+
+            $('#second-container').after($('#slider-container'));
+        },
+
+        removeRefinedModel : function(){
+            $log("STATE removeRefinedModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+            this.destroySecondary();
+            var target = $('#second-container').empty();
+
+            $('#slider-container').after($('#second-container'));
+
+            if(Quince._mosaic){
+                Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
+                Quince._mosaic.showMosaic(true);
+                Quince._model.addEventListeners();
+                Quince._landingAnimation.manageRotationTimer(false);
+                Quince._currentModel = Quince._model;
+                Quince._currentMosaic = Quince._mosaic;
+                Quince._currentMosaic.onResize();
+            } else {
+                Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");
+                Quince._currentModel = Quince._model;
+            }
+
+        },
+
+        startMosaic : function(e, el, filter){
+
+            $log("STARTMOSAIC() filter:"+filter);
+
+            Quince._currentFiltering = filter;
+
+            var targetEl = filter == Quince.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
+
+                if(filter == Quince.Constants.Filters.CHRONOLOGICAL){
+                    $log("===============================CREATE MAIN MOSAIC===================================");
+                    Quince._mosaic = new Quince.Mosaic.Container(el, filter);
+                    Quince._currentMosaic = Quince._mosaic;
+                } else {
+                    $log("NEW SECONDARY MODEL EXISTS!");
+                    $log("===============================CREATE NEW SECOND MOSAIC filter:"+filter+"===============================");
+                    Quince._secondaryMosaic = new Quince.Mosaic.Container(el, filter);
+                    Quince._currentMosaic = Quince._secondaryMosaic;
+                }
+        },
+
+        createMainModel : function(e){
+            $log("STATE createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
+            Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
+            Quince.State.removeRefinedModel();
+        },
+
+        refineBySearch : function(e, filter){
+            $log("STATE refineBySearch WORD:"+filter);
+            Quince.State.createRefinedModel(Quince.Constants.Filters.SEARCH, filter);
+        },
+
+        refineByTag : function(e, filter){
+            $log("STATE refineByTag WORD:"+filter);
+            Quince.State.createRefinedModel(Quince.Constants.Filters.SEARCH, filter);
+        },
+
+        refineByPortal : function(e, filter){
+            $log("STATE refineByPortal FILTER:"+filter);
+            Quince.State.createRefinedModel(Quince.Constants.Filters.PORTAL, filter);
+        },
+
+        refineByClient : function(e, filter){
+            $log("STATE refineByClient FILTER:"+filter);
+            Quince.State.createRefinedModel(Quince.Constants.Filters.CUSTOMER, filter);
+        },
+
+        refineByAuthor : function(e, filter){
+            $log("STATE refineByClient FILTER:"+filter);
+            Quince.State.createRefinedModel(Quince.Constants.Filters.AUTHOR, filter);
+        },
+
+        refineByFilter : function(e, filter){
+            $log("refineByFilter FILTER:"+filter);
+
+            if(filter == Quince.Constants.Filters.CHRONOLOGICAL)
+                Quince.cellRouter.navigate("/", {trigger:true});
+        }
+
+    }
+
+
     Quince.Constants = {
         'Filters':{
             'CHRONOLOGICAL':"time",
             'AUTHOR':"authorId",
             'PEOPLE':"people",
             'CUSTOMER':"customerId",
-            'TAG':"tag"
+            'TAG':"tag",
+            'SEARCH':"search",
+            'PORTAL':"portal"
         }
     };
 
@@ -405,7 +652,6 @@
         'brand_green':              '#009339'
     };
     Quince.Brand.ALL_COLORS = [Quince.Brand.brand_blue, Quince.Brand.brand_purple, Quince.Brand.brand_orange, Quince.Brand.brand_green];
-
 
 
     Quince.templates = {
@@ -554,99 +800,43 @@
         ],
         'long_images':[
             {
-                'images':Quince.cellImageDirectory+"longs/cell_g_1.jpg",
-                'id':"2",
+                'images':"/img/longs/cell_g_1.jpg",
+                'id':"101",
                 'type':'g'
             },
             {
-                'images':Quince.cellImageDirectory+"longs/cell_g_2.jpg",
-                'id':"2",
+                'images':"/img/longs/cell_g_2.jpg",
+                'id':"102",
                 'type':'g'
             },
             {
-                'images':Quince.cellImageDirectory+"longs/cell_g_3.jpg",
-                'id':"2",
+                'images':"/img/longs/cell_g_3.jpg",
+                'id':"103",
+                'type':'g'
+            },
+            {
+                'images':"/img/longs/cell_g_4.jpg",
+                'id':"104",
+                'type':'g'
+            },
+            {
+                'images':"/img/longs/cell_g_5.jpg",
+                'id':"105",
+                'type':'g'
+            },
+            {
+                'images':"/img/longs/cell_g_6.jpg",
+                'id':"106",
+                'type':'g'
+            },
+            {
+                'images':"/img/longs/cell_g_7.jpg",
+                'id':"107",
                 'type':'g'
             }
         ]
 
     };
-
-//        'column_patterns':[
-//            ["d","a","e","b","f","b","c","j"],
-//            ["a","j","b","e","c","b","h","f","j"],
-//            ["g","f","a","j","a","e","b","j"]
-//        ],
-    Quince.Patterns = {
-        'time':{
-            'default':[
-                ["d","a","e","c","f","b","j"],
-                ["a","j","c","f","b","h"],
-                ["g","a","j","a","e","b","j"]
-            ]
-        },
-        'people':{
-            'default':[
-                ["d","p","p","g","p","p","p"],
-                ["e","p","p","c","p","p","p"],
-                ["g","p","p","e","p","p","p"]
-            ]
-        },
-        'authorId':{
-            'default':[
-                ["g","a","e","c","b","j"],
-                ["a","j","c","b","h"],
-                ["a","j","a","e","b","j"]
-            ]
-        },
-        'customerId':{
-            'default':[
-                ["g","a","e","c","b","j"],
-                ["a","j","c","b","h"],
-                ["a","j","a","e","b","j"]
-            ],
-            'all':[
-                ["c","e","c","c","c", "g"],
-                ["d","c","c","c","c","c"],
-                ["c","c","c","e","c","c"]
-            ]
-        },
-        'portal':{
-            'fb':[
-                ["g","a","e","c","b","j"],
-                ["a","j","c","b","h"],
-                ["a","j","a","e","b","j"]
-            ],
-            'vim':[
-                ["j","c","j","j","j","c","j","j","g"],
-                ["j","j","c","j","e","j","c","j","j"],
-                ["g","j","j","j","g","j","j","e","j"]
-            ],
-            'yt':[
-                ["j","c","j","j","j","c","j","j","g"],
-                ["j","j","c","j","j","j","c","j","j"],
-                ["g","j","j","j","g","j","j","j","j"]
-            ],
-            'pin':[
-                ["a","a","c","a","a","g"],
-                ["a","c","a","a","a"],
-                ["a","a","c","a","a"]
-            ],
-            'tw':[
-                ["g","e","e","c","e"],
-                ["e","c","e","e","g"],
-                ["g","e","c","e","e"]
-            ],
-            'link':[
-                ["e","e","e","e"],
-                ["e","e","e","e"],
-                ["e","e","e","e"]
-            ]
-        }
-
-
-
-    }
 
     Quince.customerHash = {
         '560':'ABN-AMRO',
@@ -698,155 +888,6 @@
         '599':'VNU',
         '513':'Whirlpool'
     }
-
-    Quince.State = {
-
-        destroyPrimary : function(){
-
-            if(Quince._mosaic && Quince._mosaic._enabled){
-                Quince._mosaic.showMosaic(false);
-                Quince._model.removeEventListeners();
-                Quince._landingAnimation.manageRotationTimer(true);
-                $log("_mosaic suppressed:");
-            }
-        },
-
-        destroySecondary : function(){
-            if(Quince._secondaryMosaic){
-                Quince._secondaryModel.removeEventListeners();
-                Quince._secondaryMosaic.showMosaic(false);
-                if(Quince._secondaryMosaic) Quince._secondaryMosaic.removeMosaic();
-                Quince._secondaryModel = null;
-                Quince._secondaryMosaic = null;
-            }
-        },
-
-        showAllClients : function(){
-            $log("STATE - showAllClients() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
-//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
-
-
-            Quince.State.destroyPrimary();
-
-            Quince.State.destroySecondary();
-
-            $('#second-container').empty().html(Quince.templates.containers.slider);
-
-            Quince._currentFiltering = Quince.Constants.Filters.CUSTOMER;
-            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", Quince.Constants.Filters.CUSTOMER, "all");
-            Quince._currentModel = Quince._secondaryModel;
-
-            $('#second-container').after($('#slider-container'));
-        },
-
-        createRefinedModel : function(filter, val){
-            $log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
-//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
-
-
-            this.destroyPrimary();
-
-            this.destroySecondary();
-
-            $('#second-container').empty().html(Quince.templates.containers.slider);
-
-            Quince._currentFiltering = filter;
-            Quince._secondaryModel = new Quince.Model.Mosaic('#second-container', "/backend/item", filter, val);
-            Quince._currentModel = Quince._secondaryModel;
-
-            $('#second-container').after($('#slider-container'));
-        },
-
-        createPeopleModel : function(){
-            $log("createPeopleModel() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
-//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
-
-
-            Quince.State.destroyPrimary();
-
-            Quince.State.destroySecondary();
-
-            $('#second-container').empty().html(Quince.templates.containers.slider);
-
-            Quince._currentFiltering = Quince.Constants.Filters.PEOPLE;
-            Quince._secondaryModel = new Quince.Model.People('#second-container', "/backend/author");
-            Quince._currentModel = Quince._secondaryModel;
-
-            $('#second-container').after($('#slider-container'));
-        },
-
-        removeRefinedModel : function(){
-            $log("STATE removeRefinedModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
-            this.destroySecondary();
-            var target = $('#second-container').empty();
-
-            $('#slider-container').after($('#second-container'));
-
-            if(Quince._mosaic){
-                Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
-                Quince._mosaic.showMosaic(true);
-                Quince._model.addEventListeners();
-                Quince._landingAnimation.manageRotationTimer(false);
-                Quince._currentModel = Quince._model;
-                Quince._currentMosaic = Quince._mosaic;
-                Quince._currentMosaic.onResize();
-            } else {
-                Quince._model = new Quince.Model.Mosaic("#slider-container", "/backend/item");
-                Quince._currentModel = Quince._model;
-            }
-
-        },
-
-        startMosaic : function(e, el, filter){
-
-            $log("STARTMOSAIC() filter:"+filter);
-
-            Quince._currentFiltering = filter;
-
-            var targetEl = filter == Quince.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
-
-                if(filter == Quince.Constants.Filters.CHRONOLOGICAL){
-                    $log("===============================CREATE MAIN MOSAIC===================================");
-                    Quince._mosaic = new Quince.Mosaic.Container(el, filter);
-                    Quince._currentMosaic = Quince._mosaic;
-                } else {
-                    $log("NEW SECONDARY MODEL EXISTS!");
-                    $log("===============================CREATE NEW SECOND MOSAIC filter:"+filter+"===============================");
-                    Quince._secondaryMosaic = new Quince.Mosaic.Container(el, filter);
-                    Quince._currentMosaic = Quince._secondaryMosaic;
-                }
-        },
-
-        createMainModel : function(e){
-            $log("STATE createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
-            Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
-            Quince.State.removeRefinedModel();
-        },
-
-        refineByPortal : function(e, filter){
-            $log("STATE refineByPortal FILTER:"+filter);
-            Quince.State.createRefinedModel("portal", filter);
-        },
-        refineByClient : function(e, filter){
-            $log("STATE refineByClient FILTER:"+filter);
-            Quince.State.createRefinedModel(Quince.Constants.Filters.CUSTOMER, filter);
-        },
-
-        refineByAuthor : function(e, filter){
-            $log("STATE refineByClient FILTER:"+filter);
-            Quince.State.createRefinedModel(Quince.Constants.Filters.AUTHOR, filter);
-        },
-
-        refineByFilter : function(e, filter){
-            $log("refineByFilter FILTER:"+filter);
-
-            if(filter == Quince.Constants.Filters.CHRONOLOGICAL)
-                Quince.cellRouter.navigate("/", {trigger:true});
-        }
-
-    }
-
-
 
 
 

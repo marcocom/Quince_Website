@@ -135,9 +135,13 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
             this._mosaic = $(m);
 
             this._filterMode = filter || $q.Constants.Filters.CHRONOLOGICAL;
-            this._filterVal = val || "default";
+            this._filterVal =  val  || "default";
 
-            this._filterDefault = (this._filterMode == $q.Constants.Filters.CUSTOMER || this._filterMode == $q.Constants.Filters.AUTHOR) && this._filterVal != 'all';
+            this._filterDefault = (this._filterMode == $q.Constants.Filters.CUSTOMER
+                || this._filterMode == $q.Constants.Filters.AUTHOR
+                || this._filterMode == Quince.Constants.Filters.SEARCH
+                || this._filterMode == Quince.Constants.Filters.TAG)
+                && this._filterVal != 'all';
 
             this._firstLoad = false;
             this._currentColumn = 0;
@@ -287,6 +291,7 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
             _.each(remainders, function(val, key){
                 _this.remainderCounters[key] = val;
+                $log(key+" remaining:"+ val);
             });
             var style = Math.abs(this._currentColumn % 3);
 
@@ -295,9 +300,8 @@ Views use templates which are pre-compiled in Mosaic object and then removed fro
 
 
             $log("MODEL PARSE result:");
-            $dir(data);
-            $log("REMAINDERS:");
-            $dir(this.remainderCounters);
+            $dir($result);
+            $dir($result);
 
             var style = Math.abs(this._currentColumn % 3);
             var pattern =  $q.Patterns[this._filterMode][(this._filterDefault ? "default" : this._filterVal)][style];

@@ -90,6 +90,10 @@
 
             var m = this._el.find('.mosaic-container');
             this._mosaic_container = $(m);
+            if(
+                (this.filteringMode == $q.Constants.Filters.CUSTOMER && Quince._currentModel._filterVal == "all")
+//                  || (this.filteringMode == $q.Constants.Filters.PORTAL && (Quince._currentModel._filterVal == "vim" || Quince._currentModel._filterVal == "yt"))
+                ) this._mosaic_container.addClass('filtered');
 
 
             var c = this._mosaic_container.find('.column');
