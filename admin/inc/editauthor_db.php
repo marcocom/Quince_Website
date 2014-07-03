@@ -9,10 +9,10 @@ if (!empty($_POST['authorname'])) {
     $author_linkedin = mysql_real_escape_string($_POST['authorlinkedin']);
     $author_facebookImg = (int) (isset($_POST['usefbimage']) ? $_POST['usefbimage'] : '');
     $author_details = mysql_real_escape_string($_POST['authordetails']);
-    //$author_ = mysql_real_escape_string($_POST['']);
+    $author_title = mysql_real_escape_string($_POST['authortitle']);
 
     $updateAuthores = "UPDATE authors 
-				SET id = $author_id, name = '$author_name', 
+				SET id = $author_id, name = '$author_name', job = '$author_title', 
                 email = '$author_email', facebook = '$author_fb', linkedin = '$author_linkedin', 
                 details = '$author_details', section = '$author_section'";
 				
@@ -35,11 +35,10 @@ if ( isset($_GET['action']) && $_GET['action'] === 'deleteAuthor' ) {
 
 if(empty($getid)) {
 $author_id = (int) isset($_POST['authorid']) ? $_POST['authorid'] : '';	
-$selectAuthors = mysql_query("SELECT * FROM authors WHERE id=" . $author_id);
+$selectAuthors = mysql_query("SELECT * FROM authors WHERE id=" . $author_id . " ORDER BY name");
 $author = mysql_fetch_array($selectAuthors);
 } else {
-$selectAuthors = mysql_query("SELECT * FROM authors WHERE id=" . $getid);
+$selectAuthors = mysql_query("SELECT * FROM authors WHERE id=" . $getid . " ORDER BY name");
 $author = mysql_fetch_array($selectAuthors);
 }
-
 ?>

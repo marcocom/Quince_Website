@@ -1,6 +1,7 @@
 <?php
 $getid = (int) isset($_GET['id']) ? $_GET['id'] : '';
-if (!empty($_POST['title'])) {
+if (!empty($_POST['title']) && !empty($_POST['customer']) && !empty($_POST['author'])) {
+
 		// Get values from form 
 		$itemid= (int) $_POST['itemid'];
 		$title=mysql_real_escape_string($_POST['title']);
@@ -10,11 +11,12 @@ if (!empty($_POST['title'])) {
 		$customer= mysql_real_escape_string($_POST['customer']);
 		$date=mysql_real_escape_string($_POST['date']);
 		$url=mysql_real_escape_string( $_POST[ 'url' ] );
+		$red = mysql_real_escape_string( $_POST[ 'ref' ] );
 		$author=mysql_real_escape_string($_POST['author']);
 
 		// Update data from items table
 		$updateItems = "UPDATE items
-				SET type = '$type', text = '$text', date = '$date', customer = '$customer', title = '$title', author = '$author', url = '$url', portal = '$portal'
+				SET type = '$type', text = '$text', date = '$date', customer = '$customer', title = '$title', author = '$author', url = '$url', portal = '$portal', ref = '$ref'
 				WHERE id=" . $itemid;
 
 		$result = mysql_query($updateItems);

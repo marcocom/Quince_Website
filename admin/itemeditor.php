@@ -42,6 +42,7 @@ include 'inc/nav.php';
 			<div class="inputblock portal clearhack">
 				<label>Portal</label>
 				<select name="portal">
+					<option>Choose a portal...</option>
 					<option value="fb" <?php if ($item['portal'] == 'fb') {echo 'selected';} ?> >Facebook</option>
 					<option value="tw" <?php if ($item['portal'] == 'tw') {echo 'selected';} ?> >Twitter</option>
 					<option value="link" <?php if ($item['portal'] == 'link') {echo 'selected';} ?> >Linkedin</option>
@@ -72,6 +73,11 @@ include 'inc/nav.php';
 			<div class="inputblock">
 				<label>Url <span>URL to social site page. Videos should use only reference number!</span></label>
 				<input type="text" name="url" value="<?php echo $item['url'] ?>">
+			</div>
+
+			<div class="inputblock">
+				<label>Vimeo ref</label>
+				<input type="text" name="ref" value="<?php echo $item['ref'] ?>">
 			</div>
 
 			<div class="inputblock">

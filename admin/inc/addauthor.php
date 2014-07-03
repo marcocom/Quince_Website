@@ -8,16 +8,22 @@ if (!empty($_POST['authorname'])) {
     	$author_linkedin = mysql_real_escape_string($_POST['authorlinkedin']);
     	$author_facebookImg = (int) $_POST['usefbimage'];
     	$author_details = mysql_real_escape_string($_POST['authordetails']);
+    	$author_title = mysql_real_escape_string($_POST['authortitle']);
     	//$author_ = mysql_real_escape_string($_POST['']);
 
 
 		// Insert data into mysql 
-		$sqlauthor="INSERT INTO authors ( id, name, email, useFbImage, facebook, linkedin, details, section ) 
+		$sqlauthor="INSERT INTO authors ( id, name, job ,email, useFbImage, facebook, linkedin, details, section ) 
 					VALUES ( ".$author_id.",  
 							'".$author_name."', 
+							'".$author_title."',
 							'".$author_email."', 
 							".$author_facebookImg.", 
-							'".$author_fb."', '".$author_linkedin."', '".$author_details."', '".$author_section."' )";
+							'".$author_fb."', 
+							'".$author_linkedin."', 
+							'".$author_details."', '
+							".$author_section."' )";
+ 
 		$result=mysql_query($sqlauthor);
 
 		if($result){
@@ -37,7 +43,7 @@ if (!empty($_POST['authorname'])) {
 
 	}
 
-    $resultAuthor =  mysql_query("SELECT id, name, useFbImage FROM authors");
+    $resultAuthor =  mysql_query("SELECT id, name, useFbImage FROM authors ORDER BY name ASC");
 
     
 ?>

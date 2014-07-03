@@ -1,12 +1,19 @@
 <?php
 include ('inc/connectdb.php');
 include 'inc/editauthor_db.php';
-include 'inc/uploadimgauthor.php';
+include 'inc/uploadimg_author.php';
 include 'inc/header.php';
 include 'inc/nav.php';
+
+
+// var_dump($author['usefbimage']);
+
 ?>
 
-	<section class="container clearhack" >
+	<section class="container clearhack " >
+		<header class="formheader">
+			<h1>Edit Authors</h1>
+		</header>
 		<article>
 		<form id="postauthors" name="postauthors" action="<?php echo "authoreditor.php?id=". $_GET['id'] ?>" method="POST" enctype="multipart/form-data">
 
@@ -23,6 +30,11 @@ include 'inc/nav.php';
 				<div class="inputblock">
 					<label>Author section</label>
 					<input type="text" name="authorsection" value="<?php echo $author['section'] ?>">
+				</div>
+
+				<div class="inputblock">
+					<label>Author job</label>
+					<input type="text" name="authortitle" value="<?php echo $author['job'] ?>">
 				</div>
 
 				<div class="inputblock">
@@ -43,11 +55,11 @@ include 'inc/nav.php';
 				<div class="inputblock">
 					<label>Use Facebook Image <span>(if NO, image must be added below)</span></label>
 					<label class="radioFacebook"> Yes 
-						<input type="radio" name="usefbimage" value="1">
-					</lable>
+						<input type="radio" name="usefbimage" value="1" <?php echo ($author['useFbImage'] == 1 )? "checked" : "" ?> >
+					</label>
 					<label class="radioFacebook"> No 
-						<input type="radio" name="usefbimage" value="0">
-					</lable>
+						<input type="radio" name="usefbimage" value="0" <?php echo ($author['useFbImage'] == 0 )? "checked" : "" ?> >
+					</label>
 				</div>
 
 				<div class="inputblock">
@@ -71,11 +83,26 @@ include 'inc/nav.php';
 
 			<div class="addinfo">
 				<table>
-					<?php
-					$resultAuthor =  mysql_query("SELECT id, name, useFbImage FROM authors");
+				<thead>
+					<tr>
+						<th>image</th>
+						<th>name</th>
+						<th>edit</th>
+						<th>delet</th>
+					</tr>
+				</thead>
+
+				<?php
+				$resultAuthor =  mysql_query("SELECT id, name, useFbImage FROM authors ORDER BY name ASC");
 				while($row = mysql_fetch_array($resultAuthor)){   //Creates a loop to loop through results
+					$wishImage = "";
+					if ($row['useFbImage'] == 0) {
+						$wishImage = "LC";
+					} else  {
+						$wishImage = "FB";
+					}
 				echo "<tr>".
-						"<td>" . $row['useFbImage'] . "</td>".
+						"<td>" . $wishImage  . "</td>".
 						"<td>" . $row['name'] . "</td>".
 						'<td><a href="authoreditor.php?id=' . $row["id"] .'"' . '>edit</a></td>'.
 						'<td><a href="?action=deleteAuthor&id='.$row['id'].'">delete</a>'.'</td>'.

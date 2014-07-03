@@ -1,12 +1,15 @@
 <?php
 include ('inc/connectdb.php');
 include 'inc/addauthor.php';
-include 'inc/uploadimgauthor.php';
+include 'inc/uploadimg_author.php';
 include 'inc/header.php';
 include 'inc/nav.php';
 ?>
 
-	<section class="container clearhack" >
+	<section class="container clearhack home" >
+		<header class="formheader">
+			<h1>Post authors</h1>
+		</header>
 		<article>
 		<form id="postauthors" name="postauthors" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
 
@@ -23,6 +26,11 @@ include 'inc/nav.php';
 				<div class="inputblock">
 					<label>Author section</label>
 					<input type="text" name="authorsection" value="">
+				</div>
+
+				<div class="inputblock">
+					<label>Author job</label>
+					<input type="text" name="authortitle" value="">
 				</div>
 
 				<div class="inputblock">
@@ -73,10 +81,25 @@ include 'inc/nav.php';
 
 			<div class="addinfo">
 				<table>
-					<?php
+					<thead>
+						<tr>
+							<th>image</th>
+							<th>name</th>
+							<th>edit</th>
+							<th>delet</th>
+						</tr>
+					</thead>
+
+				<?php
 				while($row = mysql_fetch_array($resultAuthor)){   //Creates a loop to loop through results
+					$wishImg = "";
+					if ($row['useFbImage'] == 0) {
+						$wishImg = "LC";
+					} else {
+						$wishImg = "FB";
+					}
 				echo "<tr>".
-						"<td>" . $row['useFbImage'] . "</td>".
+						"<td>" . $wishImg . "</td>".
 						"<td>" . $row['name'] . "</td>".
 						'<td><a href="authoreditor.php?id=' . $row["id"] .'"' . '>edit</a></td>'.
 						'<td><a href="?action=deleteAuthor&id='.$row['id'].'">delete</a>'.'</td>'.

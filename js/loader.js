@@ -13,6 +13,7 @@
         'helper.js',
         'lib/jquery.flexslider.js',
         'lib/jquery.fancybox.js',
+        //unique project-specific namespace files below:
         'quince.js',
         'quince.model.js',
         'quince.page.js',

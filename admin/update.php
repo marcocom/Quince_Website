@@ -1,9 +1,18 @@
 <?php
 
 include ('inc/connectdb.php');
+
+// Return Type to validate upload image
+$getid = (int) isset($_GET['id']) ? $_GET['id'] : '';
+$typeQuery = mysql_query("SELECT type FROM items WHERE id=" . $getid);
+$typeResult = mysql_fetch_assoc($typeQuery);
+
+// Return How many images are in Item
+$imageQuery = mysql_query("SELECT COUNT(image) as count FROM itemImages WHERE item=" . $getid);
+$imageResult = mysql_fetch_assoc($imageQuery);
+
 include ('inc/uploadimg.php');
 
-$getid = (int) isset($_GET['id']) ? $_GET['id'] : '';
 
 // add unlik to folder img
 if( isset($_GET['action']) && $_GET['action'] === 'delete' ){
@@ -96,8 +105,8 @@ include 'inc/nav.php';
 			<table>
 			<thead>
 				<tr>
-					<th>image</th>
-					<th>name</th>
+					<th>live name</th>
+					<th>local name</th>
 					<th>extension</th>
 					<th>preview</th>
 					<th>delete</th>

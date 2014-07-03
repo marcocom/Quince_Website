@@ -4,7 +4,7 @@ include 'inc/header.php';
 include 'inc/nav.php';
 ?>
 
-	<section class="container clearhack" >
+	<section class="container clearhack home" >
 		<header class="formheader">
 			<h1>Post Item:</h1>
 		</header>
@@ -66,6 +66,11 @@ include 'inc/nav.php';
 			<div class="inputblock">
 				<label>Url</label>
 				<input type="text" name="url" value="">
+			</div>
+
+			<div class="inputblock">
+				<label>Vimeo Ref</label>
+				<input type="text" name="ref" value="">
 			</div>
 
 			<div class="inputblock">

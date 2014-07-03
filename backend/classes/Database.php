@@ -140,11 +140,12 @@ class Database
               left outer join authors
               on authors.id = items.author
 
+              ' . (isset ($filters->tag) ? '
               left outer join itemTags
               on itemTags.item = items.id
 
               left outer join tags
-              on tags.id = itemTags.tag
+              on tags.id = itemTags.tag' : '') . '
 
               where true
 
@@ -156,38 +157,32 @@ class Database
               ' . (isset ($filters->ref)        ? 'and items.ref = "' .     static::clean ($filters->ref)    . '"' : '') . '
               ' . (isset ($filters->tag)        ? 'and tags.tag = "' .      static::clean ($filters->tag)    . '"' : '') . '
 
-              order by date
+              order by date desc
 
               ' . (isset ($filters->limit)  ? 'limit ' . (int) $filters->limit   : '') . ' 
               ' . (isset ($filters->offset) ? 'offset ' . (int) $filters->offset : '');
     $result = static::query ($query);
 
-    $itemId = null;
     while ($row = $result->fetch_assoc ())
     {
-      if ($itemId != $row['id'])
-      {
-        $itemId = $row['id'];
+      $item = new Item ($row['id']);
+      $item->title        = $row['title'];
+      $item->text         = $row['text'];
+      $item->type         = $row['type'];
+      $item->customerId   = (int) $row['customerId'];
+      $item->customerName = $row['customerName'];
+      $item->authorId     = (int) $row['authorId'];
+      $item->authorName   = $row['authorName'];
+      $item->portal       = $row['portal'];
+      $item->ref          = $row['ref'];
+      $item->date         = $row['date'];
+      $item->url          = $row['url'];
+      $item->comment      = $row['comment'];
 
-        $item = new Item ($itemId);
-        $item->title        = $row['title'];
-        $item->text         = $row['text'];
-        $item->type         = $row['type'];
-        $item->customerId   = (int) $row['customerId'];
-        $item->customerName = $row['customerName'];
-        $item->authorId     = (int) $row['authorId'];
-        $item->authorName   = $row['authorName'];
-        $item->portal       = $row['portal'];
-        $item->ref          = $row['ref'];
-        $item->date         = $row['date'];
-        $item->url          = $row['url'];
-        $item->comment      = $row['comment'];
+      $item->images = static::getImages (array ('itemId' => $item->id));
+      $item->tags   = static::getTags (array ('itemId' => $item->id));
 
-        $item->images = static::getImages (array ('itemId' => $item->id));
-        $item->tags   = static::getTags (array ('itemId' => $item->id));
-
-        $items['items'][] = $item;
-      }
+      $items['items'][] = $item;
     }
 
     /* if we're requesting an offset/limit, return the number of items remaining as well */

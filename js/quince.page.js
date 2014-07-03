@@ -3,6 +3,8 @@
  The z-indexed logic of sub-pages are managed here, either through
  link-actions, or else global events.
 
+ Backbone Router is initialized here and broadcasts events, including initial boot-up of entire site based on deep-link (address) values.
+
  IntroColumn represents the 'landing-page' first-column of the wall
  */
 (function($, $q) {
@@ -64,7 +66,7 @@
             this.closeButton = $('.sub-close-cta a').click($.proxy(this.pageCollapse, this));
 
             this.toplinks.click($.proxy(this.clickAnimate, this));
-            $log("LOGO:");
+            //$log("LOGO:");
             $dir(this._logo)
             this._logo.click(function(e){
                 e.preventDefault();
@@ -74,7 +76,13 @@
 
 //            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
 
+            this.initRouter();
+
+        },
+
+        initRouter : function(){
             //BACKBONE ROUTER
+            var _this = this;
             var router = Backbone.Router.extend({
                 routes: {
 
@@ -93,48 +101,49 @@
             $q.cellRouter = new router;
 
             $q.cellRouter.on('route:getPost', function (id) {
-                $log( "Get post number " + id );
+                //$log( "Get post number " + id );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_POST, this, id);
             });
 
             $q.cellRouter.on('route:getClient', function (id) {
-                $log( "Get client number " + id );
+                //$log( "Get client number " + id );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_CLIENT, this, id);
             });
 
             $q.cellRouter.on('route:getPortal', function (id) {
-                $log( "Get portal:" + id );
+                //$log( "Get portal:" + id );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_PORTAL, this, id);
             });
 
             $q.cellRouter.on('route:getAuthor', function (id) {
-                $log( "Get author number " + id );
+                //$log( "Get author number " + id );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_AUTHOR, this, id);
             });
 
             $q.cellRouter.on('route:getTag', function (word) {
-                $log( "Get tag: " + word );
+                //$log( "Get tag: " + word );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_TAG, this, word);
             });
 
             $q.cellRouter.on('route:search', function (word) {
-                $log( "Search term: " + word );
+                //$log( "Search term: " + word );
                 $q.EventManager.fireEvent(Quince.Event.ROUTER_SEARCH, this, word);
             });
 
             $q.cellRouter.on('route:defaultRoute', function (action) {
-                $log( "DEFAULT ROUTE:" + action + " subcontentOpened:"+this.subcontentOpened);
+                //$log( "DEFAULT ROUTE:" + action + " subcontentOpened:"+this.subcontentOpened);
 
                 if(action == "jobs" || action == "about" || action == "contact"){
                     _this.remoteAnimate(action);
+                    $q.EventManager.fireEvent(Quince.Event.ROUTER_MAIN_MOSAIC, _this, action || null);
                 } else if(action == "people"){
                     $q.EventManager.fireEvent(Quince.Event.REFINE_PEOPLE, _this);
-                    $log("--------------------POEPLE ROUTE-------------------")
+                    //$log("--------------------POEPLE ROUTE-------------------")
                 } else if(action == "clients"){
                     $q.EventManager.fireEvent(Quince.Event.REFINE_CLIENTS, _this);
-                    $log("--------------------CLIENT ROUTE-------------------")
+                    //$log("--------------------CLIENT ROUTE-------------------")
                 } else if(action == null){
-                    $log("DEFAULT ROUTE - NO ACTION");
+                    //$log("DEFAULT ROUTE - NO ACTION");
                     if(_this.subcontentOpened == true) _this.pageCollapse(null);
                     $q.EventManager.fireEvent(Quince.Event.ROUTER_MAIN_MOSAIC, _this, action || null);
                 }
@@ -146,11 +155,10 @@
 //            Start Backbone history a necessary step for bookmarkable URL's
 //            - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
             Backbone.history.start({pushState: true, root: '/'});
-
         },
 
         catchPageChange : function(e, props){
-            //$log("PAGECHANGE e:"+e+" props:"+props);
+            ////$log("PAGECHANGE e:"+e+" props:"+props);
             this.remoteAnimate(props);
         },
 
@@ -160,7 +168,7 @@
             this._current = remoteLink;
             var ref = "."+( remoteLink ? remoteLink : clicksource.id) + "-content";
             var $content = $(ref);
-//            $log("REMOTE ANIMATE subcontentOpened:"+this.subcontentOpened);
+//            //$log("REMOTE ANIMATE subcontentOpened:"+this.subcontentOpened);
 
             this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, null);
         },
@@ -176,7 +184,7 @@
             var $content = $(ref);
 
             $q.cellRouter.navigate(clicksource.id, {trigger:true});
-            //$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
+            ////$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
 
             //this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
         },
@@ -192,13 +200,13 @@
 
             if(targetHeight > maxHeight) targetHeight = maxHeight;
 
-            //$log("ANIMATEFROM-CLOSED: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
+            ////$log("ANIMATEFROM-CLOSED: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
 
             this.setScrollable(false);
 
             this.currentContent = el;
             var hasSlider = this.currentContent.hasClass('sliding');
-            $log("PAGE ANIMATE has slider:"+hasSlider );
+            //$log("PAGE ANIMATE has slider:"+hasSlider );
 
             if(hasSlider) this._currentscroller = new $q.Page.SubPage(this.currentContent);
 
@@ -213,11 +221,11 @@
 
         pageAnimateFromOpened : function(el, c){
             var _this = this;
-            //$log("ANIMATEFROM-OPEN: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
-            //$log("NEW CONTENT:"+el.selector);
+            ////$log("ANIMATEFROM-OPEN: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
+            ////$log("NEW CONTENT:"+el.selector);
             if(this.currentContent.selector != el.selector){
                 this.contentSwap = c;
-                //$log("CONTENTSWAP REASSIGNED-------")
+                ////$log("CONTENTSWAP REASSIGNED-------")
             } else {
                 this.contentSwap = null;
             }
@@ -239,12 +247,12 @@
             this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
 
 
-            //$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
+            ////$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
         },
 
         onCloseTransitionEnd : function(){
             // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
-//            $log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened+" contentSwap:");
+//            //$log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened+" contentSwap:");
             $dir(this.contentSwap);
             if(this.subcontentOpened == true){
                 this.subcontentOpened = false;
@@ -262,7 +270,7 @@
                     $(this.contentSwap).trigger('click');
 //                    this.remoteAnimate(this._current);
 
-                    $log("CONTENT SWAP:"+this._current);
+                    //$log("CONTENT SWAP:"+this._current);
                     this.contentSwap = null;
                 } else {
                     $q.cellRouter.navigate("/", {trigger:false});
@@ -305,15 +313,6 @@
 
         }
     });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -410,7 +409,7 @@
             } else {
                 var searchQuery = this.searchfield.val()  == this._defaultSearchText ? "" : encodeURIComponent(this.searchfield.val());
                 this.hideField(null);
-                $log("========SEARCH:"+searchQuery);
+                //$log("========SEARCH:"+searchQuery);
                 if(searchQuery != "")
                     $q.cellRouter.navigate(("/search/"+searchQuery), {trigger:true});
 
@@ -441,6 +440,7 @@
         timer:null,
         highlight:'#5d2278',
         timerLength:3000,
+        _currentMainMosaicX:0,
 
         _construct : function(el) {
             this._el = $(el);
@@ -498,13 +498,17 @@
 
         initRotation : function(){
             this.manageRotationTimer(false);
-            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
+//            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler.bind(this));
+            $q.EventManager.addEventHandler($q.Event.MOSAIC_SCROLL_END, $.proxy(this.mosaicScrollHandler, this));
         },
 
         mosaicScrollHandler : function(e, xdiff){
+            this._currentMainMosaicX = xdiff;
             if(!$q._mosaic || !$q._mosaic._enabled) return;
             var homew = $($q._mosaic._home).width();
-            $log("SCROLL xdiff:"+xdiff+" homew:"+homew)
+
+            //$log("PAGE.INTROCOLUMN.MOSAICSCROLLHANDLER --- xdiff:"+xdiff+" homew:"+homew);
+            
             if(xdiff < -homew){//less than
                 this.manageRotationTimer(true);
             } else {//greater than
@@ -513,16 +517,19 @@
         },
 
         manageRotationTimer : function(turnOff){
+            if(!$q._mosaic) return;
             var _this = this;
-            if(!turnOff && !Quince._secondaryMosaic){
+            var homew = $($q._mosaic._home).width() ;
+            var isNotViewable = this._currentMainMosaicX < -homew;
+            if(!turnOff && !Quince._secondaryMosaic && !isNotViewable){
                 if(!this._isrotating){
                     this.timer = setInterval($.proxy(_this.rotateWords, _this), _this.timerLength);
-                    $log("TURN ON HOMEPAGE");
+                    //$log("TURN ON HOMEPAGE");
                     this._isrotating = true;
                 }
             } else {
                 if(this._isrotating){
-                    $log("SHUT OFF HOMEPAGE");
+                    //$log("SHUT OFF HOMEPAGE");
                     clearInterval(this.timer);
                     this._isrotating = false;
                 }
@@ -550,7 +557,7 @@
         },
 
         wordClick : function(e){
-            $log("CLICK");
+            //$log("CLICK");
         },
 
         rotateWords : function(){
@@ -643,7 +650,7 @@
 //            this._slider.on('beforeScrollStart', this.onBeforeScrollStart.bind(this));
 
             this.loading_items = true;
-//            $log("SUBPAGE INITCONTAINER ()  -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
+//            //$log("SUBPAGE INITCONTAINER ()  -- DETECTIONS =======  isMSGesture:"+$q.msGesture+" isTouch:"+$q.isTouch);
 
             var c = this._mosaic.find('li');
 
@@ -672,7 +679,7 @@
             var w = $(this._columns[0]).width();
             var totalw = (this._columns.length + 1) * w;
             var _this = this;
-            $log("SUB RESIZE() w:"+w+" totalwidth:"+totalw);
+            //$log("SUB RESIZE() w:"+w+" totalwidth:"+totalw);
 
 
             $(this._scroller).width( totalw );
@@ -688,14 +695,14 @@
 
         scaleColumns : function(w){
             var _this = this;
-            $log("SET WIDTH:"+w);
+            //$log("SET WIDTH:"+w);
             this._columns.each(function(e){
                 $(this).width(w);
             })
         },
 
         onFlick : function(e){
-            $log("FLICK----------------");
+            //$log("FLICK----------------");
             $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
         }
 

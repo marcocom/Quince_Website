@@ -1,3 +1,8 @@
+/*
+Mosaic controller.  All elements are generated from recieved data using the Quince.Model class,
+where they are injected into the templates and written to the page. Upon completion and even notification,
+its Quince.Mosaic that is the initialized controller for each new wall, their seperate columns, and each individual cell.
+ */
 (function($, $q) {
 
     $q.Mosaic = Class.extend({
@@ -58,13 +63,14 @@
             if(filtering == $q.Constants.Filters.CHRONOLOGICAL) this._home = $(this._el.find('.homepage')[0]);
 
             this._scrollerChild = $(this._el.find('.scroller')[0]);
-
-            this.initContainer();
+            $q._currentMosaic = this;
+            // this.initContainer();
             $log("Mosaic init :"+filtering);
 
         },
 
         initContainer : function(){
+
 //            if(!$q.isIE8){
             this._slider = new IScroll(this._el[0], {
                 scrollX: true,
@@ -89,7 +95,8 @@
             this.loading_items = true;
 
             var m = this._el.find('.mosaic-container');
-            this._mosaic_container = $(m);
+            // this._mosaic_container = $(m);
+            this._mosaic_container = $(m).addClass(this.filteringMode);
             if(
                 (this.filteringMode == $q.Constants.Filters.CUSTOMER && Quince._currentModel._filterVal == "all")
 //                  || (this.filteringMode == $q.Constants.Filters.PORTAL && (Quince._currentModel._filterVal == "vim" || Quince._currentModel._filterVal == "yt"))
@@ -111,7 +118,6 @@
 
             if(this._home){
                 this._home.show();
-
             }
 
             this.onResize(null);
@@ -124,8 +130,10 @@
             $q.EventManager.addEventHandler($q.Event.RESIZE, this.onResize.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
-            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, $.proxy(this.onLoadingData, this));
-            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
+            // $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, $.proxy(this.onLoadingData, this));
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
+            // $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
+            $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, this.onLoadingData.bind(this));
         },
 
         removeEventHandlers : function(){
@@ -173,6 +181,7 @@
         },
 
         onEndOfData : function(e){
+            $log("MOSAIC END OF DATA----------------");
             this.loading_items = false;
             if(this._home){
                 var homew = $q.windowWidth - 50;
@@ -216,6 +225,8 @@
 
         appendMosaic: function(e){
 
+            if(!this._enabled) return;
+
             var newcol = $(this._mosaic_container.find('.column').filter(":last"));
 
             this._columns.push(newcol);
@@ -223,7 +234,7 @@
             var totalw = (this._columns.length) * this.currentColumnWidth;
             $('#slider-container .scroller').width(totalw);
 
-//            $log("MOSAIC APPEND:");
+            $log("MOSAIC APPEND:");
             $dir(newcol);
             new $q.Mosaic.ParentColumn(newcol);
 
@@ -257,6 +268,7 @@
         showMosaic : function(reveal){
 //            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
             if(reveal){
+
                 this.addEventHandlers();
                 this._el.show();
 //                this._loader.show();
@@ -264,7 +276,9 @@
                 this._slider.enable();
                 this._enabled = true;
 //                $log("-----------MOSAIC:"+this.filteringMode+" SHOW!!!");
+
             }  else {
+
                 this.removeEventHandlers();
                 this._el.hide();
                 this._loader.hide();
@@ -272,6 +286,7 @@
                 this._slider.disable();
                 this._enabled = false;
 //                $log("-----------MOSAIC:"+this.filteringMode+" HIDE!!!");
+
             }
         },
 
@@ -302,10 +317,13 @@
             this.currentScrollX = this._slider.x;
             this.animateCTA();
 
-//            if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
-            if(this._enabled && $q._currentModel) $q._currentModel.mosaicScrollHandler(null, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+            if(this._enabled && $q._currentModel) {
+                $q._currentModel.mosaicScrollHandler(null, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+                $q._landingAnimation.mosaicScrollHandler(null, this._slider.x);
+            } else {
+                $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_END, this, this._slider.x, this._slider.maxScrollX, this._slider.directionX, this._slider.directionY);
+            }
         },
-
 
         onFlick : function(e){
 //            $log("FLICK----------------");
@@ -441,6 +459,13 @@
             } else
             if(this.sizeLetter == "c"){
                 this.processClientAction(this._el.data('client'));
+            } else
+            if(this.sizeLetter == "h"){
+                var link = $(this.onContent.find('.author a')[0]);
+                    link.click(function(e){
+                        e.preventDefault();
+                        $q.cellRouter.navigate("author/"+ $(this).data('author'), {trigger:true});
+                    }).css({'cursor':'pointer'});
             }
 
             if(this.sizeLetter == "f"){
@@ -605,14 +630,17 @@
                         this.onContent.css({'top':ypoints[this.sizeLetter]});
                 }
 
-                if(this.sizeLetter == "p"){
+                if(this.sizeLetter == "p" || this.sizeLetter == "a" || this.sizeLetter == "b" || this.sizeLetter == "j"){
                     var link = $(this.onContent.find('.author a')[0]);
-                    link.click(function(e){
-                        e.preventDefault();
-//                    $q.EventManager.fireEvent($q.Event.PAGECHANGE, this, actionString);
-                        $q.cellRouter.navigate("author/"+ $(this).data('author'), {trigger:true});
-                    }).css({'cursor':'pointer'});
+                    setTimeout(function(){
+                        link.click(function(e){
+                            e.preventDefault();
+                            $q.cellRouter.navigate("author/"+ $(this).data('author'), {trigger:true});
+                        }).css({'cursor':'pointer'});
+                    } , 2000);
                 }
+
+
             }
         },
 
@@ -631,7 +659,7 @@
                 if(this.sizeLetter == "f") this._carousel.flexslider("play");
                 if(this.sizeLetter == "p"){
                     var link = $(this.onContent.find('.author a')[0]);
-                    link.click(null).css({'cursor':'default'});
+//                    link.unbind('click').css({'cursor':'default'});
                 }
                 if(this.onContent){
                     $q.isIE8 ?

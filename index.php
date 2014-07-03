@@ -1,14 +1,12 @@
 <?php
-
 if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 {
     include ('noie.php');
     exit;
 }
-
 ?>
-<!DOCTYPE HTML>
-<html >
+<!DOCTYPE html>
+<html>
     <head>
         <!--http://hsmaker.com/harlemshake.asp?url=http://www.quince.nl -->
 
@@ -296,8 +294,8 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <% if(title && title.length > 0){ %>
                             <h3 class="title"><%= title %></h3>
                         <% } %>
-                        <div class="author" id="<%= authorId %>">
-                            <a href="#">
+                        <div class="author">
+                            <a href="#" data-author="<%= authorId %>">
                                 <h5 class="name"><%= authorName %></h5>
                                 <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                             </a>
@@ -325,8 +323,8 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <% if(title && title.length > 0){ %>
                             <h3 class="title"><%= title %></h3>
                         <% } %>
-                        <div class="author" id="<%= authorId %>">
-                            <a href="#">
+                        <div class="author">
+                            <a href="#" data-author="<%= authorId %>">
                                 <h5 class="name"><%= authorName %></h5>
                                 <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                             </a>
@@ -414,8 +412,8 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <% if(title && title.length > 0){ %>
                             <h3 class="title"><%= title %></h3>
                         <% } else { %>
-                            <div class="author" id="<%= authorId %>">
-                                <a href="#">
+                            <div class="author">
+                                <a href="#" data-author="<%= authorId %>">
                                     <h5 class="name"><%= authorName %></h5>
                                     <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                                 </a>
@@ -448,8 +446,8 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
                         <% if(title && title.length > 0){ %>
                             <h3 class="title"><%= title %></h3>
                         <% } else { %>
-                            <div class="author" id="<%= authorId %>">
-                                <a href="#">
+                            <div class="author">
+                                <a href="#" data-author="<%= authorId %>">
                                     <h5 class="name"><%= authorName %></h5>
                                     <h5 class="jobtitle"><%= authorJob %><em></em></h5>
                                 </a>
@@ -503,13 +501,10 @@ if (preg_match ('/(?i)msie [4-7]/', $_SERVER['HTTP_USER_AGENT']))
 
         </script>
 
-
-
-
         <!--        <script>window.jQuery || document.write('<script type="text/javascript" src="js/lib/jquery-1.10.2.js"><\/script>')</script>-->
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 
-<!--        <script type="text/javascript" src="js/main.js"></script>-->
+        <!-- // <script type="text/javascript" src="js/main.js"></script> -->
         <script type="text/javascript" src="js/loader.js"></script>
 
     </body>

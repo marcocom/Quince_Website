@@ -42,7 +42,7 @@ include 'inc/nav.php';
 					<th>date</th>
 					<th>author</th>
 					<th>edit</th>
-					<th>update</th>
+					<th>add</th>
 					<th>delete</th>
 				</tr>
 			</thead>
@@ -59,7 +59,7 @@ include 'inc/nav.php';
 						"<td>" . $row['date'] . "</td>".
 						"<td>" . $row['author'] . "</td>".
 						'<td><a href="itemeditor.php?id=' . $row["id"] .'"' . '>edit</a></td>'.
-						'<td><a href="update.php?id=' . $row["id"] .'"' . '>update</a></td>'.
+						'<td><a href="update.php?id=' . $row["id"] .'"' . '>add</a></td>'.
 						'<td><a href="?action=deleteItem&id='.$row['id'].'">delete</a>'.'</td>'.
 						"</tr>";  //$row['index'] the index here is a field name
 				}
