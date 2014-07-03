@@ -1,2 +1,0 @@
-// Initialise menu links to scroll
-function initializeScrollingLinks(e){$(e).click(function(){var e=$(this).attr("data-element"),t=$("#section-"+e).position();$.scrollTo(t.top-$("nav").height(),400)})}$(function(){initializeScrollingLinks("a.scrolling-link");initializeCircle(document.getElementById("circle"));initializeGallery();initializeProfiles();initializeMap("#map")});
