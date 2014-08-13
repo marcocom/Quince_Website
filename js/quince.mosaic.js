@@ -86,21 +86,14 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
 //                interactiveScrollbars:$q.isIE8
             });
 
-//            } else {
-//                var sl = this._el.find('#slider-container .scroller')
-//                this._slider = $(sl[0]);
-//                this._slider.css({'overflow-y':'hidden', 'overflow-x':'visible'});
-//            }
+
 
             this.loading_items = true;
 
             var m = this._el.find('.mosaic-container');
             // this._mosaic_container = $(m);
             this._mosaic_container = $(m).addClass(this.filteringMode);
-            if(
-                (this.filteringMode == $q.Constants.Filters.CUSTOMER && Quince._currentModel._filterVal == "all")
-//                  || (this.filteringMode == $q.Constants.Filters.PORTAL && (Quince._currentModel._filterVal == "vim" || Quince._currentModel._filterVal == "yt"))
-                ) this._mosaic_container.addClass('filtered');
+            if(this.filteringMode == $q.Constants.Filters.CUSTOMER && Quince._currentModel._filterVal == "all") this._mosaic_container.addClass('filtered');
 
 
             var c = this._mosaic_container.find('.column');
@@ -130,9 +123,7 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
             $q.EventManager.addEventHandler($q.Event.RESIZE, this.onResize.bind(this));
             $q.EventManager.addEventHandler($q.Event.MOSAIC_VIDEO, this.playbackVideo.bind(this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMNS_NODATA, this.onEndOfData.bind(this));
-            // $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, $.proxy(this.onLoadingData, this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADING, this.onLoadingData.bind(this));
-            // $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, $.proxy(this.appendMosaic, this));
             $q.EventManager.addEventHandler($q.Event.MODEL_COLUMN_LOADED, this.onLoadingData.bind(this));
         },
 
@@ -157,13 +148,9 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
             setTimeout(function(){
                 _this.animateCTA();
             },2000);
-
-//            _.delay(_this.animateCTA, 2000);
         },
 
         animateCTA : function(){
-
-            //this._slider.x <= this._slider.maxScrollX
             if(this._slider){
 
                 var go = ($q.windowWidth + Math.abs(this._slider.x)) - (this._cta.width() + 10);
@@ -181,7 +168,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
         },
 
         onEndOfData : function(e){
-            $log("MOSAIC END OF DATA----------------");
             this.loading_items = false;
             if(this._home){
                 var homew = $q.windowWidth - 50;
@@ -218,7 +204,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
                     slider.refresh();
                 }, 0);
 
-//                _.defer(slider.refresh);
             }
 
         },
@@ -258,15 +243,11 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
             })
             this.removeEventHandlers();
             this._slider.destroy();
-//            this._slider = null;
             this._mosaic_container.empty();
-//            this._mosaic_container = null;
             this._el.empty();
-//            this._el = null;
         },
 
         showMosaic : function(reveal){
-//            $log("SHOW MOSAIC - reveal:"+reveal, this._el);
             if(reveal){
 
                 this.addEventHandlers();
@@ -275,7 +256,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
                 this._cta.show();
                 this._slider.enable();
                 this._enabled = true;
-//                $log("-----------MOSAIC:"+this.filteringMode+" SHOW!!!");
 
             }  else {
 
@@ -285,26 +265,22 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
                 this._cta.hide();
                 this._slider.disable();
                 this._enabled = false;
-//                $log("-----------MOSAIC:"+this.filteringMode+" HIDE!!!");
 
             }
         },
 
         positionMosaic : function(){
-//            this._slider.scrollTo(this.currentScrollX, 0, 0);
             this._slider.forcePositionX(this.currentScrollX);
         },
 
         scaleColumns : function(w){
             var _this = this;
-//            $log("SET WIDTH:"+w);
             this._columns.each(function(e){
                 $(this).width(w);
             })
         },
 
         onScrollStart : function(e){
-//            $log("SCROLL START----------------");
             if(this._enabled) $q.EventManager.fireEvent($q.Event.MOSAIC_SCROLL_START, this);
         },
 
@@ -313,7 +289,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
         },
 
         onScrollEnd : function(e){
-//            $log("SCROLL END---------------- X:"+this.x);
             this.currentScrollX = this._slider.x;
             this.animateCTA();
 
@@ -326,12 +301,10 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
         },
 
         onFlick : function(e){
-//            $log("FLICK----------------");
             $q.EventManager.fireEvent($q.Event.MOSAIC_FLICK, this);
         },
 
         playbackVideo : function(e, url){
-//            $log("VIDEO PLAYER----------   src:"+url);
 
             $.fancybox({
 
@@ -379,7 +352,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
             this._super(this._el);
 
 
-//            $log("MOSAIC COLUMN newcol:");
             $dir(this._el);
             this.initContainer();
         },
@@ -426,7 +398,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
         _construct : function(el, parentColumn) {
             this._el = $(el);
             this._super(this._el);
-//            this._el.hammer({prevent_default: true});
             this._parent = parentColumn;
 
             this.initContainer();
@@ -436,7 +407,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
 
         initContainer : function(){
             this.sizeLetter = this.getItemSize(this._el);
-//            $log("MOSAIC CELL CONTROLLER -- TYPE:"+this.sizeLetter);
 
             var n = this._el.find('.on-state');
             var f = this._el.find('.off-state');
@@ -470,54 +440,54 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
 
             if(this.sizeLetter == "f"){
                 this._carousel = this._el.find('.flexslider').flexslider({
-                    namespace: "flex-",             //{NEW} String: Prefix string attached to the class of every element generated by the plugin
-                    selector: ".slides > li",       //{NEW} Selector: Must match a simple pattern. '{container} > {slide}' -- Ignore pattern at your own peril
-                    animation: "fade",              //String: Select your animation type, "fade" or "slide"
-                    easing: "swing",               //{NEW} String: Determines the easing method used in jQuery transitions. jQuery easing plugin is supported!
-                    direction: "horizontal",        //String: Select the sliding direction, "horizontal" or "vertical"
-                    reverse: false,                 //{NEW} Boolean: Reverse the animation direction
-                    animationLoop: true,             //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
-                    smoothHeight: false,            //{NEW} Boolean: Allow height of the slider to animate smoothly in horizontal mode
-                    startAt: 0,                     //Integer: The slide that the slider should start on. Array notation (0 = first slide)
-                    slideshow: true,                //Boolean: Animate slider automatically
-                    slideshowSpeed: 4000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
-                    animationSpeed: 500,            //Integer: Set the speed of animations, in milliseconds
-                    initDelay: (Math.random * 5000),                   //{NEW} Integer: Set an initialization delay, in milliseconds
-                    randomize: false,               //Boolean: Randomize slide order
+                    namespace: "flex-",
+                    selector: ".slides > li",
+                    animation: "fade",
+                    easing: "swing",
+                    direction: "horizontal",
+                    reverse: false,
+                    animationLoop: true,
+                    smoothHeight: false,
+                    startAt: 0,
+                    slideshow: true,
+                    slideshowSpeed: 4000,
+                    animationSpeed: 500,
+                    initDelay: (Math.random * 5000),
+                    randomize: false,
 
 // Usability features
-                    pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
-                    pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-                    useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
-                    touch: false,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
-                    video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
+                    pauseOnAction: true,
+                    pauseOnHover: false,
+                    useCSS: true,
+                    touch: false,
+                    video: false,
 
 // Primary Controls
-                    controlNav: true,               //Boolean: Create navigation for paging control of each clide? Note: Leave true for manualControls usage
-                    directionNav: false,             //Boolean: Create navigation for previous/next navigation? (true/false)
-                    prevText: "Previous",           //String: Set the text for the "previous" directionNav item
-                    nextText: "Next",               //String: Set the text for the "next" directionNav item
+                    controlNav: true,
+                    directionNav: false,
+                    prevText: "Previous",
+                    nextText: "Next",
 
 // Secondary Navigation
-                    keyboard: false,                 //Boolean: Allow slider navigating via keyboard left/right keys
-                    multipleKeyboard: false,        //{NEW} Boolean: Allow keyboard navigation to affect multiple sliders. Default behavior cuts out keyboard navigation with more than one slider present.
-                    mousewheel: false,              //{UPDATED} Boolean: Requires jquery.mousewheel.js (https://github.com/brandonaaron/jquery-mousewheel) - Allows slider navigating via mousewheel
-                    pausePlay: false,               //Boolean: Create pause/play dynamic element
-                    pauseText: 'Pause',             //String: Set the text for the "pause" pausePlay item
-                    playText: 'Play',               //String: Set the text for the "play" pausePlay item
+                    keyboard: false,
+                    multipleKeyboard: false,
+                    mousewheel: false,
+                    pausePlay: false,
+                    pauseText: 'Pause',
+                    playText: 'Play',
 
 // Special properties
-                    controlsContainer: "",          //{UPDATED} Selector: USE CLASS SELECTOR. Declare which container the navigation elements should be appended too. Default container is the FlexSlider element. Example use would be ".flexslider-container". Property is ignored if given element is not found.
-                    manualControls: "",             //Selector: Declare custom control navigation. Examples would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.
-                    sync: "",                       //{NEW} Selector: Mirror the actions performed on this slider with another slider. Use with care.
-                    asNavFor: "",                   //{NEW} Selector: Internal property exposed for turning the slider into a thumbnail navigation for another slider
+                    controlsContainer: "",
+                    manualControls: "",
+                    sync: "",
+                    asNavFor: "",
 
 // Carousel Options
-                    itemWidth: 474,                   //{NEW} Integer: Box-model width of individual carousel items, including horizontal borders and padding.
-                    itemMargin: 0,                  //{NEW} Integer: Margin between carousel items.
-                    minItems: 0,                    //{NEW} Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
-                    maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
-                    move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
+                    itemWidth: 474,
+                    itemMargin: 0,
+                    minItems: 0,
+                    maxItems: 0,
+                    move: 0,
 
 // Callback API
                     start: function(slider){
@@ -559,7 +529,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
         },
 
         processPageAction : function(actionString){
-            //$log("ACTION:"+actionString);
 
             if(actionString != "none"){
                 this._el.click(function(e){
@@ -585,7 +554,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
 
         colorizeCell : function(){
             var ind = Math.floor(Math.random() * $q.Brand.ALL_COLORS.length);
-            //$log("COLORIZE CELL index:"+ind);
             var newcolor = $q.Brand.ALL_COLORS[ind];
             this._el.find('.off-state').css({'background-color':newcolor});
         },
@@ -597,7 +565,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
 
         onClick : function(e){
 
-            //$log("CELL CLICKED!");
             if(!this.opened){
                 this.openInfo();
             } else {
@@ -673,7 +640,6 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
             e.preventDefault();
             e.stopPropagation();
             this.startMouseX = e.gesture.center.pageX;
-//            $log("ONPRESS [[]]:"+this.startMouseX);
         },
 
         onRelease : function(e){
@@ -681,18 +647,15 @@ its Quince.Mosaic that is the initialized controller for each new wall, their se
             e.stopPropagation();
             var xdist = e.gesture.center.pageX - this.startMouseX;
             if(xdist < this.deadzone && xdist > -this.deadzone) this.onClick(null);
-//            $log("ONRELEASE ]][[:"+xdist);
         },
 
         onMsPress : function(e){
             e.preventDefault();
             e.stopPropagation();
-//            $log("CELL PRESS!");
             this.startMouseX = e.pageX;
         },
 
         onMsRelease : function(e){
-//            $log("CELL RELEASE!");
             e.preventDefault();
             e.stopPropagation();
             var xdist = e.pageX - this.startMouseX;

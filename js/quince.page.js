@@ -74,8 +74,6 @@
                 $q.cellRouter.navigate("/", {trigger:true});
             });
 
-//            $q.EventManager.addEventHandler($q.Event.PAGECHANGE, this.catchPageChange.bind(this));
-
             this.initRouter();
 
         },
@@ -87,7 +85,6 @@
                 routes: {
 
                     "posts/:id": "getPost",
-                    // <a href="http://example.com/#/posts/121">Example</a>
                     "client/:id": "getClient",
                     "author/:id": "getAuthor",
                     "portal/:id": "getPortal",
@@ -149,11 +146,6 @@
                 }
             });
 
-//            Backbone.emulateHTTP = true;
-//            Backbone.emulateJSON = true;
-//
-//            Start Backbone history a necessary step for bookmarkable URL's
-//            - See more at: http://thomasdavis.github.io/2011/02/07/making-a-restful-ajax-app.html#sthash.oYCvSDf5.dpuf
             Backbone.history.start({pushState: true, root: '/'});
         },
 
@@ -168,7 +160,6 @@
             this._current = remoteLink;
             var ref = "."+( remoteLink ? remoteLink : clicksource.id) + "-content";
             var $content = $(ref);
-//            //$log("REMOTE ANIMATE subcontentOpened:"+this.subcontentOpened);
 
             this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, null);
         },
@@ -184,15 +175,11 @@
             var $content = $(ref);
 
             $q.cellRouter.navigate(clicksource.id, {trigger:true});
-            ////$log("CLICK ANIMATE subcontentOpened:"+this.subcontentOpened);
-
-            //this.subcontentOpened == false ? this.pageAnimateFromClosed($content) : this.pageAnimateFromOpened($content, clicksource);
         },
 
         pageAnimateFromClosed : function(el){
             var _this = this;
             el.show();
-//                $content.addClass('opened');
 
             var t = el.find('.content')[0];
             var targetHeight = $(t).height() + ($('body').hasClass('ipad-iphone') ? 10 : 40);
@@ -200,17 +187,12 @@
 
             if(targetHeight > maxHeight) targetHeight = maxHeight;
 
-            ////$log("ANIMATEFROM-CLOSED: subOpened:"+this.subcontentOpened+" targetHeight:"+targetHeight+" currentContent:"+ this.currentContent);
-
             this.setScrollable(false);
 
             this.currentContent = el;
             var hasSlider = this.currentContent.hasClass('sliding');
-            //$log("PAGE ANIMATE has slider:"+hasSlider );
 
             if(hasSlider) this._currentscroller = new $q.Page.SubPage(this.currentContent);
-
-//             this._el.css('top', (targetHeight + 'px'));
 
             this._el.animate({
                 top:targetHeight
@@ -221,11 +203,9 @@
 
         pageAnimateFromOpened : function(el, c){
             var _this = this;
-            ////$log("ANIMATEFROM-OPEN: subOpened:"+this.subcontentOpened+" currentContent:"+this.currentContent.selector);
-            ////$log("NEW CONTENT:"+el.selector);
+
             if(this.currentContent.selector != el.selector){
                 this.contentSwap = c;
-                ////$log("CONTENTSWAP REASSIGNED-------")
             } else {
                 this.contentSwap = null;
             }
@@ -245,14 +225,9 @@
             var bg = this.currentContent.find('.content');
             $(bg).bind('click', $.proxy(this.pageCollapse, this));
             this._el.bind('tap click swipe focus', $.proxy(this.pageCollapse, this));
-
-
-            ////$log("OPEN TRANSITION END - subcontentOpened:"+this.subcontentOpened);
         },
 
         onCloseTransitionEnd : function(){
-            // THIS ALLOWS FOR A SWAPPING FROM LINKED SECTION TO SECTION THROUGH HAND-OFF OF THE 'currentSwap' VALUE.  BUT IS NOT NEEDED WITH THE MOUSEOVER LOGIC.
-//            //$log("CLOSE TRANSITION END - subcontentOpened:"+this.subcontentOpened+" contentSwap:");
             $dir(this.contentSwap);
             if(this.subcontentOpened == true){
                 this.subcontentOpened = false;
@@ -268,9 +243,6 @@
                 if(this.contentSwap != null){
 
                     $(this.contentSwap).trigger('click');
-//                    this.remoteAnimate(this._current);
-
-                    //$log("CONTENT SWAP:"+this._current);
                     this.contentSwap = null;
                 } else {
                     $q.cellRouter.navigate("/", {trigger:false});
@@ -281,7 +253,7 @@
         },
 
         pageCollapse : function(e){
-//            if(this.subcontentOpened) this._el.css('top', '0px');
+
             var _this = this;
             $q.cellRouter.navigate("/", {trigger:false});
             if(this.subcontentOpened){
@@ -292,7 +264,6 @@
                 });
                 this._el.mouseover(null);
                 this._el.unbind('tap click swipe focus');
-                //            this._el.touch(null);
             }
         },
 

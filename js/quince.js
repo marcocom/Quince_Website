@@ -138,7 +138,6 @@ example (this shows the main mosaic wall):
         },
 
         popup: function (t, name) {
-            ////$log('open popup: '+name);
             var popup = this._getPopup(name);
             if(popup != null) {
                 popup.show(name);
@@ -495,7 +494,6 @@ example (this shows the main mosaic wall):
                 Quince._mosaic.showMosaic(false);
                 Quince._model.removeEventListeners();
                 Quince._landingAnimation.manageRotationTimer(true);
-                //$log("_mosaic suppressed:");
             }
         },
 
@@ -510,8 +508,6 @@ example (this shows the main mosaic wall):
         },
 
         showAllClients: function () {
-            //$log("STATE - showAllClients() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
-//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
 
             Quince.State.destroyPrimary();
 
@@ -527,9 +523,6 @@ example (this shows the main mosaic wall):
         },
 
         createRefinedModel: function (filter, val) {
-            //$log("createRefinedModel() filter:"+filter+" val:"+val+" _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
-//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
-
 
             this.destroyPrimary();
 
@@ -545,9 +538,6 @@ example (this shows the main mosaic wall):
         },
 
         createPeopleModel: function () {
-            //$log("createPeopleModel() _mosaic:"+Quince._mosaic+" _second:"+Quince._secondaryMosaic);
-//            if (Quince._secondaryModel && filter == Quince._secondaryModel._filterMode) return;
-
 
             Quince.State.destroyPrimary();
 
@@ -563,11 +553,6 @@ example (this shows the main mosaic wall):
         },
 
         removeRefinedModel: function () {
-            // //$log("STATE removeRefinedModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
-            // this.destroySecondary();
-            // $('#second-container').empty();
-
-            //$log("STATE removeRefinedModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
             this.destroySecondary();
             var target = $('#second-container').empty();
 
@@ -590,31 +575,23 @@ example (this shows the main mosaic wall):
 
         startMosaic: function (el, filter){
 
-            //$log("STARTMOSAIC() filter:"+filter);
-
             Quince._currentFiltering = filter;
 
             var targetEl = filter == Quince.Constants.Filters.CHRONOLOGICAL ? '#slider-container' : '#second-container';
 
                 if(filter == Quince.Constants.Filters.CHRONOLOGICAL){
-                    //$log("===============================CREATE MAIN MOSAIC===================================");
-                    Quince._currentMosaic = Quince._mosaic = new Quince.Mosaic.Container(el, filter);;
+                    Quince._currentMosaic = Quince._mosaic = new Quince.Mosaic.Container(el, filter);
                 } else {
-                    //$log("NEW SECONDARY MODEL EXISTS!");
-                    //$log("===============================CREATE NEW SECOND MOSAIC filter:"+filter+"===============================");
                     Quince._currentMosaic = Quince._secondaryMosaic = new Quince.Mosaic.Container(el, filter);
-
                 }
 
         },
 
         createMainModel: function (e) {
-            //$log("STATE createMainModel() _model:"+Quince._model+" _secondmodel:"+Quince._secondaryModel);
             Quince._currentFiltering = Quince.Constants.Filters.CHRONOLOGICAL;
             Quince.State.removeRefinedModel();
         },
 
-        //handlers
 
         refineBySearch: function (e, filter) {
             //$log("STATE refineBySearch WORD:"+filter);
@@ -643,7 +620,6 @@ example (this shows the main mosaic wall):
 
         refineByFilter: function (e, filter) {
             //$log("refineByFilter FILTER:"+filter);
-
             if (filter == Quince.Constants.Filters.CHRONOLOGICAL) {
                 Quince.cellRouter.navigate("/", { trigger: true });
             }
@@ -685,7 +661,6 @@ example (this shows the main mosaic wall):
             'cell_g': null,
             'cell_h': null,
             'cell_i': null,
-
             'cell_p': null
         },
         containers: {

@@ -204,31 +204,18 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
         },
         
         initModel : function(){
-//            //$log("-------------------------MODEL MOSAIC INIT-----------------------------filterMode:"+this._filterMode+" filterVal:"+this._filterVal);
             $q.State.startMosaic(this._el, this._filterMode);
             this.requestData(this._currentColumn);
         },
         
         nextModel : function(){
 
-
-
             var nextup  = (this._currentColumn+=1);
-
-//            //$log("NEXTMODEL nextup:"+nextup+" totalpreload:"+this._totalPreload+" firstLoad:"+this._firstLoad+" dataFinished:"+this._dataFinished+" filterMode:"+this._filterMode);
-
-            
 
             if(nextup < this._totalPreload){
                 this.requestData(nextup);
-
             } else if(!this._firstLoad){
                 this._firstLoad = true;
-//                //$log("FIRSTLOAD MODELS COMPLETE - INITIALIZING MOSAIC CONTROLLER");
-                // Quince.EventManager.fireEvent($q.Event.MODEL_COLUMNS_COMPLETE, this, this._el, this._filterMode);
-
-                
-
             } else if(!this._dataFinished){
                 this.requestData(nextup);
             }
@@ -269,8 +256,6 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
                 var offset = _this.offsetCounters[val];
                 _this.offsetCounters[val] += totalcount;
 
-//                //$log("DATARETURN EACH-cell:"+val+" CURRENT offset:"+offset+" list:"+list+" length:"+list.length+" remainder:"+_this.remainderCounters[val]);
-
                 var insertobj = {
                     'type':val,
                     'limit':totalcount,
@@ -280,8 +265,6 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
                 sendObj.types.push(insertobj);
 
             });
-//
-//            //$log("SEND LENGTH:"+sendObj.types.length);
 
             if(sendObj.types.length == 0){
                 Quince.EventManager.fireEvent($q.Event.MODEL_COLUMNS_COMPLETE, this, this._el, this._filterMode);
@@ -324,7 +307,6 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
 
             var el = this.injectColumn(style);
 
-            $log(">>>>>>>>>>>> MODEL.PARSECOLUMN result:"+data.length);
             _.each(data, function(val, i){
                 //$log(val.title);
             });
@@ -343,8 +325,6 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
         },
 
         loadError : function(error){
-            //$log("\n\n======================================\nDATA COMPLETED!!!!!!!\n===========================================\n\n\n");
-            //$log(error);
             this._dataFinished = true;
             Quince.EventManager.removeEventHandler($q.Event.MOSAIC_SCROLL_END, this.mosaicScrollHandler);
             Quince.EventManager.fireEvent(Quince.Event.MODEL_COLUMNS_NODATA, this);
@@ -391,9 +371,6 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
                 return new $q.Model.CellModel(post);
             });
 
-            //$log("|||||||||||||||||||||||Column Created :");
-            _.each(castm, function(val){$log(val);});
-
             this._collection = new columnCollection(castm);
 
 
@@ -402,7 +379,6 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
 
         instantiateCells : function(){
             var _this = this;
-//            //$log("MAIN COLUMN INSTANTIATECELLS()");
             this._collection.each(function(model) {
 
                 var m = _this.generateImageLink(model);
@@ -415,7 +391,6 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
             var images = model.get('images');
             var type = model.get('type');
             var isAncillary = $.inArray(type, $q.AncillaryLetters) > -1;
-//            //$log("IMAGE GENERATE:"+type);
 
             if(!(images.length == 0 || isAncillary || type == 'h' || type == 'i')){
                 _(images).each(function(val){
@@ -429,8 +404,7 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
             return model;
         },
 
-        patternFormatData : function(model){ //----------------------------------------------------THIS NEEDS CLEANUP
-            //$log("MODEL.patterFormatData() filterMode:"+$q._currentModel._filterMode+"filterVal:"+$q._currentModel._filterVal)
+        patternFormatData : function(model){
 
             if(($q._currentModel._filterMode != $q.Constants.Filters.CHRONOLOGICAL) && ($q._currentModel._filterMode != $q.Constants.Filters.PEOPLE))
                 return model;
@@ -453,7 +427,7 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
 
                     cell_letter != "i" ? ancil_obj = this.pullAncillaryData(cell_letter) : ancil_obj = {'id':uId, 'type':'i'};
 
-                } else { // else you do this
+                } else {
                     for (var k = 0; k < model.length; k++){
                         var cl = model[k].type;
                         if(cl == cell_letter)
@@ -473,17 +447,14 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
             if(letter == 'd'){
                 ran = Math.floor(Math.random() * $q.ancillary_models.quote_data.length);
                 obj = $q.ancillary_models.quote_data[ran];
-//                obj = $q.ancillary_models.quote_data.splice(ran,1)[0];
             } else
             if(letter == 'e'){
                 ran = Math.floor(Math.random() * $q.ancillary_models.action_data.length);
                 obj = $q.ancillary_models.action_data[ran];
-//                obj = $q.ancillary_models.action_data.splice(0,1)[0];
             } else
             if(letter == 'g'){
                 ran = Math.floor(Math.random() * $q.ancillary_models.long_images.length);
                 obj = $q.ancillary_models.long_images[ran];
-//                obj = $q.ancillary_models.long_images.splice(0,1)[0];
             } else
             if(letter == 'i'){
                 obj = {
@@ -524,12 +495,10 @@ deviate for unique employee data structure and thus its own Quince.Model.Person 
             this._column = col;
             this._style = this._model.get("type");
             this._tplname = 'cell_'+this._style;
-//            //$log("CELL CREATED", this._model.toJSON());
             this.render();
         },
 
         render: function(){
-//            //$log("CELL:"+this._style, this._model, " el:", this.$el);
             var template = Quince.templates.cells[this._tplname](this._model.toJSON());
             this.$el.html( template );
             this.setElement(this.$el);
